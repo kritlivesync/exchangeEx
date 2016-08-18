@@ -17,7 +17,11 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
 
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {        
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        // for debug
+        self.apiKeyText.text = key_full
+        self.secretKeyText.text = secret_full
+        
         if self.apiKeyText.text!.isEmpty || self.secretKeyText.text!.isEmpty {
             return false
         }

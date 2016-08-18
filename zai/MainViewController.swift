@@ -16,7 +16,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         
         self.account.getMarketCapitalization() { (err, value) in
-            if err {
+            if let _ = err {
                 self.marketCapitalization.text = "-"
             } else {
                 let formatter = NSNumberFormatter()

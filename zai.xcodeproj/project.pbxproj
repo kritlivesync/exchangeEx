@@ -18,6 +18,10 @@
 		B8B845A61D6604EA00535638 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845A51D6604EA00535638 /* Account.swift */; };
 		B8B845A91D6604F500535638 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845A71D6604F500535638 /* LoginViewController.swift */; };
 		B8B845AA1D6604F500535638 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845A81D6604F500535638 /* MainViewController.swift */; };
+		B8B845AC1D66089F00535638 /* Fund.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845AB1D66089F00535638 /* Fund.swift */; };
+		B8B845AE1D660D8700535638 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845AD1D660D8700535638 /* Currency.swift */; };
+		B8B845B01D660FA100535638 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845AF1D660FA100535638 /* Error.swift */; };
+		B8B845B21D661B4400535638 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845B11D661B4400535638 /* Keys.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +60,10 @@
 		B8B845A51D6604EA00535638 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		B8B845A71D6604F500535638 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		B8B845A81D6604F500535638 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		B8B845AB1D66089F00535638 /* Fund.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fund.swift; sourceTree = "<group>"; };
+		B8B845AD1D660D8700535638 /* Currency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
+		B8B845AF1D660FA100535638 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		B8B845B11D661B4400535638 /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		FD254B29072DEED3604B9179 /* Pods_zai.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_zai.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -119,6 +127,7 @@
 		B8B845761D66041D00535638 /* zai */ = {
 			isa = PBXGroup;
 			children = (
+				B8B845B11D661B4400535638 /* Keys.swift */,
 				B8B845A71D6604F500535638 /* LoginViewController.swift */,
 				B8B845A81D6604F500535638 /* MainViewController.swift */,
 				B8B845A51D6604EA00535638 /* Account.swift */,
@@ -128,6 +137,9 @@
 				B8B8457E1D66041D00535638 /* Assets.xcassets */,
 				B8B845801D66041D00535638 /* LaunchScreen.storyboard */,
 				B8B845831D66041D00535638 /* Info.plist */,
+				B8B845AB1D66089F00535638 /* Fund.swift */,
+				B8B845AD1D660D8700535638 /* Currency.swift */,
+				B8B845AF1D660FA100535638 /* Error.swift */,
 			);
 			path = zai;
 			sourceTree = "<group>";
@@ -343,10 +355,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8B845B01D660FA100535638 /* Error.swift in Sources */,
+				B8B845AC1D66089F00535638 /* Fund.swift in Sources */,
 				B8B845A91D6604F500535638 /* LoginViewController.swift in Sources */,
 				B8B8457A1D66041D00535638 /* ViewController.swift in Sources */,
 				B8B845781D66041D00535638 /* AppDelegate.swift in Sources */,
 				B8B845A61D6604EA00535638 /* Account.swift in Sources */,
+				B8B845AE1D660D8700535638 /* Currency.swift in Sources */,
+				B8B845B21D661B4400535638 /* Keys.swift in Sources */,
 				B8B845AA1D6604F500535638 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
