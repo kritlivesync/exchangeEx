@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3761386221FCB5F32FDBFC56 /* Pods_zai.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD254B29072DEED3604B9179 /* Pods_zai.framework */; };
 		B8B845781D66041D00535638 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845771D66041D00535638 /* AppDelegate.swift */; };
 		B8B8457A1D66041D00535638 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845791D66041D00535638 /* ViewController.swift */; };
 		B8B8457D1D66041D00535638 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B8457B1D66041D00535638 /* Main.storyboard */; };
@@ -14,6 +15,9 @@
 		B8B845821D66041D00535638 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B845801D66041D00535638 /* LaunchScreen.storyboard */; };
 		B8B8458D1D66041D00535638 /* zaiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B8458C1D66041D00535638 /* zaiTests.swift */; };
 		B8B845981D66041D00535638 /* zaiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845971D66041D00535638 /* zaiUITests.swift */; };
+		B8B845A61D6604EA00535638 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845A51D6604EA00535638 /* Account.swift */; };
+		B8B845A91D6604F500535638 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845A71D6604F500535638 /* LoginViewController.swift */; };
+		B8B845AA1D6604F500535638 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845A81D6604F500535638 /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2B79EE9EF789B6523DE18096 /* Pods-zai.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zai.release.xcconfig"; path = "Pods/Target Support Files/Pods-zai/Pods-zai.release.xcconfig"; sourceTree = "<group>"; };
+		47AE790BD03FD1B5B46D105B /* Pods-zai.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zai.debug.xcconfig"; path = "Pods/Target Support Files/Pods-zai/Pods-zai.debug.xcconfig"; sourceTree = "<group>"; };
 		B8B845741D66041D00535638 /* zai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = zai.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8B845771D66041D00535638 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B8B845791D66041D00535638 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +53,10 @@
 		B8B845931D66041D00535638 /* zaiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = zaiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8B845971D66041D00535638 /* zaiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = zaiUITests.swift; sourceTree = "<group>"; };
 		B8B845991D66041D00535638 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B8B845A51D6604EA00535638 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		B8B845A71D6604F500535638 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		B8B845A81D6604F500535638 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		FD254B29072DEED3604B9179 /* Pods_zai.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_zai.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3761386221FCB5F32FDBFC56 /* Pods_zai.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +85,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		506ABAE21FBBBAAF9CD28605 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				47AE790BD03FD1B5B46D105B /* Pods-zai.debug.xcconfig */,
+				2B79EE9EF789B6523DE18096 /* Pods-zai.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		B8B8456B1D66041D00535638 = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +101,8 @@
 				B8B8458B1D66041D00535638 /* zaiTests */,
 				B8B845961D66041D00535638 /* zaiUITests */,
 				B8B845751D66041D00535638 /* Products */,
+				506ABAE21FBBBAAF9CD28605 /* Pods */,
+				DCCA1EA3D4E243B9AC76F2D1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -97,6 +119,9 @@
 		B8B845761D66041D00535638 /* zai */ = {
 			isa = PBXGroup;
 			children = (
+				B8B845A71D6604F500535638 /* LoginViewController.swift */,
+				B8B845A81D6604F500535638 /* MainViewController.swift */,
+				B8B845A51D6604EA00535638 /* Account.swift */,
 				B8B845771D66041D00535638 /* AppDelegate.swift */,
 				B8B845791D66041D00535638 /* ViewController.swift */,
 				B8B8457B1D66041D00535638 /* Main.storyboard */,
@@ -125,6 +150,14 @@
 			path = zaiUITests;
 			sourceTree = "<group>";
 		};
+		DCCA1EA3D4E243B9AC76F2D1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FD254B29072DEED3604B9179 /* Pods_zai.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -132,9 +165,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B8B8459C1D66041D00535638 /* Build configuration list for PBXNativeTarget "zai" */;
 			buildPhases = (
+				4B20C9ADD627ECAA7E47BC63 /* [CP] Check Pods Manifest.lock */,
 				B8B845701D66041D00535638 /* Sources */,
 				B8B845711D66041D00535638 /* Frameworks */,
 				B8B845721D66041D00535638 /* Resources */,
+				578BE56EE1EADDF276C16139 /* [CP] Embed Pods Frameworks */,
+				664BEEAD2F2EF5BABC50ECA1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -254,13 +290,64 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4B20C9ADD627ECAA7E47BC63 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		578BE56EE1EADDF276C16139 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-zai/Pods-zai-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		664BEEAD2F2EF5BABC50ECA1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-zai/Pods-zai-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B8B845701D66041D00535638 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8B845A91D6604F500535638 /* LoginViewController.swift in Sources */,
 				B8B8457A1D66041D00535638 /* ViewController.swift in Sources */,
 				B8B845781D66041D00535638 /* AppDelegate.swift in Sources */,
+				B8B845A61D6604EA00535638 /* Account.swift in Sources */,
+				B8B845AA1D6604F500535638 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +489,7 @@
 		};
 		B8B8459D1D66041D00535638 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 47AE790BD03FD1B5B46D105B /* Pods-zai.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = zai/Info.plist;
@@ -413,6 +501,7 @@
 		};
 		B8B8459E1D66041D00535638 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2B79EE9EF789B6523DE18096 /* Pods-zai.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = zai/Info.plist;
@@ -487,6 +576,7 @@
 				B8B8459E1D66041D00535638 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B8B8459F1D66041D00535638 /* Build configuration list for PBXNativeTarget "zaiTests" */ = {
 			isa = XCConfigurationList;
@@ -495,6 +585,7 @@
 				B8B845A11D66041D00535638 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B8B845A21D66041D00535638 /* Build configuration list for PBXNativeTarget "zaiUITests" */ = {
 			isa = XCConfigurationList;
@@ -503,6 +594,7 @@
 				B8B845A41D66041D00535638 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

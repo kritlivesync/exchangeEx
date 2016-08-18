@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  zai
 //
-//  Created by 渡部郷太 on 8/18/16.
+//  Created by 渡部郷太 on 6/30/16.
 //  Copyright © 2016 watanabe kyota. All rights reserved.
 //
 
