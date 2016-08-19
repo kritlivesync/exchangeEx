@@ -30,14 +30,6 @@ class MainViewController: UIViewController {
             dispatch_async(dispatch_get_main_queue()) {
                 self.marketCapitalization.setNeedsDisplay()
             }
-            let order = ZaifSwift.Trade.Buy.Btc.In.Jpy.createOrder(50000, amount:1)
-
-            self.account.trade(order) { (err, message) in
-                if err {
-                    print(message)
-                }
-            }
-            
         }
     }
     

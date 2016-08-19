@@ -22,6 +22,8 @@
 		B8B845AE1D660D8700535638 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845AD1D660D8700535638 /* Currency.swift */; };
 		B8B845B01D660FA100535638 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845AF1D660FA100535638 /* Error.swift */; };
 		B8B845B21D661B4400535638 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845B11D661B4400535638 /* Keys.swift */; };
+		B8B845B41D672ACC00535638 /* Trader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845B31D672ACC00535638 /* Trader.swift */; };
+		B8B845B61D672F5500535638 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845B51D672F5500535638 /* Order.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +66,8 @@
 		B8B845AD1D660D8700535638 /* Currency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		B8B845AF1D660FA100535638 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		B8B845B11D661B4400535638 /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
+		B8B845B31D672ACC00535638 /* Trader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trader.swift; sourceTree = "<group>"; };
+		B8B845B51D672F5500535638 /* Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		FD254B29072DEED3604B9179 /* Pods_zai.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_zai.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -140,6 +144,8 @@
 				B8B845AB1D66089F00535638 /* Fund.swift */,
 				B8B845AD1D660D8700535638 /* Currency.swift */,
 				B8B845AF1D660FA100535638 /* Error.swift */,
+				B8B845B31D672ACC00535638 /* Trader.swift */,
+				B8B845B51D672F5500535638 /* Order.swift */,
 			);
 			path = zai;
 			sourceTree = "<group>";
@@ -359,9 +365,11 @@
 				B8B845AC1D66089F00535638 /* Fund.swift in Sources */,
 				B8B845A91D6604F500535638 /* LoginViewController.swift in Sources */,
 				B8B8457A1D66041D00535638 /* ViewController.swift in Sources */,
+				B8B845B61D672F5500535638 /* Order.swift in Sources */,
 				B8B845781D66041D00535638 /* AppDelegate.swift in Sources */,
 				B8B845A61D6604EA00535638 /* Account.swift in Sources */,
 				B8B845AE1D660D8700535638 /* Currency.swift in Sources */,
+				B8B845B41D672ACC00535638 /* Trader.swift in Sources */,
 				B8B845B21D661B4400535638 /* Keys.swift in Sources */,
 				B8B845AA1D6604F500535638 /* MainViewController.swift in Sources */,
 			);

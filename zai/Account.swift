@@ -23,13 +23,5 @@ internal class Account {
         fund.getMarketCapitalization(cb)
     }
     
-    func trade(order: Order, callback: ((err: Bool, message: String) -> Void)) {
-        self.privateApi.trade(order) { (err, res) in
-            if let e = err {
-                callback(err: true, message: e.message)
-            }
-        }
-    }
-    
     private let privateApi: PrivateApi
 }
