@@ -11,9 +11,17 @@ import Foundation
 import ZaifSwift
 
 
-internal class Trader {
-    init() {
-        
+internal class StrongTrader {
+    
+    internal static func create(acount: Account, cb: (ZaiError, StrongTrader) -> Void) {
+
     }
     
+    private init(name: String) {
+        self.name = name
+        self.positions = []
+    }
+    
+    internal let name: String
+    private let positions: [PositionProtocol]
 }

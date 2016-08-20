@@ -14,7 +14,8 @@ import ZaifSwift
 
 
 internal class Account {
-    init(api: PrivateApi) {
+    init(userId: String, api: PrivateApi) {
+        self.userId = userId
         self.privateApi = api
     }
     
@@ -23,5 +24,6 @@ internal class Account {
         fund.getMarketCapitalization(cb)
     }
     
-    private let privateApi: PrivateApi
+    internal let userId: String
+    internal let privateApi: PrivateApi
 }

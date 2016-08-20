@@ -54,7 +54,7 @@ class LoginViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if segue.identifier == "mainViewSegue" {
             let destController = segue.destinationViewController as! MainViewController
-            destController.account = Account(api: self.api!)
+            destController.account = Account(userId: "", api: self.api!)
         }
     }
 

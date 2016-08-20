@@ -20,35 +20,34 @@ internal enum OrderState {
 }
 
 internal class Order {
-    init(id: Int = -1, currencyPair: CurrencyPair, price: Double, amount: Double, api: PrivateApi) {
+    init?(id: Int = -1, currencyPair: CurrencyPair, price: Double?, amount: Double, api: PrivateApi) {
         self.id = id
-        self.currencyPair = currencyPair
-        self.price = price
-        self.amount = amount
+        
         self.status = .WAITING
         if self.id >= 0 {
             // assume that this order is being constracted by existing active order
             self.status = .ACTIVE
         }
+        self.promisedTime = 0
+        self.promisedPrice = 0.0
         self.privateApi = api
+        
+        self.zaifOrder = nil
+        let order = self.createOrder(currencyPair, price: price, amount: amount)
+        if order == nil {
+            return nil
+        }
+        self.zaifOrder = order
     }
     
-    func excute(cb: ((ZaiError?, Int) -> Void)) {
+    internal func excute(cb: (ZaiError?, Int) -> Void) {
         if self.status != .WAITING {
             // todo async
             cb(ZaiError(errorType: .INVALID_ORDER, message: "order already active"), -1)
             return
         }
-        
-        let order = self.createOrder()
-        if order == nil {
-            // todo async
-            self.status = .INVALID
-            cb(ZaiError(errorType: .INVALID_ORDER, message: "invalide currency pair"), -1)
-            return
-        }
-        
-        self.privateApi.trade(order!) { (err, res) in
+
+        self.privateApi.trade(self.zaifOrder) { (err, res) in
             if let e = err {
                 self.status = .INVALID
                 cb(ZaiError(errorType: .INVALID_ORDER, message: e.message), -1)
@@ -64,15 +63,15 @@ internal class Order {
             }
         }
     }
-    
-    internal func waitForPromise(cb: ((ZaiError?, Bool) -> Void)) {
+
+    internal func waitForPromise(cb: (ZaiError?, Bool) -> Void) {
         if self.status != .ACTIVE {
             // todo async
             cb(ZaiError(errorType: .INVALID_ORDER, message: "order is not excuted"), false)
             return
         }
         
-        self.privateApi.activeOrders(self.currencyPair) { (err, res) in
+        self.privateApi.activeOrders(self.zaifOrder.currencyPair) { (err, res) in
             if let e = err {
                 self.status = .INVALID
                 cb(ZaiError(errorType: .INVALID_ORDER, message: e.message), false)
@@ -86,18 +85,18 @@ internal class Order {
                         self.waitForPromise(cb)
                     } else {
                         if self.status == .ACTIVE { // double check
+                            self.promisedTime = Int64(NSDate().timeIntervalSince1970)
                             cb(nil, true)
                         } else {
                             cb(ZaiError(errorType: .INVALID_ORDER, message: "order is not active"), false)
                         }
                     }
-                    
                 }
             }
         }
     }
     
-    internal func cancel(cb: ((ZaiError?) -> Void)) {
+    internal func cancel(cb: (ZaiError?) -> Void) {
         if self.status != .ACTIVE {
             // todo async
             cb(ZaiError(errorType: .INVALID_ORDER, message: "order is not excuted"))
@@ -114,29 +113,67 @@ internal class Order {
         }
     }
     
-    private func createOrder() -> ZaifSwift.Order? {
+    private func createOrder(currencyPair: CurrencyPair, price: Double?, amount: Double) -> ZaifSwift.Order? {
         return nil
+    }
+    
+    internal var currencyPair: CurrencyPair {
+        get {
+            return self.zaifOrder.currencyPair
+        }
+    }
+    
+    internal var action: OrderAction {
+        get {
+            return self.zaifOrder.action
+        }
+    }
+    
+    internal var price: Double {
+        get {
+            if self.isPromised {
+                return self.promisedPrice
+            } else {
+                if let p = self.zaifOrder.price {
+                    return p
+                } else {
+                    return 0.0 // 成行き注文の約定前
+                }
+            }
+        }
+    }
+    
+    internal var amount: Double {
+        get {
+            return self.zaifOrder.amount
+        }
+    }
+    
+    internal var isPromised: Bool {
+        get {
+            return self.status == .PROMISED
+        }
     }
     
     private var id: Int
     internal let privateApi: PrivateApi
-    internal let currencyPair: CurrencyPair
-    internal let price: Double
-    internal let amount: Double
+    private var zaifOrder: ZaifSwift.Order!
     internal var status: OrderState
+    internal var promisedTime: Int64
+    internal var promisedPrice: Double
 }
 
 internal class BuyOrder : Order {
-    override init(id: Int = -1, currencyPair: CurrencyPair, price: Double, amount: Double, api: PrivateApi) {
+    override init?(id: Int = -1, currencyPair: CurrencyPair, price: Double?, amount: Double, api: PrivateApi) {
         super.init(id: id, currencyPair: currencyPair, price: price, amount: amount, api: api)
     }
     
-    override private func createOrder() -> ZaifSwift.Order? {
-        switch self.currencyPair {
+    override private func createOrder(currencyPair: CurrencyPair, price: Double?, amount: Double) -> ZaifSwift.Order? {
+        switch currencyPair {
         case .BTC_JPY:
-            return Trade.Buy.Btc.In.Jpy.createOrder(Int(self.price), amount: self.amount)
+            return Trade.Buy.Btc.In.Jpy.createOrder(price == nil ? nil : Int(price!), amount: amount)
         case .MONA_JPY:
-            return Trade.Buy.Mona.In.Jpy.createOrder(self.price, amount: Int(self.amount))
+            return Trade.Buy.Mona.In.Jpy.createOrder(price, amount: Int(amount))
         default:
             return nil
         }
@@ -144,16 +181,16 @@ internal class BuyOrder : Order {
 }
 
 internal class SellOrder : Order {
-    override init(id: Int = -1, currencyPair: CurrencyPair, price: Double, amount: Double, api: PrivateApi) {
+    override init?(id: Int = -1, currencyPair: CurrencyPair, price: Double?, amount: Double, api: PrivateApi) {
         super.init(id: id, currencyPair: currencyPair, price: price, amount: amount, api: api)
     }
     
-    override private func createOrder() -> ZaifSwift.Order? {
-        switch self.currencyPair {
+    override private func createOrder(currencyPair: CurrencyPair, price: Double?, amount: Double) -> ZaifSwift.Order? {
+        switch currencyPair {
         case .BTC_JPY:
-            return Trade.Sell.Btc.For.Jpy.createOrder(Int(self.price), amount: self.amount)
+            return Trade.Sell.Btc.For.Jpy.createOrder(price == nil ? nil : Int(price!), amount: amount)
         case .MONA_JPY:
-            return Trade.Sell.Mona.For.Jpy.createOrder(self.price, amount: Int(self.amount))
+            return Trade.Sell.Mona.For.Jpy.createOrder(price, amount: Int(amount))
         default:
             return nil
         }
