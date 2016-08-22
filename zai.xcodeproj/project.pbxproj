@@ -25,7 +25,13 @@
 		B8B845B41D672ACC00535638 /* Trader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845B31D672ACC00535638 /* Trader.swift */; };
 		B8B845B61D672F5500535638 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845B51D672F5500535638 /* Order.swift */; };
 		B8B845B81D67547E00535638 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845B71D67547E00535638 /* Position.swift */; };
-		B8B845BA1D6759B100535638 /* TradeLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845B91D6759B100535638 /* TradeLog.swift */; };
+		B8F585271D6964FA008680D8 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B8F585251D6964FA008680D8 /* Model.xcdatamodeld */; };
+		B8F585291D6B33CC008680D8 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F585281D6B33CC008680D8 /* Database.swift */; };
+		B8F5852B1D6B42A8008680D8 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8F5852A1D6B42A8008680D8 /* Config.plist */; };
+		B8F5852D1D6B44B8008680D8 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F5852C1D6B44B8008680D8 /* Config.swift */; };
+		B8F585351D6B53FD008680D8 /* TradeLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F585331D6B53FD008680D8 /* TradeLog.swift */; };
+		B8F585371D6B54DD008680D8 /* TradeLogRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F585361D6B54DD008680D8 /* TradeLogRepository.swift */; };
+		B8F585391D6B645E008680D8 /* TradeLog+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F585381D6B645E008680D8 /* TradeLog+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,7 +77,13 @@
 		B8B845B31D672ACC00535638 /* Trader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trader.swift; sourceTree = "<group>"; };
 		B8B845B51D672F5500535638 /* Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		B8B845B71D67547E00535638 /* Position.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
-		B8B845B91D6759B100535638 /* TradeLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TradeLog.swift; sourceTree = "<group>"; };
+		B8F585261D6964FA008680D8 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		B8F585281D6B33CC008680D8 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
+		B8F5852A1D6B42A8008680D8 /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
+		B8F5852C1D6B44B8008680D8 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		B8F585331D6B53FD008680D8 /* TradeLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TradeLog.swift; sourceTree = "<group>"; };
+		B8F585361D6B54DD008680D8 /* TradeLogRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TradeLogRepository.swift; sourceTree = "<group>"; };
+		B8F585381D6B645E008680D8 /* TradeLog+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TradeLog+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FD254B29072DEED3604B9179 /* Pods_zai.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_zai.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -135,6 +147,8 @@
 		B8B845761D66041D00535638 /* zai */ = {
 			isa = PBXGroup;
 			children = (
+				B8F585381D6B645E008680D8 /* TradeLog+CoreDataProperties.swift */,
+				B8F585331D6B53FD008680D8 /* TradeLog.swift */,
 				B8B845B11D661B4400535638 /* Keys.swift */,
 				B8B845A71D6604F500535638 /* LoginViewController.swift */,
 				B8B845A81D6604F500535638 /* MainViewController.swift */,
@@ -151,7 +165,11 @@
 				B8B845B31D672ACC00535638 /* Trader.swift */,
 				B8B845B51D672F5500535638 /* Order.swift */,
 				B8B845B71D67547E00535638 /* Position.swift */,
-				B8B845B91D6759B100535638 /* TradeLog.swift */,
+				B8F585251D6964FA008680D8 /* Model.xcdatamodeld */,
+				B8F585281D6B33CC008680D8 /* Database.swift */,
+				B8F5852A1D6B42A8008680D8 /* Config.plist */,
+				B8F5852C1D6B44B8008680D8 /* Config.swift */,
+				B8F585361D6B54DD008680D8 /* TradeLogRepository.swift */,
 			);
 			path = zai;
 			sourceTree = "<group>";
@@ -292,6 +310,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8F5852B1D6B42A8008680D8 /* Config.plist in Resources */,
 				B8B845821D66041D00535638 /* LaunchScreen.storyboard in Resources */,
 				B8B8457F1D66041D00535638 /* Assets.xcassets in Resources */,
 				B8B8457D1D66041D00535638 /* Main.storyboard in Resources */,
@@ -370,14 +389,19 @@
 				B8B845B01D660FA100535638 /* Error.swift in Sources */,
 				B8B845AC1D66089F00535638 /* Fund.swift in Sources */,
 				B8B845B81D67547E00535638 /* Position.swift in Sources */,
+				B8F585271D6964FA008680D8 /* Model.xcdatamodeld in Sources */,
 				B8B845A91D6604F500535638 /* LoginViewController.swift in Sources */,
 				B8B8457A1D66041D00535638 /* ViewController.swift in Sources */,
 				B8B845B61D672F5500535638 /* Order.swift in Sources */,
 				B8B845781D66041D00535638 /* AppDelegate.swift in Sources */,
+				B8F585371D6B54DD008680D8 /* TradeLogRepository.swift in Sources */,
 				B8B845A61D6604EA00535638 /* Account.swift in Sources */,
 				B8B845AE1D660D8700535638 /* Currency.swift in Sources */,
+				B8F585391D6B645E008680D8 /* TradeLog+CoreDataProperties.swift in Sources */,
+				B8F585291D6B33CC008680D8 /* Database.swift in Sources */,
 				B8B845B41D672ACC00535638 /* Trader.swift in Sources */,
-				B8B845BA1D6759B100535638 /* TradeLog.swift in Sources */,
+				B8F5852D1D6B44B8008680D8 /* Config.swift in Sources */,
+				B8F585351D6B53FD008680D8 /* TradeLog.swift in Sources */,
 				B8B845B21D661B4400535638 /* Keys.swift in Sources */,
 				B8B845AA1D6604F500535638 /* MainViewController.swift in Sources */,
 			);
@@ -629,6 +653,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		B8F585251D6964FA008680D8 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				B8F585261D6964FA008680D8 /* Model.xcdatamodel */,
+			);
+			currentVersion = B8F585261D6964FA008680D8 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = B8B8456C1D66041D00535638 /* Project object */;
 }

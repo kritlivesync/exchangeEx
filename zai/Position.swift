@@ -16,24 +16,27 @@ internal protocol PositionProtocol {
     
     var balance: Double { get }
     var profit: Double { get }
+    var id: String { get }
 }
 
 
 class LongPosition : PositionProtocol {
-    init?(order: BuyOrder, api: PrivateApi) {
+    init?(traderName: String, account: Account, order: BuyOrder) {
         if !order.isPromised {
             return nil
         }
-        self.buyLog = TradeLog(order: order)
+        self.id = NSUUID().UUIDString
+        self.buyLog = TradeLog(action: .OPEN_LONG_POSITION, traderName: traderName, account: account, order: order, positionId: self.id)
         self.sellLogs = []
-        self.privateApi = api
+        self.account = account
+        self.traderName = traderName
     }
     
     internal var balance: Double {
         get {
-            var balance = self.buyLog.amount
+            var balance = self.buyLog.amount.doubleValue
             for log in self.sellLogs {
-                balance -= log.amount
+                balance -= log.amount.doubleValue
             }
             return balance
         }
@@ -43,9 +46,9 @@ class LongPosition : PositionProtocol {
         get {
             var profit = 0.0
             for log in self.sellLogs {
-                profit += log.price
+                profit += log.price.doubleValue
             }
-            profit -= self.buyLog.price
+            profit -= self.buyLog.price.doubleValue
             return profit
         }
     }
@@ -61,14 +64,19 @@ class LongPosition : PositionProtocol {
             amt = balance
         }
         
-        let order = SellOrder(currencyPair: self.buyLog.currencyPair, price: price, amount: amt!, api: self.privateApi)!
+        let order = SellOrder(
+            currencyPair: CurrencyPair(rawValue: self.buyLog.currencyPair)!,
+            price: price,
+            amount: amt!,
+            api: self.account.privateApi)!
+        
         order.excute() { (err, res) in
             if let _ = err {
                 cb(err)
             } else {
                 order.waitForPromise() { (err, promised) in
                     if promised {
-                        let log = TradeLog(order: order)
+                        let log = TradeLog(action: .UNWIND_LONG_POSITION, traderName: self.traderName, account: self.account, order: order, positionId: self.id)
                         self.sellLogs.append(log)
                         cb(nil)
                     } else {
@@ -79,27 +87,31 @@ class LongPosition : PositionProtocol {
         }
     }
     
+    internal let id: String
     private let buyLog: TradeLog
     private var sellLogs: [TradeLog]
-    private let privateApi: PrivateApi
+    private let account: Account
+    private let traderName: String
 }
 
 
 class ShortPosition : PositionProtocol{
-    init?(order: SellOrder, api: PrivateApi) {
+    init?(traderName: String, account: Account, order: SellOrder) {
         if !order.isPromised {
             return nil
         }
-        self.sellLog = TradeLog(order: order)
+        self.id = NSUUID().UUIDString
+        self.sellLog = TradeLog(action: .OPEN_SHORT_POSITION, traderName: traderName, account: account, order: order, positionId: self.id)
         self.buyLogs = []
-        self.privateApi = api
+        self.account = account
+        self.traderName = traderName
     }
     
     internal var balance: Double {
         get {
-            var balance = self.sellLog.amount
+            var balance = self.sellLog.amount.doubleValue
             for log in self.buyLogs {
-                balance -= log.amount
+                balance -= log.amount.doubleValue
             }
             return balance
         }
@@ -109,9 +121,9 @@ class ShortPosition : PositionProtocol{
         get {
             var profit = 0.0
             for log in self.buyLogs {
-                profit += log.price
+                profit += log.price.doubleValue
             }
-            profit -= self.sellLog.price
+            profit -= self.sellLog.price.doubleValue
             return profit
         }
     }
@@ -127,14 +139,19 @@ class ShortPosition : PositionProtocol{
             amt = balance
         }
         
-        let order = SellOrder(currencyPair: self.sellLog.currencyPair, price: price, amount: amt!, api: self.privateApi)!
+        let order = SellOrder(
+            currencyPair: CurrencyPair(rawValue: self.sellLog.currencyPair)!,
+            price: price,
+            amount: amt!,
+            api: self.account.privateApi)!
+        
         order.excute() { (err, res) in
             if let _ = err {
                 cb(err)
             } else {
                 order.waitForPromise() { (err, promised) in
                     if promised {
-                        let log = TradeLog(order: order)
+                        let log = TradeLog(action: .UNWIND_SHORT_POSITION, traderName: self.traderName, account: self.account, order: order, positionId: self.id)
                         self.buyLogs.append(log)
                         cb(nil)
                     } else {
@@ -145,7 +162,9 @@ class ShortPosition : PositionProtocol{
         }
     }
     
+    internal let id: String
     private let sellLog: TradeLog
     private var buyLogs: [TradeLog]
-    private let privateApi: PrivateApi
+    private let account: Account
+     private let traderName: String
 }

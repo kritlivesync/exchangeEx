@@ -1,28 +1,45 @@
 //
 //  TradeLog.swift
-//  zai
+//  
 //
-//  Created by 渡部郷太 on 8/20/16.
-//  Copyright © 2016 watanabe kyota. All rights reserved.
+//  Created by 渡部郷太 on 8/23/16.
+//
 //
 
 import Foundation
+import CoreData
 
-import ZaifSwift
+
+public enum TradeAction : String {
+    case ORDER = "ORDER"
+    case CANCEL = "CANCEL"
+    case OPEN_LONG_POSITION = "OPEN_LONG_POSITION"
+    case OPEN_SHORT_POSITION = "OPEN_SHORT_POSITION"
+    case CLOSE_LONG_POSITION = "CLOSE_LONG_POSITION"
+    case CLOSE_SHORT_POSITION = "CLOSE_SHORT_POSITION"
+    case UNWIND_LONG_POSITION = "UNWIND_LONG_POSITION"
+    case UNWIND_SHORT_POSITION = "UNWIND_SHORT_POSITION"
+}
 
 
-internal class TradeLog {
-    init(order: Order) {
-        self.currencyPair = order.currencyPair
-        self.action = order.action
+class TradeLog: NSManagedObject {
+    
+    init(action: TradeAction, traderName: String, account: Account, order: Order, positionId: String) {
+        super.init(entity: TradeLogRepository.getInstance().tradeLogDescription, insertIntoManagedObjectContext: nil)
+        
+        self.id = NSUUID().UUIDString
+        self.userId = account.userId
+        self.apiKey = account.privateApi.apiKey
+        self.positionId = positionId
+        self.traderName = traderName
+        self.tradeAction = action.rawValue
+        self.orderAction = order.action.rawValue
+        self.currencyPair = order.currencyPair.rawValue
         self.price = order.price
         self.amount = order.amount
-        self.timestamp = order.promisedTime
+        self.timestamp = NSDate().timeIntervalSince1970
     }
-    
-    internal let currencyPair: CurrencyPair
-    internal let action: OrderAction
-    internal let price: Double
-    internal let amount: Double
-    internal let timestamp: Int64
+
+// Insert code here to add functionality to your managed object subclass
+
 }
