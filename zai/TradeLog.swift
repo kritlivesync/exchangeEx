@@ -34,6 +34,7 @@ class TradeLog: NSManagedObject {
         self.traderName = traderName
         self.tradeAction = action.rawValue
         self.orderAction = order.action.rawValue
+        self.orderId = order.orderId
         self.currencyPair = order.currencyPair.rawValue
         self.price = order.price
         self.amount = order.amount

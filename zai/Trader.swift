@@ -1,40 +1,30 @@
 //
 //  Trader.swift
-//  zai
+//  
 //
-//  Created by 渡部郷太 on 8/19/16.
-//  Copyright © 2016 watanabe kyota. All rights reserved.
+//  Created by 渡部郷太 on 8/23/16.
+//
 //
 
 import Foundation
+import CoreData
 
-import ZaifSwift
 
+class Trader: NSManagedObject {
 
-internal protocol TraderProtocol {
-    var name: String { get }
-    var account: Account { get }
-    var positions: [PositionProtocol] { get }
+// Insert code here to add functionality to your managed object subclass
+
 }
 
 
-internal class StrongTrader : TraderProtocol {
+internal class StrongTrader : Trader {
     
-    internal static func create(acount: Account, cb: (ZaiError, StrongTrader) -> Void) {
-
-    }
-    
-    private init(name: String, account: Account) {
+    init(name: String, account: Account) {
+        super.init(entity: TraderRepository.getInstance().traderDescription, insertIntoManagedObjectContext: nil)
+        
         self.name = name
         self.account = account
         self.positions = []
     }
     
-    func ss() {
-        self.positions.removeAll()
-    }
-    
-    let name: String
-    let account: Account
-    var positions: [PositionProtocol]
 }

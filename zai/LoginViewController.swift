@@ -26,18 +26,17 @@ class LoginViewController: UIViewController {
             return false
         }
         
+        let api = ZaifSwift.PrivateApi(apiKey: self.apiKeyText.text!, secretKey: self.secretKeyText.text!)
+        let account = AccountRepository.getInstance().findByUserId(self.userIdText.text!, api: api)
+        if account == nil {
+            return false
+        }
+        
         var waiting = true
         var goNext = false
-        
-        let api = ZaifSwift.PrivateApi(apiKey: self.apiKeyText.text!, secretKey: self.secretKeyText.text!)
-        api.getInfo() { (err, res) in
-            if let e = err {
-                switch e.errorType {
-                case ZSErrorType.INFO_API_NO_PERMISSION:
-                    goNext = true
-                default: break
-                }
-            } else {
+
+        account!.validateApiKey() { (err, isValid) in
+            if isValid {
                 goNext = true
             }
             waiting = false
@@ -46,7 +45,7 @@ class LoginViewController: UIViewController {
         while waiting {
             usleep(20)
         }
-        self.api = api
+        self.account = account
         
         return goNext
     }
@@ -54,13 +53,14 @@ class LoginViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if segue.identifier == "mainViewSegue" {
             let destController = segue.destinationViewController as! MainViewController
-            destController.account = Account(userId: "", api: self.api!)
+            destController.account = account!
         }
     }
 
+    @IBOutlet weak var userIdText: UITextField!
     @IBOutlet weak var apiKeyText: UITextField!
     @IBOutlet weak var secretKeyText: UITextField!
     
-    private var api: PrivateApi?
+    private var account: Account?
 }
 

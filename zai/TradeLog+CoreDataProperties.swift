@@ -21,6 +21,7 @@ extension TradeLog {
     @NSManaged var traderName: String
     @NSManaged var tradeAction: String
     @NSManaged var orderAction: String
+    @NSManaged var orderId: NSNumber
     @NSManaged var currencyPair: String
     @NSManaged var price: NSNumber
     @NSManaged var amount: NSNumber

@@ -20,9 +20,8 @@ internal enum OrderState {
 }
 
 internal class Order {
-    init?(id: Int = -1, currencyPair: CurrencyPair, price: Double?, amount: Double, api: PrivateApi) {
-        self.id = id
-        
+    init?(currencyPair: CurrencyPair, price: Double?, amount: Double, api: PrivateApi) {
+        self.id = -1
         self.status = .WAITING
         if self.id >= 0 {
             // assume that this order is being constracted by existing active order
@@ -117,6 +116,12 @@ internal class Order {
         return nil
     }
     
+    internal var orderId: Int {
+        get {
+            return self.id
+        }
+    }
+    
     internal var currencyPair: CurrencyPair {
         get {
             return self.zaifOrder.currencyPair
@@ -155,7 +160,7 @@ internal class Order {
         }
     }
     
-    private var id: Int
+    private var id: Int // Zaif order_id
     internal let privateApi: PrivateApi
     private var zaifOrder: ZaifSwift.Order!
     internal var status: OrderState
@@ -164,8 +169,8 @@ internal class Order {
 }
 
 internal class BuyOrder : Order {
-    override init?(id: Int = -1, currencyPair: CurrencyPair, price: Double?, amount: Double, api: PrivateApi) {
-        super.init(id: id, currencyPair: currencyPair, price: price, amount: amount, api: api)
+    override init?(currencyPair: CurrencyPair, price: Double?, amount: Double, api: PrivateApi) {
+        super.init(currencyPair: currencyPair, price: price, amount: amount, api: api)
     }
     
     override private func createOrder(currencyPair: CurrencyPair, price: Double?, amount: Double) -> ZaifSwift.Order? {
@@ -181,8 +186,8 @@ internal class BuyOrder : Order {
 }
 
 internal class SellOrder : Order {
-    override init?(id: Int = -1, currencyPair: CurrencyPair, price: Double?, amount: Double, api: PrivateApi) {
-        super.init(id: id, currencyPair: currencyPair, price: price, amount: amount, api: api)
+    override init?(currencyPair: CurrencyPair, price: Double?, amount: Double, api: PrivateApi) {
+        super.init(currencyPair: currencyPair, price: price, amount: amount, api: api)
     }
     
     override private func createOrder(currencyPair: CurrencyPair, price: Double?, amount: Double) -> ZaifSwift.Order? {

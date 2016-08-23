@@ -12,6 +12,7 @@ import Foundation
 public enum ZaiErrorType : ErrorType {
     case ZAIF_API_ERROR
     case INVALID_ORDER
+    case INVALID_API_KEYS
     case UNKNOWN_ERROR
 }
 

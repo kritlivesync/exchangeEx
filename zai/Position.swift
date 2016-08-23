@@ -1,12 +1,13 @@
 //
 //  Position.swift
-//  zai
+//  
 //
-//  Created by 渡部郷太 on 8/19/16.
-//  Copyright © 2016 watanabe kyota. All rights reserved.
+//  Created by 渡部郷太 on 8/23/16.
+//
 //
 
 import Foundation
+import CoreData
 
 import ZaifSwift
 
@@ -16,23 +17,40 @@ internal protocol PositionProtocol {
     
     var balance: Double { get }
     var profit: Double { get }
-    var id: String { get }
 }
 
 
-class LongPosition : PositionProtocol {
-    init?(traderName: String, account: Account, order: BuyOrder) {
+class Position: NSManagedObject, PositionProtocol {
+    
+    func unwind(amount: Double?, price: Double?, cb: (ZaiError?) -> Void) {
+        cb(ZaiError(errorType: .UNKNOWN_ERROR, message: "not implemented"))
+    }
+
+    var balance: Double {
+        get { return 0.0 }
+    }
+    
+    var profit: Double {
+        get { return 0.0 }
+    }
+
+}
+
+
+class LongPosition : Position {
+    init?(order: BuyOrder, trader: Trader) {
+        super.init(entity: TraderRepository.getInstance().positionDescription, insertIntoManagedObjectContext: nil)
+        
         if !order.isPromised {
             return nil
         }
         self.id = NSUUID().UUIDString
-        self.buyLog = TradeLog(action: .OPEN_LONG_POSITION, traderName: traderName, account: account, order: order, positionId: self.id)
+        self.trader = trader
+        self.buyLog = TradeLog(action: .OPEN_LONG_POSITION, traderName: trader.name, account: trader.account, order: order, positionId: self.id)
         self.sellLogs = []
-        self.account = account
-        self.traderName = traderName
     }
     
-    internal var balance: Double {
+    override internal var balance: Double {
         get {
             var balance = self.buyLog.amount.doubleValue
             for log in self.sellLogs {
@@ -42,7 +60,7 @@ class LongPosition : PositionProtocol {
         }
     }
     
-    internal var profit: Double {
+    override internal var profit: Double {
         get {
             var profit = 0.0
             for log in self.sellLogs {
@@ -53,7 +71,7 @@ class LongPosition : PositionProtocol {
         }
     }
     
-    internal func unwind(amount: Double?=nil, price: Double?, cb: (ZaiError?) -> Void) {
+    override internal func unwind(amount: Double?=nil, price: Double?, cb: (ZaiError?) -> Void) {
         let balance = self.balance
         var amt = amount
         if amount == nil {
@@ -68,7 +86,7 @@ class LongPosition : PositionProtocol {
             currencyPair: CurrencyPair(rawValue: self.buyLog.currencyPair)!,
             price: price,
             amount: amt!,
-            api: self.account.privateApi)!
+            api: self.trader.account.privateApi)!
         
         order.excute() { (err, res) in
             if let _ = err {
@@ -76,7 +94,7 @@ class LongPosition : PositionProtocol {
             } else {
                 order.waitForPromise() { (err, promised) in
                     if promised {
-                        let log = TradeLog(action: .UNWIND_LONG_POSITION, traderName: self.traderName, account: self.account, order: order, positionId: self.id)
+                        let log = TradeLog(action: .UNWIND_LONG_POSITION, traderName: self.trader.name, account: self.trader.account, order: order, positionId: self.id)
                         self.sellLogs.append(log)
                         cb(nil)
                     } else {
@@ -87,27 +105,24 @@ class LongPosition : PositionProtocol {
         }
     }
     
-    internal let id: String
-    private let buyLog: TradeLog
-    private var sellLogs: [TradeLog]
-    private let account: Account
-    private let traderName: String
+    private let buyLog: TradeLog! = nil
+    private var sellLogs: [TradeLog]! = nil
 }
 
 
-class ShortPosition : PositionProtocol{
-    init?(traderName: String, account: Account, order: SellOrder) {
+class ShortPosition : Position {
+    init?(order: BuyOrder, trader: Trader) {
+        super.init(entity: TraderRepository.getInstance().positionDescription, insertIntoManagedObjectContext: nil)
+        
         if !order.isPromised {
             return nil
         }
         self.id = NSUUID().UUIDString
-        self.sellLog = TradeLog(action: .OPEN_SHORT_POSITION, traderName: traderName, account: account, order: order, positionId: self.id)
+        self.sellLog = TradeLog(action: .OPEN_SHORT_POSITION, traderName: trader.name, account: trader.account, order: order, positionId: self.id)
         self.buyLogs = []
-        self.account = account
-        self.traderName = traderName
     }
     
-    internal var balance: Double {
+    override internal var balance: Double {
         get {
             var balance = self.sellLog.amount.doubleValue
             for log in self.buyLogs {
@@ -117,7 +132,7 @@ class ShortPosition : PositionProtocol{
         }
     }
     
-    internal var profit: Double {
+    override internal var profit: Double {
         get {
             var profit = 0.0
             for log in self.buyLogs {
@@ -128,7 +143,7 @@ class ShortPosition : PositionProtocol{
         }
     }
     
-    internal func unwind(amount: Double?=nil, price: Double?, cb: (ZaiError?) -> Void) {
+    override internal func unwind(amount: Double?=nil, price: Double?, cb: (ZaiError?) -> Void) {
         let balance = self.balance
         var amt = amount
         if amount == nil {
@@ -143,7 +158,7 @@ class ShortPosition : PositionProtocol{
             currencyPair: CurrencyPair(rawValue: self.sellLog.currencyPair)!,
             price: price,
             amount: amt!,
-            api: self.account.privateApi)!
+            api: self.trader.account.privateApi)!
         
         order.excute() { (err, res) in
             if let _ = err {
@@ -151,7 +166,7 @@ class ShortPosition : PositionProtocol{
             } else {
                 order.waitForPromise() { (err, promised) in
                     if promised {
-                        let log = TradeLog(action: .UNWIND_SHORT_POSITION, traderName: self.traderName, account: self.account, order: order, positionId: self.id)
+                        let log = TradeLog(action: .UNWIND_SHORT_POSITION, traderName: self.trader.name, account: self.trader.account, order: order, positionId: self.id)
                         self.buyLogs.append(log)
                         cb(nil)
                     } else {
@@ -162,9 +177,7 @@ class ShortPosition : PositionProtocol{
         }
     }
     
-    internal let id: String
-    private let sellLog: TradeLog
-    private var buyLogs: [TradeLog]
-    private let account: Account
-     private let traderName: String
+    private let sellLog: TradeLog! = nil
+    private var buyLogs: [TradeLog]! = nil
+    
 }

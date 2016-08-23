@@ -22,7 +22,7 @@ class TradeLogRepository {
         }
     }
     
-    func add(log: TradeLog) {
+    func store(log: TradeLog) {
         let db = Database.getDb()
         
         let newLog = NSEntityDescription.insertNewObjectForEntityForName(TradeLogRepository.tradeLogModelName, inManagedObjectContext: db.managedObjectContext) as! TradeLog
