@@ -12,10 +12,14 @@ import CoreData
 import ZaifSwift
 
 
-class Account: NSManagedObject {
+public class Account: NSManagedObject {
 
-    init(userId: String, api: PrivateApi) {
-        super.init(entity: AccountRepository.getInstance().accountDescription, insertIntoManagedObjectContext: nil)
+    public override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    }
+    
+    convenience init(userId: String, api: PrivateApi) {
+        self.init(entity: AccountRepository.getInstance().accountDescription, insertIntoManagedObjectContext: nil)
         
         self.userId = userId
         self.privateApi = api
@@ -41,6 +45,6 @@ class Account: NSManagedObject {
         fund.getMarketCapitalization(cb)
     }
     
-    internal let privateApi: PrivateApi! = nil
+    internal var privateApi: PrivateApi! = nil
 
 }

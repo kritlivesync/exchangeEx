@@ -10,11 +10,19 @@ import UIKit
 
 import ZaifSwift
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, NewAccountViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        self.userIdText.text = Config.previousUserId
+        self.apiKeyText.text = Config.previousApiKey
+        self.secretKeyText.text = Config.previousSecretKey
+        
+        if !self.userIdFromNewAccount.isEmpty {
+            self.userIdText.text = self.userIdFromNewAccount
+            self.userIdFromNewAccount = ""
+        }
     }
 
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
@@ -22,12 +30,12 @@ class LoginViewController: UIViewController {
         self.apiKeyText.text = key_full
         self.secretKeyText.text = secret_full
         
-        if self.apiKeyText.text!.isEmpty || self.secretKeyText.text!.isEmpty {
-            return false
-        }
+        let userId = self.userIdText.text!
+        let apiKey = self.apiKeyText.text!
+        let secretKey = self.secretKeyText.text!
         
-        let api = ZaifSwift.PrivateApi(apiKey: self.apiKeyText.text!, secretKey: self.secretKeyText.text!)
-        let account = AccountRepository.getInstance().findByUserId(self.userIdText.text!, api: api)
+        let api = ZaifSwift.PrivateApi(apiKey: apiKey, secretKey: secretKey)
+        let account = AccountRepository.getInstance().findByUserId(userId, api: api)
         if account == nil {
             return false
         }
@@ -47,19 +55,52 @@ class LoginViewController: UIViewController {
         }
         self.account = account
         
+        Config.setPreviousUserId(userId)
+        Config.setPreviousApiKey(apiKey)
+        Config.setPreviousSecretKey(secretKey)
+        Config.save()
+        
         return goNext
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        if segue.identifier == "mainViewSegue" {
+        switch segue.identifier! {
+        case self.mainViewSegue:
             let destController = segue.destinationViewController as! MainViewController
             destController.account = account!
+        case self.newAccountSegue:
+            let destController = segue.destinationViewController as! NewAccountViewController
+            destController.delegate = self
+        default: break
         }
+    }
+    
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        super.touchesEnded(touches, withEvent: event)
+        for touch: UITouch in touches {
+            let tag = touch.view!.tag
+            switch tag {
+            case self.newAccountLabelTag:
+                self.performSegueWithIdentifier(self.newAccountSegue, sender: self)
+            default:
+                break
+            }
+        }
+    }
+    
+    func didCreateNewAccount(userId: String) {
+        self.userIdFromNewAccount = userId
     }
 
     @IBOutlet weak var userIdText: UITextField!
     @IBOutlet weak var apiKeyText: UITextField!
     @IBOutlet weak var secretKeyText: UITextField!
+    
+    private let newAccountLabelTag = 0
+    private let newAccountSegue = "newAccountSegue"
+    private let mainViewSegue = "mainViewSegue"
+    
+    internal var userIdFromNewAccount = ""
     
     private var account: Account?
 }

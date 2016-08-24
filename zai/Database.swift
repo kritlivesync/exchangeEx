@@ -24,8 +24,12 @@ class Database {
     
     private init() {
         if Config.clearDBInInitialization {
-            let dbFilePath = self.applicationDocumentsDirectory.URLByAppendingPathComponent(self.dbFileName)
-            try! NSFileManager.defaultManager().removeItemAtPath(dbFilePath.description)
+            let dbFilePath = self.applicationDocumentsDirectory.URLByAppendingPathComponent(self.dbFileName).path
+            do {
+                try NSFileManager.defaultManager().removeItemAtPath(dbFilePath!)
+            } catch {
+                //
+            }
         }
     }
     
