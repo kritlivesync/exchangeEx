@@ -22,6 +22,8 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
         if !self.userIdFromNewAccount.isEmpty {
             self.userIdText.text = self.userIdFromNewAccount
             self.userIdFromNewAccount = ""
+            self.apiKeyText.text = ""
+            self.secretKeyText.text = ""
         }
     }
 

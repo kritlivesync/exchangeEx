@@ -52,24 +52,29 @@ public class Config {
     }
     
     static func save() -> Bool {
-        let d = Config.configDict
-        let f = Config.configPath
-        let b = Config.configDict.writeToFile(Config.configPath, atomically: true)
-        return b
+        return Config.configDict.writeToFile(Config.configPath, atomically: true)
     }
     
     private static var configDict: NSMutableDictionary = {
         let path = Config.configPath
         var plist = NSMutableDictionary(contentsOfFile: path)
         if plist == nil {
-            return Config.createDefaultConfigPlist(path)
-        } else {
-            return plist!
+            let prePath = Config.preInstallPath
+            plist = NSMutableDictionary(contentsOfFile: prePath)
+            if plist == nil {
+                plist = Config.createDefaultConfigPlist(path)
+            }
         }
+        return plist!
+    }()
+    
+    private static var preInstallPath: String = {
+        return NSBundle.mainBundle().pathForResource("Config", ofType: "plist")!
     }()
     
     private static var configPath: String = {
-        return NSBundle.mainBundle().pathForResource("Config", ofType: "plist")!
+        let docs = NSURL(fileURLWithPath: NSHomeDirectory()).URLByAppendingPathComponent("Documents").path!
+        return docs.stringByAppendingString("/zai.plist")
     }()
     
     private static func createDefaultConfigPlist(path: String) -> NSMutableDictionary {

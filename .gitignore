@@ -3,5 +3,5 @@ Podfile
 Podfile.lock
 Pods/
 zai.xcworkspace
-zai/Keys.swift
+zai/core/Keys.swift
 zai/Config.plist

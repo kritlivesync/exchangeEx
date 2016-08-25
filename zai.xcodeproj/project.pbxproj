@@ -8,36 +8,37 @@
 
 /* Begin PBXBuildFile section */
 		3761386221FCB5F32FDBFC56 /* Pods_zai.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD254B29072DEED3604B9179 /* Pods_zai.framework */; };
-		B8B845781D66041D00535638 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845771D66041D00535638 /* AppDelegate.swift */; };
-		B8B8457A1D66041D00535638 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845791D66041D00535638 /* ViewController.swift */; };
+		B85E8E2E1D6F3CF800C029C8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E2D1D6F3CF800C029C8 /* LoginViewController.swift */; };
+		B85E8E301D6F3DFB00C029C8 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E2F1D6F3DFB00C029C8 /* Currency.swift */; };
+		B85E8E361D6F3E2100C029C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E311D6F3E2100C029C8 /* AppDelegate.swift */; };
+		B85E8E371D6F3E2100C029C8 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E321D6F3E2100C029C8 /* Config.swift */; };
+		B85E8E381D6F3E2100C029C8 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E331D6F3E2100C029C8 /* Database.swift */; };
+		B85E8E391D6F3E2100C029C8 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E341D6F3E2100C029C8 /* Error.swift */; };
+		B85E8E3A1D6F3E2100C029C8 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E351D6F3E2100C029C8 /* Keys.swift */; };
+		B85E8E3D1D6F3E3A00C029C8 /* FundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E3B1D6F3E3A00C029C8 /* FundView.swift */; };
+		B85E8E3E1D6F3E3A00C029C8 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E3C1D6F3E3A00C029C8 /* MainViewController.swift */; };
+		B85E8E441D6F3E4D00C029C8 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E3F1D6F3E4D00C029C8 /* Account.swift */; };
+		B85E8E451D6F3E4D00C029C8 /* Account+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E401D6F3E4D00C029C8 /* Account+CoreDataProperties.swift */; };
+		B85E8E461D6F3E4D00C029C8 /* AccountRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E411D6F3E4D00C029C8 /* AccountRepository.swift */; };
+		B85E8E471D6F3E4D00C029C8 /* Fund.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E421D6F3E4D00C029C8 /* Fund.swift */; };
+		B85E8E481D6F3E4D00C029C8 /* NewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E431D6F3E4D00C029C8 /* NewAccountViewController.swift */; };
+		B85E8E4C1D6F3E5E00C029C8 /* TradeLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E491D6F3E5E00C029C8 /* TradeLog.swift */; };
+		B85E8E4D1D6F3E5E00C029C8 /* TradeLog+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E4A1D6F3E5E00C029C8 /* TradeLog+CoreDataProperties.swift */; };
+		B85E8E4E1D6F3E5E00C029C8 /* TradeLogRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E4B1D6F3E5E00C029C8 /* TradeLogRepository.swift */; };
+		B85E8E551D6F3E6F00C029C8 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E4F1D6F3E6F00C029C8 /* Order.swift */; };
+		B85E8E561D6F3E6F00C029C8 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E501D6F3E6F00C029C8 /* Position.swift */; };
+		B85E8E571D6F3E6F00C029C8 /* Position+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E511D6F3E6F00C029C8 /* Position+CoreDataProperties.swift */; };
+		B85E8E581D6F3E6F00C029C8 /* Trader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E521D6F3E6F00C029C8 /* Trader.swift */; };
+		B85E8E591D6F3E6F00C029C8 /* Trader+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E531D6F3E6F00C029C8 /* Trader+CoreDataProperties.swift */; };
+		B85E8E5A1D6F3E6F00C029C8 /* TraderRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E541D6F3E6F00C029C8 /* TraderRepository.swift */; };
+		B85E8E5C1D6F416200C029C8 /* TraderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E5B1D6F416200C029C8 /* TraderView.swift */; };
 		B8B8457D1D66041D00535638 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B8457B1D66041D00535638 /* Main.storyboard */; settings = {ASSET_TAGS = (0, ); }; };
 		B8B8457F1D66041D00535638 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8B8457E1D66041D00535638 /* Assets.xcassets */; };
 		B8B845821D66041D00535638 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B845801D66041D00535638 /* LaunchScreen.storyboard */; };
 		B8B8458D1D66041D00535638 /* zaiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B8458C1D66041D00535638 /* zaiTests.swift */; };
 		B8B845981D66041D00535638 /* zaiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845971D66041D00535638 /* zaiUITests.swift */; };
-		B8B845A91D6604F500535638 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845A71D6604F500535638 /* LoginViewController.swift */; };
-		B8B845AA1D6604F500535638 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845A81D6604F500535638 /* MainViewController.swift */; };
-		B8B845AC1D66089F00535638 /* Fund.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845AB1D66089F00535638 /* Fund.swift */; };
-		B8B845AE1D660D8700535638 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845AD1D660D8700535638 /* Currency.swift */; };
-		B8B845B01D660FA100535638 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845AF1D660FA100535638 /* Error.swift */; };
-		B8B845B21D661B4400535638 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845B11D661B4400535638 /* Keys.swift */; };
-		B8B845B61D672F5500535638 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845B51D672F5500535638 /* Order.swift */; };
-		B8E387641D6CB0D800A102F4 /* NewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E387631D6CB0D800A102F4 /* NewAccountViewController.swift */; };
 		B8F585271D6964FA008680D8 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B8F585251D6964FA008680D8 /* Model.xcdatamodeld */; };
-		B8F585291D6B33CC008680D8 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F585281D6B33CC008680D8 /* Database.swift */; };
 		B8F5852B1D6B42A8008680D8 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8F5852A1D6B42A8008680D8 /* Config.plist */; };
-		B8F5852D1D6B44B8008680D8 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F5852C1D6B44B8008680D8 /* Config.swift */; };
-		B8F585351D6B53FD008680D8 /* TradeLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F585331D6B53FD008680D8 /* TradeLog.swift */; };
-		B8F585371D6B54DD008680D8 /* TradeLogRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F585361D6B54DD008680D8 /* TradeLogRepository.swift */; };
-		B8F585391D6B645E008680D8 /* TradeLog+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F585381D6B645E008680D8 /* TradeLog+CoreDataProperties.swift */; };
-		B8F5853C1D6C8769008680D8 /* Account+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F5853A1D6C8769008680D8 /* Account+CoreDataProperties.swift */; };
-		B8F5853D1D6C8769008680D8 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F5853B1D6C8769008680D8 /* Account.swift */; };
-		B8F5853F1D6C882D008680D8 /* AccountRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F5853E1D6C882D008680D8 /* AccountRepository.swift */; };
-		B8F585421D6C98D1008680D8 /* Position+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F585401D6C98D1008680D8 /* Position+CoreDataProperties.swift */; };
-		B8F585431D6C98D1008680D8 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F585411D6C98D1008680D8 /* Position.swift */; };
-		B8F585461D6C9B62008680D8 /* Trader+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F585441D6C9B62008680D8 /* Trader+CoreDataProperties.swift */; };
-		B8F585471D6C9B62008680D8 /* Trader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F585451D6C9B62008680D8 /* Trader.swift */; };
-		B8F5854B1D6C9F89008680D8 /* TraderRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F5854A1D6C9F89008680D8 /* TraderRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,9 +61,31 @@
 /* Begin PBXFileReference section */
 		2B79EE9EF789B6523DE18096 /* Pods-zai.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zai.release.xcconfig"; path = "Pods/Target Support Files/Pods-zai/Pods-zai.release.xcconfig"; sourceTree = "<group>"; };
 		47AE790BD03FD1B5B46D105B /* Pods-zai.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zai.debug.xcconfig"; path = "Pods/Target Support Files/Pods-zai/Pods-zai.debug.xcconfig"; sourceTree = "<group>"; };
+		B85E8E2D1D6F3CF800C029C8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = login/LoginViewController.swift; sourceTree = "<group>"; };
+		B85E8E2F1D6F3DFB00C029C8 /* Currency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Currency.swift; path = currency/Currency.swift; sourceTree = "<group>"; };
+		B85E8E311D6F3E2100C029C8 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = core/AppDelegate.swift; sourceTree = "<group>"; };
+		B85E8E321D6F3E2100C029C8 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Config.swift; path = core/Config.swift; sourceTree = "<group>"; };
+		B85E8E331D6F3E2100C029C8 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Database.swift; path = core/Database.swift; sourceTree = "<group>"; };
+		B85E8E341D6F3E2100C029C8 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Error.swift; path = core/Error.swift; sourceTree = "<group>"; };
+		B85E8E351D6F3E2100C029C8 /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Keys.swift; path = core/Keys.swift; sourceTree = "<group>"; };
+		B85E8E3B1D6F3E3A00C029C8 /* FundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FundView.swift; path = main/FundView.swift; sourceTree = "<group>"; };
+		B85E8E3C1D6F3E3A00C029C8 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = main/MainViewController.swift; sourceTree = "<group>"; };
+		B85E8E3F1D6F3E4D00C029C8 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Account.swift; path = account/Account.swift; sourceTree = "<group>"; };
+		B85E8E401D6F3E4D00C029C8 /* Account+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Account+CoreDataProperties.swift"; path = "account/Account+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		B85E8E411D6F3E4D00C029C8 /* AccountRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountRepository.swift; path = account/AccountRepository.swift; sourceTree = "<group>"; };
+		B85E8E421D6F3E4D00C029C8 /* Fund.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fund.swift; path = account/Fund.swift; sourceTree = "<group>"; };
+		B85E8E431D6F3E4D00C029C8 /* NewAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewAccountViewController.swift; path = account/NewAccountViewController.swift; sourceTree = "<group>"; };
+		B85E8E491D6F3E5E00C029C8 /* TradeLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TradeLog.swift; path = log/TradeLog.swift; sourceTree = "<group>"; };
+		B85E8E4A1D6F3E5E00C029C8 /* TradeLog+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TradeLog+CoreDataProperties.swift"; path = "log/TradeLog+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		B85E8E4B1D6F3E5E00C029C8 /* TradeLogRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TradeLogRepository.swift; path = log/TradeLogRepository.swift; sourceTree = "<group>"; };
+		B85E8E4F1D6F3E6F00C029C8 /* Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Order.swift; path = trader/Order.swift; sourceTree = "<group>"; };
+		B85E8E501D6F3E6F00C029C8 /* Position.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Position.swift; path = trader/Position.swift; sourceTree = "<group>"; };
+		B85E8E511D6F3E6F00C029C8 /* Position+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Position+CoreDataProperties.swift"; path = "trader/Position+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		B85E8E521D6F3E6F00C029C8 /* Trader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Trader.swift; path = trader/Trader.swift; sourceTree = "<group>"; };
+		B85E8E531D6F3E6F00C029C8 /* Trader+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Trader+CoreDataProperties.swift"; path = "trader/Trader+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		B85E8E541D6F3E6F00C029C8 /* TraderRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderRepository.swift; path = trader/TraderRepository.swift; sourceTree = "<group>"; };
+		B85E8E5B1D6F416200C029C8 /* TraderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraderView.swift; sourceTree = "<group>"; };
 		B8B845741D66041D00535638 /* zai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = zai.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B8B845771D66041D00535638 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B8B845791D66041D00535638 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B8B8457C1D66041D00535638 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B8B8457E1D66041D00535638 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B8B845811D66041D00535638 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -73,29 +96,8 @@
 		B8B845931D66041D00535638 /* zaiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = zaiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8B845971D66041D00535638 /* zaiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = zaiUITests.swift; sourceTree = "<group>"; };
 		B8B845991D66041D00535638 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B8B845A71D6604F500535638 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		B8B845A81D6604F500535638 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		B8B845AB1D66089F00535638 /* Fund.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fund.swift; sourceTree = "<group>"; };
-		B8B845AD1D660D8700535638 /* Currency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
-		B8B845AF1D660FA100535638 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
-		B8B845B11D661B4400535638 /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
-		B8B845B51D672F5500535638 /* Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
-		B8E387631D6CB0D800A102F4 /* NewAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAccountViewController.swift; sourceTree = "<group>"; };
 		B8F585261D6964FA008680D8 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		B8F585281D6B33CC008680D8 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		B8F5852A1D6B42A8008680D8 /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
-		B8F5852C1D6B44B8008680D8 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		B8F585331D6B53FD008680D8 /* TradeLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TradeLog.swift; sourceTree = "<group>"; };
-		B8F585361D6B54DD008680D8 /* TradeLogRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TradeLogRepository.swift; sourceTree = "<group>"; };
-		B8F585381D6B645E008680D8 /* TradeLog+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TradeLog+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		B8F5853A1D6C8769008680D8 /* Account+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Account+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		B8F5853B1D6C8769008680D8 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
-		B8F5853E1D6C882D008680D8 /* AccountRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountRepository.swift; sourceTree = "<group>"; };
-		B8F585401D6C98D1008680D8 /* Position+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Position+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		B8F585411D6C98D1008680D8 /* Position.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
-		B8F585441D6C9B62008680D8 /* Trader+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Trader+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		B8F585451D6C9B62008680D8 /* Trader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trader.swift; sourceTree = "<group>"; };
-		B8F5854A1D6C9F89008680D8 /* TraderRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraderRepository.swift; sourceTree = "<group>"; };
 		FD254B29072DEED3604B9179 /* Pods_zai.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_zai.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -134,6 +136,79 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		B85E8E241D6F3A3A00C029C8 /* trader */ = {
+			isa = PBXGroup;
+			children = (
+				B85E8E4F1D6F3E6F00C029C8 /* Order.swift */,
+				B85E8E501D6F3E6F00C029C8 /* Position.swift */,
+				B85E8E511D6F3E6F00C029C8 /* Position+CoreDataProperties.swift */,
+				B85E8E521D6F3E6F00C029C8 /* Trader.swift */,
+				B85E8E531D6F3E6F00C029C8 /* Trader+CoreDataProperties.swift */,
+				B85E8E541D6F3E6F00C029C8 /* TraderRepository.swift */,
+			);
+			name = trader;
+			sourceTree = "<group>";
+		};
+		B85E8E251D6F3A8300C029C8 /* log */ = {
+			isa = PBXGroup;
+			children = (
+				B85E8E491D6F3E5E00C029C8 /* TradeLog.swift */,
+				B85E8E4A1D6F3E5E00C029C8 /* TradeLog+CoreDataProperties.swift */,
+				B85E8E4B1D6F3E5E00C029C8 /* TradeLogRepository.swift */,
+			);
+			name = log;
+			sourceTree = "<group>";
+		};
+		B85E8E261D6F3AA200C029C8 /* account */ = {
+			isa = PBXGroup;
+			children = (
+				B85E8E3F1D6F3E4D00C029C8 /* Account.swift */,
+				B85E8E401D6F3E4D00C029C8 /* Account+CoreDataProperties.swift */,
+				B85E8E411D6F3E4D00C029C8 /* AccountRepository.swift */,
+				B85E8E421D6F3E4D00C029C8 /* Fund.swift */,
+				B85E8E431D6F3E4D00C029C8 /* NewAccountViewController.swift */,
+			);
+			name = account;
+			sourceTree = "<group>";
+		};
+		B85E8E271D6F3AD200C029C8 /* main */ = {
+			isa = PBXGroup;
+			children = (
+				B85E8E3B1D6F3E3A00C029C8 /* FundView.swift */,
+				B85E8E3C1D6F3E3A00C029C8 /* MainViewController.swift */,
+				B85E8E5B1D6F416200C029C8 /* TraderView.swift */,
+			);
+			name = main;
+			sourceTree = "<group>";
+		};
+		B85E8E2A1D6F3BC000C029C8 /* core */ = {
+			isa = PBXGroup;
+			children = (
+				B85E8E311D6F3E2100C029C8 /* AppDelegate.swift */,
+				B85E8E321D6F3E2100C029C8 /* Config.swift */,
+				B85E8E331D6F3E2100C029C8 /* Database.swift */,
+				B85E8E341D6F3E2100C029C8 /* Error.swift */,
+				B85E8E351D6F3E2100C029C8 /* Keys.swift */,
+			);
+			name = core;
+			sourceTree = "<group>";
+		};
+		B85E8E2B1D6F3BD500C029C8 /* currency */ = {
+			isa = PBXGroup;
+			children = (
+				B85E8E2F1D6F3DFB00C029C8 /* Currency.swift */,
+			);
+			name = currency;
+			sourceTree = "<group>";
+		};
+		B85E8E2C1D6F3C1600C029C8 /* login */ = {
+			isa = PBXGroup;
+			children = (
+				B85E8E2D1D6F3CF800C029C8 /* LoginViewController.swift */,
+			);
+			name = login;
+			sourceTree = "<group>";
+		};
 		B8B8456B1D66041D00535638 = {
 			isa = PBXGroup;
 			children = (
@@ -159,35 +234,19 @@
 		B8B845761D66041D00535638 /* zai */ = {
 			isa = PBXGroup;
 			children = (
-				B8F585441D6C9B62008680D8 /* Trader+CoreDataProperties.swift */,
-				B8F585451D6C9B62008680D8 /* Trader.swift */,
-				B8F585401D6C98D1008680D8 /* Position+CoreDataProperties.swift */,
-				B8F585411D6C98D1008680D8 /* Position.swift */,
-				B8F5853A1D6C8769008680D8 /* Account+CoreDataProperties.swift */,
-				B8F5853B1D6C8769008680D8 /* Account.swift */,
-				B8F5853E1D6C882D008680D8 /* AccountRepository.swift */,
-				B8F585381D6B645E008680D8 /* TradeLog+CoreDataProperties.swift */,
-				B8F585331D6B53FD008680D8 /* TradeLog.swift */,
-				B8B845B11D661B4400535638 /* Keys.swift */,
-				B8B845A71D6604F500535638 /* LoginViewController.swift */,
-				B8B845A81D6604F500535638 /* MainViewController.swift */,
-				B8B845771D66041D00535638 /* AppDelegate.swift */,
-				B8B845791D66041D00535638 /* ViewController.swift */,
+				B85E8E2C1D6F3C1600C029C8 /* login */,
+				B85E8E2B1D6F3BD500C029C8 /* currency */,
+				B85E8E2A1D6F3BC000C029C8 /* core */,
+				B85E8E271D6F3AD200C029C8 /* main */,
+				B85E8E261D6F3AA200C029C8 /* account */,
+				B85E8E251D6F3A8300C029C8 /* log */,
+				B85E8E241D6F3A3A00C029C8 /* trader */,
 				B8B8457B1D66041D00535638 /* Main.storyboard */,
 				B8B8457E1D66041D00535638 /* Assets.xcassets */,
 				B8B845801D66041D00535638 /* LaunchScreen.storyboard */,
 				B8B845831D66041D00535638 /* Info.plist */,
-				B8B845AB1D66089F00535638 /* Fund.swift */,
-				B8B845AD1D660D8700535638 /* Currency.swift */,
-				B8B845AF1D660FA100535638 /* Error.swift */,
-				B8B845B51D672F5500535638 /* Order.swift */,
 				B8F585251D6964FA008680D8 /* Model.xcdatamodeld */,
-				B8F585281D6B33CC008680D8 /* Database.swift */,
 				B8F5852A1D6B42A8008680D8 /* Config.plist */,
-				B8F5852C1D6B44B8008680D8 /* Config.swift */,
-				B8F585361D6B54DD008680D8 /* TradeLogRepository.swift */,
-				B8F5854A1D6C9F89008680D8 /* TraderRepository.swift */,
-				B8E387631D6CB0D800A102F4 /* NewAccountViewController.swift */,
 			);
 			path = zai;
 			sourceTree = "<group>";
@@ -408,30 +467,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B8F585431D6C98D1008680D8 /* Position.swift in Sources */,
-				B8F585471D6C9B62008680D8 /* Trader.swift in Sources */,
-				B8F5853F1D6C882D008680D8 /* AccountRepository.swift in Sources */,
-				B8B845B01D660FA100535638 /* Error.swift in Sources */,
-				B8B845AC1D66089F00535638 /* Fund.swift in Sources */,
+				B85E8E451D6F3E4D00C029C8 /* Account+CoreDataProperties.swift in Sources */,
+				B85E8E4C1D6F3E5E00C029C8 /* TradeLog.swift in Sources */,
+				B85E8E3A1D6F3E2100C029C8 /* Keys.swift in Sources */,
+				B85E8E551D6F3E6F00C029C8 /* Order.swift in Sources */,
+				B85E8E4D1D6F3E5E00C029C8 /* TradeLog+CoreDataProperties.swift in Sources */,
+				B85E8E391D6F3E2100C029C8 /* Error.swift in Sources */,
+				B85E8E301D6F3DFB00C029C8 /* Currency.swift in Sources */,
+				B85E8E471D6F3E4D00C029C8 /* Fund.swift in Sources */,
+				B85E8E441D6F3E4D00C029C8 /* Account.swift in Sources */,
+				B85E8E581D6F3E6F00C029C8 /* Trader.swift in Sources */,
 				B8F585271D6964FA008680D8 /* Model.xcdatamodeld in Sources */,
-				B8B845A91D6604F500535638 /* LoginViewController.swift in Sources */,
-				B8F5853D1D6C8769008680D8 /* Account.swift in Sources */,
-				B8B8457A1D66041D00535638 /* ViewController.swift in Sources */,
-				B8B845B61D672F5500535638 /* Order.swift in Sources */,
-				B8F5854B1D6C9F89008680D8 /* TraderRepository.swift in Sources */,
-				B8B845781D66041D00535638 /* AppDelegate.swift in Sources */,
-				B8F585371D6B54DD008680D8 /* TradeLogRepository.swift in Sources */,
-				B8B845AE1D660D8700535638 /* Currency.swift in Sources */,
-				B8F585391D6B645E008680D8 /* TradeLog+CoreDataProperties.swift in Sources */,
-				B8F585291D6B33CC008680D8 /* Database.swift in Sources */,
-				B8F585421D6C98D1008680D8 /* Position+CoreDataProperties.swift in Sources */,
-				B8F585461D6C9B62008680D8 /* Trader+CoreDataProperties.swift in Sources */,
-				B8F5852D1D6B44B8008680D8 /* Config.swift in Sources */,
-				B8F5853C1D6C8769008680D8 /* Account+CoreDataProperties.swift in Sources */,
-				B8F585351D6B53FD008680D8 /* TradeLog.swift in Sources */,
-				B8B845B21D661B4400535638 /* Keys.swift in Sources */,
-				B8B845AA1D6604F500535638 /* MainViewController.swift in Sources */,
-				B8E387641D6CB0D800A102F4 /* NewAccountViewController.swift in Sources */,
+				B85E8E5C1D6F416200C029C8 /* TraderView.swift in Sources */,
+				B85E8E361D6F3E2100C029C8 /* AppDelegate.swift in Sources */,
+				B85E8E381D6F3E2100C029C8 /* Database.swift in Sources */,
+				B85E8E2E1D6F3CF800C029C8 /* LoginViewController.swift in Sources */,
+				B85E8E3E1D6F3E3A00C029C8 /* MainViewController.swift in Sources */,
+				B85E8E571D6F3E6F00C029C8 /* Position+CoreDataProperties.swift in Sources */,
+				B85E8E3D1D6F3E3A00C029C8 /* FundView.swift in Sources */,
+				B85E8E591D6F3E6F00C029C8 /* Trader+CoreDataProperties.swift in Sources */,
+				B85E8E371D6F3E2100C029C8 /* Config.swift in Sources */,
+				B85E8E5A1D6F3E6F00C029C8 /* TraderRepository.swift in Sources */,
+				B85E8E4E1D6F3E5E00C029C8 /* TradeLogRepository.swift in Sources */,
+				B85E8E461D6F3E4D00C029C8 /* AccountRepository.swift in Sources */,
+				B85E8E561D6F3E6F00C029C8 /* Position.swift in Sources */,
+				B85E8E481D6F3E4D00C029C8 /* NewAccountViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
