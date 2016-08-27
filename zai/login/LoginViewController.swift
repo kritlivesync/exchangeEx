@@ -39,6 +39,7 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
         let api = ZaifSwift.PrivateApi(apiKey: apiKey, secretKey: secretKey)
         let account = AccountRepository.getInstance().findByUserId(userId, api: api)
         if account == nil {
+            self.errorMessageLabel.text = "invalid use id or api keys"
             return false
         }
         
@@ -97,6 +98,7 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
     @IBOutlet weak var userIdText: UITextField!
     @IBOutlet weak var apiKeyText: UITextField!
     @IBOutlet weak var secretKeyText: UITextField!
+    @IBOutlet weak var errorMessageLabel: UILabel!
     
     private let newAccountLabelTag = 0
     private let newAccountSegue = "newAccountSegue"

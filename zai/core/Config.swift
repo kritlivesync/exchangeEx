@@ -18,6 +18,13 @@ public class Config {
         return false
     }()
     
+    static var activeTrader: String = {
+        if let val = Config.configDict.valueForKey("activeTrader") {
+            return val as! String
+        }
+        return ""
+    }()
+    
     static var previousUserId: String {
         if let val = Config.configDict.valueForKey("previousUserId") {
             return val as! String

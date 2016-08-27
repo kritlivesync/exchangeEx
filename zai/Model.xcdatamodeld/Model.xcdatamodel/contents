@@ -2,6 +2,7 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F34" minimumToolsVersion="Xcode 7.0">
     <entity name="Account" representedClassName=".Account" syncable="YES">
         <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="traders" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Trader" inverseName="account" inverseEntity="Trader" syncable="YES"/>
     </entity>
     <entity name="Position" representedClassName=".Position" syncable="YES">
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
@@ -25,13 +26,13 @@
     </entity>
     <entity name="Trader" representedClassName=".Trader" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" syncable="YES"/>
+        <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="traders" inverseEntity="Account" syncable="YES"/>
         <relationship name="positions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Position" inverseName="trader" inverseEntity="Position" syncable="YES"/>
     </entity>
     <elements>
-        <element name="TradeLog" positionX="-63" positionY="-18" width="128" height="240"/>
+        <element name="Account" positionX="-36" positionY="90" width="128" height="75"/>
         <element name="Position" positionX="-54" positionY="81" width="128" height="30"/>
-        <element name="Account" positionX="-36" positionY="90" width="128" height="60"/>
-        <element name="Trader" positionX="-18" positionY="117" width="128" height="30"/>
+        <element name="TradeLog" positionX="-63" positionY="-18" width="128" height="240"/>
+        <element name="Trader" positionX="-18" positionY="117" width="128" height="90"/>
     </elements>
 </model>

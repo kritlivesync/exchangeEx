@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		3761386221FCB5F32FDBFC56 /* Pods_zai.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD254B29072DEED3604B9179 /* Pods_zai.framework */; };
+		B8564A0A1D718D5800504A2B /* SelectTraderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8564A091D718D5800504A2B /* SelectTraderViewController.swift */; };
+		B8564A0C1D719C5900504A2B /* TraderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8564A0B1D719C5900504A2B /* TraderListView.swift */; };
+		B8564A0E1D71A42900504A2B /* TraderListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8564A0D1D71A42900504A2B /* TraderListViewCell.swift */; };
+		B8564A131D71C69300504A2B /* NewTraderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8564A121D71C69300504A2B /* NewTraderViewController.swift */; };
 		B85E8E2E1D6F3CF800C029C8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E2D1D6F3CF800C029C8 /* LoginViewController.swift */; };
 		B85E8E301D6F3DFB00C029C8 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E2F1D6F3DFB00C029C8 /* Currency.swift */; };
 		B85E8E361D6F3E2100C029C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E311D6F3E2100C029C8 /* AppDelegate.swift */; };
@@ -31,7 +35,8 @@
 		B85E8E581D6F3E6F00C029C8 /* Trader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E521D6F3E6F00C029C8 /* Trader.swift */; };
 		B85E8E591D6F3E6F00C029C8 /* Trader+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E531D6F3E6F00C029C8 /* Trader+CoreDataProperties.swift */; };
 		B85E8E5A1D6F3E6F00C029C8 /* TraderRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E541D6F3E6F00C029C8 /* TraderRepository.swift */; };
-		B85E8E5C1D6F416200C029C8 /* TraderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E5B1D6F416200C029C8 /* TraderView.swift */; };
+		B85E8E5E1D6F477900C029C8 /* TraderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E5D1D6F477900C029C8 /* TraderView.swift */; };
+		B85E8E601D6F541800C029C8 /* TraderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E5F1D6F541800C029C8 /* TraderViewCell.swift */; };
 		B8B8457D1D66041D00535638 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B8457B1D66041D00535638 /* Main.storyboard */; settings = {ASSET_TAGS = (0, ); }; };
 		B8B8457F1D66041D00535638 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8B8457E1D66041D00535638 /* Assets.xcassets */; };
 		B8B845821D66041D00535638 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B845801D66041D00535638 /* LaunchScreen.storyboard */; };
@@ -61,6 +66,10 @@
 /* Begin PBXFileReference section */
 		2B79EE9EF789B6523DE18096 /* Pods-zai.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zai.release.xcconfig"; path = "Pods/Target Support Files/Pods-zai/Pods-zai.release.xcconfig"; sourceTree = "<group>"; };
 		47AE790BD03FD1B5B46D105B /* Pods-zai.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zai.debug.xcconfig"; path = "Pods/Target Support Files/Pods-zai/Pods-zai.debug.xcconfig"; sourceTree = "<group>"; };
+		B8564A091D718D5800504A2B /* SelectTraderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectTraderViewController.swift; path = selecttrader/SelectTraderViewController.swift; sourceTree = "<group>"; };
+		B8564A0B1D719C5900504A2B /* TraderListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderListView.swift; path = selecttrader/TraderListView.swift; sourceTree = "<group>"; };
+		B8564A0D1D71A42900504A2B /* TraderListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderListViewCell.swift; path = selecttrader/TraderListViewCell.swift; sourceTree = "<group>"; };
+		B8564A121D71C69300504A2B /* NewTraderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewTraderViewController.swift; path = newtrader/NewTraderViewController.swift; sourceTree = "<group>"; };
 		B85E8E2D1D6F3CF800C029C8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = login/LoginViewController.swift; sourceTree = "<group>"; };
 		B85E8E2F1D6F3DFB00C029C8 /* Currency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Currency.swift; path = currency/Currency.swift; sourceTree = "<group>"; };
 		B85E8E311D6F3E2100C029C8 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = core/AppDelegate.swift; sourceTree = "<group>"; };
@@ -84,7 +93,8 @@
 		B85E8E521D6F3E6F00C029C8 /* Trader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Trader.swift; path = trader/Trader.swift; sourceTree = "<group>"; };
 		B85E8E531D6F3E6F00C029C8 /* Trader+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Trader+CoreDataProperties.swift"; path = "trader/Trader+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B85E8E541D6F3E6F00C029C8 /* TraderRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderRepository.swift; path = trader/TraderRepository.swift; sourceTree = "<group>"; };
-		B85E8E5B1D6F416200C029C8 /* TraderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraderView.swift; sourceTree = "<group>"; };
+		B85E8E5D1D6F477900C029C8 /* TraderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderView.swift; path = main/TraderView.swift; sourceTree = "<group>"; };
+		B85E8E5F1D6F541800C029C8 /* TraderViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderViewCell.swift; path = main/TraderViewCell.swift; sourceTree = "<group>"; };
 		B8B845741D66041D00535638 /* zai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = zai.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8B8457C1D66041D00535638 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B8B8457E1D66041D00535638 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -136,6 +146,24 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		B8564A081D718C8A00504A2B /* selecttrader */ = {
+			isa = PBXGroup;
+			children = (
+				B8564A091D718D5800504A2B /* SelectTraderViewController.swift */,
+				B8564A0B1D719C5900504A2B /* TraderListView.swift */,
+				B8564A0D1D71A42900504A2B /* TraderListViewCell.swift */,
+			);
+			name = selecttrader;
+			sourceTree = "<group>";
+		};
+		B8564A0F1D71C61000504A2B /* newtrader */ = {
+			isa = PBXGroup;
+			children = (
+				B8564A121D71C69300504A2B /* NewTraderViewController.swift */,
+			);
+			name = newtrader;
+			sourceTree = "<group>";
+		};
 		B85E8E241D6F3A3A00C029C8 /* trader */ = {
 			isa = PBXGroup;
 			children = (
@@ -174,9 +202,10 @@
 		B85E8E271D6F3AD200C029C8 /* main */ = {
 			isa = PBXGroup;
 			children = (
+				B85E8E5D1D6F477900C029C8 /* TraderView.swift */,
 				B85E8E3B1D6F3E3A00C029C8 /* FundView.swift */,
 				B85E8E3C1D6F3E3A00C029C8 /* MainViewController.swift */,
-				B85E8E5B1D6F416200C029C8 /* TraderView.swift */,
+				B85E8E5F1D6F541800C029C8 /* TraderViewCell.swift */,
 			);
 			name = main;
 			sourceTree = "<group>";
@@ -234,6 +263,8 @@
 		B8B845761D66041D00535638 /* zai */ = {
 			isa = PBXGroup;
 			children = (
+				B8564A0F1D71C61000504A2B /* newtrader */,
+				B8564A081D718C8A00504A2B /* selecttrader */,
 				B85E8E2C1D6F3C1600C029C8 /* login */,
 				B85E8E2B1D6F3BD500C029C8 /* currency */,
 				B85E8E2A1D6F3BC000C029C8 /* core */,
@@ -476,19 +507,24 @@
 				B85E8E301D6F3DFB00C029C8 /* Currency.swift in Sources */,
 				B85E8E471D6F3E4D00C029C8 /* Fund.swift in Sources */,
 				B85E8E441D6F3E4D00C029C8 /* Account.swift in Sources */,
+				B8564A0C1D719C5900504A2B /* TraderListView.swift in Sources */,
 				B85E8E581D6F3E6F00C029C8 /* Trader.swift in Sources */,
 				B8F585271D6964FA008680D8 /* Model.xcdatamodeld in Sources */,
-				B85E8E5C1D6F416200C029C8 /* TraderView.swift in Sources */,
+				B85E8E5E1D6F477900C029C8 /* TraderView.swift in Sources */,
 				B85E8E361D6F3E2100C029C8 /* AppDelegate.swift in Sources */,
 				B85E8E381D6F3E2100C029C8 /* Database.swift in Sources */,
 				B85E8E2E1D6F3CF800C029C8 /* LoginViewController.swift in Sources */,
 				B85E8E3E1D6F3E3A00C029C8 /* MainViewController.swift in Sources */,
+				B8564A0A1D718D5800504A2B /* SelectTraderViewController.swift in Sources */,
 				B85E8E571D6F3E6F00C029C8 /* Position+CoreDataProperties.swift in Sources */,
 				B85E8E3D1D6F3E3A00C029C8 /* FundView.swift in Sources */,
 				B85E8E591D6F3E6F00C029C8 /* Trader+CoreDataProperties.swift in Sources */,
 				B85E8E371D6F3E2100C029C8 /* Config.swift in Sources */,
 				B85E8E5A1D6F3E6F00C029C8 /* TraderRepository.swift in Sources */,
 				B85E8E4E1D6F3E5E00C029C8 /* TradeLogRepository.swift in Sources */,
+				B8564A0E1D71A42900504A2B /* TraderListViewCell.swift in Sources */,
+				B8564A131D71C69300504A2B /* NewTraderViewController.swift in Sources */,
+				B85E8E601D6F541800C029C8 /* TraderViewCell.swift in Sources */,
 				B85E8E461D6F3E4D00C029C8 /* AccountRepository.swift in Sources */,
 				B85E8E561D6F3E6F00C029C8 /* Position.swift in Sources */,
 				B85E8E481D6F3E4D00C029C8 /* NewAccountViewController.swift in Sources */,

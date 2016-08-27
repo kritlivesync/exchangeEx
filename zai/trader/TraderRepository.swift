@@ -29,7 +29,8 @@ class TraderRepository {
         
         let newTrader = NSEntityDescription.insertNewObjectForEntityForName(TraderRepository.traderModelName, inManagedObjectContext: db.managedObjectContext) as! Trader
         newTrader.name = trader.name
-        newTrader.account = trader.account
+        let ac = trader.account
+        newTrader.account = ac
         newTrader.positions = trader.positions
         
         db.saveContext()
@@ -52,6 +53,29 @@ class TraderRepository {
             }
         } catch {
             return nil
+        }
+    }
+    
+    func getAllTraders() -> [Trader] {
+        let query = NSFetchRequest(entityName: TraderRepository.traderModelName)
+        
+        let db = Database.getDb()
+        do {
+            return try db.managedObjectContext.executeFetchRequest(query) as! [Trader]
+        } catch {
+            return []
+        }
+    }
+    
+    func count() -> Int {
+        let query = NSFetchRequest(entityName: TraderRepository.traderModelName)
+        
+        let db = Database.getDb()
+        do {
+            let traders = try db.managedObjectContext.executeFetchRequest(query) as! [Trader]
+            return traders.count
+        } catch {
+            return 0
         }
     }
     

@@ -7,6 +7,6 @@
 	<key>activeTrader</key>
 	<string>manual</string>
 	<key>clearDBInInitialization</key>
-	<false/>
+	<true/>
 </dict>
 </plist>

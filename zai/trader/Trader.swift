@@ -10,17 +10,21 @@ import Foundation
 import CoreData
 
 
-class Trader: NSManagedObject {
+public class Trader: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
 
 }
 
 
-internal class StrongTrader : Trader {
+public class StrongTrader : Trader {
     
-    init(name: String, account: Account) {
-        super.init(entity: TraderRepository.getInstance().traderDescription, insertIntoManagedObjectContext: nil)
+    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    }
+    
+    convenience init(name: String, account: Account) {
+        self.init(entity: TraderRepository.getInstance().traderDescription, insertIntoManagedObjectContext: Database.getDb().managedObjectContext)
         
         self.name = name
         self.account = account
