@@ -4,9 +4,9 @@
 <dict>
 	<key>previousUserId</key>
 	<string></string>
-	<key>activeTrader</key>
+	<key>currentTrader</key>
 	<string>manual</string>
 	<key>clearDBInInitialization</key>
-	<true/>
+	<false/>
 </dict>
 </plist>

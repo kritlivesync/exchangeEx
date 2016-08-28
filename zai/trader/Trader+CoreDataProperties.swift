@@ -2,7 +2,7 @@
 //  Trader+CoreDataProperties.swift
 //  
 //
-//  Created by 渡部郷太 on 8/23/16.
+//  Created by 渡部郷太 on 8/28/16.
 //
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -15,7 +15,8 @@ import CoreData
 extension Trader {
 
     @NSManaged var name: String
-    @NSManaged var account: Account
+    @NSManaged var status: String
     @NSManaged var positions: NSSet
+    @NSManaged var account: Account
 
 }

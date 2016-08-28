@@ -91,6 +91,8 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
         }
     }
     
+    @IBAction func unwindToLogin(segue: UIStoryboardSegue) {}
+    
     func didCreateNewAccount(userId: String) {
         self.userIdFromNewAccount = userId
     }

@@ -24,13 +24,16 @@ class AccountRepository {
         }
     }
     
-    func register(account: Account) {
+    func create(userId: String, api: PrivateApi) -> Account {
         let db = Database.getDb()
         
         let newAccount = NSEntityDescription.insertNewObjectForEntityForName(AccountRepository.accountModelName, inManagedObjectContext: db.managedObjectContext) as! Account
-        newAccount.userId = account.userId
+        newAccount.userId = userId
+        newAccount.privateApi = api
         
         db.saveContext()
+        
+        return newAccount
     }
     
     func findByUserId(userId: String, api: PrivateApi) -> Account? {
@@ -44,7 +47,8 @@ class AccountRepository {
             if accounts.count != 1 {
                 return nil
             } else {
-                let account = Account(userId: accounts[0].userId, api: api)
+                let account = accounts[0]
+                account.privateApi = api
                 return account
             }
         } catch {

@@ -40,18 +40,19 @@ class NewAccountViewController: UIViewController {
             return
         }
         
-        let newAccount = Account(userId: userId, api: dummyApi)
-        repository.register(newAccount)
+        repository.create(userId, api: dummyApi)
         
         self.performSegueWithIdentifier("backToLoginSegue", sender: self)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        switch segue.identifier! {
-        case "backToLoginSegue":
-            let destController = segue.destinationViewController as! LoginViewController
-            destController.userIdFromNewAccount = self.userIdText.text!
-        default: break
+        if let ident = segue.identifier {
+            switch ident {
+            case "backToLoginSegue":
+                let destController = segue.destinationViewController as! LoginViewController
+                destController.userIdFromNewAccount = self.userIdText.text!
+            default: break
+            }
         }
     }
     

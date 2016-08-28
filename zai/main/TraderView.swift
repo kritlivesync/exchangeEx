@@ -14,9 +14,21 @@ import ZaifSwift
 
 class TraderView : NSObject, UITableViewDelegate, UITableViewDataSource {
     
-    init(view: UITableView, traderName: String, api: PrivateApi) {
-        self.traderName = traderName
-        self.trader = TraderRepository.getInstance().findTraderByName(traderName, api: api)
+    init(view: UITableView, api: PrivateApi) {
+        self.api = api
+        
+        super.init()
+        self.view = view
+        self.view.delegate = self
+        self.view.dataSource = self
+    }
+    
+    func reloadData() {
+        self.view.reloadData()
+    }
+    
+    func reloadTrader(traderName: String) {
+        self.trader = TraderRepository.getInstance().findTraderByName(traderName, api: self.api)
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -30,6 +42,7 @@ class TraderView : NSObject, UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    private let traderName: String
-    private let trader: Trader?
+    private var trader: Trader?
+    private var view: UITableView! = nil
+    private let api: PrivateApi
 }

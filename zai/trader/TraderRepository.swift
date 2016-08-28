@@ -24,15 +24,22 @@ class TraderRepository {
         }
     }
     
-    func register(trader: Trader) {
+    func create(name: String, account: Account) -> Trader {
         let db = Database.getDb()
         
         let newTrader = NSEntityDescription.insertNewObjectForEntityForName(TraderRepository.traderModelName, inManagedObjectContext: db.managedObjectContext) as! Trader
-        newTrader.name = trader.name
-        let ac = trader.account
-        newTrader.account = ac
-        newTrader.positions = trader.positions
+        newTrader.name = name
+        newTrader.account = account
+        newTrader.account = account
         
+        db.saveContext()
+        
+        return newTrader
+    }
+    
+    func delete(trader: Trader) {
+        let db = Database.getDb()
+        db.managedObjectContext.deleteObject(trader)
         db.saveContext()
     }
     
@@ -47,21 +54,25 @@ class TraderRepository {
             if traders.count != 1 {
                 return nil
             } else {
-                let dbTrader = traders[0]
-                let account = Account(userId: dbTrader.account.userId, api: api)
-                return StrongTrader(name: dbTrader.name, account: account)
+                let trader = traders[0]
+                trader.account.privateApi = api
+                return trader
             }
         } catch {
             return nil
         }
     }
     
-    func getAllTraders() -> [Trader] {
+    func getAllTraders(api: PrivateApi) -> [Trader] {
         let query = NSFetchRequest(entityName: TraderRepository.traderModelName)
         
         let db = Database.getDb()
         do {
-            return try db.managedObjectContext.executeFetchRequest(query) as! [Trader]
+            let traders = try db.managedObjectContext.executeFetchRequest(query) as! [Trader]
+            for trader in traders {
+                trader.account.privateApi = api
+            }
+            return traders
         } catch {
             return []
         }

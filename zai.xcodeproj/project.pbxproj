@@ -12,6 +12,7 @@
 		B8564A0C1D719C5900504A2B /* TraderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8564A0B1D719C5900504A2B /* TraderListView.swift */; };
 		B8564A0E1D71A42900504A2B /* TraderListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8564A0D1D71A42900504A2B /* TraderListViewCell.swift */; };
 		B8564A131D71C69300504A2B /* NewTraderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8564A121D71C69300504A2B /* NewTraderViewController.swift */; };
+		B8564A151D72A39700504A2B /* TraderMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8564A141D72A39700504A2B /* TraderMenuViewController.swift */; };
 		B85E8E2E1D6F3CF800C029C8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E2D1D6F3CF800C029C8 /* LoginViewController.swift */; };
 		B85E8E301D6F3DFB00C029C8 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E2F1D6F3DFB00C029C8 /* Currency.swift */; };
 		B85E8E361D6F3E2100C029C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E311D6F3E2100C029C8 /* AppDelegate.swift */; };
@@ -70,6 +71,7 @@
 		B8564A0B1D719C5900504A2B /* TraderListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderListView.swift; path = selecttrader/TraderListView.swift; sourceTree = "<group>"; };
 		B8564A0D1D71A42900504A2B /* TraderListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderListViewCell.swift; path = selecttrader/TraderListViewCell.swift; sourceTree = "<group>"; };
 		B8564A121D71C69300504A2B /* NewTraderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewTraderViewController.swift; path = newtrader/NewTraderViewController.swift; sourceTree = "<group>"; };
+		B8564A141D72A39700504A2B /* TraderMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderMenuViewController.swift; path = selecttrader/TraderMenuViewController.swift; sourceTree = "<group>"; };
 		B85E8E2D1D6F3CF800C029C8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = login/LoginViewController.swift; sourceTree = "<group>"; };
 		B85E8E2F1D6F3DFB00C029C8 /* Currency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Currency.swift; path = currency/Currency.swift; sourceTree = "<group>"; };
 		B85E8E311D6F3E2100C029C8 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = core/AppDelegate.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				B8564A091D718D5800504A2B /* SelectTraderViewController.swift */,
 				B8564A0B1D719C5900504A2B /* TraderListView.swift */,
 				B8564A0D1D71A42900504A2B /* TraderListViewCell.swift */,
+				B8564A141D72A39700504A2B /* TraderMenuViewController.swift */,
 			);
 			name = selecttrader;
 			sourceTree = "<group>";
@@ -519,6 +522,7 @@
 				B85E8E571D6F3E6F00C029C8 /* Position+CoreDataProperties.swift in Sources */,
 				B85E8E3D1D6F3E3A00C029C8 /* FundView.swift in Sources */,
 				B85E8E591D6F3E6F00C029C8 /* Trader+CoreDataProperties.swift in Sources */,
+				B8564A151D72A39700504A2B /* TraderMenuViewController.swift in Sources */,
 				B85E8E371D6F3E2100C029C8 /* Config.swift in Sources */,
 				B85E8E5A1D6F3E6F00C029C8 /* TraderRepository.swift in Sources */,
 				B85E8E4E1D6F3E5E00C029C8 /* TradeLogRepository.swift in Sources */,

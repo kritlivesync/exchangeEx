@@ -32,14 +32,24 @@ class NewTraderViewController: UIViewController {
             return
         }
         
-        let newTrader = StrongTrader(name: traderName, account: self.account)
-        repository.register(newTrader)
+        repository.create(traderName, account: self.account)
         
-        self.performSegueWithIdentifier("backToSelectTraderSegue", sender: self)
+        self.performSegueWithIdentifier(self.backToSelectTraderSeque, sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        switch segue.identifier! {
+        case self.backToSelectTraderSeque:
+            let destController = segue.destinationViewController as! SelectTraderViewController
+            destController.account = self.account!
+        default: break
+        }
     }
 
     @IBOutlet weak var traderNameText: UITextField!
     @IBOutlet weak var errorMessageLabel: UILabel!
+    
+    private let backToSelectTraderSeque = "backToSelectTraderSeque"
     
     internal var account: Account!
 }
