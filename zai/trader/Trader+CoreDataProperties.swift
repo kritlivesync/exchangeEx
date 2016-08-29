@@ -18,5 +18,11 @@ extension Trader {
     @NSManaged var status: String
     @NSManaged var positions: NSSet
     @NSManaged var account: Account
+    
+    func addPosition(position: Position) {
+        let positions = self.mutableSetValueForKey("positions")
+        positions.addObject(position)
+        Database.getDb().saveContext()
+    }
 
 }

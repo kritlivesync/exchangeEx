@@ -9,6 +9,8 @@
 import Foundation
 import CoreData
 
+import ZaifSwift
+
 
 public enum TraderState : String {
     case ACTIVE = "active"
@@ -29,6 +31,27 @@ public class Trader: NSManagedObject {
         self.status = TraderState.ACTIVE.rawValue
         self.account = account
         self.positions = []
+    }
+    
+    func createLongPosition(currencyPair: CurrencyPair, price: Double?, amount: Double, cb: (ZaiError) -> Void) {
+        let order = BuyOrder(currencyPair: currencyPair, price: price, amount: amount, api: self.account.privateApi)!
+        order.excute() { (err, orderId) in
+            if let e = err {
+                cb(e)
+            } else {
+                order.waitForPromise() { (err, promised) in
+                    if let e = err {
+                        cb(e)
+                    } else {
+                        if promised {
+                            let position = LongPosition(order: order, trader: self)
+                            self.addPosition(position!)
+                        }
+                    }
+                }
+            }
+        }
+        
     }
 
 }

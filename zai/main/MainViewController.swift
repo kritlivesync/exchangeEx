@@ -62,12 +62,33 @@ class MainViewController: UIViewController, SelectTraderViewDelegate {
         }
     }
     
+    @IBAction func pushBuyButton(sender: AnyObject) {
+        let trader = TraderRepository.getInstance().findTraderByName(self.currentTraderName, api: self.account.privateApi)
+        if trader == nil {
+            return
+        }
+        let priceText = self.buyPriceText.text!
+        let amountText = self.buyAmountText.text!
+        
+    }
+    
+    @IBAction func pushSellButton(sender: AnyObject) {
+    }
+    
+    
+    
     @IBAction func unwindToMain(segue: UIStoryboardSegue) {}
     
     internal var account: Account!
     private var fundView: FundView!
     private var traderView: TraderView!
     private var currentTraderName: String = ""
+    
+    @IBOutlet weak var buyPriceText: UITextField!
+    @IBOutlet weak var buyAmountText: UITextField!
+    @IBOutlet weak var sellPriceText: UITextField!
+    @IBOutlet weak var sellAmountText: UITextField!
+    
     
     private let selectTraderLabelTag = 0
     private let selectTraderSegue = "selectTraderSegue"

@@ -54,5 +54,40 @@ internal class JPYFund {
             }
         }
     }
+    
+    func calculateHowManyAmountCanBuy(currency: Currency, price: Double? = nil, rate: Double = 1.0, cb: (ZaiError?, Double) -> Void) {
+        self.privateApi.getInfo() { (err, res) in
+            if let e = err {
+                cb(ZaiError(errorType: .ZAIF_API_ERROR, message: e.message), 0)
+            } else {
+                if let info = res {
+                    let jpyFund = info["return"]["deposit"]["jpy"].doubleValue
+                    var currencyPair = CurrencyPair.BTC_JPY
+                    switch currency {
+                    case .MONA:
+                        currencyPair = .MONA_JPY
+                    case .XEM:
+                        currencyPair = .XEM_JPY
+                    default: break
+                    }
+                    if let p = price {
+                        let amount = jpyFund * rate / p
+                        cb(nil, amount)
+                    } else {
+                        PublicApi.lastPrice(currencyPair) { (err, res) in
+                            if let e = err {
+                                cb(ZaiError(errorType: .ZAIF_API_ERROR, message: e.message), 0)
+                            } else {
+                                let price = res!["last_price"].doubleValue
+                                let amount = jpyFund * rate / price
+                                cb(nil, amount)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     private let privateApi: PrivateApi
 }
