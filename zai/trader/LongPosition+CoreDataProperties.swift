@@ -1,5 +1,5 @@
 //
-//  Position+CoreDataProperties.swift
+//  LongPosition+CoreDataProperties.swift
 //  
 //
 //  Created by 渡部郷太 on 8/31/16.
@@ -12,10 +12,7 @@
 import Foundation
 import CoreData
 
-extension Position {
+extension LongPosition {
 
-    @NSManaged var id: String
-    @NSManaged var tradeLogs: NSSet
-    @NSManaged var trader: Trader
 
 }

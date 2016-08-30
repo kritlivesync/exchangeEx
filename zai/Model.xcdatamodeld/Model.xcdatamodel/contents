@@ -4,11 +4,13 @@
         <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="traders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Trader" inverseName="account" inverseEntity="Trader" syncable="YES"/>
     </entity>
-    <entity name="Position" representedClassName=".Position" syncable="YES">
+    <entity name="LongPosition" representedClassName="LongPosition" parentEntity="Position" syncable="YES"/>
+    <entity name="Position" representedClassName=".Position" isAbstract="YES" syncable="YES">
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="tradeLogs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TradeLog" inverseName="position" inverseEntity="TradeLog" syncable="YES"/>
         <relationship name="trader" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Trader" inverseName="positions" inverseEntity="Trader" syncable="YES"/>
     </entity>
+    <entity name="ShortPosition" representedClassName="ShortPosition" parentEntity="Position" syncable="YES"/>
     <entity name="TradeLog" representedClassName=".TradeLog" syncable="YES">
         <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="apiKey" optional="YES" attributeType="String" syncable="YES"/>
@@ -32,8 +34,10 @@
     </entity>
     <elements>
         <element name="Account" positionX="-36" positionY="90" width="128" height="75"/>
-        <element name="Position" positionX="-54" positionY="81" width="128" height="30"/>
+        <element name="Position" positionX="-54" positionY="81" width="128" height="90"/>
         <element name="TradeLog" positionX="-63" positionY="-18" width="128" height="240"/>
         <element name="Trader" positionX="-18" positionY="117" width="128" height="105"/>
+        <element name="LongPosition" positionX="-36" positionY="90" width="128" height="45"/>
+        <element name="ShortPosition" positionX="-27" positionY="99" width="128" height="45"/>
     </elements>
 </model>

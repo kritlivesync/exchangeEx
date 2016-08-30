@@ -84,6 +84,7 @@ internal class Order {
                         self.waitForPromise(cb)
                     } else {
                         if self.status == .ACTIVE { // double check
+                            self.status = .PROMISED
                             self.promisedTime = Int64(NSDate().timeIntervalSince1970)
                             cb(nil, true)
                         } else {
