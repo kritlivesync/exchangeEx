@@ -13,6 +13,7 @@
 		B825E7781D75E526004FE785 /* ShortPosition+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825E7731D75E526004FE785 /* ShortPosition+CoreDataProperties.swift */; };
 		B825E7791D75E526004FE785 /* ShortPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825E7741D75E526004FE785 /* ShortPosition.swift */; };
 		B825E77A1D75E526004FE785 /* Position+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825E7751D75E526004FE785 /* Position+CoreDataProperties.swift */; };
+		B827CD0F1D772D2300E9847B /* PositionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827CD0E1D772D2300E9847B /* PositionRepository.swift */; };
 		B8564A0A1D718D5800504A2B /* SelectTraderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8564A091D718D5800504A2B /* SelectTraderViewController.swift */; };
 		B8564A0C1D719C5900504A2B /* TraderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8564A0B1D719C5900504A2B /* TraderListView.swift */; };
 		B8564A0E1D71A42900504A2B /* TraderListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8564A0D1D71A42900504A2B /* TraderListViewCell.swift */; };
@@ -76,6 +77,7 @@
 		B825E7731D75E526004FE785 /* ShortPosition+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ShortPosition+CoreDataProperties.swift"; path = "trader/ShortPosition+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B825E7741D75E526004FE785 /* ShortPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShortPosition.swift; path = trader/ShortPosition.swift; sourceTree = "<group>"; };
 		B825E7751D75E526004FE785 /* Position+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Position+CoreDataProperties.swift"; path = "trader/Position+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		B827CD0E1D772D2300E9847B /* PositionRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PositionRepository.swift; path = trader/PositionRepository.swift; sourceTree = "<group>"; };
 		B8564A091D718D5800504A2B /* SelectTraderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectTraderViewController.swift; path = selecttrader/SelectTraderViewController.swift; sourceTree = "<group>"; };
 		B8564A0B1D719C5900504A2B /* TraderListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderListView.swift; path = selecttrader/TraderListView.swift; sourceTree = "<group>"; };
 		B8564A0D1D71A42900504A2B /* TraderListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderListViewCell.swift; path = selecttrader/TraderListViewCell.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				B85E8E521D6F3E6F00C029C8 /* Trader.swift */,
 				B85E8E531D6F3E6F00C029C8 /* Trader+CoreDataProperties.swift */,
 				B85E8E541D6F3E6F00C029C8 /* TraderRepository.swift */,
+				B827CD0E1D772D2300E9847B /* PositionRepository.swift */,
 			);
 			name = trader;
 			sourceTree = "<group>";
@@ -541,6 +544,7 @@
 				B825E7781D75E526004FE785 /* ShortPosition+CoreDataProperties.swift in Sources */,
 				B85E8E5A1D6F3E6F00C029C8 /* TraderRepository.swift in Sources */,
 				B85E8E4E1D6F3E5E00C029C8 /* TradeLogRepository.swift in Sources */,
+				B827CD0F1D772D2300E9847B /* PositionRepository.swift in Sources */,
 				B8564A0E1D71A42900504A2B /* TraderListViewCell.swift in Sources */,
 				B8564A131D71C69300504A2B /* NewTraderViewController.swift in Sources */,
 				B85E8E601D6F541800C029C8 /* TraderViewCell.swift in Sources */,

@@ -25,6 +25,12 @@ class Position: NSManagedObject, PositionProtocol {
     func unwind(amount: Double?, price: Double?, cb: (ZaiError?) -> Void) {
         cb(ZaiError(errorType: .UNKNOWN_ERROR, message: "not implemented"))
     }
+    
+    func addLog(log: TradeLog) {
+        let logs = self.mutableSetValueForKey("tradeLogs")
+        logs.addObject(log)
+        Database.getDb().saveContext()
+    }
 
     var balance: Double {
         get { return 0.0 }

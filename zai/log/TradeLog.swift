@@ -24,8 +24,12 @@ public enum TradeAction : String {
 
 class TradeLog: NSManagedObject {
     
-    init(action: TradeAction, traderName: String, account: Account, order: Order, positionId: String) {
-        super.init(entity: TradeLogRepository.getInstance().tradeLogDescription, insertIntoManagedObjectContext: nil)
+    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    }
+    
+    convenience init(action: TradeAction, traderName: String, account: Account, order: Order, positionId: String) {
+        self.init(entity: TradeLogRepository.getInstance().tradeLogDescription, insertIntoManagedObjectContext: nil)
         
         self.id = NSUUID().UUIDString
         self.userId = account.userId

@@ -68,7 +68,7 @@ class MainViewController: UIViewController, SelectTraderViewDelegate {
             return
         }
         let priceText = self.buyPriceText.text!
-        let amountText = self.buyAmountText.text!
+        let amountText = "0.0001"//self.buyAmountText.text!
         var price: Double? = nil
         var amount: Double = 0.0
         if !priceText.isEmpty {

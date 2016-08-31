@@ -32,9 +32,15 @@ class ShortPosition: Position {
     
     override internal var balance: Double {
         get {
-            var balance = self.sellLog.amount.doubleValue
-            for log in self.buyLogs {
-                balance -= log.amount.doubleValue
+            var balance = 0.0
+            for log in self.tradeLogs {
+                let l = log as! TradeLog
+                let action = TradeAction(rawValue: l.tradeAction)
+                if action == .OPEN_SHORT_POSITION {
+                    balance += l.amount.doubleValue
+                } else if action == .UNWIND_SHORT_POSITION {
+                    balance -= l.amount.doubleValue
+                }
             }
             return balance
         }
@@ -43,10 +49,15 @@ class ShortPosition: Position {
     override internal var profit: Double {
         get {
             var profit = 0.0
-            for log in self.buyLogs {
-                profit += log.price.doubleValue
+            for log in self.tradeLogs {
+                let l = log as! TradeLog
+                let action = TradeAction(rawValue: l.tradeAction)
+                if action == .OPEN_SHORT_POSITION {
+                    profit += l.price.doubleValue
+                } else if action == .UNWIND_SHORT_POSITION {
+                    profit -= l.price.doubleValue
+                }
             }
-            profit -= self.sellLog.price.doubleValue
             return profit
         }
     }
@@ -85,7 +96,7 @@ class ShortPosition: Position {
         }
     }
     
-    private var sellLog: TradeLog! = nil
-    private var buyLogs: [TradeLog]! = nil
+    internal var sellLog: TradeLog! = nil
+    internal var buyLogs: [TradeLog]! = nil
 
 }

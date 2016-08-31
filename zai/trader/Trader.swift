@@ -44,8 +44,8 @@ public class Trader: NSManagedObject {
                         cb(e)
                     } else {
                         if promised {
-                            let position = LongPosition(order: order, trader: self)
-                            self.addPosition(position!)
+                            let position = PositionRepository.getInstance().createLongPosition(order, trader: self)!
+                            self.addPosition(position)
                             cb(nil)
                         }
                     }

@@ -22,23 +22,26 @@ class TradeLogRepository {
         }
     }
     
-    func store(log: TradeLog) {
+    func create(action: TradeAction, traderName: String, account: Account, order: Order, positionId: String) -> TradeLog {
         let db = Database.getDb()
         
         let newLog = NSEntityDescription.insertNewObjectForEntityForName(TradeLogRepository.tradeLogModelName, inManagedObjectContext: db.managedObjectContext) as! TradeLog
-        newLog.id = log.id
-        newLog.userId = log.userId
-        newLog.apiKey = log.apiKey
-        newLog.positionId = log.positionId
-        newLog.traderName = log.traderName
-        newLog.tradeAction = log.tradeAction
-        newLog.orderAction = log.orderAction
-        newLog.currencyPair = log.currencyPair
-        newLog.price = log.price
-        newLog.amount = log.amount
-        newLog.timestamp = log.timestamp
+        newLog.id = NSUUID().UUIDString
+        newLog.userId = account.userId
+        newLog.apiKey = account.privateApi.apiKey
+        newLog.positionId = positionId
+        newLog.traderName = traderName
+        newLog.tradeAction = action.rawValue
+        newLog.orderAction = order.action.rawValue
+        newLog.orderId = order.orderId
+        newLog.currencyPair = order.currencyPair.rawValue
+        newLog.price = order.price
+        newLog.amount = order.amount
+        newLog.timestamp = NSDate().timeIntervalSince1970
         
         db.saveContext()
+        
+        return newLog
     }
     
     lazy var tradeLogDescription: NSEntityDescription = {

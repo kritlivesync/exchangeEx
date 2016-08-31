@@ -28,15 +28,21 @@ class LongPosition: Position {
 
         self.id = NSUUID().UUIDString
         self.trader = trader
-        self.buyLog = TradeLog(action: .OPEN_LONG_POSITION, traderName: trader.name, account: trader.account, order: order, positionId: self.id)
-        self.sellLogs = []
+        let log = TradeLogRepository.getInstance().create(.OPEN_LONG_POSITION, traderName: trader.name, account: trader.account, order: order, positionId: self.id)
+        self.addLog(log)
     }
     
     override internal var balance: Double {
         get {
-            var balance = self.buyLog.amount.doubleValue
-            for log in self.sellLogs {
-                balance -= log.amount.doubleValue
+            var balance = 0.0
+            for log in self.tradeLogs {
+                let l = log as! TradeLog
+                let action = TradeAction(rawValue: l.tradeAction)
+                if action == .OPEN_LONG_POSITION {
+                    balance += l.amount.doubleValue
+                } else if action == .UNWIND_LONG_POSITION {
+                    balance -= l.amount.doubleValue
+                }
             }
             return balance
         }
@@ -45,10 +51,15 @@ class LongPosition: Position {
     override internal var profit: Double {
         get {
             var profit = 0.0
-            for log in self.sellLogs {
-                profit += log.price.doubleValue
+            for log in self.tradeLogs {
+                let l = log as! TradeLog
+                let action = TradeAction(rawValue: l.tradeAction)
+                if action == .OPEN_LONG_POSITION {
+                    profit -= l.price.doubleValue
+                } else if action == .UNWIND_LONG_POSITION {
+                    profit += l.price.doubleValue
+                }
             }
-            profit -= self.buyLog.price.doubleValue
             return profit
         }
     }
@@ -76,8 +87,8 @@ class LongPosition: Position {
             } else {
                 order.waitForPromise() { (err, promised) in
                     if promised {
-                        let log = TradeLog(action: .UNWIND_LONG_POSITION, traderName: self.trader.name, account: self.trader.account, order: order, positionId: self.id)
-                        self.sellLogs.append(log)
+                        let log = TradeLogRepository.getInstance().create(.UNWIND_LONG_POSITION, traderName: self.trader.name, account: self.trader.account, order: order, positionId: self.id)
+                        self.addLog(log)
                         cb(nil)
                     } else {
                         cb(err)
@@ -87,6 +98,6 @@ class LongPosition: Position {
         }
     }
     
-    private var buyLog: TradeLog! = nil
-    private var sellLogs: [TradeLog]! = nil
+    internal var buyLog: TradeLog! = nil
+    internal var sellLogs: [TradeLog] = []
 }
