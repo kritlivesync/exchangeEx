@@ -12,6 +12,11 @@ import UIKit
 import ZaifSwift
 
 
+@objc protocol TraderViewDelegate {
+    func didTouchTraderView()
+}
+
+
 class TraderView : NSObject, UITableViewDelegate, UITableViewDataSource {
     
     init(view: UITableView, api: PrivateApi) {
@@ -42,7 +47,14 @@ class TraderView : NSObject, UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if let d = self.delegate {
+            d.didTouchTraderView()
+        }
+    }
+    
     private var trader: Trader?
     private var view: UITableView! = nil
     private let api: PrivateApi
+    internal var delegate: TraderViewDelegate?
 }

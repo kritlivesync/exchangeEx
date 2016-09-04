@@ -10,7 +10,7 @@ import Foundation
 
 import ZaifSwift
 
-class MainViewController: UIViewController, SelectTraderViewDelegate {
+class MainViewController: UIViewController, SelectTraderViewDelegate, TraderViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +23,7 @@ class MainViewController: UIViewController, SelectTraderViewDelegate {
         self.traderView = TraderView(view: self.traderTableView, api: self.account.privateApi)
         self.traderView.reloadTrader(self.currentTraderName)
         self.traderView.reloadData()
+        self.traderView.delegate = self
         
         self.fundView.createMarketCapitalizationView() { err, data in
             self.marketCapitalization.text = data
@@ -37,6 +38,11 @@ class MainViewController: UIViewController, SelectTraderViewDelegate {
         self.currentTraderName = traderName
         self.traderView.reloadTrader(self.currentTraderName)
         self.traderView.reloadData()
+    }
+    
+    // TraderViewDelegate
+    func didTouchTraderView() {
+        self.performSegueWithIdentifier(self.positionsSegue, sender: self)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
@@ -114,8 +120,9 @@ class MainViewController: UIViewController, SelectTraderViewDelegate {
     @IBOutlet weak var sellAmountText: UITextField!
     
     
-    private let selectTraderLabelTag = 0
+    private let selectTraderLabelTag = 1
     private let selectTraderSegue = "selectTraderSegue"
+    private let positionsSegue = "positionsSegue"
     
     @IBOutlet weak var marketCapitalization: UILabel!
     @IBOutlet weak var traderTableView: UITableView!
