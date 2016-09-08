@@ -33,6 +33,12 @@ public class Trader: NSManagedObject {
         self.positions = []
     }
     
+    func addPosition(position: Position) {
+        let positions = self.mutableSetValueForKey("positions")
+        positions.addObject(position)
+        Database.getDb().saveContext()
+    }
+    
     func createLongPosition(currencyPair: CurrencyPair, price: Double?, amount: Double, cb: (ZaiError?) -> Void) {
         let order = BuyOrder(currencyPair: currencyPair, price: price, amount: amount, api: self.account.privateApi)!
         order.excute() { (err, orderId) in

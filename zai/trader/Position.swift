@@ -17,6 +17,7 @@ internal protocol PositionProtocol {
     
     var balance: Double { get }
     var profit: Double { get }
+    var type: String { get }
 }
 
 
@@ -38,6 +39,10 @@ class Position: NSManagedObject, PositionProtocol {
     
     var profit: Double {
         get { return 0.0 }
+    }
+    
+    var type: String {
+        get { return "" }
     }
 
 }

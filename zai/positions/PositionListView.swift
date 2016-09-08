@@ -12,11 +12,17 @@ import UIKit
 import ZaifSwift
 
 
+@objc protocol PositionListViewDelegate {
+    func didSelectPosition(position: Position)
+}
+
+
 class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource {
     
-    init(view: UITableView, api: PrivateApi) {
-        self.api = api
+    init(view: UITableView, trader: Trader, btcJpyPrice: Double) {
+        self.trader = trader
         self.view = view
+        self.btcJpyPrice = btcJpyPrice
         
         super.init()
         self.view.delegate = self
@@ -24,20 +30,18 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return TraderRepository.getInstance().count()
+        return self.trader.positions.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("traderListViewCell", forIndexPath: indexPath) as! TraderListViewCell
-        let trader = self.traders[indexPath.row]
-        cell.setTrader(trader)
-        cell.tag = indexPath.row
+        let cell = tableView.dequeueReusableCellWithIdentifier("positionListViewCell", forIndexPath: indexPath) as! PositionListViewCell
+        cell.setPosition(self.trader.positions[indexPath.row] as? Position, btcJpyPrice: self.btcJpyPrice)
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if self.delegate != nil {
-            self.delegate!.didSelectTrader(self.traders[indexPath.row])
+            self.delegate!.didSelectPosition(self.trader.positions[indexPath.row] as! Position)
         }
     }
     
@@ -45,21 +49,8 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource {
         self.view.reloadData()
     }
     
-    internal func reloadTraders(currentTraderName: String) {
-        var allTraders = TraderRepository.getInstance().getAllTraders(self.api)
-        for trader in allTraders {
-            if trader.name == currentTraderName {
-                let index = allTraders.indexOf(trader)
-                allTraders.removeAtIndex(index!)
-                allTraders.insert(trader, atIndex: 0)
-                break
-            }
-        }
-        self.traders = allTraders
-    }
-    
-    private var traders: [Trader] = []
-    internal var delegate: TraderListViewDelegate? = nil
-    private let api: PrivateApi
+    internal var delegate: PositionListViewDelegate? = nil
+    private let trader: Trader
     private let view: UITableView
+    private let btcJpyPrice: Double
 }

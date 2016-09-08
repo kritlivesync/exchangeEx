@@ -62,6 +62,12 @@ class ShortPosition: Position {
         }
     }
     
+    override internal var type: String {
+        get {
+            return "Short"
+        }
+    }
+    
     override internal func unwind(amount: Double?=nil, price: Double?, cb: (ZaiError?) -> Void) {
         let balance = self.balance
         var amt = amount

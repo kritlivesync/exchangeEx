@@ -2,7 +2,7 @@
 //  Position+CoreDataProperties.swift
 //  
 //
-//  Created by 渡部郷太 on 8/31/16.
+//  Created by 渡部郷太 on 9/9/16.
 //
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -15,7 +15,7 @@ import CoreData
 extension Position {
 
     @NSManaged var id: String
-    @NSManaged var tradeLogs: NSSet
+    @NSManaged var tradeLogs: NSOrderedSet
     @NSManaged var trader: Trader
 
 }

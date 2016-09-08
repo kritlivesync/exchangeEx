@@ -51,6 +51,9 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, TraderView
             let destController = segue.destinationViewController as! SelectTraderViewController
             destController.account = account!
             destController.delegate = self
+        case self.positionsSegue:
+            let destController = segue.destinationViewController as! PositionsViewController
+            destController.trader = self.traderView.trader
         default: break
         }
     }

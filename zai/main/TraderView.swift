@@ -53,7 +53,7 @@ class TraderView : NSObject, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    private var trader: Trader?
+    internal var trader: Trader?
     private var view: UITableView! = nil
     private let api: PrivateApi
     internal var delegate: TraderViewDelegate?
