@@ -15,10 +15,10 @@ class PositionListViewCell : UITableViewCell {
     func setPosition(position: Position?, btcJpyPrice: Double) {
         if let p = position {
             self.orderActionLabel.text = p.type
-            self.marketPriceLabel.text = Int(p.balance * btcJpyPrice).description
-            self.profitLabel.text = (p.profit >= 0 ? "+" : "-") + p.profit.description
+            let gain = (btcJpyPrice - p.cost) * p.balance
+            self.marketPriceLabel.text = Int(p.balance * btcJpyPrice).description + ("(" + gain.description + ")")
+            self.profitLabel.text = p.profit.description
             self.balanceLabel.text = p.balance.description
-
         } else {
             self.orderActionLabel.text = "-"
             self.marketPriceLabel.text = "-"

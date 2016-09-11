@@ -56,6 +56,7 @@ internal class Order {
                     cb(ZaiError(errorType: .INVALID_ORDER), -1)
                 } else {
                     self.id = res!["return"]["order_id"].intValue
+                    self.orderPrice = res!["return"]["order_price"].doubleValue
                     self.status = .ACTIVE
                     cb(nil, self.id)
                 }
@@ -86,6 +87,7 @@ internal class Order {
                         if self.status == .ACTIVE { // double check
                             self.status = .PROMISED
                             self.promisedTime = Int64(NSDate().timeIntervalSince1970)
+                            self.promisedPrice = self.orderPrice! // 成行注文の約定価格を知る手段が無い
                             cb(nil, true)
                         } else {
                             cb(ZaiError(errorType: .INVALID_ORDER, message: "order is not active"), false)
@@ -140,7 +142,7 @@ internal class Order {
             if self.isPromised {
                 return self.promisedPrice
             } else {
-                if let p = self.zaifOrder.price {
+                if let p = self.orderPrice {
                     return p
                 } else {
                     return 0.0 // 成行き注文の約定前
@@ -167,6 +169,7 @@ internal class Order {
     internal var status: OrderState
     internal var promisedTime: Int64
     internal var promisedPrice: Double
+    internal var orderPrice: Double? = nil
 }
 
 internal class BuyOrder : Order {

@@ -36,8 +36,9 @@ class PositionRepository {
         
         newPosition.id = NSUUID().UUIDString
         newPosition.trader = trader
-        newPosition.buyLog = TradeLog(action: .OPEN_LONG_POSITION, traderName: trader.name, account: trader.account, order: order, positionId: newPosition.id)
-        newPosition.sellLogs = []
+        
+        let log = TradeLogRepository.getInstance().create(.OPEN_LONG_POSITION, traderName: trader.name, account: trader.account, order: order, positionId: newPosition.id)
+        newPosition.addLog(log)
         
         db.saveContext()
         
@@ -62,8 +63,9 @@ class PositionRepository {
         
         newPosition.id = NSUUID().UUIDString
         newPosition.trader = trader
-        newPosition.sellLog = TradeLog(action: .OPEN_SHORT_POSITION, traderName: trader.name, account: trader.account, order: order, positionId: newPosition.id)
-        newPosition.buyLogs = []
+        
+        let log = TradeLogRepository.getInstance().create(.OPEN_SHORT_POSITION, traderName: trader.name, account: trader.account, order: order, positionId: newPosition.id)
+        newPosition.addLog(log)
         
         db.saveContext()
         

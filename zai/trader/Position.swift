@@ -17,6 +17,7 @@ internal protocol PositionProtocol {
     
     var balance: Double { get }
     var profit: Double { get }
+    var cost: Double { get }
     var type: String { get }
 }
 
@@ -28,7 +29,7 @@ class Position: NSManagedObject, PositionProtocol {
     }
     
     func addLog(log: TradeLog) {
-        let logs = self.mutableSetValueForKey("tradeLogs")
+        let logs = self.mutableOrderedSetValueForKey("tradeLogs")
         logs.addObject(log)
         Database.getDb().saveContext()
     }
@@ -39,6 +40,14 @@ class Position: NSManagedObject, PositionProtocol {
     
     var profit: Double {
         get { return 0.0 }
+    }
+    
+    var cost: Double {
+        get { return 0.0 }
+    }
+    
+    var currencyPair: CurrencyPair {
+        get { return .BTC_JPY }
     }
     
     var type: String {

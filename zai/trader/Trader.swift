@@ -34,7 +34,7 @@ public class Trader: NSManagedObject {
     }
     
     func addPosition(position: Position) {
-        let positions = self.mutableSetValueForKey("positions")
+        let positions = self.mutableOrderedSetValueForKey("positions")
         positions.addObject(position)
         Database.getDb().saveContext()
     }

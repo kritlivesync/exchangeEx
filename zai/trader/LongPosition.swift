@@ -64,6 +64,33 @@ class LongPosition: Position {
         }
     }
     
+    override internal var cost: Double {
+        get {
+            for log in self.tradeLogs {
+                let l = log as! TradeLog
+                let action = TradeAction(rawValue: l.tradeAction)
+                if action == .OPEN_LONG_POSITION {
+                    return l.price.doubleValue
+                }
+            }
+            return 0.0
+        }
+    }
+    
+    override internal var currencyPair: CurrencyPair {
+        get {
+            var currencyPair = CurrencyPair.BTC_JPY
+            for log in self.tradeLogs {
+                let l = log as! TradeLog
+                let action = TradeAction(rawValue: l.tradeAction)
+                if action == .OPEN_LONG_POSITION {
+                    currencyPair = CurrencyPair(rawValue: l.currencyPair)!
+                }
+            }
+            return currencyPair
+        }
+    }
+    
     override internal var type: String {
         get {
             return "Long"
@@ -82,7 +109,7 @@ class LongPosition: Position {
         }
         
         let order = SellOrder(
-            currencyPair: CurrencyPair(rawValue: self.buyLog.currencyPair)!,
+            currencyPair: self.currencyPair,
             price: price,
             amount: amt!,
             api: self.trader.account.privateApi)!
@@ -103,7 +130,4 @@ class LongPosition: Position {
             }
         }
     }
-    
-    internal var buyLog: TradeLog! = nil
-    internal var sellLogs: [TradeLog] = []
 }

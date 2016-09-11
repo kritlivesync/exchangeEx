@@ -19,15 +19,16 @@ class ShortPosition: Position {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
 
-    convenience init?(order: BuyOrder, trader: Trader) {
+    convenience init?(order: SellOrder, trader: Trader) {
         self.init(entity: TraderRepository.getInstance().shortPositionDescription, insertIntoManagedObjectContext: nil)
         
         if !order.isPromised {
             return nil
         }
         self.id = NSUUID().UUIDString
-        self.sellLog = TradeLog(action: .OPEN_SHORT_POSITION, traderName: trader.name, account: trader.account, order: order, positionId: self.id)
-        self.buyLogs = []
+        
+        let log = TradeLogRepository.getInstance().create(.OPEN_SHORT_POSITION, traderName: trader.name, account: trader.account, order: order, positionId: self.id)
+        self.addLog(log)
     }
     
     override internal var balance: Double {
@@ -62,6 +63,33 @@ class ShortPosition: Position {
         }
     }
     
+    override internal var cost: Double {
+        get {
+            for log in self.tradeLogs {
+                let l = log as! TradeLog
+                let action = TradeAction(rawValue: l.tradeAction)
+                if action == .OPEN_SHORT_POSITION {
+                    return l.price.doubleValue
+                }
+            }
+            return 0.0
+        }
+    }
+    
+    override internal var currencyPair: CurrencyPair {
+        get {
+            var currencyPair = CurrencyPair.BTC_JPY
+            for log in self.tradeLogs {
+                let l = log as! TradeLog
+                let action = TradeAction(rawValue: l.tradeAction)
+                if action == .OPEN_SHORT_POSITION {
+                    currencyPair = CurrencyPair(rawValue: l.currencyPair)!
+                }
+            }
+            return currencyPair
+        }
+    }
+    
     override internal var type: String {
         get {
             return "Short"
@@ -80,7 +108,7 @@ class ShortPosition: Position {
         }
         
         let order = SellOrder(
-            currencyPair: CurrencyPair(rawValue: self.sellLog.currencyPair)!,
+            currencyPair: self.currencyPair,
             price: price,
             amount: amt!,
             api: self.trader.account.privateApi)!
@@ -92,7 +120,7 @@ class ShortPosition: Position {
                 order.waitForPromise() { (err, promised) in
                     if promised {
                         let log = TradeLog(action: .UNWIND_SHORT_POSITION, traderName: self.trader.name, account: self.trader.account, order: order, positionId: self.id)
-                        self.buyLogs.append(log)
+                        self.addLog(log)
                         cb(nil)
                     } else {
                         cb(err)
@@ -101,8 +129,4 @@ class ShortPosition: Position {
             }
         }
     }
-    
-    internal var sellLog: TradeLog! = nil
-    internal var buyLogs: [TradeLog]! = nil
-
 }
