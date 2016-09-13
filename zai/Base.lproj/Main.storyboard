@@ -525,9 +525,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="78" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="73u-S7-hEk">
-                                <rect key="frame" x="23" y="68" width="554" height="100"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="78" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="73u-S7-hEk">
+                                <rect key="frame" x="23" y="68" width="554" height="524"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="524" id="bii-JZ-jaS"/>
+                                </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="positionListViewCell" rowHeight="78" id="yDm-aI-fbk" customClass="PositionListViewCell" customModule="zai" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="1" width="554" height="78"/>
@@ -608,6 +611,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="balanceLabel" destination="f1U-MB-iKD" id="cQQ-WU-Uii"/>
+                                            <outlet property="closeButton" destination="sbX-tq-vcn" id="tvY-HD-wLP"/>
                                             <outlet property="marketPriceLabel" destination="X0l-Lm-Njy" id="gVQ-8b-3zT"/>
                                             <outlet property="orderActionLabel" destination="xu4-5x-TWp" id="IQ5-rf-EFB"/>
                                             <outlet property="profitLabel" destination="0tK-Cr-EPh" id="YAf-io-azT"/>

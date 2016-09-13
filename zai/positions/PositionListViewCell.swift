@@ -27,6 +27,7 @@ class PositionListViewCell : UITableViewCell {
         }
     }
     
+    @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var orderActionLabel: UILabel!
     @IBOutlet weak var marketPriceLabel: UILabel!
     @IBOutlet weak var profitLabel: UILabel!

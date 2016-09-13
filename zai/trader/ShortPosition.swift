@@ -54,9 +54,9 @@ class ShortPosition: Position {
                 let l = log as! TradeLog
                 let action = TradeAction(rawValue: l.tradeAction)
                 if action == .OPEN_SHORT_POSITION {
-                    profit += l.price.doubleValue
+                    profit += l.price.doubleValue * l.amount.doubleValue
                 } else if action == .UNWIND_SHORT_POSITION {
-                    profit -= l.price.doubleValue
+                    profit -= l.price.doubleValue * l.amount.doubleValue
                 }
             }
             return profit
