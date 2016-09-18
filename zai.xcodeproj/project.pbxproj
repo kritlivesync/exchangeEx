@@ -8,12 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		3761386221FCB5F32FDBFC56 /* Pods_zai.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD254B29072DEED3604B9179 /* Pods_zai.framework */; };
+		B8002D701D8D1C480079AB9B /* ZaifWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8002D6F1D8D1C480079AB9B /* ZaifWatch.swift */; };
 		B825E7761D75E526004FE785 /* LongPosition+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825E7711D75E526004FE785 /* LongPosition+CoreDataProperties.swift */; };
 		B825E7771D75E526004FE785 /* LongPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825E7721D75E526004FE785 /* LongPosition.swift */; };
 		B825E7781D75E526004FE785 /* ShortPosition+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825E7731D75E526004FE785 /* ShortPosition+CoreDataProperties.swift */; };
 		B825E7791D75E526004FE785 /* ShortPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825E7741D75E526004FE785 /* ShortPosition.swift */; };
-		B825E77A1D75E526004FE785 /* Position+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825E7751D75E526004FE785 /* Position+CoreDataProperties.swift */; };
 		B827CD0F1D772D2300E9847B /* PositionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827CD0E1D772D2300E9847B /* PositionRepository.swift */; };
+		B827CD121D7C4FDD00E9847B /* PositionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827CD111D7C4FDD00E9847B /* PositionsViewController.swift */; };
+		B827CD141D7C523700E9847B /* PositionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827CD131D7C523700E9847B /* PositionListView.swift */; };
+		B827CD161D806DF900E9847B /* PositionListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827CD151D806DF900E9847B /* PositionListViewCell.swift */; };
+		B827CD1C1D81C9F200E9847B /* Position+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827CD1B1D81C9F200E9847B /* Position+CoreDataProperties.swift */; };
 		B8564A0A1D718D5800504A2B /* SelectTraderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8564A091D718D5800504A2B /* SelectTraderViewController.swift */; };
 		B8564A0C1D719C5900504A2B /* TraderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8564A0B1D719C5900504A2B /* TraderListView.swift */; };
 		B8564A0E1D71A42900504A2B /* TraderListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8564A0D1D71A42900504A2B /* TraderListViewCell.swift */; };
@@ -43,11 +47,12 @@
 		B85E8E5A1D6F3E6F00C029C8 /* TraderRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E541D6F3E6F00C029C8 /* TraderRepository.swift */; };
 		B85E8E5E1D6F477900C029C8 /* TraderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E5D1D6F477900C029C8 /* TraderView.swift */; };
 		B85E8E601D6F541800C029C8 /* TraderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E5F1D6F541800C029C8 /* TraderViewCell.swift */; };
-		B8B8457D1D66041D00535638 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B8457B1D66041D00535638 /* Main.storyboard */; settings = {ASSET_TAGS = (0, ); }; };
+		B8B8457D1D66041D00535638 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B8457B1D66041D00535638 /* Main.storyboard */; settings = {ASSET_TAGS = (4, ); }; };
 		B8B8457F1D66041D00535638 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8B8457E1D66041D00535638 /* Assets.xcassets */; };
 		B8B845821D66041D00535638 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B845801D66041D00535638 /* LaunchScreen.storyboard */; };
 		B8B8458D1D66041D00535638 /* zaiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B8458C1D66041D00535638 /* zaiTests.swift */; };
 		B8B845981D66041D00535638 /* zaiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845971D66041D00535638 /* zaiUITests.swift */; };
+		B8F38B3A1D8ECA2600731696 /* Analyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F38B391D8ECA2600731696 /* Analyzer.swift */; };
 		B8F585271D6964FA008680D8 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B8F585251D6964FA008680D8 /* Model.xcdatamodeld */; };
 		B8F5852B1D6B42A8008680D8 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8F5852A1D6B42A8008680D8 /* Config.plist */; };
 /* End PBXBuildFile section */
@@ -72,12 +77,16 @@
 /* Begin PBXFileReference section */
 		2B79EE9EF789B6523DE18096 /* Pods-zai.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zai.release.xcconfig"; path = "Pods/Target Support Files/Pods-zai/Pods-zai.release.xcconfig"; sourceTree = "<group>"; };
 		47AE790BD03FD1B5B46D105B /* Pods-zai.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zai.debug.xcconfig"; path = "Pods/Target Support Files/Pods-zai/Pods-zai.debug.xcconfig"; sourceTree = "<group>"; };
+		B8002D6F1D8D1C480079AB9B /* ZaifWatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZaifWatch.swift; path = analytics/ZaifWatch.swift; sourceTree = "<group>"; };
 		B825E7711D75E526004FE785 /* LongPosition+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "LongPosition+CoreDataProperties.swift"; path = "trader/LongPosition+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B825E7721D75E526004FE785 /* LongPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LongPosition.swift; path = trader/LongPosition.swift; sourceTree = "<group>"; };
 		B825E7731D75E526004FE785 /* ShortPosition+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ShortPosition+CoreDataProperties.swift"; path = "trader/ShortPosition+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B825E7741D75E526004FE785 /* ShortPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShortPosition.swift; path = trader/ShortPosition.swift; sourceTree = "<group>"; };
-		B825E7751D75E526004FE785 /* Position+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Position+CoreDataProperties.swift"; path = "trader/Position+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B827CD0E1D772D2300E9847B /* PositionRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PositionRepository.swift; path = trader/PositionRepository.swift; sourceTree = "<group>"; };
+		B827CD111D7C4FDD00E9847B /* PositionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PositionsViewController.swift; path = positions/PositionsViewController.swift; sourceTree = "<group>"; };
+		B827CD131D7C523700E9847B /* PositionListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PositionListView.swift; path = positions/PositionListView.swift; sourceTree = "<group>"; };
+		B827CD151D806DF900E9847B /* PositionListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PositionListViewCell.swift; path = positions/PositionListViewCell.swift; sourceTree = "<group>"; };
+		B827CD1B1D81C9F200E9847B /* Position+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Position+CoreDataProperties.swift"; path = "trader/Position+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B8564A091D718D5800504A2B /* SelectTraderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectTraderViewController.swift; path = selecttrader/SelectTraderViewController.swift; sourceTree = "<group>"; };
 		B8564A0B1D719C5900504A2B /* TraderListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderListView.swift; path = selecttrader/TraderListView.swift; sourceTree = "<group>"; };
 		B8564A0D1D71A42900504A2B /* TraderListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderListViewCell.swift; path = selecttrader/TraderListViewCell.swift; sourceTree = "<group>"; };
@@ -118,6 +127,7 @@
 		B8B845931D66041D00535638 /* zaiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = zaiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8B845971D66041D00535638 /* zaiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = zaiUITests.swift; sourceTree = "<group>"; };
 		B8B845991D66041D00535638 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B8F38B391D8ECA2600731696 /* Analyzer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Analyzer.swift; path = analytics/Analyzer.swift; sourceTree = "<group>"; };
 		B8F585261D6964FA008680D8 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		B8F5852A1D6B42A8008680D8 /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		FD254B29072DEED3604B9179 /* Pods_zai.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_zai.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -158,6 +168,25 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		B8002D6C1D8D10DA0079AB9B /* analytics */ = {
+			isa = PBXGroup;
+			children = (
+				B8002D6F1D8D1C480079AB9B /* ZaifWatch.swift */,
+				B8F38B391D8ECA2600731696 /* Analyzer.swift */,
+			);
+			name = analytics;
+			sourceTree = "<group>";
+		};
+		B827CD101D7C4F6E00E9847B /* positions */ = {
+			isa = PBXGroup;
+			children = (
+				B827CD111D7C4FDD00E9847B /* PositionsViewController.swift */,
+				B827CD131D7C523700E9847B /* PositionListView.swift */,
+				B827CD151D806DF900E9847B /* PositionListViewCell.swift */,
+			);
+			name = positions;
+			sourceTree = "<group>";
+		};
 		B8564A081D718C8A00504A2B /* selecttrader */ = {
 			isa = PBXGroup;
 			children = (
@@ -180,11 +209,11 @@
 		B85E8E241D6F3A3A00C029C8 /* trader */ = {
 			isa = PBXGroup;
 			children = (
+				B827CD1B1D81C9F200E9847B /* Position+CoreDataProperties.swift */,
 				B825E7711D75E526004FE785 /* LongPosition+CoreDataProperties.swift */,
 				B825E7721D75E526004FE785 /* LongPosition.swift */,
 				B825E7731D75E526004FE785 /* ShortPosition+CoreDataProperties.swift */,
 				B825E7741D75E526004FE785 /* ShortPosition.swift */,
-				B825E7751D75E526004FE785 /* Position+CoreDataProperties.swift */,
 				B85E8E4F1D6F3E6F00C029C8 /* Order.swift */,
 				B85E8E501D6F3E6F00C029C8 /* Position.swift */,
 				B85E8E521D6F3E6F00C029C8 /* Trader.swift */,
@@ -281,6 +310,8 @@
 		B8B845761D66041D00535638 /* zai */ = {
 			isa = PBXGroup;
 			children = (
+				B8002D6C1D8D10DA0079AB9B /* analytics */,
+				B827CD101D7C4F6E00E9847B /* positions */,
 				B8564A0F1D71C61000504A2B /* newtrader */,
 				B8564A081D718C8A00504A2B /* selecttrader */,
 				B85E8E2C1D6F3C1600C029C8 /* login */,
@@ -393,6 +424,8 @@
 			attributes = {
 				KnownAssetTags = (
 					0,
+					1,
+					4,
 					newAccountLabel,
 				);
 				LastSwiftUpdateCheck = 0730;
@@ -519,6 +552,7 @@
 				B825E7761D75E526004FE785 /* LongPosition+CoreDataProperties.swift in Sources */,
 				B85E8E451D6F3E4D00C029C8 /* Account+CoreDataProperties.swift in Sources */,
 				B85E8E4C1D6F3E5E00C029C8 /* TradeLog.swift in Sources */,
+				B827CD141D7C523700E9847B /* PositionListView.swift in Sources */,
 				B85E8E3A1D6F3E2100C029C8 /* Keys.swift in Sources */,
 				B85E8E551D6F3E6F00C029C8 /* Order.swift in Sources */,
 				B85E8E4D1D6F3E5E00C029C8 /* TradeLog+CoreDataProperties.swift in Sources */,
@@ -528,17 +562,21 @@
 				B825E7791D75E526004FE785 /* ShortPosition.swift in Sources */,
 				B85E8E441D6F3E4D00C029C8 /* Account.swift in Sources */,
 				B8564A0C1D719C5900504A2B /* TraderListView.swift in Sources */,
+				B8002D701D8D1C480079AB9B /* ZaifWatch.swift in Sources */,
 				B85E8E581D6F3E6F00C029C8 /* Trader.swift in Sources */,
+				B827CD121D7C4FDD00E9847B /* PositionsViewController.swift in Sources */,
 				B8F585271D6964FA008680D8 /* Model.xcdatamodeld in Sources */,
 				B85E8E5E1D6F477900C029C8 /* TraderView.swift in Sources */,
 				B85E8E361D6F3E2100C029C8 /* AppDelegate.swift in Sources */,
 				B85E8E381D6F3E2100C029C8 /* Database.swift in Sources */,
+				B827CD161D806DF900E9847B /* PositionListViewCell.swift in Sources */,
 				B85E8E2E1D6F3CF800C029C8 /* LoginViewController.swift in Sources */,
 				B85E8E3E1D6F3E3A00C029C8 /* MainViewController.swift in Sources */,
 				B8564A0A1D718D5800504A2B /* SelectTraderViewController.swift in Sources */,
 				B85E8E3D1D6F3E3A00C029C8 /* FundView.swift in Sources */,
 				B85E8E591D6F3E6F00C029C8 /* Trader+CoreDataProperties.swift in Sources */,
 				B825E7771D75E526004FE785 /* LongPosition.swift in Sources */,
+				B827CD1C1D81C9F200E9847B /* Position+CoreDataProperties.swift in Sources */,
 				B8564A151D72A39700504A2B /* TraderMenuViewController.swift in Sources */,
 				B85E8E371D6F3E2100C029C8 /* Config.swift in Sources */,
 				B825E7781D75E526004FE785 /* ShortPosition+CoreDataProperties.swift in Sources */,
@@ -547,8 +585,8 @@
 				B827CD0F1D772D2300E9847B /* PositionRepository.swift in Sources */,
 				B8564A0E1D71A42900504A2B /* TraderListViewCell.swift in Sources */,
 				B8564A131D71C69300504A2B /* NewTraderViewController.swift in Sources */,
+				B8F38B3A1D8ECA2600731696 /* Analyzer.swift in Sources */,
 				B85E8E601D6F541800C029C8 /* TraderViewCell.swift in Sources */,
-				B825E77A1D75E526004FE785 /* Position+CoreDataProperties.swift in Sources */,
 				B85E8E461D6F3E4D00C029C8 /* AccountRepository.swift in Sources */,
 				B85E8E561D6F3E6F00C029C8 /* Position.swift in Sources */,
 				B85E8E481D6F3E4D00C029C8 /* NewAccountViewController.swift in Sources */,

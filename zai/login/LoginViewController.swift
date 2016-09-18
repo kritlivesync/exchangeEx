@@ -63,6 +63,9 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
         Config.setPreviousSecretKey(secretKey)
         Config.save()
         
+        let app = UIApplication.sharedApplication().delegate as! AppDelegate
+        app.analyzer = Analyzer()
+        
         return goNext
     }
     

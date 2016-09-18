@@ -86,6 +86,8 @@ class SelectTraderViewController: UIViewController, TraderListViewDelegate, Trad
         self.traderListView.reloadData()
     }
     
+    @IBAction func unwindToSelect(segue: UIStoryboardSegue) {}
+    
     @IBAction func unwindToTraderList(segue: UIStoryboardSegue) {}
     
     internal var account: Account!
