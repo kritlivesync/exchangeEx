@@ -21,11 +21,13 @@ class ZaifWatch {
     init() {
         self.queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
         self.marketPriceTimer = NSTimer.scheduledTimerWithTimeInterval(
-            3,
+            self.WATCH_INTERVAL,
             target: self,
             selector: #selector(ZaifWatch.addMarketPriceOperation),
             userInfo: nil,
-            repeats: false)
+            repeats: true)
+        
+        self.addMarketPriceOperation()
     }
     
     @objc func addMarketPriceOperation() {
@@ -52,4 +54,5 @@ class ZaifWatch {
     let queue: dispatch_queue_t
     var marketPriceTimer: NSTimer!
     var delegate: ZaifWatchDelegate? = nil
+    let WATCH_INTERVAL = 10.0 // seconds
 }

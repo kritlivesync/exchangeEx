@@ -10,10 +10,13 @@ import Foundation
 
 import ZaifSwift
 
-class MainViewController: UIViewController, SelectTraderViewDelegate, TraderViewDelegate {
+class MainViewController: UIViewController, SelectTraderViewDelegate, TraderViewDelegate, FundViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.marketCapitalization.text = "-"
+        self.btcJpyMarketPrice.text = "-"
         
         if self.currentTraderName.isEmpty {
             self.currentTraderName = Config.currentTraderName
@@ -24,13 +27,7 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, TraderView
         self.traderView.reloadTrader(self.currentTraderName)
         self.traderView.reloadData()
         self.traderView.delegate = self
-        
-        self.fundView.createMarketCapitalizationView() { err, data in
-            self.marketCapitalization.text = data
-            dispatch_async(dispatch_get_main_queue()) {
-                self.marketCapitalization.setNeedsDisplay()
-            }
-        }
+        self.fundView.delegate = self
     }
     
     // SelectTraderViewDelegate
@@ -43,6 +40,21 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, TraderView
     // TraderViewDelegate
     func didTouchTraderView() {
         self.performSegueWithIdentifier(self.positionsSegue, sender: self)
+    }
+    
+    // FundViewDelegate
+    func didUpdateBtcJpyPrice(view: String) {
+        self.btcJpyMarketPrice.text = view
+        dispatch_async(dispatch_get_main_queue()) {
+            self.marketCapitalization.setNeedsDisplay()
+        }
+    }
+    
+    func didUpdateMarketCapitalization(view: String) {
+        self.marketCapitalization.text = view
+        dispatch_async(dispatch_get_main_queue()) {
+            self.marketCapitalization.setNeedsDisplay()
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
@@ -128,6 +140,7 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, TraderView
     private let positionsSegue = "positionsSegue"
     
     @IBOutlet weak var marketCapitalization: UILabel!
+    @IBOutlet weak var btcJpyMarketPrice: UILabel!
     @IBOutlet weak var traderTableView: UITableView!
 
 }

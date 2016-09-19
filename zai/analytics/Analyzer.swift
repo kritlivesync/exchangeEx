@@ -10,30 +10,36 @@ import Foundation
 
 
 class MarketPrice {
-    var btcJpy: Double = 0.0
-    var monaJpy: Double = 0.0
-    var xemJpy: Double = 0.0
+    init(btcJpy: Double, monaJpy: Double, xemJpy: Double) {
+        self.btcJpy = btcJpy
+        self.monaJpy = monaJpy
+        self.xemJpy = xemJpy
+    }
+    let btcJpy: Double
+    let monaJpy: Double
+    let xemJpy: Double
 }
 
 class Analyzer : ZaifWatchDelegate {
     
     init() {
-        self.marketPice = MarketPrice()
+        self.marketPrice = MarketPrice(btcJpy: 0.0, monaJpy: 0.0, xemJpy: 0.0)
         self.watch = ZaifWatch()
+        self.watch.delegate = self
     }
     
     func didFetchBtcJpyMarketPrice(price: Double) {
-        self.marketPice.btcJpy = price
+        self.marketPrice = MarketPrice(btcJpy: price, monaJpy: self.marketPrice.monaJpy, xemJpy: self.marketPrice.xemJpy)
     }
     
     func didFetchMonaJpyMarketPrice(price: Double) {
-        self.marketPice.monaJpy = price
+        self.marketPrice = MarketPrice(btcJpy: self.marketPrice.btcJpy, monaJpy: price, xemJpy: self.marketPrice.xemJpy)
     }
     
     func didFetchXemJpyMarketPrice(price: Double) {
-        self.marketPice.xemJpy = price
+        self.marketPrice = MarketPrice(btcJpy: self.marketPrice.btcJpy, monaJpy: self.marketPrice.monaJpy, xemJpy: price)
     }
     
-    var marketPice: MarketPrice
+    var marketPrice: MarketPrice
     let watch: ZaifWatch!
 }

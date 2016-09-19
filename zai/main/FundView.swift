@@ -7,28 +7,75 @@
 //
 
 import Foundation
+import UIKit
+
+protocol FundViewDelegate {
+    func didUpdateMarketCapitalization(view: String)
+    func didUpdateBtcJpyPrice(view: String)
+}
 
 
 internal class FundView {
     
     init(account: Account) {
         self.account = account
+        
+        self.updateCapitalizationTimer = NSTimer.scheduledTimerWithTimeInterval(
+            self.UPDATE_CAPITALIATION_INTERVAL,
+            target: self,
+            selector: #selector(FundView.updateMarketCapitalization),
+            userInfo: nil,
+            repeats: true)
+        
+        self.updateBtcJpyTimer = NSTimer.scheduledTimerWithTimeInterval(
+            self.UPDATE_BTCJPY_INTERVAL,
+            target: self,
+            selector: #selector(FundView.updateBtcJpyPrice),
+            userInfo: nil,
+            repeats: true)
+        
+        self.updateMarketCapitalization()
+        self.updateBtcJpyPrice()
     }
     
-    func createMarketCapitalizationView(cb: (ZaiError?, String) -> Void) {
-        self.account.getMarketCapitalization() { (err, value) in
-            if let e = err {
-                cb(e, "-")
-            } else {
-                let formatter = NSNumberFormatter()
-                formatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
-                formatter.groupingSeparator = ","
-                formatter.groupingSize = 3
-                formatter.maximumFractionDigits = 2
-                cb(nil, formatter.stringFromNumber(value)!)
+    @objc func updateMarketCapitalization() {
+        self.createMarketCapitalizationView() { (err, view) in
+            if err == nil && self.delegate != nil {
+                self.delegate!.didUpdateMarketCapitalization(view)
             }
         }
     }
     
+    @objc func updateBtcJpyPrice() {
+        let app = UIApplication.sharedApplication().delegate as! AppDelegate
+        if let d = self.delegate {
+            d.didUpdateBtcJpyPrice(self.formatValue(Int((app.analyzer?.marketPrice.btcJpy)!)))
+        }
+    }
+    
+    private func createMarketCapitalizationView(cb: (ZaiError?, String) -> Void) {
+        self.account.getMarketCapitalization() { (err, value) in
+            if let e = err {
+                cb(e, "-")
+            } else {
+                cb(nil, self.formatValue(value))
+            }
+        }
+    }
+    
+    private func formatValue(value: Int) -> String {
+        let formatter = NSNumberFormatter()
+        formatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+        formatter.groupingSeparator = ","
+        formatter.groupingSize = 3
+        formatter.maximumFractionDigits = 2
+        return formatter.stringFromNumber(value)!
+    }
+    
     private let account: Account
+    private var updateCapitalizationTimer: NSTimer?
+    private var updateBtcJpyTimer: NSTimer?
+    var delegate: FundViewDelegate? = nil
+    private let UPDATE_CAPITALIATION_INTERVAL = 10.0
+    private let UPDATE_BTCJPY_INTERVAL = 1.0
 }
