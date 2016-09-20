@@ -8,11 +8,14 @@
 
 import Foundation
 
+import ZaifSwift
+
 
 protocol ZaifWatchDelegate {
     func didFetchBtcJpyMarketPrice(price: Double)
     func didFetchMonaJpyMarketPrice(price: Double)
     func didFetchXemJpyMarketPrice(price: Double)
+    func didFetchBtcJpyLastPrice(price: Double)
 }
 
 
@@ -21,9 +24,16 @@ class ZaifWatch {
     init() {
         self.queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
         self.marketPriceTimer = NSTimer.scheduledTimerWithTimeInterval(
-            self.WATCH_INTERVAL,
+            self.WATCH_MARKETPRICE_INTERVAL,
             target: self,
             selector: #selector(ZaifWatch.addMarketPriceOperation),
+            userInfo: nil,
+            repeats: true)
+        
+        self.marketPriceTimer = NSTimer.scheduledTimerWithTimeInterval(
+            self.WATCH_LASTPRICE_INTERVAL,
+            target: self,
+            selector: #selector(ZaifWatch.addLastPriceOperation),
             userInfo: nil,
             repeats: true)
         
@@ -49,10 +59,21 @@ class ZaifWatch {
             }
         }
     }
+    
+    @objc func addLastPriceOperation() {
+        PublicApi.lastPrice(.BTC_JPY) { (err, res) in
+            if err == nil && self.delegate != nil {
+                let price = res!["last_price"].doubleValue
+                self.delegate!.didFetchBtcJpyLastPrice(price)
+            }
+        }
+    }
 
     
     let queue: dispatch_queue_t
     var marketPriceTimer: NSTimer!
+    var lastPriceTimer: NSTimer!
     var delegate: ZaifWatchDelegate? = nil
-    let WATCH_INTERVAL = 10.0 // seconds
+    let WATCH_MARKETPRICE_INTERVAL = 10.0 // seconds
+    let WATCH_LASTPRICE_INTERVAL = 60.0
 }

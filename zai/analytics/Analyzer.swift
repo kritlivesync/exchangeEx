@@ -8,6 +8,8 @@
 
 import Foundation
 
+import ZaifSwift
+
 
 class MarketPrice {
     init(btcJpy: Double, monaJpy: Double, xemJpy: Double) {
@@ -20,10 +22,17 @@ class MarketPrice {
     let xemJpy: Double
 }
 
+
+protocol AnalyzerDelegate {
+    func signaledBuy()
+    func signaledSell()
+}
+
 class Analyzer : ZaifWatchDelegate {
     
     init() {
         self.marketPrice = MarketPrice(btcJpy: 0.0, monaJpy: 0.0, xemJpy: 0.0)
+        self.macd = Macd(shortTerm: 12, longTerm: 26, signalTerm: 9)
         self.watch = ZaifWatch()
         self.watch.delegate = self
     }
@@ -40,6 +49,19 @@ class Analyzer : ZaifWatchDelegate {
         self.marketPrice = MarketPrice(btcJpy: self.marketPrice.btcJpy, monaJpy: self.marketPrice.monaJpy, xemJpy: price)
     }
     
+    func didFetchBtcJpyLastPrice(price: Double) {
+        self.macd.addSampleValue(price)
+        if self.macd.valid {
+            if self.macd.isGoldenCross() && self.delegate != nil {
+                self.delegate!.signaledBuy()
+            } else if self.macd.isDeadCross() && self.delegate != nil {
+                self.delegate!.signaledSell()
+            }
+        }
+    }
+    
     var marketPrice: MarketPrice
+    var macd: Macd
     let watch: ZaifWatch!
+    var delegate: AnalyzerDelegate? = nil
 }

@@ -53,6 +53,10 @@
 		B8B8458D1D66041D00535638 /* zaiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B8458C1D66041D00535638 /* zaiTests.swift */; };
 		B8B845981D66041D00535638 /* zaiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845971D66041D00535638 /* zaiUITests.swift */; };
 		B8F38B3A1D8ECA2600731696 /* Analyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F38B391D8ECA2600731696 /* Analyzer.swift */; };
+		B8F38B3C1D8FC1CB00731696 /* Macd.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F38B3B1D8FC1CB00731696 /* Macd.swift */; };
+		B8F38B3F1D8FD2AB00731696 /* PriceLog+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F38B3D1D8FD2AB00731696 /* PriceLog+CoreDataProperties.swift */; };
+		B8F38B401D8FD2AB00731696 /* PriceLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F38B3E1D8FD2AB00731696 /* PriceLog.swift */; };
+		B8F38B421D8FD2D700731696 /* PriceLogRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F38B411D8FD2D700731696 /* PriceLogRepository.swift */; };
 		B8F585271D6964FA008680D8 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B8F585251D6964FA008680D8 /* Model.xcdatamodeld */; };
 		B8F5852B1D6B42A8008680D8 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8F5852A1D6B42A8008680D8 /* Config.plist */; };
 /* End PBXBuildFile section */
@@ -128,6 +132,10 @@
 		B8B845971D66041D00535638 /* zaiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = zaiUITests.swift; sourceTree = "<group>"; };
 		B8B845991D66041D00535638 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B8F38B391D8ECA2600731696 /* Analyzer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Analyzer.swift; path = analytics/Analyzer.swift; sourceTree = "<group>"; };
+		B8F38B3B1D8FC1CB00731696 /* Macd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Macd.swift; path = analytics/Macd.swift; sourceTree = "<group>"; };
+		B8F38B3D1D8FD2AB00731696 /* PriceLog+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "PriceLog+CoreDataProperties.swift"; path = "log/PriceLog+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		B8F38B3E1D8FD2AB00731696 /* PriceLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PriceLog.swift; path = log/PriceLog.swift; sourceTree = "<group>"; };
+		B8F38B411D8FD2D700731696 /* PriceLogRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PriceLogRepository.swift; path = log/PriceLogRepository.swift; sourceTree = "<group>"; };
 		B8F585261D6964FA008680D8 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		B8F5852A1D6B42A8008680D8 /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		FD254B29072DEED3604B9179 /* Pods_zai.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_zai.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -173,6 +181,7 @@
 			children = (
 				B8002D6F1D8D1C480079AB9B /* ZaifWatch.swift */,
 				B8F38B391D8ECA2600731696 /* Analyzer.swift */,
+				B8F38B3B1D8FC1CB00731696 /* Macd.swift */,
 			);
 			name = analytics;
 			sourceTree = "<group>";
@@ -227,9 +236,12 @@
 		B85E8E251D6F3A8300C029C8 /* log */ = {
 			isa = PBXGroup;
 			children = (
+				B8F38B3D1D8FD2AB00731696 /* PriceLog+CoreDataProperties.swift */,
+				B8F38B3E1D8FD2AB00731696 /* PriceLog.swift */,
 				B85E8E491D6F3E5E00C029C8 /* TradeLog.swift */,
 				B85E8E4A1D6F3E5E00C029C8 /* TradeLog+CoreDataProperties.swift */,
 				B85E8E4B1D6F3E5E00C029C8 /* TradeLogRepository.swift */,
+				B8F38B411D8FD2D700731696 /* PriceLogRepository.swift */,
 			);
 			name = log;
 			sourceTree = "<group>";
@@ -550,17 +562,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				B825E7761D75E526004FE785 /* LongPosition+CoreDataProperties.swift in Sources */,
+				B8F38B421D8FD2D700731696 /* PriceLogRepository.swift in Sources */,
 				B85E8E451D6F3E4D00C029C8 /* Account+CoreDataProperties.swift in Sources */,
 				B85E8E4C1D6F3E5E00C029C8 /* TradeLog.swift in Sources */,
 				B827CD141D7C523700E9847B /* PositionListView.swift in Sources */,
 				B85E8E3A1D6F3E2100C029C8 /* Keys.swift in Sources */,
 				B85E8E551D6F3E6F00C029C8 /* Order.swift in Sources */,
+				B8F38B3C1D8FC1CB00731696 /* Macd.swift in Sources */,
 				B85E8E4D1D6F3E5E00C029C8 /* TradeLog+CoreDataProperties.swift in Sources */,
 				B85E8E391D6F3E2100C029C8 /* Error.swift in Sources */,
 				B85E8E301D6F3DFB00C029C8 /* Currency.swift in Sources */,
 				B85E8E471D6F3E4D00C029C8 /* Fund.swift in Sources */,
 				B825E7791D75E526004FE785 /* ShortPosition.swift in Sources */,
 				B85E8E441D6F3E4D00C029C8 /* Account.swift in Sources */,
+				B8F38B3F1D8FD2AB00731696 /* PriceLog+CoreDataProperties.swift in Sources */,
 				B8564A0C1D719C5900504A2B /* TraderListView.swift in Sources */,
 				B8002D701D8D1C480079AB9B /* ZaifWatch.swift in Sources */,
 				B85E8E581D6F3E6F00C029C8 /* Trader.swift in Sources */,
@@ -581,6 +596,7 @@
 				B85E8E371D6F3E2100C029C8 /* Config.swift in Sources */,
 				B825E7781D75E526004FE785 /* ShortPosition+CoreDataProperties.swift in Sources */,
 				B85E8E5A1D6F3E6F00C029C8 /* TraderRepository.swift in Sources */,
+				B8F38B401D8FD2AB00731696 /* PriceLog.swift in Sources */,
 				B85E8E4E1D6F3E5E00C029C8 /* TradeLogRepository.swift in Sources */,
 				B827CD0F1D772D2300E9847B /* PositionRepository.swift in Sources */,
 				B8564A0E1D71A42900504A2B /* TraderListViewCell.swift in Sources */,
