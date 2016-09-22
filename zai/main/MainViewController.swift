@@ -10,7 +10,7 @@ import Foundation
 
 import ZaifSwift
 
-class MainViewController: UIViewController, SelectTraderViewDelegate, TraderViewDelegate, FundViewDelegate {
+class MainViewController: UIViewController, SelectTraderViewDelegate, TraderViewDelegate, FundViewDelegate, AnalyzerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +28,9 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, TraderView
         self.traderView.reloadData()
         self.traderView.delegate = self
         self.fundView.delegate = self
+        
+        let app = UIApplication.sharedApplication().delegate as! AppDelegate
+        app.analyzer!.delegate = self
     }
     
     // SelectTraderViewDelegate
@@ -47,6 +50,39 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, TraderView
         self.btcJpyMarketPrice.text = view
         dispatch_async(dispatch_get_main_queue()) {
             self.marketCapitalization.setNeedsDisplay()
+        }
+    }
+    
+    // AnalyzerDelegate
+    func signaledBuy() {
+        let trader = TraderRepository.getInstance().findTraderByName(self.currentTraderName, api: self.account.privateApi)
+        if trader == nil {
+            return
+        }
+        let fund = JPYFund(api: self.account.privateApi)
+        fund.calculateHowManyAmountCanBuy(.BTC) { (err, amount) in
+            trader!.createLongPosition(.BTC_JPY, price: nil, amount: amount) { err in
+                if let e = err {
+                    print(e.message)
+                }
+                self.traderView.reloadData()
+            }
+        }
+    }
+    
+    func signaledSell() {
+        let trader = TraderRepository.getInstance().findTraderByName(self.currentTraderName, api: self.account.privateApi)
+        if trader == nil {
+            return
+        }
+        for position in trader!.positions {
+            let p = position as? Position
+            p?.unwind(nil, price: nil) { (err) in
+                if let e = err {
+                    print(e.message)
+                }
+                self.traderView.reloadData()
+            }
         }
     }
     

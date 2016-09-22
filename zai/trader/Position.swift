@@ -21,6 +21,12 @@ internal protocol PositionProtocol {
     var type: String { get }
 }
 
+enum PositionState {
+    case OPEN
+    case CLOSED
+    case CLOSING
+}
+
 
 class Position: NSManagedObject, PositionProtocol {
     
@@ -54,4 +60,5 @@ class Position: NSManagedObject, PositionProtocol {
         get { return "" }
     }
 
+    var status: PositionState = .OPEN
 }

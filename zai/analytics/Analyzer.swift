@@ -53,9 +53,18 @@ class Analyzer : ZaifWatchDelegate {
         self.macd.addSampleValue(price)
         if self.macd.valid {
             if self.macd.isGoldenCross() && self.delegate != nil {
+                self.isBullMarket = true
                 self.delegate!.signaledBuy()
             } else if self.macd.isDeadCross() && self.delegate != nil {
+                self.isBullMarket = false
                 self.delegate!.signaledSell()
+            } else {
+                let prev = self.macd.getPreviousMacdValue()
+                let latest = self.macd.getLatestMacdValue()
+                if self.isBullMarket && latest < prev {
+                    self.isBullMarket = false
+                    self.delegate!.signaledSell()
+                }
             }
         }
     }
@@ -63,5 +72,6 @@ class Analyzer : ZaifWatchDelegate {
     var marketPrice: MarketPrice
     var macd: Macd
     let watch: ZaifWatch!
+    var isBullMarket = false
     var delegate: AnalyzerDelegate? = nil
 }

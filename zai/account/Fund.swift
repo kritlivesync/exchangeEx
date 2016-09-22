@@ -79,7 +79,14 @@ internal class JPYFund {
                                 cb(ZaiError(errorType: .ZAIF_API_ERROR, message: e.message), 0)
                             } else {
                                 let price = res!["last_price"].doubleValue
-                                let amount = jpyFund * rate / price
+                                var amount = jpyFund * rate / price
+                                switch currency {
+                                case .BTC:
+                                    amount = Double(Int(amount * 10000)) / 10000.0
+                                case .MONA:
+                                    amount = Double(Int(amount))
+                                default: break
+                                }
                                 cb(nil, amount)
                             }
                         }

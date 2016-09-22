@@ -97,6 +97,13 @@ class ShortPosition: Position {
     }
     
     override internal func unwind(amount: Double?=nil, price: Double?, cb: (ZaiError?) -> Void) {
+        if self.status != .OPEN {
+            cb(nil)
+            return
+        }
+        
+        self.status = .CLOSING
+        
         let balance = self.balance
         var amt = amount
         if amount == nil {

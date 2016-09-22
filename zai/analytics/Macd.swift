@@ -61,6 +61,10 @@ class Macd {
         
         let maxTerm = max(max(self.shortTerm, self.longTerm), self.signalTerm)
         self.valid = (maxTerm <= self.samples.count)
+        
+        if self.HISTORY_SIZE < self.samples.count {
+            self.samples.removeAtIndex(0)
+        }
     }
     
     func isGoldenCross() -> Bool {
@@ -112,7 +116,8 @@ class Macd {
     
     func getPreviousMacdValue() -> Double {
         if self.valid {
-            let prev = self.samples.suffix(2)[0]
+            let slice = Array(self.samples.suffix(2))
+            let prev = slice[0]
             return prev.macd()
         } else {
             return 0.0
@@ -185,4 +190,5 @@ class Macd {
     private let shortTerm: Int
     private let longTerm: Int
     private let signalTerm: Int
+    private let HISTORY_SIZE = 100
 }
