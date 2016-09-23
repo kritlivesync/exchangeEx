@@ -60,7 +60,7 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, TraderView
             return
         }
         let fund = JPYFund(api: self.account.privateApi)
-        fund.calculateHowManyAmountCanBuy(.BTC) { (err, amount) in
+        fund.calculateHowManyAmountCanBuy(.BTC, rate: 0.9) { (err, amount) in
             trader!.createLongPosition(.BTC_JPY, price: nil, amount: amount) { err in
                 if let e = err {
                     print(e.message)
@@ -125,7 +125,7 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, TraderView
             return
         }
         let priceText = self.buyPriceText.text!
-        let amountText = "0.0001"//self.buyAmountText.text!
+        let amountText = self.buyAmountText.text!
         var price: Double? = nil
         var amount: Double = 0.0
         if !priceText.isEmpty {

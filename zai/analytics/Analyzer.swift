@@ -52,20 +52,22 @@ class Analyzer : ZaifWatchDelegate {
     func didFetchBtcJpyLastPrice(price: Double) {
         self.macd.addSampleValue(price)
         if self.macd.valid {
-            if self.macd.isGoldenCross() && self.delegate != nil {
+            let momentum = (self.macd.getLatestMacdValue() - self.macd.getPreviousMacdValue()) / self.watch.WATCH_LASTPRICE_INTERVAL
+            let prevMomentum = self.momentum
+            let isBullMomentum = prevMomentum < momentum
+            if self.macd.isGoldenCross() && isBullMomentum && self.delegate != nil {
                 self.isBullMarket = true
                 self.delegate!.signaledBuy()
             } else if self.macd.isDeadCross() && self.delegate != nil {
                 self.isBullMarket = false
                 self.delegate!.signaledSell()
             } else {
-                let prev = self.macd.getPreviousMacdValue()
-                let latest = self.macd.getLatestMacdValue()
-                if self.isBullMarket && latest < prev {
+                if self.isBullMarket && !isBullMomentum {
                     self.isBullMarket = false
                     self.delegate!.signaledSell()
                 }
             }
+            self.momentum = momentum
         }
     }
     
@@ -73,5 +75,6 @@ class Analyzer : ZaifWatchDelegate {
     var macd: Macd
     let watch: ZaifWatch!
     var isBullMarket = false
+    var momentum = 0.0
     var delegate: AnalyzerDelegate? = nil
 }
