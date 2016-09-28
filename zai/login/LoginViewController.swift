@@ -65,6 +65,7 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
         
         let app = UIApplication.sharedApplication().delegate as! AppDelegate
         app.analyzer = Analyzer()
+        UIApplication.sharedApplication().idleTimerDisabled = true
         
         return goNext
     }

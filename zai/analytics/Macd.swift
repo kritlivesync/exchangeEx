@@ -124,6 +124,19 @@ class Macd {
         }
     }
     
+    func average(interval: Int) -> Double {
+        if self.valid {
+            let slice = Array(self.samples.suffix(interval))
+            var sum = 0.0
+            for sample in slice {
+                sum += sample.macd()
+            }
+            return sum / Double(interval)
+        } else {
+            return 0.0
+        }
+    }
+    
     func getLatestSignalValue() -> Double {
         if self.valid {
             let last = self.samples.last!

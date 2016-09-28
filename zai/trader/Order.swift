@@ -87,7 +87,16 @@ internal class Order {
                         if self.status == .ACTIVE { // double check
                             self.status = .PROMISED
                             self.promisedTime = Int64(NSDate().timeIntervalSince1970)
-                            self.promisedPrice = self.orderPrice! // 成行注文の約定価格を知る手段が無い
+                            self.promisedPrice = self.orderPrice!
+                            if self.zaifOrder.price == nil {
+                                // 成行注文の約定価格を知る手段が無い
+                                switch self.zaifOrder.action {
+                                case .BID:
+                                    self.promisedPrice /= 1.0005
+                                case .ASK:
+                                    self.promisedPrice /= 0.9995
+                                }
+                            }
                             cb(nil, true)
                         } else {
                             cb(ZaiError(errorType: .INVALID_ORDER, message: "order is not active"), false)

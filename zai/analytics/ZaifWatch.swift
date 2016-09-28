@@ -75,5 +75,5 @@ class ZaifWatch {
     var lastPriceTimer: NSTimer!
     var delegate: ZaifWatchDelegate? = nil
     let WATCH_MARKETPRICE_INTERVAL = 10.0 // seconds
-    let WATCH_LASTPRICE_INTERVAL = 60.0
+    let WATCH_LASTPRICE_INTERVAL = 180.0
 }

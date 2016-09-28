@@ -17,6 +17,9 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, TraderView
         
         self.marketCapitalization.text = "-"
         self.btcJpyMarketPrice.text = "-"
+        self.momentumLabel.text = "-"
+        self.bullMarketLabel.text = "OFF"
+        self.countDownLabel.text = "-"
         
         if self.currentTraderName.isEmpty {
             self.currentTraderName = Config.currentTraderName
@@ -48,6 +51,13 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, TraderView
     // FundViewDelegate
     func didUpdateBtcJpyPrice(view: String) {
         self.btcJpyMarketPrice.text = view
+        dispatch_async(dispatch_get_main_queue()) {
+            self.marketCapitalization.setNeedsDisplay()
+        }
+    }
+    
+    func didUpdateMarketCapitalization(view: String) {
+        self.marketCapitalization.text = view
         dispatch_async(dispatch_get_main_queue()) {
             self.marketCapitalization.setNeedsDisplay()
         }
@@ -86,10 +96,19 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, TraderView
         }
     }
     
-    func didUpdateMarketCapitalization(view: String) {
-        self.marketCapitalization.text = view
+    func didUpdateSignals(momentum: Double, isBullMarket: Bool) {
+        self.momentumLabel.text = momentum.description
+        self.bullMarketLabel.text = isBullMarket.description
         dispatch_async(dispatch_get_main_queue()) {
-            self.marketCapitalization.setNeedsDisplay()
+            self.momentumLabel.setNeedsDisplay()
+            self.bullMarketLabel.setNeedsDisplay()
+        }
+    }
+    
+    func didUpdateCount(count: Int) {
+        self.countDownLabel.text = count.description
+        dispatch_async(dispatch_get_main_queue()) {
+            self.countDownLabel.setNeedsDisplay()
         }
     }
     
@@ -170,6 +189,9 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, TraderView
     @IBOutlet weak var sellPriceText: UITextField!
     @IBOutlet weak var sellAmountText: UITextField!
     
+    @IBOutlet weak var momentumLabel: UILabel!
+    @IBOutlet weak var bullMarketLabel: UILabel!
+    @IBOutlet weak var countDownLabel: UILabel!
     
     private let selectTraderLabelTag = 1
     private let selectTraderSegue = "selectTraderSegue"
