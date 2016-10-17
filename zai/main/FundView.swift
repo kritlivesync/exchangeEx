@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 protocol FundViewDelegate {
-    func didUpdateMarketCapitalization(view: String)
-    func didUpdateBtcJpyPrice(view: String)
+    func didUpdateMarketCapitalization(_ view: String)
+    func didUpdateBtcJpyPrice(_ view: String)
 }
 
 
@@ -20,15 +20,15 @@ internal class FundView {
     init(account: Account) {
         self.account = account
         
-        self.updateCapitalizationTimer = NSTimer.scheduledTimerWithTimeInterval(
-            self.UPDATE_CAPITALIATION_INTERVAL,
+        self.updateCapitalizationTimer = Timer.scheduledTimer(
+            timeInterval: self.UPDATE_CAPITALIATION_INTERVAL,
             target: self,
             selector: #selector(FundView.updateMarketCapitalization),
             userInfo: nil,
             repeats: true)
         
-        self.updateBtcJpyTimer = NSTimer.scheduledTimerWithTimeInterval(
-            self.UPDATE_BTCJPY_INTERVAL,
+        self.updateBtcJpyTimer = Timer.scheduledTimer(
+            timeInterval: self.UPDATE_BTCJPY_INTERVAL,
             target: self,
             selector: #selector(FundView.updateBtcJpyPrice),
             userInfo: nil,
@@ -47,13 +47,13 @@ internal class FundView {
     }
     
     @objc func updateBtcJpyPrice() {
-        let app = UIApplication.sharedApplication().delegate as! AppDelegate
+        let app = UIApplication.shared.delegate as! AppDelegate
         if let d = self.delegate {
             d.didUpdateBtcJpyPrice(self.formatValue(Int((app.analyzer?.marketPrice.btcJpy)!)))
         }
     }
     
-    private func createMarketCapitalizationView(cb: (ZaiError?, String) -> Void) {
+    fileprivate func createMarketCapitalizationView(_ cb: @escaping (ZaiError?, String) -> Void) {
         self.account.getMarketCapitalization() { (err, value) in
             if let e = err {
                 cb(e, "-")
@@ -63,19 +63,19 @@ internal class FundView {
         }
     }
     
-    private func formatValue(value: Int) -> String {
-        let formatter = NSNumberFormatter()
-        formatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+    fileprivate func formatValue(_ value: Int) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = NumberFormatter.Style.decimal
         formatter.groupingSeparator = ","
         formatter.groupingSize = 3
         formatter.maximumFractionDigits = 2
-        return formatter.stringFromNumber(value)!
+        return formatter.string(from: NSNumber(value: value))!
     }
     
-    private let account: Account
-    private var updateCapitalizationTimer: NSTimer?
-    private var updateBtcJpyTimer: NSTimer?
+    fileprivate let account: Account
+    fileprivate var updateCapitalizationTimer: Timer?
+    fileprivate var updateBtcJpyTimer: Timer?
     var delegate: FundViewDelegate? = nil
-    private let UPDATE_CAPITALIATION_INTERVAL = 10.0
-    private let UPDATE_BTCJPY_INTERVAL = 1.0
+    fileprivate let UPDATE_CAPITALIATION_INTERVAL = 10.0
+    fileprivate let UPDATE_BTCJPY_INTERVAL = 1.0
 }

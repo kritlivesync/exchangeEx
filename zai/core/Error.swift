@@ -9,7 +9,7 @@
 import Foundation
 
 
-public enum ZaiErrorType : ErrorType {
+public enum ZaiErrorType : Error {
     case ZAIF_API_ERROR
     case INVALID_ORDER
     case INVALID_API_KEYS

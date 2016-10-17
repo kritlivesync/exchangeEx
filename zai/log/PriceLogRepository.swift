@@ -23,14 +23,14 @@ class PriceLogRepository {
         }
     }
     
-    func create(currencyPair: String, price: Double) -> TradeLog {
+    func create(_ currencyPair: String, price: Double) -> TradeLog {
         let db = Database.getDb()
         
-        let newLog = NSEntityDescription.insertNewObjectForEntityForName(PriceLogRepository.priceLogModelName, inManagedObjectContext: db.managedObjectContext) as! TradeLog
+        let newLog = NSEntityDescription.insertNewObject(forEntityName: PriceLogRepository.priceLogModelName, into: db.managedObjectContext) as! TradeLog
 
-        newLog.price = price
+        newLog.price = NSNumber(value: price)
         newLog.currencyPair = currencyPair
-        newLog.timestamp = NSDate().timeIntervalSince1970
+        newLog.timestamp = NSNumber(value: Date().timeIntervalSince1970)
         
         db.saveContext()
         
@@ -39,12 +39,12 @@ class PriceLogRepository {
     
     lazy var tradeLogDescription: NSEntityDescription = {
         let db = Database.getDb()
-        return NSEntityDescription.entityForName(PriceLogRepository.priceLogModelName, inManagedObjectContext: db.managedObjectContext)!
+        return NSEntityDescription.entity(forEntityName: PriceLogRepository.priceLogModelName, in: db.managedObjectContext)!
     }()
     
-    private init() {
+    fileprivate init() {
     }
     
-    private static var inst: PriceLogRepository? = nil
-    private static let priceLogModelName = "PriceLog"
+    fileprivate static var inst: PriceLogRepository? = nil
+    fileprivate static let priceLogModelName = "PriceLog"
 }

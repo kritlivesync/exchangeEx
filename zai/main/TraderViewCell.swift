@@ -12,7 +12,7 @@ import UIKit
 
 class TraderViewCell : UITableViewCell {
     
-    func setTrader(trader: Trader?) {
+    func setTrader(_ trader: Trader?) {
         if let t = trader {
             var totalProfit = 0.0
             for position in t.positions {

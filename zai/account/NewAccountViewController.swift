@@ -14,7 +14,7 @@ import ZaifSwift
 
 
 @objc protocol NewAccountViewDelegate {
-    func didCreateNewAccount(userId: String)
+    func didCreateNewAccount(_ userId: String)
 }
 
 
@@ -25,7 +25,7 @@ class NewAccountViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
     
-    @IBAction func pushCreateButton(sender: AnyObject) {
+    @IBAction func pushCreateButton(_ sender: AnyObject) {
         let userId = self.userIdText.text!
         if userId == "" {
             self.errorMessageLabel.text = "Invalid user id"
@@ -42,21 +42,21 @@ class NewAccountViewController: UIViewController {
         
         repository.create(userId, api: dummyApi)
         
-        self.performSegueWithIdentifier("backToLoginSegue", sender: self)
+        self.performSegue(withIdentifier: "backToLoginSegue", sender: self)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         if let ident = segue.identifier {
             switch ident {
             case "backToLoginSegue":
-                let destController = segue.destinationViewController as! LoginViewController
+                let destController = segue.destination as! LoginViewController
                 destController.userIdFromNewAccount = self.userIdText.text!
             default: break
             }
         }
     }
     
-    @IBAction func back(segue:UIStoryboardSegue) {
+    @IBAction func back(_ segue:UIStoryboardSegue) {
         print("bbb")
     }
     

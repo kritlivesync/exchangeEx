@@ -12,20 +12,20 @@ import CoreData
 import ZaifSwift
 
 
-public class Account: NSManagedObject {
+open class Account: NSManagedObject {
 
-    public override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    public override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
     }
     
     convenience init(userId: String, api: PrivateApi) {
-        self.init(entity: AccountRepository.getInstance().accountDescription, insertIntoManagedObjectContext: nil)
+        self.init(entity: AccountRepository.getInstance().accountDescription, insertInto: nil)
         
         self.userId = userId
         self.privateApi = api
     }
     
-    func validateApiKey(cb: (ZaiError?, Bool) -> Void) {
+    func validateApiKey(_ cb: @escaping (ZaiError?, Bool) -> Void) {
         self.privateApi.getInfo() { (err, res) in
             if let e = err {
                 switch e.errorType {
@@ -40,7 +40,7 @@ public class Account: NSManagedObject {
         }
     }
     
-    func getMarketCapitalization(cb: ((ZaiError?, Int) -> Void)) {
+    func getMarketCapitalization(_ cb: @escaping ((ZaiError?, Int) -> Void)) {
         let fund = JPYFund(api: self.privateApi)
         fund.getMarketCapitalization(cb)
     }

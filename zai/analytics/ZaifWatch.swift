@@ -12,28 +12,21 @@ import ZaifSwift
 
 
 protocol ZaifWatchDelegate {
-    func didFetchBtcJpyMarketPrice(price: Double)
-    func didFetchMonaJpyMarketPrice(price: Double)
-    func didFetchXemJpyMarketPrice(price: Double)
-    func didFetchBtcJpyLastPrice(price: Double)
+    func didFetchBtcJpyMarketPrice(_ price: Double)
+    func didFetchMonaJpyMarketPrice(_ price: Double)
+    func didFetchXemJpyMarketPrice(_ price: Double)
+    func didFetchBtcJpyLastPrice(_ price: Double)
 }
 
 
 class ZaifWatch {
     
     init() {
-        self.queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-        self.marketPriceTimer = NSTimer.scheduledTimerWithTimeInterval(
-            self.WATCH_MARKETPRICE_INTERVAL,
+        self.queue = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default)
+        self.marketPriceTimer = Timer.scheduledTimer(
+            timeInterval: self.WATCH_MARKETPRICE_INTERVAL,
             target: self,
             selector: #selector(ZaifWatch.addMarketPriceOperation),
-            userInfo: nil,
-            repeats: true)
-        
-        self.marketPriceTimer = NSTimer.scheduledTimerWithTimeInterval(
-            self.WATCH_LASTPRICE_INTERVAL,
-            target: self,
-            selector: #selector(ZaifWatch.addLastPriceOperation),
             userInfo: nil,
             repeats: true)
         
@@ -41,7 +34,7 @@ class ZaifWatch {
     }
     
     @objc func addMarketPriceOperation() {
-        dispatch_async(self.queue) {
+        self.queue.async {
             BitCoin.getPriceFor(.JPY) { (err, price) in
                 if err == nil && self.delegate != nil {
                     self.delegate!.didFetchBtcJpyMarketPrice(price)
@@ -69,11 +62,33 @@ class ZaifWatch {
         }
     }
 
+    var lastPriceWatchInterval: Double {
+        get {
+            if let _ = self.lastPriceTimer {
+                return Double(self.lastPriceTimer.timeInterval)
+            } else {
+                return 0.0
+            }
+        }
+        set {
+            if let timer = self.lastPriceTimer {
+                if timer.isValid {
+                    timer.invalidate()
+                }
+            }
+            
+            self.lastPriceTimer = Timer.scheduledTimer(
+                   timeInterval: newValue,
+                   target: self,
+                   selector: #selector(ZaifWatch.addLastPriceOperation),
+                   userInfo: nil,
+                   repeats: true)
+        }
+    }
     
-    let queue: dispatch_queue_t
-    var marketPriceTimer: NSTimer!
-    var lastPriceTimer: NSTimer!
+    let queue: DispatchQueue
+    var marketPriceTimer: Timer!
+    var lastPriceTimer: Timer!
     var delegate: ZaifWatchDelegate? = nil
     let WATCH_MARKETPRICE_INTERVAL = 10.0 // seconds
-    let WATCH_LASTPRICE_INTERVAL = 180.0
 }

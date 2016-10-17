@@ -12,7 +12,7 @@ import UIKit
 
 class PositionListViewCell : UITableViewCell {
     
-    func setPosition(position: Position?, btcJpyPrice: Double) {
+    func setPosition(_ position: Position?, btcJpyPrice: Double) {
         if let p = position {
             self.orderActionLabel.text = p.type
             let gain = (btcJpyPrice - p.cost) * p.balance

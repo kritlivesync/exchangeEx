@@ -24,10 +24,10 @@ class AccountRepository {
         }
     }
     
-    func create(userId: String, api: PrivateApi) -> Account {
+    func create(_ userId: String, api: PrivateApi) -> Account {
         let db = Database.getDb()
         
-        let newAccount = NSEntityDescription.insertNewObjectForEntityForName(AccountRepository.accountModelName, inManagedObjectContext: db.managedObjectContext) as! Account
+        let newAccount = NSEntityDescription.insertNewObject(forEntityName: AccountRepository.accountModelName, into: db.managedObjectContext) as! Account
         newAccount.userId = userId
         newAccount.privateApi = api
         
@@ -36,14 +36,14 @@ class AccountRepository {
         return newAccount
     }
     
-    func findByUserId(userId: String, api: PrivateApi) -> Account? {
-        let query = NSFetchRequest(entityName: AccountRepository.accountModelName)
+    func findByUserId(_ userId: String, api: PrivateApi) -> Account? {
+        let query: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: AccountRepository.accountModelName)
         let predicate = NSPredicate(format: "userId = %@", userId)
         query.predicate = predicate
         
         let db = Database.getDb()
         do {
-            let accounts = try db.managedObjectContext.executeFetchRequest(query) as! [Account]
+            let accounts = try db.managedObjectContext.fetch(query) as! [Account]
             if accounts.count != 1 {
                 return nil
             } else {
@@ -58,12 +58,12 @@ class AccountRepository {
     
     lazy var accountDescription: NSEntityDescription = {
         let db = Database.getDb()
-        return NSEntityDescription.entityForName(AccountRepository.accountModelName, inManagedObjectContext: db.managedObjectContext)!
+        return NSEntityDescription.entity(forEntityName: AccountRepository.accountModelName, in: db.managedObjectContext)!
     }()
     
-    private init() {
+    fileprivate init() {
     }
     
-    private static var inst: AccountRepository? = nil
-    private static let accountModelName = "Account"
+    fileprivate static var inst: AccountRepository? = nil
+    fileprivate static let accountModelName = "Account"
 }

@@ -18,14 +18,14 @@ public enum TraderState : String {
 }
 
 
-public class Trader: NSManagedObject {
+open class Trader: NSManagedObject {
 
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
     }
     
     convenience init(name: String, account: Account) {
-        self.init(entity: TraderRepository.getInstance().traderDescription, insertIntoManagedObjectContext: nil)
+        self.init(entity: TraderRepository.getInstance().traderDescription, insertInto: nil)
         
         self.name = name
         self.status = TraderState.ACTIVE.rawValue
@@ -33,13 +33,13 @@ public class Trader: NSManagedObject {
         self.positions = []
     }
     
-    func addPosition(position: Position) {
-        let positions = self.mutableOrderedSetValueForKey("positions")
-        positions.addObject(position)
+    func addPosition(_ position: Position) {
+        let positions = self.mutableOrderedSetValue(forKey: "positions")
+        positions.add(position)
         Database.getDb().saveContext()
     }
     
-    func createLongPosition(currencyPair: CurrencyPair, price: Double?, amount: Double, cb: (ZaiError?) -> Void) {
+    func createLongPosition(_ currencyPair: CurrencyPair, price: Double?, amount: Double, cb: @escaping (ZaiError?) -> Void) {
         let order = BuyOrder(currencyPair: currencyPair, price: price, amount: amount, api: self.account.privateApi)!
         order.excute() { (err, orderId) in
             if let e = err {

@@ -15,18 +15,18 @@ import ZaifSwift
 @objc(LongPosition)
 class LongPosition: Position {
     
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
     }
 
     convenience init?(order: BuyOrder, trader: Trader) {
-        self.init(entity: TraderRepository.getInstance().longPositionDescription, insertIntoManagedObjectContext: nil)
+        self.init(entity: TraderRepository.getInstance().longPositionDescription, insertInto: nil)
         
         if !order.isPromised {
             return nil
         }
 
-        self.id = NSUUID().UUIDString
+        self.id = UUID().uuidString
         self.trader = trader
         let log = TradeLogRepository.getInstance().create(.OPEN_LONG_POSITION, traderName: trader.name, account: trader.account, order: order, positionId: self.id)
         self.addLog(log)
@@ -97,7 +97,7 @@ class LongPosition: Position {
         }
     }
     
-    override internal func unwind(amount: Double?=nil, price: Double?, cb: (ZaiError?) -> Void) {
+    override internal func unwind(_ amount: Double?=nil, price: Double?, cb: @escaping (ZaiError?) -> Void) {
         if self.status != .OPEN {
             cb(nil)
             return
@@ -111,7 +111,7 @@ class LongPosition: Position {
             // close this position completely
             amt = balance
         }
-        if balance < amt {
+        if balance < amt! {
             amt = balance
         }
         

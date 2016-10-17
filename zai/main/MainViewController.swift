@@ -32,12 +32,12 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, TraderView
         self.traderView.delegate = self
         self.fundView.delegate = self
         
-        let app = UIApplication.sharedApplication().delegate as! AppDelegate
+        let app = UIApplication.shared.delegate as! AppDelegate
         app.analyzer!.delegate = self
     }
     
     // SelectTraderViewDelegate
-    func setCurrentTrader(traderName: String) {
+    func setCurrentTrader(_ traderName: String) {
         self.currentTraderName = traderName
         self.traderView.reloadTrader(self.currentTraderName)
         self.traderView.reloadData()
@@ -45,20 +45,20 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, TraderView
     
     // TraderViewDelegate
     func didTouchTraderView() {
-        self.performSegueWithIdentifier(self.positionsSegue, sender: self)
+        self.performSegue(withIdentifier: self.positionsSegue, sender: self)
     }
     
     // FundViewDelegate
-    func didUpdateBtcJpyPrice(view: String) {
+    func didUpdateBtcJpyPrice(_ view: String) {
         self.btcJpyMarketPrice.text = view
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.marketCapitalization.setNeedsDisplay()
         }
     }
     
-    func didUpdateMarketCapitalization(view: String) {
+    func didUpdateMarketCapitalization(_ view: String) {
         self.marketCapitalization.text = view
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.marketCapitalization.setNeedsDisplay()
         }
     }
@@ -96,49 +96,53 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, TraderView
         }
     }
     
-    func didUpdateSignals(momentum: Double, isBullMarket: Bool) {
+    func didUpdateSignals(_ momentum: Double, isBullMarket: Bool) {
         self.momentumLabel.text = momentum.description
         self.bullMarketLabel.text = isBullMarket.description
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.momentumLabel.setNeedsDisplay()
             self.bullMarketLabel.setNeedsDisplay()
         }
     }
     
-    func didUpdateCount(count: Int) {
+    func didUpdateCount(_ count: Int) {
         self.countDownLabel.text = count.description
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.countDownLabel.setNeedsDisplay()
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+    func didUpdateInterval(_ interval: Int) {
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier! {
         case self.selectTraderSegue:
-            let destController = segue.destinationViewController as! SelectTraderViewController
+            let destController = segue.destination as! SelectTraderViewController
             destController.account = account!
             destController.delegate = self
         case self.positionsSegue:
-            let destController = segue.destinationViewController as! PositionsViewController
+            let destController = segue.destination as! PositionsViewController
             destController.trader = self.traderView.trader
         default: break
         }
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesEnded(touches, withEvent: event)
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
         for touch: UITouch in touches {
             let tag = touch.view!.tag
             switch tag {
             case self.selectTraderLabelTag:
-                self.performSegueWithIdentifier(self.selectTraderSegue, sender: self)
+                self.performSegue(withIdentifier: self.selectTraderSegue, sender: self)
             default:
                 break
             }
         }
     }
     
-    @IBAction func pushBuyButton(sender: AnyObject) {
+    @IBAction func pushBuyButton(_ sender: AnyObject) {
         let trader = TraderRepository.getInstance().findTraderByName(self.currentTraderName, api: self.account.privateApi)
         if trader == nil {
             return
@@ -172,17 +176,17 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, TraderView
         
     }
     
-    @IBAction func pushSellButton(sender: AnyObject) {
+    @IBAction func pushSellButton(_ sender: AnyObject) {
     }
     
     
     
-    @IBAction func unwindToMain(segue: UIStoryboardSegue) {}
+    @IBAction func unwindToMain(_ segue: UIStoryboardSegue) {}
     
     internal var account: Account!
-    private var fundView: FundView!
-    private var traderView: TraderView!
-    private var currentTraderName: String = ""
+    fileprivate var fundView: FundView!
+    fileprivate var traderView: TraderView!
+    fileprivate var currentTraderName: String = ""
     
     @IBOutlet weak var buyPriceText: UITextField!
     @IBOutlet weak var buyAmountText: UITextField!
@@ -193,9 +197,9 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, TraderView
     @IBOutlet weak var bullMarketLabel: UILabel!
     @IBOutlet weak var countDownLabel: UILabel!
     
-    private let selectTraderLabelTag = 1
-    private let selectTraderSegue = "selectTraderSegue"
-    private let positionsSegue = "positionsSegue"
+    fileprivate let selectTraderLabelTag = 1
+    fileprivate let selectTraderSegue = "selectTraderSegue"
+    fileprivate let positionsSegue = "positionsSegue"
     
     @IBOutlet weak var marketCapitalization: UILabel!
     @IBOutlet weak var btcJpyMarketPrice: UILabel!

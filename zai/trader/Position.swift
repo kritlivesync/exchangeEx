@@ -13,7 +13,7 @@ import ZaifSwift
 
 
 internal protocol PositionProtocol {
-    func unwind(amount: Double?, price: Double?, cb: (ZaiError?) -> Void)
+    func unwind(_ amount: Double?, price: Double?, cb: @escaping (ZaiError?) -> Void) -> Void
     
     var balance: Double { get }
     var profit: Double { get }
@@ -29,14 +29,13 @@ enum PositionState {
 
 
 class Position: NSManagedObject, PositionProtocol {
-    
-    func unwind(amount: Double?, price: Double?, cb: (ZaiError?) -> Void) {
+    internal func unwind(_ amount: Double?, price: Double?, cb: @escaping (ZaiError?) -> Void) {
         cb(ZaiError(errorType: .UNKNOWN_ERROR, message: "not implemented"))
     }
     
-    func addLog(log: TradeLog) {
-        let logs = self.mutableOrderedSetValueForKey("tradeLogs")
-        logs.addObject(log)
+    func addLog(_ log: TradeLog) {
+        let logs = self.mutableOrderedSetValue(forKey: "tradeLogs")
+        logs.add(log)
         Database.getDb().saveContext()
     }
 

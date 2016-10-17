@@ -12,7 +12,7 @@ import ZaifSwift
 
 
 @objc protocol SelectTraderViewDelegate {
-    func setCurrentTrader(traderName: String)
+    func setCurrentTrader(_ traderName: String)
 }
 
 
@@ -30,14 +30,14 @@ class SelectTraderViewController: UIViewController, TraderListViewDelegate, Trad
         self.traderListView.reloadTraders(self.currentTraderName!)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let identifier = segue.identifier {
             switch identifier {
             case self.newTraderSegue:
-                let destController = segue.destinationViewController as! NewTraderViewController
+                let destController = segue.destination as! NewTraderViewController
                 destController.account = self.account!
             case self.traderMenuSegue:
-                let destController = segue.destinationViewController as! TraderMenuViewController
+                let destController = segue.destination as! TraderMenuViewController
                 destController.trader = self.selectedTrader
                 destController.delegate = self
             default: break
@@ -46,13 +46,13 @@ class SelectTraderViewController: UIViewController, TraderListViewDelegate, Trad
     }
     
     // TraderListViewDelegate
-    func didSelectTrader(trader: Trader) {
+    func didSelectTrader(_ trader: Trader) {
         self.selectedTrader = trader
-        self.performSegueWithIdentifier(self.traderMenuSegue, sender: self)
+        self.performSegue(withIdentifier: self.traderMenuSegue, sender: self)
     }
     
     // TraderMenuViewDelegate
-    func didSelectActivate(trader: Trader) {
+    func didSelectActivate(_ trader: Trader) {
         self.currentTraderName = trader.name
         Config.SetCurrentTraderName(trader.name)
         Config.save()
@@ -63,7 +63,7 @@ class SelectTraderViewController: UIViewController, TraderListViewDelegate, Trad
         }
     }
     
-    func didSelectDeactivate(trader: Trader) {
+    func didSelectDeactivate(_ trader: Trader) {
         if self.currentTraderName == trader.name {
             self.currentTraderName = ""
             Config.SetCurrentTraderName("")
@@ -76,30 +76,30 @@ class SelectTraderViewController: UIViewController, TraderListViewDelegate, Trad
         }
     }
     
-    func didSelectShowPositions(trader: Trader) {
+    func didSelectShowPositions(_ trader: Trader) {
     }
     
-    func didSelectDelete(trader: Trader) {
+    func didSelectDelete(_ trader: Trader) {
         self.didSelectDeactivate(trader)
         TraderRepository.getInstance().delete(trader)
         self.traderListView.reloadTraders(self.currentTraderName!)
         self.traderListView.reloadData()
     }
     
-    @IBAction func unwindToSelect(segue: UIStoryboardSegue) {}
+    @IBAction func unwindToSelect(_ segue: UIStoryboardSegue) {}
     
-    @IBAction func unwindToTraderList(segue: UIStoryboardSegue) {}
+    @IBAction func unwindToTraderList(_ segue: UIStoryboardSegue) {}
     
     internal var account: Account!
     internal var traderListView: TraderListView!
-    private var currentTraderName: String? = nil
+    fileprivate var currentTraderName: String? = nil
     
-    private var selectedTrader: Trader? = nil
+    fileprivate var selectedTrader: Trader? = nil
     
     internal var delegate: SelectTraderViewDelegate? = nil
     
-    private let newTraderSegue = "newTraderSegue"
-    private let traderMenuSegue = "traderMenuSegue"
+    fileprivate let newTraderSegue = "newTraderSegue"
+    fileprivate let traderMenuSegue = "traderMenuSegue"
 
     @IBOutlet weak var tableView: UITableView!
 

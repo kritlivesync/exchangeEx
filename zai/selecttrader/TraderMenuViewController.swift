@@ -12,10 +12,10 @@ import ZaifSwift
 
 
 @objc protocol TraderMenuViewDelegate {
-    func didSelectActivate(trader: Trader)
-    func didSelectDeactivate(trader: Trader)
-    func didSelectShowPositions(trader: Trader)
-    func didSelectDelete(trader: Trader)
+    func didSelectActivate(_ trader: Trader)
+    func didSelectDeactivate(_ trader: Trader)
+    func didSelectShowPositions(_ trader: Trader)
+    func didSelectDelete(_ trader: Trader)
 }
 
 
@@ -25,32 +25,32 @@ class TraderMenuViewController: UIViewController {
         super.viewDidLoad()
     }
 
-    @IBAction func pushActivateButton(sender: AnyObject) {
+    @IBAction func pushActivateButton(_ sender: AnyObject) {
         if self.delegate != nil {
             self.delegate!.didSelectActivate(self.trader!)
         }
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func pushDeactivateButton(sender: AnyObject) {
+    @IBAction func pushDeactivateButton(_ sender: AnyObject) {
         if self.delegate != nil {
             self.delegate!.didSelectDeactivate(self.trader!)
         }
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 
-    @IBAction func pushShowPositionsButton(sender: AnyObject) {
+    @IBAction func pushShowPositionsButton(_ sender: AnyObject) {
         if self.delegate != nil {
             self.delegate!.didSelectShowPositions(self.trader!)
         }
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func pushDeleteButton(sender: AnyObject) {
+    @IBAction func pushDeleteButton(_ sender: AnyObject) {
         if self.delegate != nil {
             self.delegate!.didSelectDelete(self.trader!)
         }
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
  

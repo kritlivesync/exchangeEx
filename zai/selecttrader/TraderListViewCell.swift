@@ -12,7 +12,7 @@ import UIKit
 
 class TraderListViewCell : UITableViewCell {
     
-    func setTrader(trader: Trader?) {
+    func setTrader(_ trader: Trader?) {
         if let t = trader {
             self.nameLabel.text = t.name
             self.typeLabel.text = "Manual"

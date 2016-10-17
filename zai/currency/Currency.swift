@@ -12,7 +12,7 @@ import ZaifSwift
 
 
 internal class BitCoin {
-    static func getPriceFor(currency: Currency, cb: (ZaiError?, Double) -> Void) {
+    static func getPriceFor(_ currency: Currency, cb: @escaping (ZaiError?, Double) -> Void) {
         switch currency {
         case Currency.JPY:
             PublicApi.ticker(CurrencyPair.BTC_JPY) { (err, res) in
@@ -33,7 +33,7 @@ internal class BitCoin {
 }
 
 internal class MonaCoin {
-    static func getPriceFor(currency: Currency, cb: (ZaiError?, Double) -> Void) {
+    static func getPriceFor(_ currency: Currency, cb: @escaping (ZaiError?, Double) -> Void) {
         switch currency {
         case Currency.JPY:
             PublicApi.ticker(CurrencyPair.MONA_JPY) { (err, res) in
@@ -54,7 +54,7 @@ internal class MonaCoin {
 }
 
 internal class XEM {
-    static func getPriceFor(currency: Currency, cb: (ZaiError?, Double) -> Void) {
+    static func getPriceFor(_ currency: Currency, cb: @escaping (ZaiError?, Double) -> Void) {
         switch currency {
         case Currency.JPY:
             PublicApi.ticker(CurrencyPair.XEM_JPY) { (err, res) in

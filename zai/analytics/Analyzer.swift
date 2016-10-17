@@ -26,56 +26,78 @@ class MarketPrice {
 protocol AnalyzerDelegate {
     func signaledBuy()
     func signaledSell()
-    func didUpdateSignals(momentum: Double, isBullMarket: Bool)
-    func didUpdateCount(count: Int)
+    func didUpdateSignals(_ momentum: Double, isBullMarket: Bool)
+    func didUpdateCount(_ count: Int)
+    func didUpdateInterval(_ interval: Int)
 }
 
 class Analyzer : ZaifWatchDelegate {
     
-    init() {
+    init(api: PrivateApi) {
+        self.api = api
         self.marketPrice = MarketPrice(btcJpy: 0.0, monaJpy: 0.0, xemJpy: 0.0)
         self.macd = Macd(shortTerm: 3, longTerm: 6, signalTerm: 4)
         self.watch = ZaifWatch()
+        self.watch.lastPriceWatchInterval = Double(self.lastPriceWatchInterval * 60)
         
-        self.count = Int(self.watch.WATCH_LASTPRICE_INTERVAL)
-        self.countDownTimer = NSTimer.scheduledTimerWithTimeInterval(
-            1,
+        self.count = Int(self.watch.lastPriceWatchInterval)
+        self.countDownTimer = Timer.scheduledTimer(
+            timeInterval: 1,
             target: self,
             selector: #selector(Analyzer.countDown),
             userInfo: nil,
             repeats: true)
         
         self.watch.delegate = self
+        
+        let fund = JPYFund(api: self.api)
+        fund.getMarketCapitalization() { (err, jpy) in
+            if err == nil {
+                self.prevJpFund = jpy
+            }
+        }
+        self.updateWatchIntervalTimer = Timer.scheduledTimer(
+            timeInterval: 3600.0,
+            target: self,
+            selector: #selector(Analyzer.updateWatchInterval),
+            userInfo: nil,
+            repeats: true)
     }
     
-    func didFetchBtcJpyMarketPrice(price: Double) {
+    func didFetchBtcJpyMarketPrice(_ price: Double) {
         self.marketPrice = MarketPrice(btcJpy: price, monaJpy: self.marketPrice.monaJpy, xemJpy: self.marketPrice.xemJpy)
     }
     
-    func didFetchMonaJpyMarketPrice(price: Double) {
+    func didFetchMonaJpyMarketPrice(_ price: Double) {
         self.marketPrice = MarketPrice(btcJpy: self.marketPrice.btcJpy, monaJpy: price, xemJpy: self.marketPrice.xemJpy)
     }
     
-    func didFetchXemJpyMarketPrice(price: Double) {
+    func didFetchXemJpyMarketPrice(_ price: Double) {
         self.marketPrice = MarketPrice(btcJpy: self.marketPrice.btcJpy, monaJpy: self.marketPrice.monaJpy, xemJpy: price)
     }
     
-    func didFetchBtcJpyLastPrice(price: Double) {
-        self.count = Int(self.watch.WATCH_LASTPRICE_INTERVAL)
+    func didFetchBtcJpyLastPrice(_ price: Double) {
+        self.count = Int(self.watch.lastPriceWatchInterval)
         
         self.macd.addSampleValue(price)
 
         if self.macd.valid {
             let average = self.macd.average(3)
             let prevAverage = self.average
-            let momentum = (average - prevAverage) / self.watch.WATCH_LASTPRICE_INTERVAL
+            let momentum = (average - prevAverage) / self.watch.lastPriceWatchInterval
             let prevMomentum = self.momentum
             let isBullMomentum = (0 < momentum)
             let prevMomentumisBull = (0 < prevMomentum)
+            var isBearMomuntum = false
+            if self.momentumAtBuy > 0 {
+                isBearMomuntum = (momentum < (self.momentumAtBuy * self.bearFactor))
+            } else {
+                isBearMomuntum = (momentum < (self.momentumAtBuy / (1 - self.bearFactor)))
+            }
             
             if self.isTestBuy {
                 if self.marketPrice.btcJpy < self.btcJpyPrice {
-                    dispatch_async(dispatch_get_main_queue()) {
+                    DispatchQueue.main.async {
                         self.delegate!.signaledSell()
                         self.hasLongPos = false
                     }
@@ -88,27 +110,30 @@ class Analyzer : ZaifWatchDelegate {
                 self.isTestBuy = false
             } else if !prevMomentumisBull && isBullMomentum && self.delegate != nil {
                 self.isBullMarket = true
-                dispatch_async(dispatch_get_main_queue()) {
-                    if self.isPreferBull {
+                DispatchQueue.main.async {
+                    if !self.isPreferBull {
                         self.delegate!.signaledBuy()
-                        self.isTestBuy = true
+                        //self.momentumAtBuy = momentum
+                        //self.isTestBuy = true
                         self.hasLongPos = true
                     } else {
                         self.delegate!.signaledSell()
+                        self.momentumAtBuy = momentum
                         self.hasLongPos = false
                     }
                 }
                 print("sell")
             } else {
-                if self.isBullMarket && prevMomentumisBull && !isBullMomentum {
+                if self.isBullMarket && isBearMomuntum {
                     self.isBullMarket = false
-                    dispatch_async(dispatch_get_main_queue()) {
-                        if self.isPreferBull {
+                    DispatchQueue.main.async {
+                        if !self.isPreferBull {
                             self.delegate!.signaledSell()
                             self.hasLongPos = false
                         } else {
                             self.delegate!.signaledBuy()
-                            self.isTestBuy = true
+                            //self.momentumAtBuy = momentum
+                            //self.isTestBuy = true
                             self.hasLongPos = true
                         }
                     }
@@ -132,9 +157,34 @@ class Analyzer : ZaifWatchDelegate {
         }
     }
     
+    @objc func updateWatchInterval() {
+        let fund = JPYFund(api: self.api)
+        fund.getMarketCapitalization() { (err, jpy) in
+            if err == nil {
+                if jpy < self.prevJpFund {
+                    self.isPreferBull = !self.isPreferBull
+                    /*
+                    var newInterval = self.lastPriceWatchInterval + 1
+                    if newInterval > 5 {
+                        newInterval = 3
+                    }
+                    self.watch.lastPriceWatchInterval = Double(newInterval * 60)
+                    self.lastPriceWatchInterval = newInterval
+                    
+                    self.count = Int(self.watch.lastPriceWatchInterval)
+                    */
+                }
+                self.prevJpFund = jpy
+            }
+        }
+    }
+    
     var marketPrice: MarketPrice
     var macd: Macd
     let watch: ZaifWatch!
+    var lastPriceWatchInterval = 10
+    var momentumAtBuy = 0.0
+    var bearFactor = 0.3
     var isBullMarket = false
     var isPreferBull = true
     var isTestBuy = false
@@ -144,6 +194,12 @@ class Analyzer : ZaifWatchDelegate {
     var btcJpyPrice = 0.0
     var delegate: AnalyzerDelegate? = nil
     
-    var countDownTimer: NSTimer! = nil
+    var updateWatchIntervalTimer: Timer! = nil
+    var prevJpFund: Int = 0
+    
+    
+    var countDownTimer: Timer! = nil
     var count: Int
+    
+    var api: PrivateApi
 }

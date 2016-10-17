@@ -24,25 +24,25 @@ public enum TradeAction : String {
 
 class TradeLog: NSManagedObject {
     
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
     }
     
     convenience init(action: TradeAction, traderName: String, account: Account, order: Order, positionId: String) {
-        self.init(entity: TradeLogRepository.getInstance().tradeLogDescription, insertIntoManagedObjectContext: nil)
+        self.init(entity: TradeLogRepository.getInstance().tradeLogDescription, insertInto: nil)
         
-        self.id = NSUUID().UUIDString
+        self.id = UUID().uuidString
         self.userId = account.userId
         self.apiKey = account.privateApi.apiKey
         self.positionId = positionId
         self.traderName = traderName
         self.tradeAction = action.rawValue
         self.orderAction = order.action.rawValue
-        self.orderId = order.orderId
+        self.orderId = NSNumber(value: order.orderId)
         self.currencyPair = order.currencyPair.rawValue
-        self.price = order.price
-        self.amount = order.amount
-        self.timestamp = NSDate().timeIntervalSince1970
+        self.price = NSNumber(value: order.price)
+        self.amount = NSNumber(value: order.amount)
+        self.timestamp = NSNumber(value: Date().timeIntervalSince1970)
     }
 
 // Insert code here to add functionality to your managed object subclass

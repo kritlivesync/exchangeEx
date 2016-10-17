@@ -18,7 +18,7 @@ class NewTraderViewController: UIViewController {
         
     }
     
-    @IBAction func pushCreateButton(sender: AnyObject) {
+    @IBAction func pushCreateButton(_ sender: AnyObject) {
         let traderName = self.traderNameText.text!
         if traderName == "" {
             self.errorMessageLabel.text = "Invalid trader name"
@@ -34,13 +34,13 @@ class NewTraderViewController: UIViewController {
         
         repository.create(traderName, account: self.account)
         
-        self.performSegueWithIdentifier(self.backToSelectTraderSeque, sender: self)
+        self.performSegue(withIdentifier: self.backToSelectTraderSeque, sender: self)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier! {
         case self.backToSelectTraderSeque:
-            let destController = segue.destinationViewController as! SelectTraderViewController
+            let destController = segue.destination as! SelectTraderViewController
             destController.account = self.account!
         default: break
         }
@@ -49,7 +49,7 @@ class NewTraderViewController: UIViewController {
     @IBOutlet weak var traderNameText: UITextField!
     @IBOutlet weak var errorMessageLabel: UILabel!
     
-    private let backToSelectTraderSeque = "backToSelectTraderSeque"
+    fileprivate let backToSelectTraderSeque = "backToSelectTraderSeque"
     
     internal var account: Account!
 }

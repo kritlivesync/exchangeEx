@@ -12,12 +12,12 @@ import ZaifSwift
 
 
 @objc protocol TraderListViewDelegate {
-    func didSelectTrader(trader: Trader)
+    func didSelectTrader(_ trader: Trader)
 }
 
 
 class TraderListView : NSObject, UITableViewDelegate, UITableViewDataSource {
-    
+
     init(view: UITableView, api: PrivateApi) {
         self.api = api
         self.view = view
@@ -27,21 +27,21 @@ class TraderListView : NSObject, UITableViewDelegate, UITableViewDataSource {
         self.view.dataSource = self
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return TraderRepository.getInstance().count()
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("traderListViewCell", forIndexPath: indexPath) as! TraderListViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "traderListViewCell", for: indexPath as IndexPath) as! TraderListViewCell
         let trader = self.traders[indexPath.row]
         cell.setTrader(trader)
         cell.tag = indexPath.row
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if self.delegate != nil {
-            self.delegate!.didSelectTrader(self.traders[indexPath.row])
+            self.delegate!.didSelectTrader(self.traders[(indexPath as NSIndexPath).row])
         }
     }
     
@@ -49,21 +49,21 @@ class TraderListView : NSObject, UITableViewDelegate, UITableViewDataSource {
         self.view.reloadData()
     }
     
-    internal func reloadTraders(currentTraderName: String) {
+    internal func reloadTraders(_ currentTraderName: String) {
         var allTraders = TraderRepository.getInstance().getAllTraders(self.api)
         for trader in allTraders {
             if trader.name == currentTraderName {
-                let index = allTraders.indexOf(trader)
-                allTraders.removeAtIndex(index!)
-                allTraders.insert(trader, atIndex: 0)
+                let index = allTraders.index(of: trader)
+                allTraders.remove(at: index!)
+                allTraders.insert(trader, at: 0)
                 break
             }
         }
         self.traders = allTraders
     }
     
-    private var traders: [Trader] = []
+    fileprivate var traders: [Trader] = []
     internal var delegate: TraderListViewDelegate? = nil
-    private let api: PrivateApi
-    private let view: UITableView
+    fileprivate let api: PrivateApi
+    fileprivate let view: UITableView
 }

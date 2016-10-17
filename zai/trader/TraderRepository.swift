@@ -24,10 +24,10 @@ class TraderRepository {
         }
     }
     
-    func create(name: String, account: Account) -> Trader {
+    func create(_ name: String, account: Account) -> Trader {
         let db = Database.getDb()
         
-        let newTrader = NSEntityDescription.insertNewObjectForEntityForName(TraderRepository.traderModelName, inManagedObjectContext: db.managedObjectContext) as! Trader
+        let newTrader = NSEntityDescription.insertNewObject(forEntityName: TraderRepository.traderModelName, into: db.managedObjectContext) as! Trader
         newTrader.name = name
         newTrader.account = account
         newTrader.account = account
@@ -37,20 +37,20 @@ class TraderRepository {
         return newTrader
     }
     
-    func delete(trader: Trader) {
+    func delete(_ trader: Trader) {
         let db = Database.getDb()
-        db.managedObjectContext.deleteObject(trader)
+        db.managedObjectContext.delete(trader)
         db.saveContext()
     }
     
-    func findTraderByName(name: String, api: PrivateApi) -> Trader? {
-        let query = NSFetchRequest(entityName: TraderRepository.traderModelName)
+    func findTraderByName(_ name: String, api: PrivateApi) -> Trader? {
+        let query: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: TraderRepository.traderModelName)
         let predicate = NSPredicate(format: "name = %@", name)
         query.predicate = predicate
         
         let db = Database.getDb()
         do {
-            let traders = try db.managedObjectContext.executeFetchRequest(query) as! [Trader]
+            let traders = try db.managedObjectContext.fetch(query) as! [Trader]
             if traders.count != 1 {
                 return nil
             } else {
@@ -63,12 +63,12 @@ class TraderRepository {
         }
     }
     
-    func getAllTraders(api: PrivateApi) -> [Trader] {
-        let query = NSFetchRequest(entityName: TraderRepository.traderModelName)
+    func getAllTraders(_ api: PrivateApi) -> [Trader] {
+        let query = Trader.fetchRequest()
         
         let db = Database.getDb()
         do {
-            let traders = try db.managedObjectContext.executeFetchRequest(query) as! [Trader]
+            let traders = try db.managedObjectContext.fetch(query) as! [Trader]
             for trader in traders {
                 trader.account.privateApi = api
             }
@@ -79,11 +79,11 @@ class TraderRepository {
     }
     
     func count() -> Int {
-        let query = NSFetchRequest(entityName: TraderRepository.traderModelName)
+        let query = Trader.fetchRequest()
         
         let db = Database.getDb()
         do {
-            let traders = try db.managedObjectContext.executeFetchRequest(query) as! [Trader]
+            let traders = try db.managedObjectContext.fetch(query) as! [Trader]
             return traders.count
         } catch {
             return 0
@@ -92,24 +92,24 @@ class TraderRepository {
     
     lazy var traderDescription: NSEntityDescription = {
         let db = Database.getDb()
-        return NSEntityDescription.entityForName(TraderRepository.traderModelName, inManagedObjectContext: db.managedObjectContext)!
+        return NSEntityDescription.entity(forEntityName: TraderRepository.traderModelName, in: db.managedObjectContext)!
     }()
     
     lazy var longPositionDescription: NSEntityDescription = {
         let db = Database.getDb()
-        return NSEntityDescription.entityForName(TraderRepository.longPositionModelName, inManagedObjectContext: db.managedObjectContext)!
+        return NSEntityDescription.entity(forEntityName: TraderRepository.longPositionModelName, in: db.managedObjectContext)!
     }()
     
     lazy var shortPositionDescription: NSEntityDescription = {
         let db = Database.getDb()
-        return NSEntityDescription.entityForName(TraderRepository.shortPositionModelName, inManagedObjectContext: db.managedObjectContext)!
+        return NSEntityDescription.entity(forEntityName: TraderRepository.shortPositionModelName, in: db.managedObjectContext)!
     }()
     
-    private init() {
+    fileprivate init() {
     }
     
-    private static var inst: TraderRepository? = nil
-    private static let traderModelName = "Trader"
-    private static let longPositionModelName = "LongPosition"
-    private static let shortPositionModelName = "ShortPosition"
+    fileprivate static var inst: TraderRepository? = nil
+    fileprivate static let traderModelName = "Trader"
+    fileprivate static let longPositionModelName = "LongPosition"
+    fileprivate static let shortPositionModelName = "ShortPosition"
 }

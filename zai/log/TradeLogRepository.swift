@@ -22,22 +22,22 @@ class TradeLogRepository {
         }
     }
     
-    func create(action: TradeAction, traderName: String, account: Account, order: Order, positionId: String) -> TradeLog {
+    func create(_ action: TradeAction, traderName: String, account: Account, order: Order, positionId: String) -> TradeLog {
         let db = Database.getDb()
         
-        let newLog = NSEntityDescription.insertNewObjectForEntityForName(TradeLogRepository.tradeLogModelName, inManagedObjectContext: db.managedObjectContext) as! TradeLog
-        newLog.id = NSUUID().UUIDString
+        let newLog = NSEntityDescription.insertNewObject(forEntityName: TradeLogRepository.tradeLogModelName, into: db.managedObjectContext) as! TradeLog
+        newLog.id = UUID().uuidString
         newLog.userId = account.userId
         newLog.apiKey = account.privateApi.apiKey
         newLog.positionId = positionId
         newLog.traderName = traderName
         newLog.tradeAction = action.rawValue
         newLog.orderAction = order.action.rawValue
-        newLog.orderId = order.orderId
+        newLog.orderId = NSNumber(value: order.orderId)
         newLog.currencyPair = order.currencyPair.rawValue
-        newLog.price = order.price
-        newLog.amount = order.amount
-        newLog.timestamp = NSDate().timeIntervalSince1970
+        newLog.price = NSNumber(value: order.price)
+        newLog.amount = NSNumber(value: order.amount)
+        newLog.timestamp = NSNumber(value: Date().timeIntervalSince1970)
         
         db.saveContext()
         
@@ -46,12 +46,12 @@ class TradeLogRepository {
     
     lazy var tradeLogDescription: NSEntityDescription = {
         let db = Database.getDb()
-        return NSEntityDescription.entityForName(TradeLogRepository.tradeLogModelName, inManagedObjectContext: db.managedObjectContext)!
+        return NSEntityDescription.entity(forEntityName: TradeLogRepository.tradeLogModelName, in: db.managedObjectContext)!
     }()
     
-    private init() {
+    fileprivate init() {
     }
     
-    private static var inst: TradeLogRepository? = nil
-    private static let tradeLogModelName = "TradeLog"
+    fileprivate static var inst: TradeLogRepository? = nil
+    fileprivate static let tradeLogModelName = "TradeLog"
 }

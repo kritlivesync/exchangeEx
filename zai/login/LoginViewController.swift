@@ -27,7 +27,7 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
         }
     }
 
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         // for debug
         self.apiKeyText.text = key_full
         self.secretKeyText.text = secret_full
@@ -63,41 +63,41 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
         Config.setPreviousSecretKey(secretKey)
         Config.save()
         
-        let app = UIApplication.sharedApplication().delegate as! AppDelegate
-        app.analyzer = Analyzer()
-        UIApplication.sharedApplication().idleTimerDisabled = true
+        let app = UIApplication.shared.delegate as! AppDelegate
+        app.analyzer = Analyzer(api: api)
+        UIApplication.shared.isIdleTimerDisabled = true
         
         return goNext
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         switch segue.identifier! {
         case self.mainViewSegue:
-            let destController = segue.destinationViewController as! MainViewController
+            let destController = segue.destination as! MainViewController
             destController.account = account!
         case self.newAccountSegue:
-            let destController = segue.destinationViewController as! NewAccountViewController
+            let destController = segue.destination as! NewAccountViewController
             destController.delegate = self
         default: break
         }
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesEnded(touches, withEvent: event)
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
         for touch: UITouch in touches {
             let tag = touch.view!.tag
             switch tag {
             case self.newAccountLabelTag:
-                self.performSegueWithIdentifier(self.newAccountSegue, sender: self)
+                self.performSegue(withIdentifier: self.newAccountSegue, sender: self)
             default:
                 break
             }
         }
     }
     
-    @IBAction func unwindToLogin(segue: UIStoryboardSegue) {}
+    @IBAction func unwindToLogin(_ segue: UIStoryboardSegue) {}
     
-    func didCreateNewAccount(userId: String) {
+    func didCreateNewAccount(_ userId: String) {
         self.userIdFromNewAccount = userId
     }
 
@@ -106,12 +106,12 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
     @IBOutlet weak var secretKeyText: UITextField!
     @IBOutlet weak var errorMessageLabel: UILabel!
     
-    private let newAccountLabelTag = 0
-    private let newAccountSegue = "newAccountSegue"
-    private let mainViewSegue = "mainViewSegue"
+    fileprivate let newAccountLabelTag = 0
+    fileprivate let newAccountSegue = "newAccountSegue"
+    fileprivate let mainViewSegue = "mainViewSegue"
     
     internal var userIdFromNewAccount = ""
     
-    private var account: Account?
+    fileprivate var account: Account?
 }
 

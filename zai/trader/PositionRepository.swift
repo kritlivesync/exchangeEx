@@ -24,44 +24,43 @@ class PositionRepository {
         }
     }
     
-    func createLongPosition(order: BuyOrder, trader: Trader) -> LongPosition? {
+    func createLongPosition(_ order: BuyOrder, trader: Trader) -> LongPosition? {
         let db = Database.getDb()
         
         if !order.isPromised {
             return nil
         }
         
-        let newPosition = NSEntityDescription.insertNewObjectForEntityForName(PositionRepository.longPositionModelName, inManagedObjectContext: db.managedObjectContext) as! LongPosition
-        
-        
-        newPosition.id = NSUUID().UUIDString
+        let newPosition = NSEntityDescription.insertNewObject(forEntityName: PositionRepository.longPositionModelName, into: db.managedObjectContext) as! LongPosition
+        newPosition.id = UUID().uuidString
         newPosition.trader = trader
         
-        let log = TradeLogRepository.getInstance().create(.OPEN_LONG_POSITION, traderName: trader.name, account: trader.account, order: order, positionId: newPosition.id)
-        newPosition.addLog(log)
-        
         db.saveContext()
+        
+        let log = TradeLogRepository.getInstance().create(.OPEN_LONG_POSITION, traderName: trader.name, account: trader.account, order: order, positionId: newPosition.id)
+        
+        newPosition.addLog(log)
         
         return newPosition
     }
     
-    func deleteLongPosition(position: LongPosition) {
+    func deleteLongPosition(_ position: LongPosition) {
         let db = Database.getDb()
-        db.managedObjectContext.deleteObject(position)
+        db.managedObjectContext.delete(position)
         db.saveContext()
     }
     
-    func createShortPosition(order: SellOrder, trader: Trader) -> ShortPosition? {
+    func createShortPosition(_ order: SellOrder, trader: Trader) -> ShortPosition? {
         let db = Database.getDb()
         
         if !order.isPromised {
             return nil
         }
         
-        let newPosition = NSEntityDescription.insertNewObjectForEntityForName(PositionRepository.shortPositionModelName, inManagedObjectContext: db.managedObjectContext) as! ShortPosition
+        let newPosition = NSEntityDescription.insertNewObject(forEntityName: PositionRepository.shortPositionModelName, into: db.managedObjectContext) as! ShortPosition
         
         
-        newPosition.id = NSUUID().UUIDString
+        newPosition.id = UUID().uuidString
         newPosition.trader = trader
         
         let log = TradeLogRepository.getInstance().create(.OPEN_SHORT_POSITION, traderName: trader.name, account: trader.account, order: order, positionId: newPosition.id)
@@ -72,26 +71,26 @@ class PositionRepository {
         return newPosition
     }
     
-    func deleteShoetPosition(position: ShortPosition) {
+    func deleteShoetPosition(_ position: ShortPosition) {
         let db = Database.getDb()
-        db.managedObjectContext.deleteObject(position)
+        db.managedObjectContext.delete(position)
         db.saveContext()
     }
     
     lazy var longPositionDescription: NSEntityDescription = {
         let db = Database.getDb()
-        return NSEntityDescription.entityForName(PositionRepository.longPositionModelName, inManagedObjectContext: db.managedObjectContext)!
+        return NSEntityDescription.entity(forEntityName: PositionRepository.longPositionModelName, in: db.managedObjectContext)!
     }()
     
     lazy var shortPositionDescription: NSEntityDescription = {
         let db = Database.getDb()
-        return NSEntityDescription.entityForName(PositionRepository.shortPositionModelName, inManagedObjectContext: db.managedObjectContext)!
+        return NSEntityDescription.entity(forEntityName: PositionRepository.shortPositionModelName, in: db.managedObjectContext)!
     }()
     
-    private init() {
+    fileprivate init() {
     }
     
-    private static var inst: PositionRepository? = nil
-    private static let longPositionModelName = "LongPosition"
-    private static let shortPositionModelName = "ShortPosition"
+    fileprivate static var inst: PositionRepository? = nil
+    fileprivate static let longPositionModelName = "LongPosition"
+    fileprivate static let shortPositionModelName = "ShortPosition"
 }

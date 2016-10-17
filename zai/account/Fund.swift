@@ -18,7 +18,7 @@ internal class JPYFund {
         self.privateApi = api
     }
  
-    func getMarketCapitalization(cb: ((ZaiError?, Int) -> Void)) {
+    func getMarketCapitalization(_ cb: @escaping ((ZaiError?, Int) -> Void)) {
         self.privateApi.getInfo() { (err, res) in
             if let e = err {
                 cb(ZaiError(errorType: .ZAIF_API_ERROR, message: e.message), 0)
@@ -55,7 +55,7 @@ internal class JPYFund {
         }
     }
     
-    func calculateHowManyAmountCanBuy(currency: Currency, price: Double? = nil, rate: Double = 1.0, cb: (ZaiError?, Double) -> Void) {
+    func calculateHowManyAmountCanBuy(_ currency: Currency, price: Double? = nil, rate: Double = 1.0, cb: @escaping (ZaiError?, Double) -> Void) {
         self.privateApi.getInfo() { (err, res) in
             if let e = err {
                 cb(ZaiError(errorType: .ZAIF_API_ERROR, message: e.message), 0)
@@ -96,5 +96,5 @@ internal class JPYFund {
         }
     }
     
-    private let privateApi: PrivateApi
+    fileprivate let privateApi: PrivateApi
 }

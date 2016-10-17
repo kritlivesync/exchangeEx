@@ -32,29 +32,29 @@ class TraderView : NSObject, UITableViewDelegate, UITableViewDataSource {
         self.view.reloadData()
     }
     
-    func reloadTrader(traderName: String) {
+    func reloadTrader(_ traderName: String) {
         self.trader = TraderRepository.getInstance().findTraderByName(traderName, api: self.api)
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("traderViewCell", forIndexPath: indexPath) as! TraderViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "traderViewCell", for: indexPath) as! TraderViewCell
         cell.setTrader(self.trader)
         
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let d = self.delegate {
             d.didTouchTraderView()
         }
     }
     
     internal var trader: Trader?
-    private var view: UITableView! = nil
-    private let api: PrivateApi
+    fileprivate var view: UITableView! = nil
+    fileprivate let api: PrivateApi
     internal var delegate: TraderViewDelegate?
 }

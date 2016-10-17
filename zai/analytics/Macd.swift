@@ -41,7 +41,7 @@ class Macd {
         self.samples = []
     }
     
-    func addSampleValue(value: Double) {
+    func addSampleValue(_ value: Double) {
         let sampleCount = self.samples.count + 1 // + 1 for new value
         
         var shortEma = 0.0
@@ -63,7 +63,7 @@ class Macd {
         self.valid = (maxTerm <= self.samples.count)
         
         if self.HISTORY_SIZE < self.samples.count {
-            self.samples.removeAtIndex(0)
+            self.samples.remove(at: 0)
         }
     }
     
@@ -75,7 +75,7 @@ class Macd {
         if last.macd() - last.macdSignal() <= 0 {
             return false
         }
-        for sample in self.samples.prefix(self.samples.count - 1).reverse() {
+        for sample in self.samples.prefix(self.samples.count - 1).reversed() {
             let diff = sample.macd() - sample.macdSignal()
             if diff < 0 {
                 return true
@@ -94,7 +94,7 @@ class Macd {
         if last.macdSignal() - last.macd() <= 0 {
             return false
         }
-        for sample in self.samples.prefix(self.samples.count - 1).reverse() {
+        for sample in self.samples.prefix(self.samples.count - 1).reversed() {
             let diff =  sample.macdSignal() - sample.macd()
             if diff < 0 {
                 return true
@@ -124,7 +124,7 @@ class Macd {
         }
     }
     
-    func average(interval: Int) -> Double {
+    func average(_ interval: Int) -> Double {
         if self.valid {
             let slice = Array(self.samples.suffix(interval))
             var sum = 0.0
@@ -155,7 +155,7 @@ class Macd {
         }
     }
     
-    private func calculateShortEma(value: Double) -> Double {
+    fileprivate func calculateShortEma(_ value: Double) -> Double {
         let sampleCount = self.samples.count
         if sampleCount + 1 == self.shortTerm {
             var sum = 0.0
@@ -172,7 +172,7 @@ class Macd {
         }
     }
     
-    private func calculateLongEma(value: Double) -> Double {
+    fileprivate func calculateLongEma(_ value: Double) -> Double {
         let sampleCount = self.samples.count
         if sampleCount + 1 == self.longTerm {
             var sum = 0.0
@@ -189,7 +189,7 @@ class Macd {
         }
     }
     
-    private func calculateSignal(macd: Double) -> Double {
+    fileprivate func calculateSignal(_ macd: Double) -> Double {
         var sum = 0.0
         for sample in self.samples.suffix(self.signalTerm - 1) {
             sum += sample.macd()
@@ -199,9 +199,9 @@ class Macd {
     }
     
     internal var valid = false
-    private var samples: [Sample]
-    private let shortTerm: Int
-    private let longTerm: Int
-    private let signalTerm: Int
-    private let HISTORY_SIZE = 100
+    fileprivate var samples: [Sample]
+    fileprivate let shortTerm: Int
+    fileprivate let longTerm: Int
+    fileprivate let signalTerm: Int
+    fileprivate let HISTORY_SIZE = 100
 }
