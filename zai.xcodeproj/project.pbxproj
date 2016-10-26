@@ -52,6 +52,7 @@
 		B8B845821D66041D00535638 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B845801D66041D00535638 /* LaunchScreen.storyboard */; };
 		B8B8458D1D66041D00535638 /* zaiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B8458C1D66041D00535638 /* zaiTests.swift */; };
 		B8B845981D66041D00535638 /* zaiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845971D66041D00535638 /* zaiUITests.swift */; };
+		B8F1B2241DC0D37D001A120E /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F1B2231DC0D37D001A120E /* Feature.swift */; };
 		B8F38B3A1D8ECA2600731696 /* Analyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F38B391D8ECA2600731696 /* Analyzer.swift */; };
 		B8F38B3C1D8FC1CB00731696 /* Macd.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F38B3B1D8FC1CB00731696 /* Macd.swift */; };
 		B8F38B3F1D8FD2AB00731696 /* PriceLog+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F38B3D1D8FD2AB00731696 /* PriceLog+CoreDataProperties.swift */; };
@@ -131,6 +132,7 @@
 		B8B845931D66041D00535638 /* zaiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = zaiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8B845971D66041D00535638 /* zaiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = zaiUITests.swift; sourceTree = "<group>"; };
 		B8B845991D66041D00535638 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B8F1B2231DC0D37D001A120E /* Feature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Feature.swift; path = analytics/Feature.swift; sourceTree = "<group>"; };
 		B8F38B391D8ECA2600731696 /* Analyzer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Analyzer.swift; path = analytics/Analyzer.swift; sourceTree = "<group>"; };
 		B8F38B3B1D8FC1CB00731696 /* Macd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Macd.swift; path = analytics/Macd.swift; sourceTree = "<group>"; };
 		B8F38B3D1D8FD2AB00731696 /* PriceLog+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "PriceLog+CoreDataProperties.swift"; path = "log/PriceLog+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				B8002D6F1D8D1C480079AB9B /* ZaifWatch.swift */,
 				B8F38B391D8ECA2600731696 /* Analyzer.swift */,
 				B8F38B3B1D8FC1CB00731696 /* Macd.swift */,
+				B8F1B2231DC0D37D001A120E /* Feature.swift */,
 			);
 			name = analytics;
 			sourceTree = "<group>";
@@ -572,6 +575,7 @@
 				B85E8E3A1D6F3E2100C029C8 /* Keys.swift in Sources */,
 				B85E8E551D6F3E6F00C029C8 /* Order.swift in Sources */,
 				B8F38B3C1D8FC1CB00731696 /* Macd.swift in Sources */,
+				B8F1B2241DC0D37D001A120E /* Feature.swift in Sources */,
 				B85E8E4D1D6F3E5E00C029C8 /* TradeLog+CoreDataProperties.swift in Sources */,
 				B85E8E391D6F3E2100C029C8 /* Error.swift in Sources */,
 				B85E8E301D6F3DFB00C029C8 /* Currency.swift in Sources */,

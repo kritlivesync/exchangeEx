@@ -58,7 +58,7 @@ class Macd {
             signal = self.calculateSignal(macd)
         }
         self.samples.append(Sample(value: value, shortTermEma: shortEma, longTermEma: longEma, signal: signal))
-        
+            
         let maxTerm = max(max(self.shortTerm, self.longTerm), self.signalTerm)
         self.valid = (maxTerm <= self.samples.count)
         

@@ -4,3 +4,4 @@ Pods/
 zai.xcworkspace
 zai/core/Keys.swift
 zai/Config.plist
+zai/analytics/Feature.swift
