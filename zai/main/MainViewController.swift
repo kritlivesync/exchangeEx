@@ -10,7 +10,7 @@ import Foundation
 
 import ZaifSwift
 
-class MainViewController: UIViewController, SelectTraderViewDelegate, FundViewDelegate, AnalyzerDelegate {
+class MainViewController: UIViewController, FundViewDelegate, BoardViewDelegate, AnalyzerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +23,6 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, FundViewDe
             self.currentTraderName = Config.currentTraderName
         }
         self.trader = TraderRepository.getInstance().findTraderByName(self.currentTraderName, api: self.account.privateApi)
-        self.positionListView = PositionListView(view: self.positionTableView, trader: self.trader)
         
         self.fundView = FundView(account: self.account)
         self.fundView.delegate = self
@@ -179,14 +178,10 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, FundViewDe
          */
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        switch segue.identifier! {
-        case self.selectTraderSegue:
-            let destController = segue.destination as! SelectTraderViewController
-            destController.account = account!
-            destController.delegate = self
-        default: break
-        }
+    func recievedBoard(board: Board) {
+        self.boardView = BoardView(view: self.boardTableView, board: board)
+        self.boardView.delegate = self
+        self.boardView.reloadData()
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -202,68 +197,23 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, FundViewDe
         }
     }
     
-    @IBAction func pushMakerBuyButton(_ sender: Any) {
+    func orderBuy(quote: Quote) {
         let trader = TraderRepository.getInstance().findTraderByName(self.currentTraderName, api: self.account.privateApi)
         if trader == nil {
             return
         }
-        BitCoin.getBestAskQuote(.JPY) { (err, price, amount) in
-            let amt = min(amount, 1.0)
-            let prc = price - 5
-            trader!.createLongPosition(.BTC_JPY, price: prc, amount: amt) { err in
-                if let e = err {
-                    print(e.message)
-                } else {
-                    self.positionListView = PositionListView(view: self.positionTableView, trader: self.trader)
-                    DispatchQueue.main.async {
-                        self.positionListView.reloadData()
-                    }
-                }
+        let amt = min(quote.amount, 1.0)
+        trader!.createLongPosition(.BTC_JPY, price: quote.price, amount: amt) { err in
+            if let e = err {
+                print(e.message)
             }
         }
     }
     
-    @IBAction func pushMakerSellButton(_ sender: Any) {
-        BitCoin.getBestBidQuote(.JPY) { (err, price, amount) in
-            var amt = amount
-            let maxAmount = Double(self.btcFundLabel.text!)!
-            if maxAmount < amt {
-                amt = maxAmount
-            }
-            let prc = price + 5
-            self.sell(price: prc, amount: amt)
-        }
-    }
-    
-    @IBAction func pushBuyButton(_ sender: AnyObject) {
-        let trader = TraderRepository.getInstance().findTraderByName(self.currentTraderName, api: self.account.privateApi)
-        if trader == nil {
-            return
-        }
-        BitCoin.getBestAskQuote(.JPY) { (err, price, amount) in
-            let amt = min(amount, 1.0)
-            trader!.createLongPosition(.BTC_JPY, price: price, amount: amt) { err in
-                if let e = err {
-                    print(e.message)
-                } else {
-                    self.positionListView = PositionListView(view: self.positionTableView, trader: self.trader)
-                    DispatchQueue.main.async {
-                        self.positionListView.reloadData()
-                    }
-                }
-            }
-        }
-    }
-    
-    @IBAction func pushSellButton(_ sender: AnyObject) {
-        BitCoin.getBestBidQuote(.JPY) { (err, price, amount) in
-            var amt = amount
-            let maxAmount = Double(self.btcFundLabel.text!)!
-            if maxAmount < amt {
-                amt = maxAmount
-            }
-            self.sell(price: price, amount: amt)
-        }
+    func orderSell(quote: Quote) {
+        let maxAmount = Double(self.btcFundLabel.text!)!
+        let amt = min(quote.amount, maxAmount)
+        self.sell(price: quote.price, amount: amt)
     }
     
     func sell(price: Double?, amount: Double) {
@@ -302,9 +252,9 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, FundViewDe
     
     internal var account: Account!
     fileprivate var fundView: FundView!
-    @IBOutlet weak var positionTableView: UITableView!
+    @IBOutlet weak var boardTableView: UITableView!
     fileprivate var currentTraderName: String = ""
-    var positionListView: PositionListView! = nil
+    var boardView: BoardView! = nil
     var trader: Trader! = nil
     
     

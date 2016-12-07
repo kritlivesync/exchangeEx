@@ -26,6 +26,7 @@ class MarketPrice {
 protocol AnalyzerDelegate {
     func signaledBuy()
     func signaledSell()
+    func recievedBoard(board: Board)
 }
 
 class Analyzer : ZaifWatchDelegate, ZaiAnalyticsDelegate {
@@ -62,69 +63,12 @@ class Analyzer : ZaifWatchDelegate, ZaiAnalyticsDelegate {
     
     func didFetchBtcJpyLastPrice(_ price: Double) {
         return
-        
-        let now = Int(Date().timeIntervalSince1970)
-        if (now - self.lastPriceDate) < self.feature.priceInterval {
-            return
+    }
+    
+    func didFetchBoard(board: Board) {
+        if let d = self.delegate {
+            d.recievedBoard(board: board)
         }
-        self.lastPriceDate = now
-        
-        self.macd.addSampleValue(price)
-        if !self.macd.valid {
-            return
-        }
-        
-        let average = self.macd.average(self.feature.averageTerm)
-        let prevAverage = self.average
-        let momentum = (average - prevAverage)
-
-        if self.momentumHistory.count >= 2 {
-            let historySlice = Array(self.momentumHistory.suffix(2))
-            if historySlice[1] < historySlice[0] && historySlice[1] < momentum {
-                self.currentBottomMomentum = historySlice[1]
-            }
-            
-            var isMomentumBull = false
-            if self.currentBottomMomentum >= 0 {
-                isMomentumBull = ((self.currentBottomMomentum * self.feature.bullFactor) <= momentum)
-            } else {
-                let dif = momentum - self.currentBottomMomentum
-                let absPrev = abs(self.currentBottomMomentum)
-                isMomentumBull = ((absPrev * self.feature.bullFactor) <= (absPrev + dif))
-            }
-            
-            var isMomuntumBear = false
-            if self.momentumAtBuy >= 0 {
-                isMomuntumBear = (momentum < (self.momentumAtBuy * self.feature.bearFactor))
-            } else {
-                isMomuntumBear = (momentum < (self.momentumAtBuy / (1 - self.feature.bearFactor)))
-            }
-            
-            if isMomentumBull && self.delegate != nil {
-                self.isBullMarket = true
-                DispatchQueue.main.async {
-                    self.delegate!.signaledBuy()
-                    self.momentumAtBuy = momentum
-                    self.currentBottomMomentum = 9999999.9
-                }
-                print("buy")
-            } else {
-                if self.isBullMarket && isMomuntumBear {
-                    self.isBullMarket = false
-                    DispatchQueue.main.async {
-                        self.delegate!.signaledSell()
-                    }
-                    print("sell")
-                }
-            }
-        }
-        
-        self.momentumHistory.append(momentum)
-        if self.HISTORY_SIZE < self.momentumHistory.count {
-            self.momentumHistory.remove(at: 0)
-        }
-        self.average = average
-        self.btcJpyPrice = self.marketPrice.btcJpy
     }
     
     // ZaiAnalyticsDelegate
