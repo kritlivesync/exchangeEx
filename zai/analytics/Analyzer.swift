@@ -26,12 +26,9 @@ class MarketPrice {
 protocol AnalyzerDelegate {
     func signaledBuy()
     func signaledSell()
-    func didUpdateSignals(_ momentum: Double, isBullMarket: Bool)
-    func didUpdateCount(_ count: Int)
-    func didUpdateInterval(_ interval: Int)
 }
 
-class Analyzer : ZaifWatchDelegate {
+class Analyzer : ZaifWatchDelegate, ZaiAnalyticsDelegate {
     
     init(api: PrivateApi) {
         self.api = api
@@ -42,17 +39,14 @@ class Analyzer : ZaifWatchDelegate {
         
         self.lastPriceDate = Int(Date().timeIntervalSince1970) - self.feature.priceInterval
         
-        self.count = Int(self.feature.priceInterval)
-        self.countDownTimer = Timer.scheduledTimer(
-            timeInterval: 1,
-            target: self,
-            selector: #selector(Analyzer.countDown),
-            userInfo: nil,
-            repeats: true)
+        //self.analyticsClient = ZaiAnalyticsClient()
         
         self.watch.delegate = self
-
+        //self.analyticsClient.delegate = self
     }
+    
+    
+    // ZaifWatchDelegate
     
     func didFetchBtcJpyMarketPrice(_ price: Double) {
         self.marketPrice = MarketPrice(btcJpy: price, monaJpy: self.marketPrice.monaJpy, xemJpy: self.marketPrice.xemJpy)
@@ -67,12 +61,13 @@ class Analyzer : ZaifWatchDelegate {
     }
     
     func didFetchBtcJpyLastPrice(_ price: Double) {
+        return
+        
         let now = Int(Date().timeIntervalSince1970)
         if (now - self.lastPriceDate) < self.feature.priceInterval {
             return
         }
         self.lastPriceDate = now
-        self.count = Int(self.feature.priceInterval)
         
         self.macd.addSampleValue(price)
         if !self.macd.valid {
@@ -110,6 +105,7 @@ class Analyzer : ZaifWatchDelegate {
                 DispatchQueue.main.async {
                     self.delegate!.signaledBuy()
                     self.momentumAtBuy = momentum
+                    self.currentBottomMomentum = 9999999.9
                 }
                 print("buy")
             } else {
@@ -129,17 +125,23 @@ class Analyzer : ZaifWatchDelegate {
         }
         self.average = average
         self.btcJpyPrice = self.marketPrice.btcJpy
-            
-        if let d = self.delegate {
-            d.didUpdateSignals(momentum, isBullMarket: self.isBullMarket)
-        }
     }
     
-    @objc func countDown() {
-        self.count -= 1
-        if let d = self.delegate {
-            d.didUpdateCount(self.count)
+    // ZaiAnalyticsDelegate
+    func recievedBuySignal() {
+        DispatchQueue.main.async {
+            self.delegate!.signaledBuy()
+            //self.delegate!.signaledSell()
         }
+        print("buy: " + getNow())
+    }
+    
+    func recievedSellSignal() {
+        DispatchQueue.main.async {
+            self.delegate!.signaledSell()
+            //self.delegate!.signaledBuy()
+        }
+        print("sell: " + getNow())
     }
     
     var marketPrice: MarketPrice
@@ -158,9 +160,8 @@ class Analyzer : ZaifWatchDelegate {
     var delegate: AnalyzerDelegate? = nil
     
     var lastPriceDate = 0
-
-    var countDownTimer: Timer! = nil
-    var count: Int
+    
+    //let analyticsClient: ZaiAnalyticsClient!
     
     var api: PrivateApi
 }

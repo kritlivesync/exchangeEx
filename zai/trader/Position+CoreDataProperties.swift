@@ -15,6 +15,7 @@ import CoreData
 extension Position {
 
     @NSManaged var id: String
+    @NSManaged var status: NSNumber
     @NSManaged var tradeLogs: NSOrderedSet
     @NSManaged var trader: Trader
 

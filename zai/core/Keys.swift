@@ -8,5 +8,5 @@
 
 import Foundation
 
-internal let key_full = "6472eed9-a881-4b00-a559-e221a446264e"
-internal let secret_full = "fbc8562d-8620-4fcd-96a4-aacc326a53de"
+internal let key_full = "61ff5e4d-3095-45d9-badb-c048f6b47c05"
+internal let secret_full = "6e2a5704-b0a1-4d33-8015-b213316ddd6c"

@@ -21,10 +21,10 @@ internal protocol PositionProtocol {
     var type: String { get }
 }
 
-enum PositionState {
-    case OPEN
-    case CLOSED
-    case CLOSING
+enum PositionState: Int{
+    case OPEN=0
+    case CLOSED=1
+    case CLOSING=2
 }
 
 
@@ -36,7 +36,11 @@ class Position: NSManagedObject, PositionProtocol {
     func addLog(_ log: TradeLog) {
         let logs = self.mutableOrderedSetValue(forKey: "tradeLogs")
         logs.add(log)
-        Database.getDb().saveContext()
+        //Database.getDb().saveContext()
+    }
+    
+    var price: Double {
+        get { return 0.0 }
     }
 
     var balance: Double {
@@ -58,6 +62,4 @@ class Position: NSManagedObject, PositionProtocol {
     var type: String {
         get { return "" }
     }
-
-    var status: PositionState = .OPEN
 }

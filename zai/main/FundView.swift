@@ -12,6 +12,7 @@ import UIKit
 protocol FundViewDelegate {
     func didUpdateMarketCapitalization(_ view: String)
     func didUpdateBtcJpyPrice(_ view: String)
+    func didUpdateBtcFund(_ view: String)
 }
 
 
@@ -50,6 +51,13 @@ internal class FundView {
         let app = UIApplication.shared.delegate as! AppDelegate
         if let d = self.delegate {
             d.didUpdateBtcJpyPrice(self.formatValue(Int((app.analyzer?.marketPrice.btcJpy)!)))
+        }
+        
+        let fund = JPYFund(api: self.account.privateApi)
+        fund.getBtcFund() { (err, btc) in
+            if err == nil && self.delegate != nil {
+                self.delegate!.didUpdateBtcFund(btc.description)
+            }
         }
     }
     

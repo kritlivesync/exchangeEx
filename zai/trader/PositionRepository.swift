@@ -24,7 +24,7 @@ class PositionRepository {
         }
     }
     
-    func createLongPosition(_ order: BuyOrder, trader: Trader) -> LongPosition? {
+    func createLongPosition(_ order: BuyOrder, trader: Trader, id: String?=nil) -> LongPosition? {
         let db = Database.getDb()
         
         if !order.isPromised {
@@ -32,10 +32,11 @@ class PositionRepository {
         }
         
         let newPosition = NSEntityDescription.insertNewObject(forEntityName: PositionRepository.longPositionModelName, into: db.managedObjectContext) as! LongPosition
-        newPosition.id = UUID().uuidString
+        
+        newPosition.id = (id == nil) ? UUID().uuidString : id!
         newPosition.trader = trader
         
-        db.saveContext()
+        //db.saveContext()
         
         let log = TradeLogRepository.getInstance().create(.OPEN_LONG_POSITION, traderName: trader.name, account: trader.account, order: order, positionId: newPosition.id)
         

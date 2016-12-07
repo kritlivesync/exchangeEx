@@ -10,26 +10,22 @@ import Foundation
 
 import ZaifSwift
 
-class MainViewController: UIViewController, SelectTraderViewDelegate, TraderViewDelegate, FundViewDelegate, AnalyzerDelegate {
+class MainViewController: UIViewController, SelectTraderViewDelegate, FundViewDelegate, AnalyzerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.marketCapitalization.text = "-"
         self.btcJpyMarketPrice.text = "-"
-        self.momentumLabel.text = "-"
-        self.bullMarketLabel.text = "OFF"
-        self.countDownLabel.text = "-"
+        self.btcFundLabel.text = "-"
         
         if self.currentTraderName.isEmpty {
             self.currentTraderName = Config.currentTraderName
         }
+        self.trader = TraderRepository.getInstance().findTraderByName(self.currentTraderName, api: self.account.privateApi)
+        self.positionListView = PositionListView(view: self.positionTableView, trader: self.trader)
         
         self.fundView = FundView(account: self.account)
-        self.traderView = TraderView(view: self.traderTableView, api: self.account.privateApi)
-        self.traderView.reloadTrader(self.currentTraderName)
-        self.traderView.reloadData()
-        self.traderView.delegate = self
         self.fundView.delegate = self
         
         let app = UIApplication.shared.delegate as! AppDelegate
@@ -39,8 +35,6 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, TraderView
     // SelectTraderViewDelegate
     func setCurrentTrader(_ traderName: String) {
         self.currentTraderName = traderName
-        self.traderView.reloadTrader(self.currentTraderName)
-        self.traderView.reloadData()
     }
     
     // TraderViewDelegate
@@ -52,7 +46,7 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, TraderView
     func didUpdateBtcJpyPrice(_ view: String) {
         self.btcJpyMarketPrice.text = view
         DispatchQueue.main.async {
-            self.marketCapitalization.setNeedsDisplay()
+            self.btcJpyMarketPrice.setNeedsDisplay()
         }
     }
     
@@ -63,28 +57,116 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, TraderView
         }
     }
     
-    // AnalyzerDelegate
+    func didUpdateBtcFund(_ view: String) {
+        self.btcFundLabel.text = view
+        DispatchQueue.main.async {
+            self.btcFundLabel.setNeedsDisplay()
+        }
+    }
+    
+    // AnalyzerDelegate    
     func signaledBuy() {
+        self.messageLabel.text = "Recieved Signal Buy"
+        DispatchQueue.main.async {
+            self.messageLabel.setNeedsDisplay()
+        }
+        /*
         let trader = TraderRepository.getInstance().findTraderByName(self.currentTraderName, api: self.account.privateApi)
         if trader == nil {
             return
         }
+         */
         let fund = JPYFund(api: self.account.privateApi)
-        fund.calculateHowManyAmountCanBuy(.BTC, rate: 0.9) { (err, amount) in
+        fund.calculateHowManyAmountCanBuy(.BTC, rate: 0.85) { (err, amount, price) in
+            var amt = amount
+            if amt > 0.2 {
+                amt = 0.2
+            }
+            let order = BuyOrder(currencyPair: .BTC_JPY, price: price, amount: amt, api: self.account.privateApi)!
+            order.excute() { (err, orderId) in
+                if let e = err {
+                    self.messageLabel.text = e.message
+                    DispatchQueue.main.async {
+                        self.messageLabel.setNeedsDisplay()
+                    }
+                } else {
+                    order.waitForPromise(timeout: 60) { (err, promised) in
+                        if let e = err {
+                            self.messageLabel.text = e.message
+                            DispatchQueue.main.async {
+                                self.messageLabel.setNeedsDisplay()
+                            }
+                        } else if !promised {
+                            self.account.privateApi.cancelOrder(order.orderId) { _ in }
+                        }
+                    }
+                    
+                }
+            }
+            
+            /*
             trader!.createLongPosition(.BTC_JPY, price: nil, amount: amount) { err in
                 if let e = err {
                     print(e.message)
+                    self.messageLabel.text = e.message
+                    DispatchQueue.main.async {
+                        self.messageLabel.setNeedsDisplay()
+                    }
                 }
                 self.traderView.reloadData()
             }
+             */
         }
     }
     
     func signaledSell() {
+        self.messageLabel.text = "Recieved Signal Sell"
+        DispatchQueue.main.async {
+            self.messageLabel.setNeedsDisplay()
+        }
+        /*
         let trader = TraderRepository.getInstance().findTraderByName(self.currentTraderName, api: self.account.privateApi)
         if trader == nil {
             return
         }
+        */
+        
+        let fund = JPYFund(api: self.account.privateApi)
+        fund.getBtcFund() { (err, btc) in
+            let amount = Double(Int(btc * 10000)) / 10000.0
+            let order = SellOrder(
+                currencyPair: CurrencyPair.BTC_JPY,
+                price: Double(self.btcJpyMarketPrice.text!),
+                amount: amount,
+                api: self.account.privateApi)!
+            
+            order.excute() { (err, _) in
+                if let e = err {
+                    print(e.message)
+                    self.messageLabel.text = e.message
+                    DispatchQueue.main.async {
+                        self.messageLabel.setNeedsDisplay()
+                    }
+                } else {
+                    order.waitForPromise(timeout: 10) { (err, promised) in
+                        if let e = err {
+                            self.messageLabel.text = e.message
+                            DispatchQueue.main.async {
+                                self.messageLabel.setNeedsDisplay()
+                            }
+                        } else if !promised{
+                            self.account.privateApi.cancelOrder(order.orderId) { _ in
+                                self.signaledSell()
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        }
+
+        
+        /*
         for position in trader!.positions {
             let p = position as? Position
             p?.unwind(nil, price: nil) { (err) in
@@ -94,26 +176,7 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, TraderView
                 self.traderView.reloadData()
             }
         }
-    }
-    
-    func didUpdateSignals(_ momentum: Double, isBullMarket: Bool) {
-        self.momentumLabel.text = momentum.description
-        self.bullMarketLabel.text = isBullMarket.description
-        DispatchQueue.main.async {
-            self.momentumLabel.setNeedsDisplay()
-            self.bullMarketLabel.setNeedsDisplay()
-        }
-    }
-    
-    func didUpdateCount(_ count: Int) {
-        self.countDownLabel.text = count.description
-        DispatchQueue.main.async {
-            self.countDownLabel.setNeedsDisplay()
-        }
-    }
-    
-    func didUpdateInterval(_ interval: Int) {
-        
+         */
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -122,9 +185,6 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, TraderView
             let destController = segue.destination as! SelectTraderViewController
             destController.account = account!
             destController.delegate = self
-        case self.positionsSegue:
-            let destController = segue.destination as! PositionsViewController
-            destController.trader = self.traderView.trader
         default: break
         }
     }
@@ -142,60 +202,116 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, TraderView
         }
     }
     
+    @IBAction func pushMakerBuyButton(_ sender: Any) {
+        let trader = TraderRepository.getInstance().findTraderByName(self.currentTraderName, api: self.account.privateApi)
+        if trader == nil {
+            return
+        }
+        BitCoin.getBestAskQuote(.JPY) { (err, price, amount) in
+            let amt = min(amount, 1.0)
+            let prc = price - 5
+            trader!.createLongPosition(.BTC_JPY, price: prc, amount: amt) { err in
+                if let e = err {
+                    print(e.message)
+                } else {
+                    self.positionListView = PositionListView(view: self.positionTableView, trader: self.trader)
+                    DispatchQueue.main.async {
+                        self.positionListView.reloadData()
+                    }
+                }
+            }
+        }
+    }
+    
+    @IBAction func pushMakerSellButton(_ sender: Any) {
+        BitCoin.getBestBidQuote(.JPY) { (err, price, amount) in
+            var amt = amount
+            let maxAmount = Double(self.btcFundLabel.text!)!
+            if maxAmount < amt {
+                amt = maxAmount
+            }
+            let prc = price + 5
+            self.sell(price: prc, amount: amt)
+        }
+    }
+    
     @IBAction func pushBuyButton(_ sender: AnyObject) {
         let trader = TraderRepository.getInstance().findTraderByName(self.currentTraderName, api: self.account.privateApi)
         if trader == nil {
             return
         }
-        let priceText = self.buyPriceText.text!
-        let amountText = self.buyAmountText.text!
-        var price: Double? = nil
-        var amount: Double = 0.0
-        if !priceText.isEmpty {
-            price = Double(priceText)
-        }
-        if amountText.isEmpty {
-            let fund = JPYFund(api: self.account.privateApi)
-            fund.calculateHowManyAmountCanBuy(.BTC) { (err, amount) in
-                trader!.createLongPosition(.BTC_JPY, price: price, amount: amount) { err in
-                    if let e = err {
-                        print(e.message)
-                    }
-                    self.traderView.reloadData()
-                }
-            }
-        } else {
-            amount = Double(amountText)!
-            trader!.createLongPosition(.BTC_JPY, price: price, amount: amount) { err in
+        BitCoin.getBestAskQuote(.JPY) { (err, price, amount) in
+            let amt = min(amount, 1.0)
+            trader!.createLongPosition(.BTC_JPY, price: price, amount: amt) { err in
                 if let e = err {
                     print(e.message)
+                } else {
+                    self.positionListView = PositionListView(view: self.positionTableView, trader: self.trader)
+                    DispatchQueue.main.async {
+                        self.positionListView.reloadData()
+                    }
                 }
-                self.traderView.reloadData()
             }
         }
-        
     }
     
     @IBAction func pushSellButton(_ sender: AnyObject) {
+        BitCoin.getBestBidQuote(.JPY) { (err, price, amount) in
+            var amt = amount
+            let maxAmount = Double(self.btcFundLabel.text!)!
+            if maxAmount < amt {
+                amt = maxAmount
+            }
+            self.sell(price: price, amount: amt)
+        }
     }
     
+    func sell(price: Double?, amount: Double) {
+        let order = SellOrder(
+            currencyPair: CurrencyPair.BTC_JPY,
+            price: price,
+            amount: amount,
+            api: self.account.privateApi)!
+        
+        order.excute() { (err, _) in
+            if let e = err {
+                print(e.message)
+                self.messageLabel.text = e.message
+                DispatchQueue.main.async {
+                    self.messageLabel.setNeedsDisplay()
+                }
+            } else {
+                order.waitForPromise(timeout: 30) { (err, promised) in
+                    if let e = err {
+                        self.messageLabel.text = e.message
+                        DispatchQueue.main.async {
+                            self.messageLabel.setNeedsDisplay()
+                        }
+                    } else if !promised{
+                        self.account.privateApi.cancelOrder(order.orderId) { _ in
+                            self.sell(price: nil, amount: amount)
+                        }
+                    }
+                }
+            }
+        }
+    }
     
     
     @IBAction func unwindToMain(_ segue: UIStoryboardSegue) {}
     
     internal var account: Account!
     fileprivate var fundView: FundView!
-    fileprivate var traderView: TraderView!
+    @IBOutlet weak var positionTableView: UITableView!
     fileprivate var currentTraderName: String = ""
+    var positionListView: PositionListView! = nil
+    var trader: Trader! = nil
+    
     
     @IBOutlet weak var buyPriceText: UITextField!
     @IBOutlet weak var buyAmountText: UITextField!
     @IBOutlet weak var sellPriceText: UITextField!
     @IBOutlet weak var sellAmountText: UITextField!
-    
-    @IBOutlet weak var momentumLabel: UILabel!
-    @IBOutlet weak var bullMarketLabel: UILabel!
-    @IBOutlet weak var countDownLabel: UILabel!
     
     fileprivate let selectTraderLabelTag = 1
     fileprivate let selectTraderSegue = "selectTraderSegue"
@@ -203,6 +319,7 @@ class MainViewController: UIViewController, SelectTraderViewDelegate, TraderView
     
     @IBOutlet weak var marketCapitalization: UILabel!
     @IBOutlet weak var btcJpyMarketPrice: UILabel!
-    @IBOutlet weak var traderTableView: UITableView!
+    @IBOutlet weak var btcFundLabel: UILabel!
 
+    @IBOutlet weak var messageLabel: UILabel!
 }

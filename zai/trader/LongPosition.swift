@@ -32,6 +32,19 @@ class LongPosition: Position {
         self.addLog(log)
     }
     
+    override public var price: Double {
+        get {
+            for log in self.tradeLogs {
+                let l = log as! TradeLog
+                let action = TradeAction(rawValue: l.tradeAction)
+                if action == .OPEN_LONG_POSITION {
+                    return l.price.doubleValue
+                }
+            }
+            return 0.0
+        }
+    }
+    
     override internal var balance: Double {
         get {
             var balance = 0.0
@@ -98,12 +111,12 @@ class LongPosition: Position {
     }
     
     override internal func unwind(_ amount: Double?=nil, price: Double?, cb: @escaping (ZaiError?) -> Void) {
-        if self.status != .OPEN {
+        if self.status.intValue != PositionState.OPEN.rawValue {
             cb(nil)
             return
         }
         
-        self.status = .CLOSING
+        self.status = NSNumber(value: PositionState.CLOSING.rawValue)
         
         let balance = self.balance
         var amt = amount
@@ -115,6 +128,8 @@ class LongPosition: Position {
             amt = balance
         }
         
+        print("sell: " + balance.description)
+        
         let order = SellOrder(
             currencyPair: self.currencyPair,
             price: price,
@@ -122,10 +137,11 @@ class LongPosition: Position {
             api: self.trader.account.privateApi)!
         
         order.excute() { (err, res) in
+            Database.getDb().saveContext()
             if let _ = err {
                 cb(err)
             } else {
-                order.waitForPromise() { (err, promised) in
+                order.waitForPromise(timeout: 30) { (err, promised) in
                     if promised {
                         let log = TradeLogRepository.getInstance().create(.UNWIND_LONG_POSITION, traderName: self.trader.name, account: self.trader.account, order: order, positionId: self.id)
                         self.addLog(log)

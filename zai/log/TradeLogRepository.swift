@@ -39,7 +39,7 @@ class TradeLogRepository {
         newLog.amount = NSNumber(value: order.amount)
         newLog.timestamp = NSNumber(value: Date().timeIntervalSince1970)
         
-        db.saveContext()
+        //db.saveContext()
         
         return newLog
     }

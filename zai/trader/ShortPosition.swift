@@ -97,12 +97,12 @@ class ShortPosition: Position {
     }
     
     override internal func unwind(_ amount: Double?=nil, price: Double?, cb: @escaping (ZaiError?) -> Void) {
-        if self.status != .OPEN {
+        if self.status.intValue != PositionState.OPEN.rawValue {
             cb(nil)
             return
         }
         
-        self.status = .CLOSING
+        self.status = NSNumber(value: PositionState.CLOSING.rawValue)
         
         let balance = self.balance
         var amt = amount
@@ -124,7 +124,7 @@ class ShortPosition: Position {
             if let _ = err {
                 cb(err)
             } else {
-                order.waitForPromise() { (err, promised) in
+                order.waitForPromise(timeout: 10) { (err, promised) in
                     if promised {
                         let log = TradeLog(action: .UNWIND_SHORT_POSITION, traderName: self.trader.name, account: self.trader.account, order: order, positionId: self.id)
                         self.addLog(log)

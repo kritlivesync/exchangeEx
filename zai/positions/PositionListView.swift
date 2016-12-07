@@ -19,10 +19,9 @@ import ZaifSwift
 
 class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource {
     
-    init(view: UITableView, trader: Trader, btcJpyPrice: Double) {
-        self.trader = trader
+    init(view: UITableView, trader: Trader) {
+        self.positions = trader.getActivePositions()
         self.view = view
-        self.btcJpyPrice = btcJpyPrice
         self.tappedRow = -1
         
         super.init()
@@ -30,21 +29,26 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource {
         self.view.dataSource = self
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.trader.positions.count
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let c = self.positions.count
+        return c
+    }
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "positionListViewCell", for: indexPath) as! PositionListViewCell
-        cell.setPosition(self.trader.positions[(indexPath as NSIndexPath).row] as? Position, btcJpyPrice: self.btcJpyPrice)
+        cell.setPosition(self.positions[(indexPath as NSIndexPath).row] as? Position)
         cell.closeButton.addTarget(self, action: #selector(PositionListView.pushCloseButton(_:event:)), for: .touchUpInside)
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tappedRow = (indexPath as NSIndexPath).row
         if self.delegate != nil {
-            self.delegate!.didSelectPosition(self.trader.positions[(indexPath as NSIndexPath).row] as! Position)
+            self.delegate!.didSelectPosition(self.positions[(indexPath as NSIndexPath).row] as! Position)
         }
     }
     
@@ -54,11 +58,17 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource {
             let point = touch.location(in: self.view)
             row = (self.view.indexPathForRow(at: point)! as NSIndexPath).row
         }
-        if 0 <= row && row < self.trader.positions.count {
-            let position = self.trader.positions[row] as? Position
+        if 0 <= row && row < self.positions.count {
+            let position = self.positions[row] as? Position
             position?.unwind(nil, price: nil) { err in
                 if let e = err {
                     return
+                } else {
+                    self.positions.remove(at: row)
+                    DispatchQueue.main.async {
+                        self.reloadData()
+                    }
+                    
                 }
             }
         }
@@ -69,8 +79,7 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource {
     }
     
     internal var delegate: PositionListViewDelegate? = nil
-    fileprivate let trader: Trader
+    fileprivate var positions: [Position]
     fileprivate let view: UITableView
-    fileprivate let btcJpyPrice: Double
     fileprivate var tappedRow: Int
 }

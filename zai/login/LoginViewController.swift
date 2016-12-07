@@ -58,15 +58,25 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
         }
         self.account = account
         
-        Config.setPreviousUserId(userId)
-        Config.setPreviousApiKey(apiKey)
-        Config.setPreviousSecretKey(secretKey)
-        Config.save()
-        
-        let app = UIApplication.shared.delegate as! AppDelegate
-        app.analyzer = Analyzer(api: api)
-        UIApplication.shared.isIdleTimerDisabled = true
-        
+        if goNext {
+            let traderName = "dummyTrader"
+            let repository = TraderRepository.getInstance()
+            let trader = repository.findTraderByName(traderName, api: api)
+            if trader == nil {
+                repository.create(traderName, account: account!)
+                Config.SetCurrentTraderName(traderName)
+            }
+            
+            Config.setPreviousUserId(userId)
+            Config.setPreviousApiKey(apiKey)
+            Config.setPreviousSecretKey(secretKey)
+            Config.save()
+            
+            let app = UIApplication.shared.delegate as! AppDelegate
+            app.analyzer = Analyzer(api: api)
+            UIApplication.shared.isIdleTimerDisabled = true
+        }
+
         return goNext
     }
     

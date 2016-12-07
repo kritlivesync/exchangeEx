@@ -45,7 +45,7 @@ open class Trader: NSManagedObject {
             if let e = err {
                 cb(e)
             } else {
-                order.waitForPromise() { (err, promised) in
+                order.waitForPromise(timeout: 30) { (err, promised) in
                     if let e = err {
                         cb(e)
                     } else {
@@ -53,10 +53,25 @@ open class Trader: NSManagedObject {
                             let position = PositionRepository.getInstance().createLongPosition(order, trader: self)!
                             self.addPosition(position)
                             cb(nil)
+                        } else {
+                            self.account.privateApi.cancelOrder(order.orderId) { (err, _) in
+                                cb(nil)
+                            }
                         }
                     }
                 }
             }
         }
+    }
+    
+    func getActivePositions() -> [Position] {
+        var positions = [Position]()
+        for position in self.positions {
+            let p = position as! Position
+            if p.status.intValue == PositionState.OPEN.rawValue {
+                positions.append(p)
+            }
+        }
+        return positions
     }
 }

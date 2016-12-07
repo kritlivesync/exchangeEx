@@ -46,7 +46,7 @@ internal class Order {
             return
         }
 
-        self.privateApi.trade(self.zaifOrder) { (err, res) in
+        self.privateApi.trade(self.zaifOrder, validate: false) { (err, res) in
             if let e = err {
                 self.status = .INVALID
                 cb(ZaiError(errorType: .INVALID_ORDER, message: e.message), -1)
@@ -64,13 +64,12 @@ internal class Order {
         }
     }
 
-    internal func waitForPromise(_ cb: @escaping (ZaiError?, Bool) -> Void) {
+    internal func waitForPromise(timeout: Int, _ cb: @escaping (ZaiError?, Bool) -> Void) {
         if self.status != .ACTIVE {
             // todo async
             cb(ZaiError(errorType: .INVALID_ORDER, message: "order is not excuted"), false)
             return
         }
-        
         self.privateApi.activeOrders(self.zaifOrder.currencyPair) { (err, res) in
             if let e = err {
                 self.status = .INVALID
@@ -82,7 +81,12 @@ internal class Order {
                 } else {
                     let idExists = res!["return"].dictionaryValue.keys.contains(self.id.description)
                     if idExists {
-                        self.waitForPromise(cb)
+                        if timeout > 0 {
+                            sleep(UInt32(timeout))
+                            self.waitForPromise(timeout: 0, cb)
+                        } else {
+                            cb(nil, false)
+                        }
                     } else {
                         if self.status == .ACTIVE { // double check
                             self.status = .PROMISED

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15G1004" minimumToolsVersion="Xcode 7.0">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="15G1004" minimumToolsVersion="Xcode 7.0" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="Account" representedClassName=".Account" syncable="YES">
         <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="traders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Trader" inverseName="account" inverseEntity="Trader" syncable="YES"/>
@@ -7,25 +7,26 @@
     <entity name="LongPosition" representedClassName="LongPosition" parentEntity="Position" syncable="YES"/>
     <entity name="Position" representedClassName=".Position" isAbstract="YES" syncable="YES">
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="tradeLogs" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="TradeLog" inverseName="position" inverseEntity="TradeLog" syncable="YES"/>
         <relationship name="trader" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Trader" inverseName="positions" inverseEntity="Trader" syncable="YES"/>
     </entity>
     <entity name="PriceLog" representedClassName=".PriceLog" syncable="YES">
         <attribute name="currencyPair" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="lastPrice" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="timestamp" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="lastPrice" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
     </entity>
     <entity name="ShortPosition" representedClassName="ShortPosition" parentEntity="Position" syncable="YES"/>
     <entity name="TradeLog" representedClassName=".TradeLog" syncable="YES">
-        <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="apiKey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="currencyPair" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="orderAction" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="orderId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="orderId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="positionId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="timestamp" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="tradeAction" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="traderName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
@@ -40,10 +41,10 @@
     <elements>
         <element name="Account" positionX="-36" positionY="90" width="128" height="75"/>
         <element name="LongPosition" positionX="-36" positionY="90" width="128" height="45"/>
-        <element name="Position" positionX="-54" positionY="81" width="128" height="90"/>
+        <element name="Position" positionX="-54" positionY="81" width="128" height="105"/>
+        <element name="PriceLog" positionX="-36" positionY="90" width="128" height="90"/>
         <element name="ShortPosition" positionX="-27" positionY="99" width="128" height="45"/>
         <element name="TradeLog" positionX="-63" positionY="-18" width="128" height="240"/>
         <element name="Trader" positionX="-18" positionY="117" width="128" height="105"/>
-        <element name="PriceLog" positionX="-36" positionY="90" width="128" height="90"/>
     </elements>
 </model>

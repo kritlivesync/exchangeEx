@@ -55,10 +55,10 @@ internal class JPYFund {
         }
     }
     
-    func calculateHowManyAmountCanBuy(_ currency: Currency, price: Double? = nil, rate: Double = 1.0, cb: @escaping (ZaiError?, Double) -> Void) {
+    func calculateHowManyAmountCanBuy(_ currency: Currency, price: Double? = nil, rate: Double = 1.0, cb: @escaping (ZaiError?, Double, Double) -> Void) {
         self.privateApi.getInfo() { (err, res) in
             if let e = err {
-                cb(ZaiError(errorType: .ZAIF_API_ERROR, message: e.message), 0)
+                cb(ZaiError(errorType: .ZAIF_API_ERROR, message: e.message), 0, 0)
             } else {
                 if let info = res {
                     let jpyFund = info["return"]["deposit"]["jpy"].doubleValue
@@ -72,11 +72,11 @@ internal class JPYFund {
                     }
                     if let p = price {
                         let amount = jpyFund * rate / p
-                        cb(nil, amount)
+                        cb(nil, amount, p)
                     } else {
                         PublicApi.lastPrice(currencyPair) { (err, res) in
                             if let e = err {
-                                cb(ZaiError(errorType: .ZAIF_API_ERROR, message: e.message), 0)
+                                cb(ZaiError(errorType: .ZAIF_API_ERROR, message: e.message), 0, 0)
                             } else {
                                 let price = res!["last_price"].doubleValue
                                 var amount = jpyFund * rate / price
@@ -87,10 +87,23 @@ internal class JPYFund {
                                     amount = Double(Int(amount))
                                 default: break
                                 }
-                                cb(nil, amount)
+                                cb(nil, amount, price)
                             }
                         }
                     }
+                }
+            }
+        }
+    }
+    
+    func getBtcFund(_ cb: @escaping ((ZaiError?, Double) -> Void)) {
+        self.privateApi.getInfo() { (err, res) in
+            if let e = err {
+                cb(ZaiError(errorType: .ZAIF_API_ERROR, message: e.message), 0)
+            } else {
+                if let info = res {
+                    let btc = info["return"]["deposit"]["btc"].doubleValue
+                    cb(nil, btc)
                 }
             }
         }

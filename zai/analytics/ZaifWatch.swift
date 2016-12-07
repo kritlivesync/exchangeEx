@@ -90,5 +90,5 @@ class ZaifWatch {
     var marketPriceTimer: Timer!
     var lastPriceTimer: Timer!
     var delegate: ZaifWatchDelegate? = nil
-    let WATCH_MARKETPRICE_INTERVAL = 10.0 // seconds
+    let WATCH_MARKETPRICE_INTERVAL = 5.0 // seconds
 }

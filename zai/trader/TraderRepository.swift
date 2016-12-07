@@ -30,9 +30,8 @@ class TraderRepository {
         let newTrader = NSEntityDescription.insertNewObject(forEntityName: TraderRepository.traderModelName, into: db.managedObjectContext) as! Trader
         newTrader.name = name
         newTrader.account = account
-        newTrader.account = account
         
-        db.saveContext()
+        //db.saveContext()
         
         return newTrader
     }

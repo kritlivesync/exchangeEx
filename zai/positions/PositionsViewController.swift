@@ -20,7 +20,7 @@ class PositionsViewController : UIViewController {
             if let _ = err {
                 
             } else {
-                self.positionListView = PositionListView(view: self.tableView, trader: self.trader, btcJpyPrice: price)
+                self.positionListView = PositionListView(view: self.tableView, trader: self.trader)
                 self.positionListView.reloadData()
             }
         }

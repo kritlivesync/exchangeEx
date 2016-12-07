@@ -12,25 +12,25 @@ import UIKit
 
 class PositionListViewCell : UITableViewCell {
     
-    func setPosition(_ position: Position?, btcJpyPrice: Double) {
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        
+        // Configure the view for the selected state
+    }
+    
+    func setPosition(_ position: Position?) {
         if let p = position {
-            self.orderActionLabel.text = p.type
-            let gain = (btcJpyPrice - p.cost) * p.balance
-            self.marketPriceLabel.text = Int(p.balance * btcJpyPrice).description + ("(" + gain.description + ")")
-            self.profitLabel.text = p.profit.description
-            self.balanceLabel.text = p.balance.description
-        } else {
-            self.orderActionLabel.text = "-"
-            self.marketPriceLabel.text = "-"
-            self.profitLabel.text = "-"
-            self.balanceLabel.text = "-"
+            self.priceLabel.text = p.price.description
+            self.amountLabel.text = p.balance.description
         }
     }
     
+    @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var closeButton: UIButton!
-    @IBOutlet weak var orderActionLabel: UILabel!
-    @IBOutlet weak var marketPriceLabel: UILabel!
-    @IBOutlet weak var profitLabel: UILabel!
-    @IBOutlet weak var balanceLabel: UILabel!
-    
 }
