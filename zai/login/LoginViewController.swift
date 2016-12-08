@@ -32,11 +32,14 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
         self.apiKeyText.text = key_full
         self.secretKeyText.text = secret_full
         
+        let app = UIApplication.shared.delegate as! AppDelegate
+        app.nonce = TimeNonce()
+        
         let userId = self.userIdText.text!
         let apiKey = self.apiKeyText.text!
         let secretKey = self.secretKeyText.text!
         
-        let api = ZaifSwift.PrivateApi(apiKey: apiKey, secretKey: secretKey)
+        let api = ZaifSwift.PrivateApi(apiKey: apiKey, secretKey: secretKey, nonce: app.nonce)
         let account = AccountRepository.getInstance().findByUserId(userId, api: api)
         if account == nil {
             self.errorMessageLabel.text = "invalid use id or api keys"
@@ -49,6 +52,11 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
         account!.validateApiKey() { (err, isValid) in
             if isValid {
                 goNext = true
+            }
+            if let e = err {
+                if e.errorType == .INVALID_API_KEYS {
+                    app.nonce?.countUp(value: 100)
+                }
             }
             waiting = false
         }
@@ -72,7 +80,6 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
             Config.setPreviousSecretKey(secretKey)
             Config.save()
             
-            let app = UIApplication.shared.delegate as! AppDelegate
             app.analyzer = Analyzer(api: api)
             UIApplication.shared.isIdleTimerDisabled = true
         }

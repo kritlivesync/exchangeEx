@@ -8,6 +8,8 @@
 
 import UIKit
 
+import ZaifSwift
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -42,5 +44,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     var analyzer: Analyzer? = nil
+    var nonce: TimeNonce? = nil
 }
 
