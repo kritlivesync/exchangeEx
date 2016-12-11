@@ -44,6 +44,14 @@ class Board {
         }
     }
     
+    func calculateAskMomentum() -> Double {
+        let ema = Ema(term: 5)
+        for ask in self.asks {
+            ema.addSample(value: ask.amount)
+        }
+        return ema.calculate()
+    }
+    
     func addBid(price: Double, amount: Double) {
         let quote = Quote(price: price, amount: amount, type: .BID)
         self.bids.append(quote)
@@ -56,6 +64,15 @@ class Board {
         } else {
             return nil
         }
+    }
+    
+    func calculateBidMomentum() -> Double {
+        let ema = Ema(term: 5)
+        let rev = self.bids.reversed()
+        for bid in rev {
+            ema.addSample(value: bid.amount)
+        }
+        return ema.calculate()
     }
     
     func getQuote(index: Int) -> Quote? {

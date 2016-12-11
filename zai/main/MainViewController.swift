@@ -182,6 +182,12 @@ class MainViewController: UIViewController, FundViewDelegate, BoardViewDelegate,
         self.boardView = BoardView(view: self.boardTableView, board: board)
         self.boardView.delegate = self
         self.boardView.reloadData()
+        let askMomentum = board.calculateAskMomentum()
+        let bidMomentum = board.calculateBidMomentum()
+        let askWidth = askAmountMomentumLabel.layer.bounds.width
+        let ratio = bidMomentum / askMomentum
+        let bidWidth = CGFloat(Double(askWidth) * (ratio) * 0.5)
+        self.amountMomentLabel.constant = min(bidWidth, askWidth)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -271,5 +277,8 @@ class MainViewController: UIViewController, FundViewDelegate, BoardViewDelegate,
     @IBOutlet weak var btcJpyMarketPrice: UILabel!
     @IBOutlet weak var btcFundLabel: UILabel!
 
+    @IBOutlet weak var askAmountMomentumLabel: UILabel!
+    @IBOutlet weak var amountMomentLabel: NSLayoutConstraint!
+    
     @IBOutlet weak var messageLabel: UILabel!
 }

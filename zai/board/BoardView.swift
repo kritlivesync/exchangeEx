@@ -44,9 +44,11 @@ class BoardView : NSObject, UITableViewDelegate, UITableViewDataSource {
         let quote = self.board.getQuote(index: (indexPath as NSIndexPath).row)!
         cell.setQuote(quote)
         if quote.type == Quote.QuoteType.ASK {
-            cell.orderButton.addTarget(self, action: #selector(BoardView.pushBuyOrder(_:event:)), for: .touchUpInside)
+            cell.takerButton.addTarget(self, action: #selector(BoardView.pushBuyOrder(_:event:)), for: .touchUpInside)
+            cell.makerButton.addTarget(self, action: #selector(BoardView.pushSellOrder(_:event:)), for: .touchUpInside)
         } else if quote.type == Quote.QuoteType.BID {
-            cell.orderButton.addTarget(self, action: #selector(BoardView.pushSellOrder(_:event:)), for: .touchUpInside)
+            cell.takerButton.addTarget(self, action: #selector(BoardView.pushSellOrder(_:event:)), for: .touchUpInside)
+            cell.makerButton.addTarget(self, action: #selector(BoardView.pushBuyOrder(_:event:)), for: .touchUpInside)
         }
         return cell
     }

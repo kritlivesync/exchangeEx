@@ -55,7 +55,7 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
             }
             if let e = err {
                 if e.errorType == .INVALID_API_KEYS {
-                    app.nonce?.countUp(value: 100)
+                    app.nonce?.countUp(value: 200)
                 }
             }
             waiting = false

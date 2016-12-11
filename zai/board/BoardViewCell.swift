@@ -29,13 +29,13 @@ class BoardViewCell : UITableViewCell {
         }
         var barWidth = CGFloat(quote.amount * 50.0)
         barWidth = min(barWidth, self.amountLabel.layer.bounds.width)
-        self.amountBarLabel.constant = barWidth
+        self.amountBarConstraint.constant = barWidth
     }
     
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
-    @IBOutlet weak var orderButton: UIButton!
+    @IBOutlet weak var takerButton: UIButton!
+    @IBOutlet weak var makerButton: UIButton!
     @IBOutlet weak var amountBar: UILabel!
-    @IBOutlet weak var amountBarLabel: NSLayoutConstraint!
-
+    @IBOutlet weak var amountBarConstraint: NSLayoutConstraint!
 }

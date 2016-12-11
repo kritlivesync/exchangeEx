@@ -21,6 +21,7 @@
 		B8521A721DF844380025B60E /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A711DF844380025B60E /* Board.swift */; };
 		B8521A741DF84DE80025B60E /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A731DF84DE80025B60E /* BoardView.swift */; };
 		B8521A761DF8542F0025B60E /* BoardViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A751DF8542F0025B60E /* BoardViewCell.swift */; };
+		B8521A781DFC681A0025B60E /* Ema.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A771DFC681A0025B60E /* Ema.swift */; };
 		B8564A0A1D718D5800504A2B /* SelectTraderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8564A091D718D5800504A2B /* SelectTraderViewController.swift */; };
 		B8564A0C1D719C5900504A2B /* TraderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8564A0B1D719C5900504A2B /* TraderListView.swift */; };
 		B8564A0E1D71A42900504A2B /* TraderListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8564A0D1D71A42900504A2B /* TraderListViewCell.swift */; };
@@ -100,6 +101,7 @@
 		B8521A711DF844380025B60E /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Board.swift; path = board/Board.swift; sourceTree = "<group>"; };
 		B8521A731DF84DE80025B60E /* BoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardView.swift; path = board/BoardView.swift; sourceTree = "<group>"; };
 		B8521A751DF8542F0025B60E /* BoardViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardViewCell.swift; path = board/BoardViewCell.swift; sourceTree = "<group>"; };
+		B8521A771DFC681A0025B60E /* Ema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Ema.swift; path = analytics/Ema.swift; sourceTree = "<group>"; };
 		B8564A091D718D5800504A2B /* SelectTraderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectTraderViewController.swift; path = selecttrader/SelectTraderViewController.swift; sourceTree = "<group>"; };
 		B8564A0B1D719C5900504A2B /* TraderListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderListView.swift; path = selecttrader/TraderListView.swift; sourceTree = "<group>"; };
 		B8564A0D1D71A42900504A2B /* TraderListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderListViewCell.swift; path = selecttrader/TraderListViewCell.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				B8F38B3B1D8FC1CB00731696 /* Macd.swift */,
 				B8F1B2231DC0D37D001A120E /* Feature.swift */,
 				B8F1B2251DC5A9C7001A120E /* ZaiAnalyticsClient.swift */,
+				B8521A771DFC681A0025B60E /* Ema.swift */,
 			);
 			name = analytics;
 			sourceTree = "<group>";
@@ -625,6 +628,7 @@
 				B85E8E591D6F3E6F00C029C8 /* Trader+CoreDataProperties.swift in Sources */,
 				B825E7771D75E526004FE785 /* LongPosition.swift in Sources */,
 				B827CD1C1D81C9F200E9847B /* Position+CoreDataProperties.swift in Sources */,
+				B8521A781DFC681A0025B60E /* Ema.swift in Sources */,
 				B8564A151D72A39700504A2B /* TraderMenuViewController.swift in Sources */,
 				B85E8E371D6F3E2100C029C8 /* Config.swift in Sources */,
 				B825E7781D75E526004FE785 /* ShortPosition+CoreDataProperties.swift in Sources */,
