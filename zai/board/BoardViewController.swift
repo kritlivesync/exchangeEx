@@ -10,7 +10,7 @@ import Foundation
 
 import ZaifSwift
 
-class MainViewController: UIViewController, FundDelegate, BitCoinDelegate, BoardDelegate, BoardViewDelegate {
+class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, BoardDelegate, BoardViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,13 +31,11 @@ class MainViewController: UIViewController, FundDelegate, BitCoinDelegate, Board
     }
     
     // FundDelegate
-    func didUpdateBtcJpyPrice(_ view: String) {
-        self.btcJpyMarketPrice.text = view
-        DispatchQueue.main.async {
-            self.btcJpyMarketPrice.setNeedsDisplay()
-        }
-    }
     func recievedMarketCapitalization(jpy: Int) {
+        return
+    }
+    
+    func recievedJpyFund(jpy: Int) {
         return
     }
     

@@ -13,14 +13,14 @@ class MainTabBarController : UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let vc = self.viewControllers?[0] as! MainViewController
-        vc.account = self.account
+        let assets = self.viewControllers?[0] as! AssetsViewController
+        assets.account = self.account
+        
+        let board = self.viewControllers?[1] as! BoardViewController
+        board.account = self.account
     }
     
     public func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        
-        let vc = viewController as! MainViewController
-        vc.account = self.account
         
     }
     

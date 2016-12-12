@@ -106,7 +106,7 @@
         <!--Board-->
         <scene sceneID="b5N-wN-fGf">
             <objects>
-                <viewController id="SJD-rl-KnU" customClass="BoardViewController" sceneMemberID="viewController">
+                <viewController id="SJD-rl-KnU" customClass="BoardViewController" customModule="zai" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cfE-Ac-wcu"/>
                         <viewControllerLayoutGuide type="bottom" id="Suv-jj-NIM"/>
@@ -340,9 +340,9 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
+                        <segue destination="t5r-by-sXT" kind="relationship" relationship="viewControllers" id="kui-Ck-833"/>
                         <segue destination="SJD-rl-KnU" kind="relationship" relationship="viewControllers" id="by4-nW-di2"/>
                         <segue destination="EhP-Nb-jnZ" kind="relationship" relationship="viewControllers" id="W9F-rt-ysV"/>
-                        <segue destination="t5r-by-sXT" kind="relationship" relationship="viewControllers" id="kui-Ck-833"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8HP-h0-8Wz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -691,10 +691,10 @@
             </objects>
             <point key="canvasLocation" x="134" y="1047"/>
         </scene>
-        <!--Item-->
+        <!--Assets-->
         <scene sceneID="rQ0-8X-NQT">
             <objects>
-                <viewController id="t5r-by-sXT" sceneMemberID="viewController">
+                <viewController id="t5r-by-sXT" customClass="AssetsViewController" customModule="zai" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0aF-9a-Xq0"/>
                         <viewControllerLayoutGuide type="bottom" id="RgS-NC-00w"/>
@@ -813,7 +813,12 @@
                             <constraint firstItem="Jau-Lp-fip" firstAttribute="top" secondItem="0aF-9a-Xq0" secondAttribute="bottom" constant="30" id="pWC-QW-Qex"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="2uf-BZ-KXL"/>
+                    <tabBarItem key="tabBarItem" title="Assets" id="2uf-BZ-KXL"/>
+                    <connections>
+                        <outlet property="btcFundLabel" destination="T3P-La-0sB" id="diQ-3x-Rwb"/>
+                        <outlet property="jpyFundLabel" destination="9rx-I1-c91" id="t3c-ZN-yDP"/>
+                        <outlet property="marketCapitalizationLabel" destination="AYF-Fh-utn" id="jdx-zE-cWv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nxd-i6-PSo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

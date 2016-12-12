@@ -35,7 +35,6 @@
 		B85E8E381D6F3E2100C029C8 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E331D6F3E2100C029C8 /* Database.swift */; };
 		B85E8E391D6F3E2100C029C8 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E341D6F3E2100C029C8 /* Error.swift */; };
 		B85E8E3A1D6F3E2100C029C8 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E351D6F3E2100C029C8 /* Keys.swift */; };
-		B85E8E3D1D6F3E3A00C029C8 /* FundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E3B1D6F3E3A00C029C8 /* FundView.swift */; };
 		B85E8E441D6F3E4D00C029C8 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E3F1D6F3E4D00C029C8 /* Account.swift */; };
 		B85E8E451D6F3E4D00C029C8 /* Account+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E401D6F3E4D00C029C8 /* Account+CoreDataProperties.swift */; };
 		B85E8E461D6F3E4D00C029C8 /* AccountRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E411D6F3E4D00C029C8 /* AccountRepository.swift */; };
@@ -115,7 +114,6 @@
 		B85E8E331D6F3E2100C029C8 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Database.swift; path = core/Database.swift; sourceTree = "<group>"; };
 		B85E8E341D6F3E2100C029C8 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Error.swift; path = core/Error.swift; sourceTree = "<group>"; };
 		B85E8E351D6F3E2100C029C8 /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Keys.swift; path = core/Keys.swift; sourceTree = "<group>"; };
-		B85E8E3B1D6F3E3A00C029C8 /* FundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FundView.swift; path = main/FundView.swift; sourceTree = "<group>"; };
 		B85E8E3F1D6F3E4D00C029C8 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Account.swift; path = account/Account.swift; sourceTree = "<group>"; };
 		B85E8E401D6F3E4D00C029C8 /* Account+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Account+CoreDataProperties.swift"; path = "account/Account+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B85E8E411D6F3E4D00C029C8 /* AccountRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountRepository.swift; path = account/AccountRepository.swift; sourceTree = "<group>"; };
@@ -280,7 +278,6 @@
 			isa = PBXGroup;
 			children = (
 				B85E8E5D1D6F477900C029C8 /* TraderView.swift */,
-				B85E8E3B1D6F3E3A00C029C8 /* FundView.swift */,
 				B85E8E5F1D6F541800C029C8 /* TraderViewCell.swift */,
 				B80920301DFD03E8005667D4 /* MainTabBarController.swift */,
 			);
@@ -617,7 +614,6 @@
 				B85E8E381D6F3E2100C029C8 /* Database.swift in Sources */,
 				B827CD161D806DF900E9847B /* PositionListViewCell.swift in Sources */,
 				B85E8E2E1D6F3CF800C029C8 /* LoginViewController.swift in Sources */,
-				B85E8E3D1D6F3E3A00C029C8 /* FundView.swift in Sources */,
 				B85E8E591D6F3E6F00C029C8 /* Trader+CoreDataProperties.swift in Sources */,
 				B825E7771D75E526004FE785 /* LongPosition.swift in Sources */,
 				B81AF6431DFF054600D4F706 /* AssetsViewController.swift in Sources */,

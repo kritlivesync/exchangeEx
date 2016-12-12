@@ -15,6 +15,7 @@ import ZaifSwift
 
 protocol FundDelegate {
     func recievedMarketCapitalization(jpy: Int)
+    func recievedJpyFund(jpy: Int)
     func recievedBtcFund(btc: Double)
 }
 
@@ -101,6 +102,19 @@ internal class Fund : Monitorable {
         }
     }
     
+    func getJpyFund(_ cb: @escaping ((ZaiError?, Int) -> Void)) {
+        self.privateApi.getInfo() { (err, res) in
+            if let e = err {
+                cb(ZaiError(errorType: .ZAIF_API_ERROR, message: e.message), 0)
+            } else {
+                if let info = res {
+                    let jpy = info["return"]["deposit"]["jpy"].intValue
+                    cb(nil, jpy)
+                }
+            }
+        }
+    }
+    
     func getBtcFund(_ cb: @escaping ((ZaiError?, Double) -> Void)) {
         self.privateApi.getInfo() { (err, res) in
             if let e = err {
@@ -119,6 +133,11 @@ internal class Fund : Monitorable {
             self.getMarketCapitalization() { (err, jpy) in
                 if err == nil {
                     d.recievedMarketCapitalization(jpy: jpy)
+                }
+            }
+            self.getJpyFund() { (err, jpy) in
+                if err == nil && self.delegate != nil {
+                    d.recievedJpyFund(jpy: jpy)
                 }
             }
             self.getBtcFund() { (err, btc) in
