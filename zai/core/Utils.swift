@@ -15,3 +15,16 @@ func getNow() -> String {
     formatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
     return formatter.string(from: now as Date)
 }
+
+func formatValue(_ value: Int) -> String {
+    let formatter = NumberFormatter()
+    formatter.numberStyle = NumberFormatter.Style.decimal
+    formatter.groupingSeparator = ","
+    formatter.groupingSize = 3
+    formatter.maximumFractionDigits = 2
+    return formatter.string(from: NSNumber(value: value))!
+}
+
+func formatValue(_ value: Double) -> String {
+    return NSString(format: "%.4f", value) as String
+}

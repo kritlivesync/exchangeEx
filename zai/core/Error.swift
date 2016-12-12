@@ -13,6 +13,8 @@ public enum ZaiErrorType : Error {
     case ZAIF_API_ERROR
     case INVALID_ORDER
     case INVALID_API_KEYS
+    case INVALID_ACCOUNT_INFO
+    case ZAIF_CONNECTION_ERROR
     case UNKNOWN_ERROR
 }
 

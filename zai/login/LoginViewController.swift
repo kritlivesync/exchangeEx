@@ -32,31 +32,20 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
         self.apiKeyText.text = key_full
         self.secretKeyText.text = secret_full
         
-        let app = UIApplication.shared.delegate as! AppDelegate
-        app.nonce = TimeNonce()
-        
         let userId = self.userIdText.text!
         let apiKey = self.apiKeyText.text!
         let secretKey = self.secretKeyText.text!
         
-        let api = ZaifSwift.PrivateApi(apiKey: apiKey, secretKey: secretKey, nonce: app.nonce)
-        let account = AccountRepository.getInstance().findByUserId(userId, api: api)
-        if account == nil {
-            self.errorMessageLabel.text = "invalid use id or api keys"
-            return false
-        }
-        
         var waiting = true
         var goNext = false
 
-        account!.validateApiKey() { (err, isValid) in
-            if isValid {
+        login(userId: userId, apiKey: apiKey, secretKey: secretKey) { (err, account) in
+            if let _ = err {
+                self.errorMessageLabel.text = "invalid user name or api keys"
+                goNext = false
+            } else {
+                self.account = account
                 goNext = true
-            }
-            if let e = err {
-                if e.errorType == .INVALID_API_KEYS {
-                    app.nonce?.countUp(value: 200)
-                }
             }
             waiting = false
         }
@@ -64,12 +53,11 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
         while waiting {
             usleep(20)
         }
-        self.account = account
         
         if goNext {
             let traderName = "dummyTrader"
             let repository = TraderRepository.getInstance()
-            let trader = repository.findTraderByName(traderName, api: api)
+            let trader = repository.findTraderByName(traderName, api: (self.account?.privateApi)!)
             if trader == nil {
                 repository.create(traderName, account: account!)
                 Config.SetCurrentTraderName(traderName)
@@ -80,7 +68,8 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
             Config.setPreviousSecretKey(secretKey)
             Config.save()
             
-            app.analyzer = Analyzer(api: api)
+            let app = UIApplication.shared.delegate as! AppDelegate
+            app.analyzer = Analyzer(api: (self.account?.privateApi)!)
             UIApplication.shared.isIdleTimerDisabled = true
         }
 
@@ -90,8 +79,9 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         switch segue.identifier! {
         case self.mainViewSegue:
-            let destController = segue.destination as! MainViewController
+            let destController = segue.destination as! MainTabBarController
             destController.account = account!
+            
         case self.newAccountSegue:
             let destController = segue.destination as! NewAccountViewController
             destController.delegate = self
@@ -125,7 +115,7 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
     
     fileprivate let newAccountLabelTag = 0
     fileprivate let newAccountSegue = "newAccountSegue"
-    fileprivate let mainViewSegue = "mainViewSegue"
+    fileprivate let mainViewSegue = "mainTabSegue"
     
     internal var userIdFromNewAccount = ""
     

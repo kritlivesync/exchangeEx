@@ -41,7 +41,7 @@ open class Account: NSManagedObject {
     }
     
     func getMarketCapitalization(_ cb: @escaping ((ZaiError?, Int) -> Void)) {
-        let fund = JPYFund(api: self.privateApi)
+        let fund = Fund(api: self.privateApi)
         fund.getMarketCapitalization(cb)
     }
     

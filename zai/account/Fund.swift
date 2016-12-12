@@ -13,7 +13,12 @@ import SwiftyJSON
 import ZaifSwift
 
 
-internal class JPYFund {
+protocol FundDelegate {
+    func recievedMarketCapitalization(jpy: Int)
+    func recievedBtcFund(btc: Double)
+}
+
+internal class Fund : Monitorable {
     init(api: PrivateApi) {
         self.privateApi = api
     }
@@ -109,5 +114,21 @@ internal class JPYFund {
         }
     }
     
+    override func monitor() {
+        if let d = delegate {
+            self.getMarketCapitalization() { (err, jpy) in
+                if err == nil {
+                    d.recievedMarketCapitalization(jpy: jpy)
+                }
+            }
+            self.getBtcFund() { (err, btc) in
+                if err == nil && self.delegate != nil {
+                    d.recievedBtcFund(btc: btc)
+                }
+            }
+        }
+    }
+    
     fileprivate let privateApi: PrivateApi
+    var delegate: FundDelegate? = nil
 }

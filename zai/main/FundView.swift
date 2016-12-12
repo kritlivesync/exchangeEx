@@ -16,59 +16,14 @@ protocol FundViewDelegate {
 }
 
 
-internal class FundView {
+internal class FundView : FundDelegate, BitCoinDelegate {
     
     init(account: Account) {
         self.account = account
-        
-        self.updateCapitalizationTimer = Timer.scheduledTimer(
-            timeInterval: self.UPDATE_CAPITALIATION_INTERVAL,
-            target: self,
-            selector: #selector(FundView.updateMarketCapitalization),
-            userInfo: nil,
-            repeats: true)
-        
-        self.updateBtcJpyTimer = Timer.scheduledTimer(
-            timeInterval: self.UPDATE_BTCJPY_INTERVAL,
-            target: self,
-            selector: #selector(FundView.updateBtcJpyPrice),
-            userInfo: nil,
-            repeats: true)
-        
-        self.updateMarketCapitalization()
-        self.updateBtcJpyPrice()
-    }
-    
-    @objc func updateMarketCapitalization() {
-        self.createMarketCapitalizationView() { (err, view) in
-            if err == nil && self.delegate != nil {
-                self.delegate!.didUpdateMarketCapitalization(view)
-            }
-        }
-    }
-    
-    @objc func updateBtcJpyPrice() {
-        let app = UIApplication.shared.delegate as! AppDelegate
-        if let d = self.delegate {
-            d.didUpdateBtcJpyPrice(self.formatValue(Int((app.analyzer?.marketPrice.btcJpy)!)))
-        }
-        
-        let fund = JPYFund(api: self.account.privateApi)
-        fund.getBtcFund() { (err, btc) in
-            if err == nil && self.delegate != nil {
-                self.delegate!.didUpdateBtcFund(btc.description)
-            }
-        }
-    }
-    
-    fileprivate func createMarketCapitalizationView(_ cb: @escaping (ZaiError?, String) -> Void) {
-        self.account.getMarketCapitalization() { (err, value) in
-            if let e = err {
-                cb(e, "-")
-            } else {
-                cb(nil, self.formatValue(value))
-            }
-        }
+        self.fund = Fund(api: account.privateApi)
+        self.btc = BitCoin()
+        self.fund.delegate = self
+        self.btc.delegate = self
     }
     
     fileprivate func formatValue(_ value: Int) -> String {
@@ -80,10 +35,28 @@ internal class FundView {
         return formatter.string(from: NSNumber(value: value))!
     }
     
+    // FundDelegate
+    func recievedMarketCapitalization(jpy: Int) {
+        if let d = self.delegate {
+            d.didUpdateMarketCapitalization(self.formatValue(jpy))
+        }
+    }
+    
+    func recievedBtcFund(btc: Double) {
+        if let d = self.delegate {
+            d.didUpdateBtcFund(NSString(format: "%.4f", btc) as String)
+        }
+    }
+    
+    // BitCoinDelegate
+    func recievedJpyPrice(price: Int) {
+        if let d = self.delegate {
+            d.didUpdateBtcJpyPrice(self.formatValue(price))
+        }
+    }
+    
     fileprivate let account: Account
-    fileprivate var updateCapitalizationTimer: Timer?
-    fileprivate var updateBtcJpyTimer: Timer?
+    fileprivate let fund: Fund
+    fileprivate let btc: BitCoin
     var delegate: FundViewDelegate? = nil
-    fileprivate let UPDATE_CAPITALIATION_INTERVAL = 10.0
-    fileprivate let UPDATE_BTCJPY_INTERVAL = 1.0
 }

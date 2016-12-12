@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		3761386221FCB5F32FDBFC56 /* Pods_zai.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD254B29072DEED3604B9179 /* Pods_zai.framework */; };
 		B8002D701D8D1C480079AB9B /* ZaifWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8002D6F1D8D1C480079AB9B /* ZaifWatch.swift */; };
+		B80920311DFD03E8005667D4 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80920301DFD03E8005667D4 /* MainTabBarController.swift */; };
+		B80920331DFD3609005667D4 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80920321DFD3609005667D4 /* Login.swift */; };
+		B80920351DFD4555005667D4 /* BitCoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80920341DFD4555005667D4 /* BitCoin.swift */; };
+		B80920371DFD8817005667D4 /* PositionFundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80920361DFD8817005667D4 /* PositionFundView.swift */; };
+		B81AF6431DFF054600D4F706 /* AssetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81AF6421DFF054600D4F706 /* AssetsViewController.swift */; };
+		B81AF6451DFF059600D4F706 /* BoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81AF6441DFF059600D4F706 /* BoardViewController.swift */; };
 		B825E7761D75E526004FE785 /* LongPosition+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825E7711D75E526004FE785 /* LongPosition+CoreDataProperties.swift */; };
 		B825E7771D75E526004FE785 /* LongPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825E7721D75E526004FE785 /* LongPosition.swift */; };
 		B825E7781D75E526004FE785 /* ShortPosition+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825E7731D75E526004FE785 /* ShortPosition+CoreDataProperties.swift */; };
@@ -22,11 +28,6 @@
 		B8521A741DF84DE80025B60E /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A731DF84DE80025B60E /* BoardView.swift */; };
 		B8521A761DF8542F0025B60E /* BoardViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A751DF8542F0025B60E /* BoardViewCell.swift */; };
 		B8521A781DFC681A0025B60E /* Ema.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A771DFC681A0025B60E /* Ema.swift */; };
-		B8564A0A1D718D5800504A2B /* SelectTraderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8564A091D718D5800504A2B /* SelectTraderViewController.swift */; };
-		B8564A0C1D719C5900504A2B /* TraderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8564A0B1D719C5900504A2B /* TraderListView.swift */; };
-		B8564A0E1D71A42900504A2B /* TraderListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8564A0D1D71A42900504A2B /* TraderListViewCell.swift */; };
-		B8564A131D71C69300504A2B /* NewTraderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8564A121D71C69300504A2B /* NewTraderViewController.swift */; };
-		B8564A151D72A39700504A2B /* TraderMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8564A141D72A39700504A2B /* TraderMenuViewController.swift */; };
 		B85E8E2E1D6F3CF800C029C8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E2D1D6F3CF800C029C8 /* LoginViewController.swift */; };
 		B85E8E301D6F3DFB00C029C8 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E2F1D6F3DFB00C029C8 /* Currency.swift */; };
 		B85E8E361D6F3E2100C029C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E311D6F3E2100C029C8 /* AppDelegate.swift */; };
@@ -35,7 +36,6 @@
 		B85E8E391D6F3E2100C029C8 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E341D6F3E2100C029C8 /* Error.swift */; };
 		B85E8E3A1D6F3E2100C029C8 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E351D6F3E2100C029C8 /* Keys.swift */; };
 		B85E8E3D1D6F3E3A00C029C8 /* FundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E3B1D6F3E3A00C029C8 /* FundView.swift */; };
-		B85E8E3E1D6F3E3A00C029C8 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E3C1D6F3E3A00C029C8 /* MainViewController.swift */; };
 		B85E8E441D6F3E4D00C029C8 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E3F1D6F3E4D00C029C8 /* Account.swift */; };
 		B85E8E451D6F3E4D00C029C8 /* Account+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E401D6F3E4D00C029C8 /* Account+CoreDataProperties.swift */; };
 		B85E8E461D6F3E4D00C029C8 /* AccountRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E411D6F3E4D00C029C8 /* AccountRepository.swift */; };
@@ -89,6 +89,12 @@
 		2B79EE9EF789B6523DE18096 /* Pods-zai.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zai.release.xcconfig"; path = "Pods/Target Support Files/Pods-zai/Pods-zai.release.xcconfig"; sourceTree = "<group>"; };
 		47AE790BD03FD1B5B46D105B /* Pods-zai.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zai.debug.xcconfig"; path = "Pods/Target Support Files/Pods-zai/Pods-zai.debug.xcconfig"; sourceTree = "<group>"; };
 		B8002D6F1D8D1C480079AB9B /* ZaifWatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZaifWatch.swift; path = analytics/ZaifWatch.swift; sourceTree = "<group>"; };
+		B80920301DFD03E8005667D4 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainTabBarController.swift; path = main/MainTabBarController.swift; sourceTree = "<group>"; };
+		B80920321DFD3609005667D4 /* Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Login.swift; path = login/Login.swift; sourceTree = "<group>"; };
+		B80920341DFD4555005667D4 /* BitCoin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BitCoin.swift; path = currency/BitCoin.swift; sourceTree = "<group>"; };
+		B80920361DFD8817005667D4 /* PositionFundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PositionFundView.swift; path = positions/PositionFundView.swift; sourceTree = "<group>"; };
+		B81AF6421DFF054600D4F706 /* AssetsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AssetsViewController.swift; path = assets/AssetsViewController.swift; sourceTree = "<group>"; };
+		B81AF6441DFF059600D4F706 /* BoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardViewController.swift; path = board/BoardViewController.swift; sourceTree = "<group>"; };
 		B825E7711D75E526004FE785 /* LongPosition+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "LongPosition+CoreDataProperties.swift"; path = "trader/LongPosition+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B825E7721D75E526004FE785 /* LongPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LongPosition.swift; path = trader/LongPosition.swift; sourceTree = "<group>"; };
 		B825E7731D75E526004FE785 /* ShortPosition+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ShortPosition+CoreDataProperties.swift"; path = "trader/ShortPosition+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -102,11 +108,6 @@
 		B8521A731DF84DE80025B60E /* BoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardView.swift; path = board/BoardView.swift; sourceTree = "<group>"; };
 		B8521A751DF8542F0025B60E /* BoardViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardViewCell.swift; path = board/BoardViewCell.swift; sourceTree = "<group>"; };
 		B8521A771DFC681A0025B60E /* Ema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Ema.swift; path = analytics/Ema.swift; sourceTree = "<group>"; };
-		B8564A091D718D5800504A2B /* SelectTraderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectTraderViewController.swift; path = selecttrader/SelectTraderViewController.swift; sourceTree = "<group>"; };
-		B8564A0B1D719C5900504A2B /* TraderListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderListView.swift; path = selecttrader/TraderListView.swift; sourceTree = "<group>"; };
-		B8564A0D1D71A42900504A2B /* TraderListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderListViewCell.swift; path = selecttrader/TraderListViewCell.swift; sourceTree = "<group>"; };
-		B8564A121D71C69300504A2B /* NewTraderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewTraderViewController.swift; path = newtrader/NewTraderViewController.swift; sourceTree = "<group>"; };
-		B8564A141D72A39700504A2B /* TraderMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderMenuViewController.swift; path = selecttrader/TraderMenuViewController.swift; sourceTree = "<group>"; };
 		B85E8E2D1D6F3CF800C029C8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = login/LoginViewController.swift; sourceTree = "<group>"; };
 		B85E8E2F1D6F3DFB00C029C8 /* Currency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Currency.swift; path = currency/Currency.swift; sourceTree = "<group>"; };
 		B85E8E311D6F3E2100C029C8 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = core/AppDelegate.swift; sourceTree = "<group>"; };
@@ -115,7 +116,6 @@
 		B85E8E341D6F3E2100C029C8 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Error.swift; path = core/Error.swift; sourceTree = "<group>"; };
 		B85E8E351D6F3E2100C029C8 /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Keys.swift; path = core/Keys.swift; sourceTree = "<group>"; };
 		B85E8E3B1D6F3E3A00C029C8 /* FundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FundView.swift; path = main/FundView.swift; sourceTree = "<group>"; };
-		B85E8E3C1D6F3E3A00C029C8 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = main/MainViewController.swift; sourceTree = "<group>"; };
 		B85E8E3F1D6F3E4D00C029C8 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Account.swift; path = account/Account.swift; sourceTree = "<group>"; };
 		B85E8E401D6F3E4D00C029C8 /* Account+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Account+CoreDataProperties.swift"; path = "account/Account+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B85E8E411D6F3E4D00C029C8 /* AccountRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountRepository.swift; path = account/AccountRepository.swift; sourceTree = "<group>"; };
@@ -203,12 +203,21 @@
 			name = analytics;
 			sourceTree = "<group>";
 		};
+		B81AF6411DFF04F300D4F706 /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				B81AF6421DFF054600D4F706 /* AssetsViewController.swift */,
+			);
+			name = assets;
+			sourceTree = "<group>";
+		};
 		B827CD101D7C4F6E00E9847B /* positions */ = {
 			isa = PBXGroup;
 			children = (
 				B827CD111D7C4FDD00E9847B /* PositionsViewController.swift */,
 				B827CD131D7C523700E9847B /* PositionListView.swift */,
 				B827CD151D806DF900E9847B /* PositionListViewCell.swift */,
+				B80920361DFD8817005667D4 /* PositionFundView.swift */,
 			);
 			name = positions;
 			sourceTree = "<group>";
@@ -216,30 +225,12 @@
 		B8521A701DF843EB0025B60E /* board */ = {
 			isa = PBXGroup;
 			children = (
+				B81AF6441DFF059600D4F706 /* BoardViewController.swift */,
 				B8521A711DF844380025B60E /* Board.swift */,
 				B8521A731DF84DE80025B60E /* BoardView.swift */,
 				B8521A751DF8542F0025B60E /* BoardViewCell.swift */,
 			);
 			name = board;
-			sourceTree = "<group>";
-		};
-		B8564A081D718C8A00504A2B /* selecttrader */ = {
-			isa = PBXGroup;
-			children = (
-				B8564A091D718D5800504A2B /* SelectTraderViewController.swift */,
-				B8564A0B1D719C5900504A2B /* TraderListView.swift */,
-				B8564A0D1D71A42900504A2B /* TraderListViewCell.swift */,
-				B8564A141D72A39700504A2B /* TraderMenuViewController.swift */,
-			);
-			name = selecttrader;
-			sourceTree = "<group>";
-		};
-		B8564A0F1D71C61000504A2B /* newtrader */ = {
-			isa = PBXGroup;
-			children = (
-				B8564A121D71C69300504A2B /* NewTraderViewController.swift */,
-			);
-			name = newtrader;
 			sourceTree = "<group>";
 		};
 		B85E8E241D6F3A3A00C029C8 /* trader */ = {
@@ -290,8 +281,8 @@
 			children = (
 				B85E8E5D1D6F477900C029C8 /* TraderView.swift */,
 				B85E8E3B1D6F3E3A00C029C8 /* FundView.swift */,
-				B85E8E3C1D6F3E3A00C029C8 /* MainViewController.swift */,
 				B85E8E5F1D6F541800C029C8 /* TraderViewCell.swift */,
+				B80920301DFD03E8005667D4 /* MainTabBarController.swift */,
 			);
 			name = main;
 			sourceTree = "<group>";
@@ -313,6 +304,7 @@
 			isa = PBXGroup;
 			children = (
 				B85E8E2F1D6F3DFB00C029C8 /* Currency.swift */,
+				B80920341DFD4555005667D4 /* BitCoin.swift */,
 			);
 			name = currency;
 			sourceTree = "<group>";
@@ -321,6 +313,7 @@
 			isa = PBXGroup;
 			children = (
 				B85E8E2D1D6F3CF800C029C8 /* LoginViewController.swift */,
+				B80920321DFD3609005667D4 /* Login.swift */,
 			);
 			name = login;
 			sourceTree = "<group>";
@@ -350,11 +343,10 @@
 		B8B845761D66041D00535638 /* zai */ = {
 			isa = PBXGroup;
 			children = (
+				B81AF6411DFF04F300D4F706 /* assets */,
 				B8521A701DF843EB0025B60E /* board */,
 				B8002D6C1D8D10DA0079AB9B /* analytics */,
 				B827CD101D7C4F6E00E9847B /* positions */,
-				B8564A0F1D71C61000504A2B /* newtrader */,
-				B8564A081D718C8A00504A2B /* selecttrader */,
 				B85E8E2C1D6F3C1600C029C8 /* login */,
 				B85E8E2B1D6F3BD500C029C8 /* currency */,
 				B85E8E2A1D6F3BC000C029C8 /* core */,
@@ -593,10 +585,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B80920331DFD3609005667D4 /* Login.swift in Sources */,
 				B825E7761D75E526004FE785 /* LongPosition+CoreDataProperties.swift in Sources */,
 				B8F38B421D8FD2D700731696 /* PriceLogRepository.swift in Sources */,
 				B85E8E451D6F3E4D00C029C8 /* Account+CoreDataProperties.swift in Sources */,
 				B85E8E4C1D6F3E5E00C029C8 /* TradeLog.swift in Sources */,
+				B80920371DFD8817005667D4 /* PositionFundView.swift in Sources */,
 				B827CD141D7C523700E9847B /* PositionListView.swift in Sources */,
 				B85E8E3A1D6F3E2100C029C8 /* Keys.swift in Sources */,
 				B85E8E551D6F3E6F00C029C8 /* Order.swift in Sources */,
@@ -610,10 +604,11 @@
 				B85E8E471D6F3E4D00C029C8 /* Fund.swift in Sources */,
 				B825E7791D75E526004FE785 /* ShortPosition.swift in Sources */,
 				B85E8E441D6F3E4D00C029C8 /* Account.swift in Sources */,
+				B80920311DFD03E8005667D4 /* MainTabBarController.swift in Sources */,
 				B8F38B3F1D8FD2AB00731696 /* PriceLog+CoreDataProperties.swift in Sources */,
-				B8564A0C1D719C5900504A2B /* TraderListView.swift in Sources */,
 				B8002D701D8D1C480079AB9B /* ZaifWatch.swift in Sources */,
 				B85E8E581D6F3E6F00C029C8 /* Trader.swift in Sources */,
+				B81AF6451DFF059600D4F706 /* BoardViewController.swift in Sources */,
 				B827CD121D7C4FDD00E9847B /* PositionsViewController.swift in Sources */,
 				B8F585271D6964FA008680D8 /* Model.xcdatamodeld in Sources */,
 				B85E8E5E1D6F477900C029C8 /* TraderView.swift in Sources */,
@@ -622,23 +617,20 @@
 				B85E8E381D6F3E2100C029C8 /* Database.swift in Sources */,
 				B827CD161D806DF900E9847B /* PositionListViewCell.swift in Sources */,
 				B85E8E2E1D6F3CF800C029C8 /* LoginViewController.swift in Sources */,
-				B85E8E3E1D6F3E3A00C029C8 /* MainViewController.swift in Sources */,
-				B8564A0A1D718D5800504A2B /* SelectTraderViewController.swift in Sources */,
 				B85E8E3D1D6F3E3A00C029C8 /* FundView.swift in Sources */,
 				B85E8E591D6F3E6F00C029C8 /* Trader+CoreDataProperties.swift in Sources */,
 				B825E7771D75E526004FE785 /* LongPosition.swift in Sources */,
+				B81AF6431DFF054600D4F706 /* AssetsViewController.swift in Sources */,
 				B827CD1C1D81C9F200E9847B /* Position+CoreDataProperties.swift in Sources */,
 				B8521A781DFC681A0025B60E /* Ema.swift in Sources */,
-				B8564A151D72A39700504A2B /* TraderMenuViewController.swift in Sources */,
 				B85E8E371D6F3E2100C029C8 /* Config.swift in Sources */,
 				B825E7781D75E526004FE785 /* ShortPosition+CoreDataProperties.swift in Sources */,
 				B8521A721DF844380025B60E /* Board.swift in Sources */,
 				B85E8E5A1D6F3E6F00C029C8 /* TraderRepository.swift in Sources */,
+				B80920351DFD4555005667D4 /* BitCoin.swift in Sources */,
 				B8F38B401D8FD2AB00731696 /* PriceLog.swift in Sources */,
 				B85E8E4E1D6F3E5E00C029C8 /* TradeLogRepository.swift in Sources */,
 				B827CD0F1D772D2300E9847B /* PositionRepository.swift in Sources */,
-				B8564A0E1D71A42900504A2B /* TraderListViewCell.swift in Sources */,
-				B8564A131D71C69300504A2B /* NewTraderViewController.swift in Sources */,
 				B8F38B3A1D8ECA2600731696 /* Analyzer.swift in Sources */,
 				B85E8E601D6F541800C029C8 /* TraderViewCell.swift in Sources */,
 				B85E8E461D6F3E4D00C029C8 /* AccountRepository.swift in Sources */,

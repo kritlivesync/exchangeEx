@@ -26,11 +26,6 @@ class ZaifWatch {
     init() {
         self.queue = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default)
         
-        self.stream = StreamingApi.stream(.BTC_JPY) { _,_ in
-            print("opened btc_jpy streaming")
-        }
-        self.stream.onData(callback: self.onStreamData)
-        
         self.marketPriceTimer = Timer.scheduledTimer(
             timeInterval: self.WATCH_MARKETPRICE_INTERVAL,
             target: self,
@@ -69,29 +64,6 @@ class ZaifWatch {
             }
         }
     }
-    
-    func onStreamData(_ err: ZSError?, _ res: JSON?) {
-        if let e = err {
-            print(e.message)
-            return
-        }
-        
-        let board = Board()
-        let asks = res!["asks"].arrayValue
-        for ask in asks {
-            let a = ask.arrayValue
-            board.addAsk(price: a[0].doubleValue, amount: a[1].doubleValue)
-        }
- 
-        let bids = res!["bids"].arrayValue
-        for bid in bids {
-            let b = bid.arrayValue
-            board.addBid(price: b[0].doubleValue, amount: b[1].doubleValue)
-        }
-        if let d = self.delegate {
-            d.didFetchBoard(board: board)
-        }
-    }
 
     var lastPriceWatchInterval: Double {
         get {
@@ -122,5 +94,4 @@ class ZaifWatch {
     var lastPriceTimer: Timer!
     var delegate: ZaifWatchDelegate? = nil
     let WATCH_MARKETPRICE_INTERVAL = 5.0 // seconds
-    let stream: ZaifSwift.Stream!
 }
