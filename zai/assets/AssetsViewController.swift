@@ -40,7 +40,9 @@ class AssetsViewController: UIViewController, FundDelegate {
         }
     }
     
-    var account: Account!
+    var account: Account! = nil
+    var trader: Trader! = nil
+    
     var fund: Fund!
     
     @IBOutlet weak var marketCapitalizationLabel: UILabel!

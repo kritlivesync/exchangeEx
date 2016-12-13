@@ -13,11 +13,19 @@ class MainTabBarController : UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let assets = self.viewControllers?[0] as! AssetsViewController
-        assets.account = self.account
+        let trader = TraderRepository.getInstance().findTraderByName(Config.currentTraderName, api: self.account.privateApi)
         
-        let board = self.viewControllers?[1] as! BoardViewController
+        let assets = self.viewControllers![0] as! AssetsViewController
+        assets.account = self.account
+        assets.trader = trader
+        
+        let board = self.viewControllers![1] as! BoardViewController
         board.account = self.account
+        board.trader = trader
+        
+        let positions = self.viewControllers![2] as! PositionsViewController
+        positions.account = self.account
+        positions.trader = trader
     }
     
     public func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {

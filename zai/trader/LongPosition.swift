@@ -63,17 +63,20 @@ class LongPosition: Position {
     
     override internal var profit: Double {
         get {
-            var profit = 0.0
+            var buyPrice = 0.0
+            var sellPriceSum = 0.0
+            var sellAmount = 0.0
             for log in self.tradeLogs {
                 let l = log as! TradeLog
                 let action = TradeAction(rawValue: l.tradeAction)
                 if action == .OPEN_LONG_POSITION {
-                    profit -= l.price.doubleValue * l.amount.doubleValue
+                    buyPrice = l.price.doubleValue
                 } else if action == .UNWIND_LONG_POSITION {
-                    profit += l.price.doubleValue * l.amount.doubleValue
+                    sellAmount += l.amount.doubleValue
+                    sellPriceSum += l.price.doubleValue * l.amount.doubleValue
                 }
             }
-            return profit
+            return sellPriceSum - (buyPrice * sellAmount)
         }
     }
     

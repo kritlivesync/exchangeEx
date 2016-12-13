@@ -19,10 +19,11 @@ import ZaifSwift
 
 class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource {
     
-    init(view: UITableView, trader: Trader) {
+    init(view: UITableView, trader: Trader, btcPrice: Int) {
         self.positions = trader.getActivePositions()
         self.view = view
         self.tappedRow = -1
+        self.btcPrice = btcPrice
         
         super.init()
         self.view.delegate = self
@@ -40,8 +41,12 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "positionListViewCell", for: indexPath) as! PositionListViewCell
-        cell.setPosition(self.positions[(indexPath as NSIndexPath).row] as? Position)
+        cell.setPosition(self.positions[(indexPath as NSIndexPath).row] as? Position, btcPrice: self.btcPrice)
         cell.closeButton.addTarget(self, action: #selector(PositionListView.pushCloseButton(_:event:)), for: .touchUpInside)
+        
+        if indexPath.row % 2 == 0 {
+            cell.backgroundColor = UIColor.white
+        }
         return cell
     }
     
@@ -82,4 +87,5 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource {
     fileprivate var positions: [Position]
     fileprivate let view: UITableView
     fileprivate var tappedRow: Int
+    fileprivate let btcPrice: Int
 }

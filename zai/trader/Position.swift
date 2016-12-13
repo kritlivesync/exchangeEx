@@ -21,10 +21,21 @@ internal protocol PositionProtocol {
     var type: String { get }
 }
 
-enum PositionState: Int{
+enum PositionState: Int {
     case OPEN=0
     case CLOSED=1
     case CLOSING=2
+    
+    func toString() -> String {
+        switch self {
+        case .OPEN:
+            return "Open"
+        case .CLOSED:
+            return "Closed"
+        case .CLOSING:
+            return "Closing"
+        }
+    }
 }
 
 

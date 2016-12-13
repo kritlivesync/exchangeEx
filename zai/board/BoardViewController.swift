@@ -17,11 +17,6 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
         
         self.btcJpyMarketPrice.text = "-"
         
-        if self.currentTraderName.isEmpty {
-            self.currentTraderName = Config.currentTraderName
-        }
-        self.trader = TraderRepository.getInstance().findTraderByName(self.currentTraderName, api: self.account.privateApi)
-        
         self.bitcoin = BitCoin()
         self.bitcoin.delegate = self
         self.board = Board()
@@ -127,11 +122,12 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     }
     
     
-    internal var account: Account!
+    var account: Account! = nil
+    var trader: Trader! = nil
+    
     fileprivate var fund: Fund!
     fileprivate var currentTraderName: String = ""
     var boardView: BoardView! = nil
-    var trader: Trader! = nil
     
     var bitcoin: BitCoin!
     var btcFund: Double = 0.0
