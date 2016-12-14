@@ -27,11 +27,17 @@ class PositionListViewCell : UITableViewCell {
         if let p = position {
             self.priceLabel.text = p.price.description
             self.amountLabel.text = p.balance.description
-            let profit = Int(p.profit + (Double(btcPrice) - p.cost) * p.balance)
-            let desc = formatValue(profit)
-            self.profitLabel.text = (profit < 0) ? "" + desc : "+" + desc
-            if profit < 0 {
-                self.profitLabel.textColor = UIColor.red
+            if btcPrice < 0 {
+                self.profitLabel.text = "-"
+            } else {
+                let profit = Int(p.profit + (Double(btcPrice) - p.cost) * p.balance)
+                let desc = formatValue(profit)
+                self.profitLabel.text = (profit < 0) ? "" + desc : "+" + desc
+                if profit < 0 {
+                    self.profitLabel.textColor = UIColor.red
+                } else {
+                    self.profitLabel.textColor = UIColor.black
+                }
             }
         }
     }

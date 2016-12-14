@@ -50,6 +50,8 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
         
         if indexPath.row % 2 == 0 {
             cell.backgroundColor = UIColor.white
+        } else {
+            cell.backgroundColor = UIColor(red: 0.93, green: 0.93, blue: 0.96, alpha: 1.0)
         }
         return cell
     }
@@ -135,7 +137,7 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
     fileprivate var positions: [Position]
     fileprivate let view: UITableView
     fileprivate var tappedRow: Int
-    fileprivate var btcPrice: Int = 0
+    fileprivate var btcPrice: Int = -1
     fileprivate var btcFund: Double = 0.0
     
     var trader: Trader! = nil

@@ -492,6 +492,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="tintColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="amountLabel" destination="qtt-4s-V6M" id="gdI-sh-blo"/>
                                             <outlet property="closeButton" destination="Yq1-EQ-FWZ" id="yAD-1X-Jfe"/>
