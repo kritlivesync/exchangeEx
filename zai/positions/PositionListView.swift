@@ -17,17 +17,21 @@ import ZaifSwift
 }
 
 
-class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource {
+class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, FundDelegate, BitCoinDelegate {
     
-    init(view: UITableView, trader: Trader, btcPrice: Int) {
+    init(view: UITableView, trader: Trader) {
+        self.trader = trader
         self.positions = trader.getActivePositions()
         self.view = view
         self.tappedRow = -1
-        self.btcPrice = btcPrice
+        
+        self.fund = Fund(api: trader.account.privateApi)
+        self.bitcoin = BitCoin()
         
         super.init()
         self.view.delegate = self
         self.view.dataSource = self
+        self.startWatch()
     }
     
     public func numberOfSections(in tableView: UITableView) -> Int {
@@ -64,28 +68,79 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource {
             row = (self.view.indexPathForRow(at: point)! as NSIndexPath).row
         }
         if 0 <= row && row < self.positions.count {
-            let position = self.positions[row] as? Position
-            position?.unwind(nil, price: nil) { err in
-                if let e = err {
-                    return
-                } else {
-                    self.positions.remove(at: row)
-                    DispatchQueue.main.async {
-                        self.reloadData()
+            let position = self.positions[row]
+            let balance = position.balance
+            let btcFundAmount = self.btcFund
+            let amount = min(balance, btcFundAmount)
+            if amount < 0.0001 {
+                position.close()
+                self.positions.remove(at: row)
+                DispatchQueue.main.async {
+                    self.reloadData()
+                }
+            } else {
+                position.unwind(amount, price: nil) { err in
+                    if let _ = err {
+                        return
+                    } else {
+                        if btcFundAmount < balance {
+                            position.close()
+                        }
+                        self.positions.remove(at: row)
+                        DispatchQueue.main.async {
+                            self.reloadData()
+                        }
                     }
-                    
                 }
             }
         }
     }
     
+    // FundDelegate
+    func recievedMarketCapitalization(jpy: Int) {
+        return
+    }
+    
+    func recievedJpyFund(jpy: Int) {
+        return
+    }
+    
+    func recievedBtcFund(btc: Double) {
+        self.btcFund = btc
+    }
+    
+    // BitCoinDelegate
+    func recievedJpyPrice(price: Int) {
+        self.btcPrice = price
+        self.reloadData()
+    }
+    
     internal func reloadData() {
+        self.positions = trader.getActivePositions()
         self.view.reloadData()
     }
+    
+    internal func startWatch() {
+        self.fund.delegate = self
+        self.bitcoin.delegate = self
+    }
+    
+    internal func stopWatch() {
+        self.fund.delegate = nil
+        self.bitcoin.delegate = nil
+    }
+    
     
     internal var delegate: PositionListViewDelegate? = nil
     fileprivate var positions: [Position]
     fileprivate let view: UITableView
     fileprivate var tappedRow: Int
-    fileprivate let btcPrice: Int
+    fileprivate var btcPrice: Int = 0
+    fileprivate var btcFund: Double = 0.0
+    
+    var trader: Trader! = nil
+    var fund: Fund! = nil
+    var bitcoin: BitCoin! = nil
+    
+    
 }

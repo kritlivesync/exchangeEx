@@ -64,12 +64,8 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     }
     
     func orderBuy(quote: Quote) {
-        let trader = TraderRepository.getInstance().findTraderByName(self.currentTraderName, api: self.account.privateApi)
-        if trader == nil {
-            return
-        }
         let amt = min(quote.amount, 1.0)
-        trader!.createLongPosition(.BTC_JPY, price: quote.price, amount: amt) { err in
+        self.trader!.createLongPosition(.BTC_JPY, price: quote.price, amount: amt) { err in
             if let e = err {
                 print(e.message)
             }

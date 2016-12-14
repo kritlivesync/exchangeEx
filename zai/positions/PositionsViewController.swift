@@ -11,25 +11,25 @@ import UIKit
 
 
 
-class PositionsViewController : UIViewController, BitCoinDelegate {
+class PositionsViewController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.bitcoin = BitCoin()
-        self.bitcoin.delegate = self
+        self.positionListView = PositionListView(view: self.tableView, trader: self.trader)
     }
     
-    // BitCoinDelegate
-    func recievedJpyPrice(price: Int) {
-        self.positionListView = PositionListView(view: self.tableView, trader: self.trader, btcPrice: price)
+    open override func viewDidAppear(_ animated: Bool) {
+        self.positionListView.startWatch()
         self.positionListView.reloadData()
+    }
+    
+    open override func viewWillDisappear(_ animated: Bool) {
+        self.positionListView.stopWatch()
     }
     
     var account: Account! = nil
     var trader: Trader! = nil
-    
-    var bitcoin: BitCoin! = nil
     
     var positionListView: PositionListView! = nil
     

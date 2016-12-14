@@ -140,7 +140,6 @@ class LongPosition: Position {
             api: self.trader.account.privateApi)!
         
         order.excute() { (err, res) in
-            Database.getDb().saveContext()
             if let _ = err {
                 cb(err)
             } else {
@@ -148,6 +147,9 @@ class LongPosition: Position {
                     if promised {
                         let log = TradeLogRepository.getInstance().create(.UNWIND_LONG_POSITION, traderName: self.trader.name, account: self.trader.account, order: order, positionId: self.id)
                         self.addLog(log)
+                        if self.balance < 0.0001 {
+                            self.close()
+                        }
                         cb(nil)
                     } else {
                         cb(err)
