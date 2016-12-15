@@ -22,17 +22,6 @@ class Database {
         }
     }
     
-    fileprivate init() {
-        if Config.clearDBInInitialization {
-            let dbFilePath = self.applicationDocumentsDirectory.appendingPathComponent(self.dbFileName).path
-            do {
-                try FileManager.default.removeItem(atPath: dbFilePath)
-            } catch {
-                //
-            }
-        }
-    }
-    
     // MARK: - Core Data stack
     lazy var applicationDocumentsDirectory: URL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "jp.atbat.Core_Data_Demo" in the application's documents Application Support directory.

@@ -10,59 +10,56 @@ import Foundation
 
 
 open class Config {
+    
+    var currentTraderName: String {
+        get {
+            if let val = Config.configDict.value(forKey: "currentTraderName") {
+                return val as! String
+            }
+            return ""
+        }
+        set {
+            Config.configDict.setValue(newValue, forKey: "currentTraderName")
+        }
+    }
+    
+    var previousUserId: String {
+        get {
+            if let val = Config.configDict.value(forKey: "previousUserId") {
+                return val as! String
+            }
+            return ""
+        }
+        set {
+            Config.configDict.setValue(newValue, forKey: "previousUserId")
+        }
+    }
 
-    static var clearDBInInitialization: Bool = {
-        if let val = Config.configDict.value(forKey: "clearDBInInitialization") {
-            return val as! Bool
+    var previousApiKey: String {
+        get {
+            if let val = Config.configDict.value(forKey: "previousApiKey") {
+                return val as! String
+            }
+            return ""
         }
-        return false
-    }()
-    
-    static var currentTraderName: String = {
-        if let val = Config.configDict.value(forKey: "currentTraderName") {
-            return val as! String
+        set {
+            Config.configDict.setValue(newValue, forKey: "previousApiKey")
         }
-        return ""
-    }()
-    
-    static func SetCurrentTraderName(_ name: String) {
-        Config.configDict.setValue(name, forKey: "currentTraderName")
     }
     
-    static var previousUserId: String {
-        if let val = Config.configDict.value(forKey: "previousUserId") {
-            return val as! String
+    var previousSecretKey: String {
+        get {
+            if let val = Config.configDict.value(forKey: "previousSecretKey") {
+                return val as! String
+            }
+            return ""
         }
-        return ""
-    }
-    
-    static func setPreviousUserId(_ userId: String) {
-        Config.configDict.setValue(userId, forKey: "previousUserId")
-    }
-    
-    static var previousApiKey: String {
-        if let val = Config.configDict.value(forKey: "previousApiKey") {
-            return val as! String
+        set {
+            Config.configDict.setValue(newValue, forKey: "previousSecretKey")
         }
-        return ""
     }
     
-    static func setPreviousApiKey(_ key: String) {
-        Config.configDict.setValue(key, forKey: "previousApiKey")
-    }
-    
-    static var previousSecretKey: String {
-        if let val = Config.configDict.value(forKey: "previousSecretKey") {
-            return val as! String
-        }
-        return ""
-    }
-    
-    static func setPreviousSecretKey(_ key: String) {
-        Config.configDict.setValue(key, forKey: "previousSecretKey")
-    }
-    
-    static func save() -> Bool {
+    func save() -> Bool {
         return Config.configDict.write(toFile: Config.configPath, atomically: true)
     }
     
@@ -79,14 +76,14 @@ open class Config {
         return plist!
     }()
     
-    fileprivate static var preInstallPath: String = {
+    fileprivate static var preInstallPath: String {
         return Bundle.main.path(forResource: "Config", ofType: "plist")!
-    }()
+    }
     
-    fileprivate static var configPath: String = {
+    fileprivate static var configPath: String {
         let docs = URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent("Documents").path
         return docs + "/zai.plist"
-    }()
+    }
     
     fileprivate static func createDefaultConfigPlist(_ path: String) -> NSMutableDictionary {
         let plist = NSMutableDictionary()

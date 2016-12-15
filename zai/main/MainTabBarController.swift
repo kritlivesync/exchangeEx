@@ -13,7 +13,9 @@ class MainTabBarController : UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let trader = TraderRepository.getInstance().findTraderByName(Config.currentTraderName, api: self.account.privateApi)
+        let app = UIApplication.shared.delegate as! AppDelegate
+        
+        let trader = TraderRepository.getInstance().findTraderByName(app.config.currentTraderName, api: self.account.privateApi)
         
         let assets = self.viewControllers![0] as! AssetsViewController
         assets.account = self.account

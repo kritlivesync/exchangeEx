@@ -45,5 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var analyzer: Analyzer? = nil
     var nonce: TimeNonce? = nil
+    let config = Config()
 }
 

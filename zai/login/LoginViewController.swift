@@ -15,9 +15,10 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.userIdText.text = Config.previousUserId
-        self.apiKeyText.text = Config.previousApiKey
-        self.secretKeyText.text = Config.previousSecretKey
+        let app = UIApplication.shared.delegate as! AppDelegate
+        self.userIdText.text = app.config.previousUserId
+        self.apiKeyText.text = app.config.previousApiKey
+        self.secretKeyText.text = app.config.previousSecretKey
         
         if !self.userIdFromNewAccount.isEmpty {
             self.userIdText.text = self.userIdFromNewAccount
@@ -55,20 +56,21 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
         }
         
         if goNext {
+            let app = UIApplication.shared.delegate as! AppDelegate
+            
             let traderName = "dummyTrader"
             let repository = TraderRepository.getInstance()
             let trader = repository.findTraderByName(traderName, api: (self.account?.privateApi)!)
             if trader == nil {
-                repository.create(traderName, account: account!)
-                Config.SetCurrentTraderName(traderName)
+                _ = repository.create(traderName, account: account!)
+                app.config.currentTraderName = traderName
             }
             
-            Config.setPreviousUserId(userId)
-            Config.setPreviousApiKey(apiKey)
-            Config.setPreviousSecretKey(secretKey)
-            Config.save()
-            
-            let app = UIApplication.shared.delegate as! AppDelegate
+            app.config.previousUserId = userId
+            app.config.previousApiKey = apiKey
+            app.config.previousSecretKey = secretKey
+            _ = app.config.save()
+
             app.analyzer = Analyzer(api: (self.account?.privateApi)!)
             UIApplication.shared.isIdleTimerDisabled = true
         }
