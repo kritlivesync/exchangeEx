@@ -15,7 +15,7 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.btcJpyMarketPrice.text = "-"
+        self.jpyFundLabel.text = "-"
         
         self.bitcoin = BitCoin()
         self.bitcoin.delegate = self
@@ -26,13 +26,10 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     }
     
     // FundDelegate
-    func recievedBtcFund(btc: Double) {
-        self.btcFund = btc
-    }
-    
-    // BitCoinDelegate
-    func recievedJpyPrice(price: Int) {
-        self.btcJpyMarketPrice.text = formatValue(price)
+    func recievedJpyFund(jpy: Int) {
+        DispatchQueue.main.async {
+            self.jpyFundLabel.text = jpy.description
+        }
     }
     
     // BoardDelegate
@@ -70,7 +67,6 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     }
     
     func orderSell(quote: Quote) {
-        let amt = min(quote.amount, self.btcFund)
         let app = UIApplication.shared.delegate as! AppDelegate
         if app.config.sellMaxProfitPosition {
             self.trader.unwindMaxProfitPosition(price: quote.price, amount: quote.amount) { (err) in
@@ -81,7 +77,7 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
                     }
                 } else {
                     DispatchQueue.main.async {
-                        self.messageLabel.text = "Promised. Price: " + formatValue(Int(quote.price)) + " Amount: " + formatValue(amt)
+                        self.messageLabel.text = "Promised. Price: " + formatValue(Int(quote.price)) + " Amount: " + formatValue(quote.amount)
                         self.messageLabel.textColor = UIColor(red: 0.4, green: 0.7, blue: 0.4, alpha: 1.0)
                     }
                 }
@@ -95,7 +91,7 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
                     }
                 } else {
                     DispatchQueue.main.async {
-                        self.messageLabel.text = "Promised. Price: " + formatValue(Int(quote.price)) + " Amount: " + formatValue(amt)
+                        self.messageLabel.text = "Promised. Price: " + formatValue(Int(quote.price)) + " Amount: " + formatValue(quote.amount)
                         self.messageLabel.textColor = UIColor(red: 0.4, green: 0.7, blue: 0.4, alpha: 1.0)
                     }
                 }
@@ -148,13 +144,12 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     
     fileprivate var fund: Fund!
     fileprivate var bitcoin: BitCoin!
-    fileprivate var btcFund: Double = -1.0
     
     fileprivate var board: Board!
     
     @IBOutlet weak var boardTableView: UITableView!
     
-    @IBOutlet weak var btcJpyMarketPrice: UILabel!
+    @IBOutlet weak var jpyFundLabel: UILabel!
 
     @IBOutlet weak var askAmountMomentumLabel: UILabel!
     @IBOutlet weak var bidMomentumWidth: NSLayoutConstraint!

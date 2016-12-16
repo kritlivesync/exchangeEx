@@ -29,6 +29,11 @@ open class Trader: NSManagedObject, FundDelegate {
                 self.btcFund = btc
             }
         }
+        self.fund.getJpyFund() { (err, jpy) in
+            if err == nil {
+                self.jpyFund = jpy
+            }
+        }
     }
     
     convenience init(name: String, account: Account) {
@@ -47,7 +52,11 @@ open class Trader: NSManagedObject, FundDelegate {
     }
     
     func createLongPosition(_ currencyPair: CurrencyPair, price: Double?, amount: Double, cb: @escaping (ZaiError?) -> Void) {
-        let amt = min(self.btcFund, amount)
+        var amt = amount
+        if let p = price {
+            let maxAmount = Double(self.jpyFund) / p
+            amt = min(maxAmount, amt)
+        }
         let order = BuyOrder(currencyPair: currencyPair, price: price, amount: amt, api: self.account.privateApi)!
         order.excute() { (err, orderId) in
             if let e = err {
@@ -92,7 +101,7 @@ open class Trader: NSManagedObject, FundDelegate {
             position!.close()
             cb(nil)
         } else {
-            position!.unwind(amount, price: price) { err in
+            position!.unwind(amt, price: price) { err in
                 if let _ = err {
                     cb(err)
                 } else {
@@ -127,7 +136,8 @@ open class Trader: NSManagedObject, FundDelegate {
         var positions = [Position]()
         for position in self.positions {
             let p = position as! Position
-            if p.status.intValue == PositionState.OPEN.rawValue {
+            let status = p.status.intValue
+            if status == PositionState.OPEN.rawValue || status == PositionState.CLOSING.rawValue {
                 positions.append(p)
             }
         }
@@ -167,6 +177,11 @@ open class Trader: NSManagedObject, FundDelegate {
         self.btcFund = btc
     }
     
+    func recievedJpyFund(jpy: Int) {
+        self.jpyFund = jpy
+    }
+    
     var fund: Fund! = nil
     var btcFund: Double = 0.0
+    var jpyFund: Int = 0
 }

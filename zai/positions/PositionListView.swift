@@ -73,7 +73,6 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
             let position = self.positions[row]
             self.trader.unwindPosition(id: position.id, price: nil, amount: position.balance) { err in
                 if err == nil {
-                    self.positions.remove(at: row)
                     DispatchQueue.main.async {
                         self.reloadData()
                     }

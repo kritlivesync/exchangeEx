@@ -140,6 +140,7 @@ class LongPosition: Position {
             api: self.trader.account.privateApi)!
         
         order.excute() { (err, res) in
+            self.open()
             if let _ = err {
                 cb(err)
             } else {

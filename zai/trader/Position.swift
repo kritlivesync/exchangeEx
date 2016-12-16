@@ -50,6 +50,11 @@ class Position: NSManagedObject, PositionProtocol {
         //Database.getDb().saveContext()
     }
     
+    func open() {
+        self.status = NSNumber(value: PositionState.OPEN.rawValue)
+        Database.getDb().saveContext()
+    }
+    
     func close() {
         self.status = NSNumber(value: PositionState.CLOSED.rawValue)
         Database.getDb().saveContext()
