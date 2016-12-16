@@ -152,7 +152,7 @@ class LongPosition: Position {
                         }
                         cb(nil)
                     } else {
-                        cb(err)
+                        cb(ZaiError(errorType: .ORDER_TIMEOUT))
                     }
                 }
             }

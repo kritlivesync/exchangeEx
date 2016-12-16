@@ -21,77 +21,34 @@ protocol ZaifWatchDelegate {
 }
 
 
-class ZaifWatch {
+class ZaifWatch: FundDelegate, BitCoinDelegate {
     
     init() {
-        self.queue = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default)
         
-        self.marketPriceTimer = Timer.scheduledTimer(
-            timeInterval: self.WATCH_MARKETPRICE_INTERVAL,
-            target: self,
-            selector: #selector(ZaifWatch.addMarketPriceOperation),
-            userInfo: nil,
-            repeats: true)
+    }
+    
+    
+    
+    // FundDelegate
+    func recievedMarketCapitalization(jpy: Int) {
         
-        self.addMarketPriceOperation()
+    }
+    func recievedJpyFund(jpy: Int) {
+        
+    }
+    func recievedBtcFund(btc: Double) {
+        
     }
     
-    @objc func addMarketPriceOperation() {
-        self.queue.async {
-            BitCoin.getPriceFor(.JPY) { (err, price) in
-                if err == nil && self.delegate != nil {
-                    self.delegate!.didFetchBtcJpyMarketPrice(price)
-                }
-            }
-            MonaCoin.getPriceFor(.JPY) { (err, price) in
-                if err == nil && self.delegate != nil {
-                    self.delegate!.didFetchMonaJpyMarketPrice(price)
-                }
-            }
-            XEM.getPriceFor(.JPY) { (err, price) in
-                if err == nil && self.delegate != nil {
-                    self.delegate!.didFetchXemJpyMarketPrice(price)
-                }
-            }
-        }
+    // BitCoinDelegate
+    func recievedJpyPrice(price: Int) {
+        
     }
     
-    @objc func addLastPriceOperation() {
-        PublicApi.lastPrice(.BTC_JPY) { (err, res) in
-            if err == nil && self.delegate != nil {
-                let price = res!["last_price"].doubleValue
-                self.delegate!.didFetchBtcJpyLastPrice(price)
-            }
-        }
-    }
-
-    var lastPriceWatchInterval: Double {
-        get {
-            if let _ = self.lastPriceTimer {
-                return Double(self.lastPriceTimer.timeInterval)
-            } else {
-                return 0.0
-            }
-        }
-        set {
-            if let timer = self.lastPriceTimer {
-                if timer.isValid {
-                    timer.invalidate()
-                }
-            }
-            
-            self.lastPriceTimer = Timer.scheduledTimer(
-                   timeInterval: newValue,
-                   target: self,
-                   selector: #selector(ZaifWatch.addLastPriceOperation),
-                   userInfo: nil,
-                   repeats: true)
-        }
-    }
-    
-    let queue: DispatchQueue
-    var marketPriceTimer: Timer!
-    var lastPriceTimer: Timer!
-    var delegate: ZaifWatchDelegate? = nil
-    let WATCH_MARKETPRICE_INTERVAL = 5.0 // seconds
+    let fund: Fund! = nil
+    let bitcoin: BitCoin! = nil
+    var marketCapitalization = 0
+    var jpyFund = 0
+    var btcFund = 0.0
+    var btcJpyPrice = 0
 }

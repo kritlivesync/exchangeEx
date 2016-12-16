@@ -59,6 +59,18 @@ open class Config {
         }
     }
     
+    var sellMaxProfitPosition: Bool {
+        get {
+            if let val = Config.configDict.value(forKey: "sellMaxProfitPosition") {
+                return val as! Bool
+            }
+            return true
+        }
+        set {
+            Config.configDict.setValue(newValue, forKey: "sellMaxProfitPosition")
+        }
+    }
+    
     func save() -> Bool {
         return Config.configDict.write(toFile: Config.configPath, atomically: true)
     }

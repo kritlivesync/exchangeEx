@@ -18,7 +18,14 @@ class AssetsViewController: UIViewController, FundDelegate {
         self.btcFundLabel.text = "-"
         
         self.fund = Fund(api: self.account.privateApi)
+    }
+    
+    open override func viewWillAppear(_ animated: Bool) {
         self.fund.delegate = self
+    }
+    
+    open override func viewWillDisappear(_ animated: Bool) {
+        self.fund.delegate = nil
     }
 
     // FundDelegate
@@ -42,7 +49,6 @@ class AssetsViewController: UIViewController, FundDelegate {
     
     var account: Account! = nil
     var trader: Trader! = nil
-    
     var fund: Fund!
     
     @IBOutlet weak var marketCapitalizationLabel: UILabel!

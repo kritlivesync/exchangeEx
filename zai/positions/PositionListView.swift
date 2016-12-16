@@ -21,7 +21,7 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
     
     init(view: UITableView, trader: Trader) {
         self.trader = trader
-        self.positions = trader.getActivePositions()
+        self.positions = trader.activePositions
         self.view = view
         self.tappedRow = -1
         
@@ -71,27 +71,11 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
         }
         if 0 <= row && row < self.positions.count {
             let position = self.positions[row]
-            let balance = position.balance
-            let btcFundAmount = self.btcFund
-            let amount = min(balance, btcFundAmount)
-            if amount < 0.0001 {
-                position.close()
-                self.positions.remove(at: row)
-                DispatchQueue.main.async {
-                    self.reloadData()
-                }
-            } else {
-                position.unwind(amount, price: nil) { err in
-                    if let _ = err {
-                        return
-                    } else {
-                        if btcFundAmount < balance {
-                            position.close()
-                        }
-                        self.positions.remove(at: row)
-                        DispatchQueue.main.async {
-                            self.reloadData()
-                        }
+            self.trader.unwindPosition(id: position.id, price: nil, amount: position.balance) { err in
+                if err == nil {
+                    self.positions.remove(at: row)
+                    DispatchQueue.main.async {
+                        self.reloadData()
                     }
                 }
             }
@@ -118,7 +102,7 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
     }
     
     internal func reloadData() {
-        self.positions = trader.getActivePositions()
+        self.positions = trader.activePositions
         self.view.reloadData()
     }
     

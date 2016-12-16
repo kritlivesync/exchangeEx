@@ -35,14 +35,11 @@ class Analyzer : ZaifWatchDelegate, ZaiAnalyticsDelegate {
         self.api = api
         self.marketPrice = MarketPrice(btcJpy: 0.0, monaJpy: 0.0, xemJpy: 0.0)
         self.macd = Macd(shortTerm: self.feature.shortTerm, longTerm: self.feature.longTerm, signalTerm: self.feature.signalTerm)
-        self.watch = ZaifWatch()
-        self.watch.lastPriceWatchInterval = Double(self.lastPriceWatchInterval)
         
         self.lastPriceDate = Int(Date().timeIntervalSince1970) - self.feature.priceInterval
         
         //self.analyticsClient = ZaiAnalyticsClient()
         
-        self.watch.delegate = self
         //self.analyticsClient.delegate = self
     }
     
@@ -90,7 +87,6 @@ class Analyzer : ZaifWatchDelegate, ZaiAnalyticsDelegate {
     
     var marketPrice: MarketPrice
     var macd: Macd
-    let watch: ZaifWatch!
     var lastPriceWatchInterval = 10
     var momentumAtBuy = 0.0
     var currentBottomMomentum = 9999999.9

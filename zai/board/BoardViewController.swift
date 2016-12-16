@@ -26,14 +26,6 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     }
     
     // FundDelegate
-    func recievedMarketCapitalization(jpy: Int) {
-        return
-    }
-    
-    func recievedJpyFund(jpy: Int) {
-        return
-    }
-    
     func recievedBtcFund(btc: Double) {
         self.btcFund = btc
     }
@@ -68,17 +60,47 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
         self.trader!.createLongPosition(.BTC_JPY, price: quote.price, amount: amt) { err in
             if let e = err {
                 print(e.message)
-            }
-            DispatchQueue.main.async {
-                self.messageLabel.text = "Promised. Price: " + formatValue(Int(quote.price)) + " Amount: " + formatValue(amt)
-                self.messageLabel.textColor = UIColor(red: 0.7, green: 0.4, blue: 0.4, alpha: 1.0)
+            } else {
+                DispatchQueue.main.async {
+                    self.messageLabel.text = "Promised. Price: " + formatValue(Int(quote.price)) + " Amount: " + formatValue(amt)
+                    self.messageLabel.textColor = UIColor(red: 0.7, green: 0.4, blue: 0.4, alpha: 1.0)
+                }
             }
         }
     }
     
     func orderSell(quote: Quote) {
         let amt = min(quote.amount, self.btcFund)
-        self.sell(price: quote.price, amount: amt)
+        let app = UIApplication.shared.delegate as! AppDelegate
+        if app.config.sellMaxProfitPosition {
+            self.trader.unwindMaxProfitPosition(price: quote.price, amount: quote.amount) { (err) in
+                if let e = err {
+                    DispatchQueue.main.async {
+                        self.messageLabel.text = e.errorType.toString()
+                        self.messageLabel.textColor = UIColor.red
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.messageLabel.text = "Promised. Price: " + formatValue(Int(quote.price)) + " Amount: " + formatValue(amt)
+                        self.messageLabel.textColor = UIColor(red: 0.4, green: 0.7, blue: 0.4, alpha: 1.0)
+                    }
+                }
+            }
+        } else {
+            self.trader.unwindMinProfitPosition(price: quote.price, amount: quote.amount) { (err) in
+                if let e = err {
+                    DispatchQueue.main.async {
+                        self.messageLabel.text = e.errorType.toString()
+                        self.messageLabel.textColor = UIColor.red
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.messageLabel.text = "Promised. Price: " + formatValue(Int(quote.price)) + " Amount: " + formatValue(amt)
+                        self.messageLabel.textColor = UIColor(red: 0.4, green: 0.7, blue: 0.4, alpha: 1.0)
+                    }
+                }
+            }
+        }
     }
     
     func sell(price: Double?, amount: Double) {
@@ -121,14 +143,14 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     var account: Account! = nil
     var trader: Trader! = nil
     
-    fileprivate var fund: Fund!
     fileprivate var currentTraderName: String = ""
     var boardView: BoardView! = nil
     
-    var bitcoin: BitCoin!
-    var btcFund: Double = 0.0
+    fileprivate var fund: Fund!
+    fileprivate var bitcoin: BitCoin!
+    fileprivate var btcFund: Double = -1.0
     
-    var board: Board!
+    fileprivate var board: Board!
     
     @IBOutlet weak var boardTableView: UITableView!
     

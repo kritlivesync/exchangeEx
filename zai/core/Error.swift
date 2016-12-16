@@ -15,7 +15,18 @@ public enum ZaiErrorType : Error {
     case INVALID_API_KEYS
     case INVALID_ACCOUNT_INFO
     case ZAIF_CONNECTION_ERROR
+    case ORDER_TIMEOUT
+    case INVALID_POSITION
     case UNKNOWN_ERROR
+    
+    func toString() -> String {
+        switch self {
+        case .ORDER_TIMEOUT:
+            return "Order timed out"
+        default:
+            return "Unkonwn error"
+        }
+    }
 }
 
 public struct ZaiError {
