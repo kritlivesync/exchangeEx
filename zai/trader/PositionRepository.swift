@@ -24,12 +24,8 @@ class PositionRepository {
         }
     }
     
-    func createLongPosition(_ order: BuyOrder, trader: Trader, id: String?=nil) -> LongPosition? {
+    func createLongPosition(_ order: BuyOrder, trader: Trader, id: String?=nil) -> LongPosition {
         let db = Database.getDb()
-        
-        if !order.isPromised {
-            return nil
-        }
         
         let newPosition = NSEntityDescription.insertNewObject(forEntityName: PositionRepository.longPositionModelName, into: db.managedObjectContext) as! LongPosition
         
@@ -51,13 +47,9 @@ class PositionRepository {
         db.saveContext()
     }
     
-    func createShortPosition(_ order: SellOrder, trader: Trader) -> ShortPosition? {
+    func createShortPosition(_ order: SellOrder, trader: Trader) -> ShortPosition {
         let db = Database.getDb()
-        
-        if !order.isPromised {
-            return nil
-        }
-        
+
         let newPosition = NSEntityDescription.insertNewObject(forEntityName: PositionRepository.shortPositionModelName, into: db.managedObjectContext) as! ShortPosition
         
         

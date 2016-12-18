@@ -30,6 +30,7 @@ internal class Order {
         self.promisedTime = 0
         self.promisedPrice = 0.0
         self.privateApi = api
+        self.orderPrice = price
         
         self.zaifOrder = nil
         let order = self.createOrder(currencyPair, price: price, amount: amount)

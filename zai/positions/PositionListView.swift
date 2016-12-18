@@ -47,12 +47,7 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
         let cell = tableView.dequeueReusableCell(withIdentifier: "positionListViewCell", for: indexPath) as! PositionListViewCell
         cell.setPosition(self.positions[(indexPath as NSIndexPath).row] as? Position, btcPrice: self.btcPrice)
         cell.closeButton.addTarget(self, action: #selector(PositionListView.pushCloseButton(_:event:)), for: .touchUpInside)
-        
-        if indexPath.row % 2 == 0 {
-            cell.backgroundColor = UIColor.white
-        } else {
-            cell.backgroundColor = UIColor(red: 0.93, green: 0.93, blue: 0.96, alpha: 1.0)
-        }
+        cell.backgroundColor = UIColor.white
         return cell
     }
     

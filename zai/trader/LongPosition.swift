@@ -19,13 +19,9 @@ class LongPosition: Position {
         super.init(entity: entity, insertInto: context)
     }
 
-    convenience init?(order: BuyOrder, trader: Trader) {
+    convenience init(order: BuyOrder, trader: Trader) {
         self.init(entity: TraderRepository.getInstance().longPositionDescription, insertInto: nil)
         
-        if !order.isPromised {
-            return nil
-        }
-
         self.id = UUID().uuidString
         self.trader = trader
         let log = TradeLogRepository.getInstance().create(.OPEN_LONG_POSITION, traderName: trader.name, account: trader.account, order: order, positionId: self.id)

@@ -67,7 +67,7 @@ open class Trader: NSManagedObject, FundDelegate {
                         cb(e)
                     } else {
                         if promised {
-                            let position = PositionRepository.getInstance().createLongPosition(order, trader: self)!
+                            let position = PositionRepository.getInstance().createLongPosition(order, trader: self)
                             self.addPosition(position)
                             cb(nil)
                         } else {
