@@ -17,7 +17,7 @@ import ZaifSwift
 }
 
 
-class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, FundDelegate, BitCoinDelegate {
+class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, FundDelegate, BitCoinDelegate, PositionDelegate {
     
     init(view: UITableView, trader: Trader) {
         self.trader = trader
@@ -66,11 +66,9 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
         }
         if 0 <= row && row < self.positions.count {
             let position = self.positions[row]
-            self.trader.unwindPosition(id: position.id, price: nil, amount: position.balance) { err in
+            self.trader.unwindPosition(id: position.id, price: nil, amount: position.balance) { (err, position) in
                 if err == nil {
-                    DispatchQueue.main.async {
-                        self.reloadData()
-                    }
+                    position?.delegate = self
                 }
             }
         }
@@ -110,6 +108,18 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
         self.bitcoin.delegate = nil
     }
     
+    // PositionDelegate
+    func opendPosition(position: Position) {
+        return
+    }
+    func unwindPosition(position: Position) {
+        return
+    }
+    func closedPosition(position: Position) {
+        DispatchQueue.main.async {
+            self.reloadData()
+        }
+    }
     
     internal var delegate: PositionListViewDelegate? = nil
     fileprivate var positions: [Position]

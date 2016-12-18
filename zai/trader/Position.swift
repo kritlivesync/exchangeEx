@@ -15,25 +15,50 @@ import ZaifSwift
 internal protocol PositionProtocol {
     func unwind(_ amount: Double?, price: Double?, cb: @escaping (ZaiError?) -> Void) -> Void
     
+    var price: Double { get }
     var balance: Double { get }
     var profit: Double { get }
-    var cost: Double { get }
     var type: String { get }
 }
 
+protocol PositionDelegate {
+    func opendPosition(position: Position)
+    func unwindPosition(position: Position)
+    func closedPosition(position: Position)
+}
+
 enum PositionState: Int {
-    case OPEN=0
-    case CLOSED=1
-    case CLOSING=2
+    case OPENING=0
+    case OPEN=1
+    case CLOSED=2
+    case UNWINDING=3
+    case WAITING=4
     
     func toString() -> String {
         switch self {
+        case .OPENING:
+            return "Opening"
         case .OPEN:
             return "Open"
         case .CLOSED:
             return "Closed"
-        case .CLOSING:
-            return "Closing"
+        case .UNWINDING:
+            return "Unwinding"
+        case .WAITING:
+            return "Waiting"
+        default:
+            return "Invalid"
+        }
+    }
+    
+    var isActive: Bool {
+        switch self {
+        case .OPENING, .OPEN, .UNWINDING:
+            return true
+        case .CLOSED, .WAITING:
+            return false
+        default:
+            return false
         }
     }
 }
@@ -72,10 +97,6 @@ class Position: NSManagedObject, PositionProtocol {
         get { return 0.0 }
     }
     
-    var cost: Double {
-        get { return 0.0 }
-    }
-    
     var currencyPair: CurrencyPair {
         get { return .BTC_JPY }
     }
@@ -83,4 +104,10 @@ class Position: NSManagedObject, PositionProtocol {
     var type: String {
         get { return "" }
     }
+    
+    var lastTrade: TradeLog {
+        get { return self.tradeLogs.lastObject as! TradeLog }
+    }
+    
+    var delegate: PositionDelegate?
 }

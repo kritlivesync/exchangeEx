@@ -137,7 +137,7 @@
                                         <rect key="frame" x="0.0" y="1" width="414" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jaK-DH-bk8" id="TCu-CG-dqG">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="3.2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jGh-kE-3zc">
@@ -441,7 +441,7 @@
                                         <rect key="frame" x="0.0" y="1" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ybn-GK-IWf" id="ytd-yO-J2U">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="79"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="79.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="98211" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rBu-VL-QGO">
@@ -582,7 +582,10 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Positions" id="sIq-q3-wQi"/>
                     <connections>
+                        <outlet property="btcFund" destination="O1v-uD-qfn" id="RJ5-Dp-KL5"/>
+                        <outlet property="priceAverage" destination="Xfk-8K-nQP" id="Tni-2R-ecO"/>
                         <outlet property="tableView" destination="YTQ-Qf-k3R" id="dnI-N8-g38"/>
+                        <outlet property="totalProfit" destination="i4T-g2-0xt" id="Cig-qI-ggt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YQv-dV-nJl" userLabel="First Responder" sceneMemberID="firstResponder"/>

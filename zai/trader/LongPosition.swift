@@ -13,7 +13,7 @@ import ZaifSwift
 
 
 @objc(LongPosition)
-class LongPosition: Position {
+class LongPosition: Position, OrderDelegate {
     
     override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
@@ -30,14 +30,15 @@ class LongPosition: Position {
     
     override public var price: Double {
         get {
+            var prc = 0.0
             for log in self.tradeLogs {
                 let l = log as! TradeLog
                 let action = TradeAction(rawValue: l.tradeAction)
                 if action == .OPEN_LONG_POSITION {
-                    return l.price.doubleValue
+                    prc += l.price.doubleValue
                 }
             }
-            return 0.0
+            return prc
         }
     }
     
@@ -76,19 +77,6 @@ class LongPosition: Position {
         }
     }
     
-    override internal var cost: Double {
-        get {
-            for log in self.tradeLogs {
-                let l = log as! TradeLog
-                let action = TradeAction(rawValue: l.tradeAction)
-                if action == .OPEN_LONG_POSITION {
-                    return l.price.doubleValue
-                }
-            }
-            return 0.0
-        }
-    }
-    
     override internal var currencyPair: CurrencyPair {
         get {
             var currencyPair = CurrencyPair.BTC_JPY
@@ -110,12 +98,13 @@ class LongPosition: Position {
     }
     
     override internal func unwind(_ amount: Double?=nil, price: Double?, cb: @escaping (ZaiError?) -> Void) {
-        if self.status.intValue != PositionState.OPEN.rawValue {
+        let state = PositionState(rawValue: self.status.intValue)
+        if state != PositionState.OPEN {
             cb(nil)
             return
         }
         
-        self.status = NSNumber(value: PositionState.CLOSING.rawValue)
+        self.status = NSNumber(value: PositionState.UNWINDING.rawValue)
         
         let balance = self.balance
         var amt = amount
@@ -130,29 +119,60 @@ class LongPosition: Position {
         print("sell: " + balance.description)
         
         let order = SellOrder(
+            id: nil,
             currencyPair: self.currencyPair,
             price: price,
             amount: amt!,
             api: self.trader.account.privateApi)!
         
-        order.excute() { (err, res) in
-            self.open()
-            if let _ = err {
-                cb(err)
-            } else {
-                order.waitForPromise(timeout: 30) { (err, promised) in
-                    if promised {
-                        let log = TradeLogRepository.getInstance().create(.UNWIND_LONG_POSITION, traderName: self.trader.name, account: self.trader.account, order: order, positionId: self.id)
-                        self.addLog(log)
-                        if self.balance < 0.0001 {
-                            self.close()
-                        }
-                        cb(nil)
-                    } else {
-                        cb(ZaiError(errorType: .ORDER_TIMEOUT))
-                    }
-                }
-            }
+        order.excute() { (err, _) in
+            cb(err)
+            order.delegate = self
         }
     }
+    
+    // OrderDelegate
+    func orderPromised(order: Order, price: Double, amount: Double) {
+        switch self.status.intValue {
+        case PositionState.OPENING.rawValue:
+            order.delegate = nil
+            let promisedOrder = BuyOrder(id: order.id, currencyPair: order.currencyPair, price: price, amount: amount, api: self.trader.account.privateApi)
+            let log = TradeLogRepository.getInstance().create(.OPEN_LONG_POSITION, traderName: self.trader.name, account: self.trader.account, order: promisedOrder!, positionId: self.id)
+            self.addLog(log)
+            self.open()
+            self.delegate?.opendPosition(position: self)
+        case PositionState.UNWINDING.rawValue:
+            order.delegate = nil
+            let promisedOrder = BuyOrder(id: order.id, currencyPair: order.currencyPair, price: price, amount: amount, api: self.trader.account.privateApi)
+            let log = TradeLogRepository.getInstance().create(.UNWIND_LONG_POSITION, traderName: self.trader.name, account: self.trader.account, order: promisedOrder!, positionId: self.id)
+            self.addLog(log)
+            if self.balance < 0.0001 {
+                self.close()
+                self.delegate?.closedPosition(position: self)
+            } else {
+                self.open()
+                self.delegate?.unwindPosition(position: self)
+            }
+        default: break
+        }
+    }
+    
+    func orderPartiallyPromised(order: Order, price: Double, amount: Double) {
+        switch self.status.intValue {
+        case PositionState.OPENING.rawValue:
+            let promisedOrder = BuyOrder(id: order.id, currencyPair: order.currencyPair, price: price, amount: amount, api: self.trader.account.privateApi)
+            let log = TradeLogRepository.getInstance().create(.OPEN_LONG_POSITION, traderName: self.trader.name, account: self.trader.account, order: promisedOrder!, positionId: self.id)
+            self.addLog(log)
+        case PositionState.UNWINDING.rawValue:
+            let promisedOrder = BuyOrder(id: order.id, currencyPair: order.currencyPair, price: price, amount: amount, api: self.trader.account.privateApi)
+            let log = TradeLogRepository.getInstance().create(.UNWIND_LONG_POSITION, traderName: self.trader.name, account: self.trader.account, order: promisedOrder!, positionId: self.id)
+            self.addLog(log)
+        default: break
+        }
+    }
+    
+    func orderCancelled(order: Order) {
+        
+    }
+    
 }

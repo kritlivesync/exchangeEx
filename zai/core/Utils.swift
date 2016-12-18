@@ -25,6 +25,7 @@ func formatValue(_ value: Int) -> String {
     return formatter.string(from: NSNumber(value: value))!
 }
 
-func formatValue(_ value: Double) -> String {
-    return NSString(format: "%.4f", value) as String
+func formatValue(_ value: Double, digit: Int=4) -> String {
+    let format = "%." + digit.description + "f"
+    return NSString(format: format as NSString, value) as String
 }

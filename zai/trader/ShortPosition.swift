@@ -13,7 +13,7 @@ import ZaifSwift
 
 
 @objc(ShortPosition)
-class ShortPosition: Position {
+class ShortPosition: Position, OrderDelegate {
     
     override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
@@ -63,19 +63,6 @@ class ShortPosition: Position {
         }
     }
     
-    override internal var cost: Double {
-        get {
-            for log in self.tradeLogs {
-                let l = log as! TradeLog
-                let action = TradeAction(rawValue: l.tradeAction)
-                if action == .OPEN_SHORT_POSITION {
-                    return l.price.doubleValue
-                }
-            }
-            return 0.0
-        }
-    }
-    
     override internal var currencyPair: CurrencyPair {
         get {
             var currencyPair = CurrencyPair.BTC_JPY
@@ -102,7 +89,7 @@ class ShortPosition: Position {
             return
         }
         
-        self.status = NSNumber(value: PositionState.CLOSING.rawValue)
+        self.status = NSNumber(value: PositionState.UNWINDING.rawValue)
         
         let balance = self.balance
         var amt = amount
@@ -115,25 +102,26 @@ class ShortPosition: Position {
         }
         
         let order = SellOrder(
+            id: nil,
             currencyPair: self.currencyPair,
             price: price,
             amount: amt!,
             api: self.trader.account.privateApi)!
         
         order.excute() { (err, res) in
-            if let _ = err {
-                cb(err)
-            } else {
-                order.waitForPromise(timeout: 10) { (err, promised) in
-                    if promised {
-                        let log = TradeLog(action: .UNWIND_SHORT_POSITION, traderName: self.trader.name, account: self.trader.account, order: order, positionId: self.id)
-                        self.addLog(log)
-                        cb(nil)
-                    } else {
-                        cb(err)
-                    }
-                }
-            }
+            cb(err)
+            order.delegate = self
         }
+    }
+    
+    // OrderDelegate
+    func orderPromised(order: Order, price: Double, amount: Double) {
+        return
+    }
+    func orderPartiallyPromised(order: Order, price: Double, amount: Double) {
+        return
+    }
+    func orderCancelled(order: Order) {
+        return
     }
 }

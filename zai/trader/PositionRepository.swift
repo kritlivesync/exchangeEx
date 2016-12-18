@@ -31,13 +31,9 @@ class PositionRepository {
         
         newPosition.id = (id == nil) ? UUID().uuidString : id!
         newPosition.trader = trader
-        
-        //db.saveContext()
-        
-        let log = TradeLogRepository.getInstance().create(.OPEN_LONG_POSITION, traderName: trader.name, account: trader.account, order: order, positionId: newPosition.id)
-        
-        newPosition.addLog(log)
-        
+        newPosition.status = NSNumber(value: PositionState.OPENING.rawValue)
+
+        db.saveContext()
         return newPosition
     }
     

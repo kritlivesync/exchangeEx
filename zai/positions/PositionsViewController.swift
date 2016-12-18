@@ -11,21 +11,28 @@ import UIKit
 
 
 
-class PositionsViewController : UIViewController, UITextFieldDelegate {
+class PositionsViewController : UIViewController, UITextFieldDelegate, PositionFundViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.totalProfit.text = "-"
+        self.priceAverage.text = "-"
+        self.btcFund.text = "-"
+        
         self.positionListView = PositionListView(view: self.tableView, trader: self.trader)
+        self.positionFundView = PositionFundView(trader: self.trader)
     }
     
     open override func viewDidAppear(_ animated: Bool) {
         self.positionListView.startWatch()
         self.positionListView.reloadData()
+        self.positionFundView.delegate = self
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
         self.positionListView.stopWatch()
+        self.positionFundView.delegate = nil
     }
     
     @IBAction func pushAddPositionButton(_ sender: Any) {
@@ -55,8 +62,11 @@ class PositionsViewController : UIViewController, UITextFieldDelegate {
         addPositionController.addAction(cancel)
         
         let add = UIAlertAction(title: "追加", style: .default, handler: { action in
-            let order = BuyOrder(currencyPair: .BTC_JPY, price: Double((priceTextField?.text)!), amount: Double((amountextField?.text)!)!, api: self.trader.account.privateApi)
+            let order = BuyOrder(id: nil, currencyPair: .BTC_JPY, price: Double((priceTextField?.text)!), amount: Double((amountextField?.text)!)!, api: self.trader.account.privateApi)
             let position = PositionRepository.getInstance().createLongPosition(order!, trader: self.trader)
+            let log = TradeLogRepository.getInstance().create(.OPEN_LONG_POSITION, traderName: self.trader.name, account: self.trader.account, order: order!, positionId: position.id)
+            position.addLog(log)
+            position.open()
             self.trader.addPosition(position)
             self.positionListView.reloadData()
             
@@ -94,6 +104,25 @@ class PositionsViewController : UIViewController, UITextFieldDelegate {
         }
     }
     
+    // PositionFundViewDelegate
+    func recievedTotalProfit(profit: String) {
+        DispatchQueue.main.async {
+            self.totalProfit.text = profit
+        }
+    }
+    
+    func recievedPriceAverage(average: String) {
+        DispatchQueue.main.async {
+            self.priceAverage.text = average
+        }
+    }
+    
+    func recievedBtcFund(btc: String) {
+        DispatchQueue.main.async {
+            self.btcFund.text = btc
+        }
+    }
+    
     func validate(string: String) -> Bool {
         var pattern = "^[0-9]+\\."
         var reg = try! NSRegularExpression(pattern: pattern)
@@ -113,8 +142,13 @@ class PositionsViewController : UIViewController, UITextFieldDelegate {
     var trader: Trader! = nil
     
     var positionListView: PositionListView! = nil
+    var positionFundView: PositionFundView! = nil
     var addPositionController: UIAlertController?
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var totalProfit: UILabel!
+    @IBOutlet weak var priceAverage: UILabel!
+    @IBOutlet weak var btcFund: UILabel!
+    
 
 }

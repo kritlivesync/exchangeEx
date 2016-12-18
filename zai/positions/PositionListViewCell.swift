@@ -25,12 +25,12 @@ class PositionListViewCell : UITableViewCell {
     
     func setPosition(_ position: Position?, btcPrice: Int) {
         if let p = position {
-            self.priceLabel.text = p.price.description
-            self.amountLabel.text = p.balance.description
+            self.priceLabel.text = Int(p.price).description
+            self.amountLabel.text = formatValue(p.balance)
             if btcPrice < 0 {
                 self.profitLabel.text = "-"
             } else {
-                let profit = Int(p.profit + (Double(btcPrice) - p.cost) * p.balance)
+                let profit = Int(p.profit + (Double(btcPrice) - p.price) * p.balance)
                 let desc = formatValue(profit)
                 self.profitLabel.text = (profit < 0) ? "" + desc : "+" + desc
                 if profit < 0 {
