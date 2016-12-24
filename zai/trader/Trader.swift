@@ -57,15 +57,16 @@ open class Trader: NSManagedObject, FundDelegate {
             let maxAmount = Double(self.jpyFund) / p
             amt = min(maxAmount, amt)
         }
-        let order = BuyOrder(id: nil, currencyPair: currencyPair, price: price, amount: amt, api: self.account.privateApi)!
+        let order = OrderRepository.getInstance().createBuyOrder(currencyPair: currencyPair, price: price, amount: amt, api: self.account.privateApi)
         order.excute() { (err, orderId) in
             if let e = err {
                 cb(e, nil)
             } else {
                 let position = PositionRepository.getInstance().createLongPosition(order, trader: self)
                 cb(nil, position)
-                self.addPosition(position)
                 order.delegate = position
+                position.setActiveOrder(order: order)
+                self.addPosition(position)
             }
         }
     }

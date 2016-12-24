@@ -9,6 +9,8 @@
 import Foundation
 import CoreData
 
+import ZaifSwift
+
 
 class TradeLogRepository {
     
@@ -22,26 +24,32 @@ class TradeLogRepository {
         }
     }
     
-    func create(_ action: TradeAction, traderName: String, account: Account, order: Order, positionId: String) -> TradeLog {
+    func create(userId: String, apiKey: String, action: TradeAction, traderName: String, orderAction: String, orderId: String, currencyPair: CurrencyPair, price: Double, amount: Double, positionId: String) -> TradeLog {
+        
         let db = Database.getDb()
         
         let newLog = NSEntityDescription.insertNewObject(forEntityName: TradeLogRepository.tradeLogModelName, into: db.managedObjectContext) as! TradeLog
         newLog.id = UUID().uuidString
-        newLog.userId = account.userId
-        newLog.apiKey = account.privateApi.apiKey
+        newLog.userId = userId
+        newLog.apiKey = apiKey
         newLog.positionId = positionId
         newLog.traderName = traderName
         newLog.tradeAction = action.rawValue
-        newLog.orderAction = order.action.rawValue
-        newLog.orderId = NSNumber(value: order.orderId)
-        newLog.currencyPair = order.currencyPair.rawValue
-        newLog.price = NSNumber(value: order.price)
-        newLog.amount = NSNumber(value: order.amount)
+        newLog.orderAction = orderAction
+        newLog.orderId = Int(orderId)! as NSNumber
+        newLog.currencyPair = currencyPair.rawValue
+        newLog.price = NSNumber(value: price)
+        newLog.amount = NSNumber(value: amount)
         newLog.timestamp = NSNumber(value: Date().timeIntervalSince1970)
         
-        //db.saveContext()
+        db.saveContext()
         
         return newLog
+    }
+    
+    func create(_ action: TradeAction, traderName: String, account: Account, order: Order, positionId: String) -> TradeLog {
+        
+        return self.create(userId: account.userId, apiKey: account.privateApi.apiKey, action: action, traderName: traderName, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: order.price, amount: order.amount, positionId: positionId)
     }
     
     lazy var tradeLogDescription: NSEntityDescription = {

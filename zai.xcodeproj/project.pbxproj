@@ -23,7 +23,14 @@
 		B827CD121D7C4FDD00E9847B /* PositionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827CD111D7C4FDD00E9847B /* PositionsViewController.swift */; };
 		B827CD141D7C523700E9847B /* PositionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827CD131D7C523700E9847B /* PositionListView.swift */; };
 		B827CD161D806DF900E9847B /* PositionListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827CD151D806DF900E9847B /* PositionListViewCell.swift */; };
-		B827CD1C1D81C9F200E9847B /* Position+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827CD1B1D81C9F200E9847B /* Position+CoreDataProperties.swift */; };
+		B843CFCB1E080E1D00CC6656 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843CFC91E080E1D00CC6656 /* Order.swift */; };
+		B843CFD11E0814B400CC6656 /* OrderRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843CFD01E0814B400CC6656 /* OrderRepository.swift */; };
+		B843CFD41E0816A400CC6656 /* BuyOrder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843CFD21E0816A400CC6656 /* BuyOrder+CoreDataProperties.swift */; };
+		B843CFD51E0816A400CC6656 /* SellOrder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843CFD31E0816A400CC6656 /* SellOrder+CoreDataProperties.swift */; };
+		B843CFD81E0816C600CC6656 /* BuyOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843CFD61E0816C600CC6656 /* BuyOrder.swift */; };
+		B843CFD91E0816C600CC6656 /* SellOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843CFD71E0816C600CC6656 /* SellOrder.swift */; };
+		B843CFDB1E0CD21300CC6656 /* Position+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843CFDA1E0CD21300CC6656 /* Position+CoreDataProperties.swift */; };
+		B843CFDD1E0D83D100CC6656 /* Order+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843CFDC1E0D83D100CC6656 /* Order+CoreDataProperties.swift */; };
 		B8521A721DF844380025B60E /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A711DF844380025B60E /* Board.swift */; };
 		B8521A741DF84DE80025B60E /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A731DF84DE80025B60E /* BoardView.swift */; };
 		B8521A761DF8542F0025B60E /* BoardViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A751DF8542F0025B60E /* BoardViewCell.swift */; };
@@ -43,7 +50,6 @@
 		B85E8E4C1D6F3E5E00C029C8 /* TradeLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E491D6F3E5E00C029C8 /* TradeLog.swift */; };
 		B85E8E4D1D6F3E5E00C029C8 /* TradeLog+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E4A1D6F3E5E00C029C8 /* TradeLog+CoreDataProperties.swift */; };
 		B85E8E4E1D6F3E5E00C029C8 /* TradeLogRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E4B1D6F3E5E00C029C8 /* TradeLogRepository.swift */; };
-		B85E8E551D6F3E6F00C029C8 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E4F1D6F3E6F00C029C8 /* Order.swift */; };
 		B85E8E561D6F3E6F00C029C8 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E501D6F3E6F00C029C8 /* Position.swift */; };
 		B85E8E581D6F3E6F00C029C8 /* Trader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E521D6F3E6F00C029C8 /* Trader.swift */; };
 		B85E8E591D6F3E6F00C029C8 /* Trader+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E531D6F3E6F00C029C8 /* Trader+CoreDataProperties.swift */; };
@@ -102,7 +108,14 @@
 		B827CD111D7C4FDD00E9847B /* PositionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PositionsViewController.swift; path = positions/PositionsViewController.swift; sourceTree = "<group>"; };
 		B827CD131D7C523700E9847B /* PositionListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PositionListView.swift; path = positions/PositionListView.swift; sourceTree = "<group>"; };
 		B827CD151D806DF900E9847B /* PositionListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PositionListViewCell.swift; path = positions/PositionListViewCell.swift; sourceTree = "<group>"; };
-		B827CD1B1D81C9F200E9847B /* Position+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Position+CoreDataProperties.swift"; path = "trader/Position+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		B843CFC91E080E1D00CC6656 /* Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Order.swift; path = trader/Order.swift; sourceTree = "<group>"; };
+		B843CFD01E0814B400CC6656 /* OrderRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrderRepository.swift; path = trader/OrderRepository.swift; sourceTree = "<group>"; };
+		B843CFD21E0816A400CC6656 /* BuyOrder+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "BuyOrder+CoreDataProperties.swift"; path = "trader/BuyOrder+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		B843CFD31E0816A400CC6656 /* SellOrder+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SellOrder+CoreDataProperties.swift"; path = "trader/SellOrder+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		B843CFD61E0816C600CC6656 /* BuyOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuyOrder.swift; path = trader/BuyOrder.swift; sourceTree = "<group>"; };
+		B843CFD71E0816C600CC6656 /* SellOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SellOrder.swift; path = trader/SellOrder.swift; sourceTree = "<group>"; };
+		B843CFDA1E0CD21300CC6656 /* Position+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Position+CoreDataProperties.swift"; path = "trader/Position+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		B843CFDC1E0D83D100CC6656 /* Order+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Order+CoreDataProperties.swift"; path = "trader/Order+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B8521A711DF844380025B60E /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Board.swift; path = board/Board.swift; sourceTree = "<group>"; };
 		B8521A731DF84DE80025B60E /* BoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardView.swift; path = board/BoardView.swift; sourceTree = "<group>"; };
 		B8521A751DF8542F0025B60E /* BoardViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardViewCell.swift; path = board/BoardViewCell.swift; sourceTree = "<group>"; };
@@ -122,7 +135,6 @@
 		B85E8E491D6F3E5E00C029C8 /* TradeLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TradeLog.swift; path = log/TradeLog.swift; sourceTree = "<group>"; };
 		B85E8E4A1D6F3E5E00C029C8 /* TradeLog+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TradeLog+CoreDataProperties.swift"; path = "log/TradeLog+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B85E8E4B1D6F3E5E00C029C8 /* TradeLogRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TradeLogRepository.swift; path = log/TradeLogRepository.swift; sourceTree = "<group>"; };
-		B85E8E4F1D6F3E6F00C029C8 /* Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Order.swift; path = trader/Order.swift; sourceTree = "<group>"; };
 		B85E8E501D6F3E6F00C029C8 /* Position.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Position.swift; path = trader/Position.swift; sourceTree = "<group>"; };
 		B85E8E521D6F3E6F00C029C8 /* Trader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Trader.swift; path = trader/Trader.swift; sourceTree = "<group>"; };
 		B85E8E531D6F3E6F00C029C8 /* Trader+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Trader+CoreDataProperties.swift"; path = "trader/Trader+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -234,17 +246,23 @@
 		B85E8E241D6F3A3A00C029C8 /* trader */ = {
 			isa = PBXGroup;
 			children = (
-				B827CD1B1D81C9F200E9847B /* Position+CoreDataProperties.swift */,
+				B843CFD61E0816C600CC6656 /* BuyOrder.swift */,
+				B843CFD71E0816C600CC6656 /* SellOrder.swift */,
+				B843CFDA1E0CD21300CC6656 /* Position+CoreDataProperties.swift */,
+				B843CFD21E0816A400CC6656 /* BuyOrder+CoreDataProperties.swift */,
+				B843CFDC1E0D83D100CC6656 /* Order+CoreDataProperties.swift */,
+				B843CFD31E0816A400CC6656 /* SellOrder+CoreDataProperties.swift */,
+				B843CFC91E080E1D00CC6656 /* Order.swift */,
 				B825E7711D75E526004FE785 /* LongPosition+CoreDataProperties.swift */,
 				B825E7721D75E526004FE785 /* LongPosition.swift */,
 				B825E7731D75E526004FE785 /* ShortPosition+CoreDataProperties.swift */,
 				B825E7741D75E526004FE785 /* ShortPosition.swift */,
-				B85E8E4F1D6F3E6F00C029C8 /* Order.swift */,
 				B85E8E501D6F3E6F00C029C8 /* Position.swift */,
 				B85E8E521D6F3E6F00C029C8 /* Trader.swift */,
 				B85E8E531D6F3E6F00C029C8 /* Trader+CoreDataProperties.swift */,
 				B85E8E541D6F3E6F00C029C8 /* TraderRepository.swift */,
 				B827CD0E1D772D2300E9847B /* PositionRepository.swift */,
+				B843CFD01E0814B400CC6656 /* OrderRepository.swift */,
 			);
 			name = trader;
 			sourceTree = "<group>";
@@ -588,17 +606,19 @@
 				B85E8E451D6F3E4D00C029C8 /* Account+CoreDataProperties.swift in Sources */,
 				B85E8E4C1D6F3E5E00C029C8 /* TradeLog.swift in Sources */,
 				B80920371DFD8817005667D4 /* PositionFundView.swift in Sources */,
+				B843CFD41E0816A400CC6656 /* BuyOrder+CoreDataProperties.swift in Sources */,
 				B827CD141D7C523700E9847B /* PositionListView.swift in Sources */,
 				B85E8E3A1D6F3E2100C029C8 /* Keys.swift in Sources */,
-				B85E8E551D6F3E6F00C029C8 /* Order.swift in Sources */,
 				B8521A741DF84DE80025B60E /* BoardView.swift in Sources */,
 				B8F1B2261DC5A9C7001A120E /* ZaiAnalyticsClient.swift in Sources */,
 				B8F38B3C1D8FC1CB00731696 /* Macd.swift in Sources */,
 				B8F1B2241DC0D37D001A120E /* Feature.swift in Sources */,
 				B85E8E4D1D6F3E5E00C029C8 /* TradeLog+CoreDataProperties.swift in Sources */,
+				B843CFDD1E0D83D100CC6656 /* Order+CoreDataProperties.swift in Sources */,
 				B85E8E391D6F3E2100C029C8 /* Error.swift in Sources */,
 				B85E8E301D6F3DFB00C029C8 /* Currency.swift in Sources */,
 				B85E8E471D6F3E4D00C029C8 /* Fund.swift in Sources */,
+				B843CFD51E0816A400CC6656 /* SellOrder+CoreDataProperties.swift in Sources */,
 				B825E7791D75E526004FE785 /* ShortPosition.swift in Sources */,
 				B85E8E441D6F3E4D00C029C8 /* Account.swift in Sources */,
 				B80920311DFD03E8005667D4 /* MainTabBarController.swift in Sources */,
@@ -608,8 +628,12 @@
 				B81AF6451DFF059600D4F706 /* BoardViewController.swift in Sources */,
 				B827CD121D7C4FDD00E9847B /* PositionsViewController.swift in Sources */,
 				B8F585271D6964FA008680D8 /* Model.xcdatamodeld in Sources */,
+				B843CFCB1E080E1D00CC6656 /* Order.swift in Sources */,
 				B85E8E5E1D6F477900C029C8 /* TraderView.swift in Sources */,
+				B843CFDB1E0CD21300CC6656 /* Position+CoreDataProperties.swift in Sources */,
 				B8F1B22A1DC5AFDF001A120E /* Utils.swift in Sources */,
+				B843CFD81E0816C600CC6656 /* BuyOrder.swift in Sources */,
+				B843CFD91E0816C600CC6656 /* SellOrder.swift in Sources */,
 				B85E8E361D6F3E2100C029C8 /* AppDelegate.swift in Sources */,
 				B85E8E381D6F3E2100C029C8 /* Database.swift in Sources */,
 				B827CD161D806DF900E9847B /* PositionListViewCell.swift in Sources */,
@@ -617,7 +641,6 @@
 				B85E8E591D6F3E6F00C029C8 /* Trader+CoreDataProperties.swift in Sources */,
 				B825E7771D75E526004FE785 /* LongPosition.swift in Sources */,
 				B81AF6431DFF054600D4F706 /* AssetsViewController.swift in Sources */,
-				B827CD1C1D81C9F200E9847B /* Position+CoreDataProperties.swift in Sources */,
 				B8521A781DFC681A0025B60E /* Ema.swift in Sources */,
 				B85E8E371D6F3E2100C029C8 /* Config.swift in Sources */,
 				B825E7781D75E526004FE785 /* ShortPosition+CoreDataProperties.swift in Sources */,
@@ -627,6 +650,7 @@
 				B8F38B401D8FD2AB00731696 /* PriceLog.swift in Sources */,
 				B85E8E4E1D6F3E5E00C029C8 /* TradeLogRepository.swift in Sources */,
 				B827CD0F1D772D2300E9847B /* PositionRepository.swift in Sources */,
+				B843CFD11E0814B400CC6656 /* OrderRepository.swift in Sources */,
 				B8F38B3A1D8ECA2600731696 /* Analyzer.swift in Sources */,
 				B85E8E601D6F541800C029C8 /* TraderViewCell.swift in Sources */,
 				B85E8E461D6F3E4D00C029C8 /* AccountRepository.swift in Sources */,

@@ -15,22 +15,6 @@ import ZaifSwift
 @objc(ShortPosition)
 class ShortPosition: Position, OrderDelegate {
     
-    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertInto: context)
-    }
-
-    convenience init?(order: SellOrder, trader: Trader) {
-        self.init(entity: TraderRepository.getInstance().shortPositionDescription, insertInto: nil)
-        
-        if !order.isPromised {
-            return nil
-        }
-        self.id = UUID().uuidString
-        
-        let log = TradeLogRepository.getInstance().create(.OPEN_SHORT_POSITION, traderName: trader.name, account: trader.account, order: order, positionId: self.id)
-        self.addLog(log)
-    }
-    
     override internal var balance: Double {
         get {
             var balance = 0.0
@@ -101,12 +85,7 @@ class ShortPosition: Position, OrderDelegate {
             amt = balance
         }
         
-        let order = SellOrder(
-            id: nil,
-            currencyPair: self.currencyPair,
-            price: price,
-            amount: amt!,
-            api: self.trader.account.privateApi)!
+        let order = OrderRepository.getInstance().createSellOrder(currencyPair: self.currencyPair, price: price, amount: amt!, api: self.trader!.account.privateApi)
         
         order.excute() { (err, res) in
             cb(err)

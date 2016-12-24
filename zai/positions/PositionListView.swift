@@ -54,7 +54,7 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tappedRow = (indexPath as NSIndexPath).row
         if self.delegate != nil {
-            self.delegate!.didSelectPosition(self.positions[(indexPath as NSIndexPath).row] as! Position)
+            self.delegate!.didSelectPosition(self.positions[(indexPath as NSIndexPath).row])
         }
     }
     

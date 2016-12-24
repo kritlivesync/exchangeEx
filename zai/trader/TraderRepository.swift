@@ -118,21 +118,9 @@ class TraderRepository {
         return NSEntityDescription.entity(forEntityName: TraderRepository.traderModelName, in: db.managedObjectContext)!
     }()
     
-    lazy var longPositionDescription: NSEntityDescription = {
-        let db = Database.getDb()
-        return NSEntityDescription.entity(forEntityName: TraderRepository.longPositionModelName, in: db.managedObjectContext)!
-    }()
-    
-    lazy var shortPositionDescription: NSEntityDescription = {
-        let db = Database.getDb()
-        return NSEntityDescription.entity(forEntityName: TraderRepository.shortPositionModelName, in: db.managedObjectContext)!
-    }()
-    
     fileprivate init() {
     }
     
     fileprivate static var inst: TraderRepository? = nil
     fileprivate static let traderModelName = "Trader"
-    fileprivate static let longPositionModelName = "LongPosition"
-    fileprivate static let shortPositionModelName = "ShortPosition"
 }

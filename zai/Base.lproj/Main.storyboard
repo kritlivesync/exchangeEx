@@ -592,67 +592,6 @@
             </objects>
             <point key="canvasLocation" x="1979.7101449275365" y="1105.4347826086957"/>
         </scene>
-        <!--New Trader View Controller-->
-        <scene sceneID="1Ez-bg-fDW">
-            <objects>
-                <viewController id="3yf-is-Hm5" customClass="NewTraderViewController" customModule="zai" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="pPS-Cz-VUr"/>
-                        <viewControllerLayoutGuide type="bottom" id="C4N-gd-fio"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="J3z-oV-vOM">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Trader name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qsR-w8-Usg">
-                                <rect key="frame" x="20" y="83" width="560" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l7R-lh-mqe">
-                                <rect key="frame" x="20" y="128" width="560" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.38823529410000002" green="0.62745098040000002" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="Create">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="pushCreateButton:" destination="3yf-is-Hm5" eventType="touchUpInside" id="KiL-Sb-7G4"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xm3-Oa-pLU">
-                                <rect key="frame" x="26" y="0.0" width="34" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Back"/>
-                                <connections>
-                                    <segue destination="8bf-XJ-kvW" kind="unwind" unwindAction="unwindToTraderList:" id="h35-wU-039"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0yI-iv-mCY">
-                                <rect key="frame" x="20" y="38" width="560" height="26"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="qsR-w8-Usg" firstAttribute="leading" secondItem="J3z-oV-vOM" secondAttribute="leadingMargin" id="Wsy-jb-fut"/>
-                            <constraint firstItem="qsR-w8-Usg" firstAttribute="trailing" secondItem="J3z-oV-vOM" secondAttribute="trailingMargin" id="tjB-bq-ge2"/>
-                            <constraint firstItem="qsR-w8-Usg" firstAttribute="top" secondItem="pPS-Cz-VUr" secondAttribute="bottom" constant="63" id="wBn-Me-beh"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="errorMessageLabel" destination="0yI-iv-mCY" id="I2A-hQ-3zb"/>
-                        <outlet property="traderNameText" destination="qsR-w8-Usg" id="4h8-JG-Tia"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7OB-aT-Ua1" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="8bf-XJ-kvW" userLabel="Exit" sceneMemberID="exit"/>
-            </objects>
-            <point key="canvasLocation" x="1090" y="1829"/>
-        </scene>
         <!--New Account View Controller-->
         <scene sceneID="79R-gx-UoR">
             <objects>

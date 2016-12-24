@@ -46,8 +46,6 @@ enum PositionState: Int {
             return "Unwinding"
         case .WAITING:
             return "Waiting"
-        default:
-            return "Invalid"
         }
     }
     
@@ -57,14 +55,12 @@ enum PositionState: Int {
             return true
         case .CLOSED, .WAITING:
             return false
-        default:
-            return false
         }
     }
 }
 
 
-class Position: NSManagedObject, PositionProtocol {
+public class Position: NSManagedObject, PositionProtocol {
     internal func unwind(_ amount: Double?, price: Double?, cb: @escaping (ZaiError?) -> Void) {
         cb(ZaiError(errorType: .UNKNOWN_ERROR, message: "not implemented"))
     }
@@ -72,7 +68,12 @@ class Position: NSManagedObject, PositionProtocol {
     func addLog(_ log: TradeLog) {
         let logs = self.mutableOrderedSetValue(forKey: "tradeLogs")
         logs.add(log)
-        //Database.getDb().saveContext()
+        Database.getDb().saveContext()
+    }
+    
+    func setActiveOrder(order: Order?) {
+        self.activeOrder = order
+        Database.getDb().saveContext()
     }
     
     func open() {
