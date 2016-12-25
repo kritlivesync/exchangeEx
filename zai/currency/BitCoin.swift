@@ -10,7 +10,7 @@ import Foundation
 
 import ZaifSwift
 
-@objc protocol BitCoinDelegate {
+@objc protocol BitCoinDelegate : MonitorableDelegate {
     @objc optional func recievedJpyPrice(price: Int)
 }
 
@@ -77,14 +77,14 @@ internal class BitCoin : Monitorable {
     }
     
     override func monitor() {
-        if self.delegate?.recievedJpyPrice != nil {
+        let delegate = self.delegate as? BitCoinDelegate
+        if delegate?.recievedJpyPrice != nil {
             BitCoin.getPriceFor(.JPY) { (err, price) in
                 if err == nil {
-                    self.delegate?.recievedJpyPrice?(price: Int(price))
+                    delegate?.recievedJpyPrice?(price: Int(price))
                 }
             }
         }
     }
-    
-    var delegate: BitCoinDelegate? = nil
+
 }

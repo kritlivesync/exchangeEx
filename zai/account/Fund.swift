@@ -13,7 +13,7 @@ import SwiftyJSON
 import ZaifSwift
 
 
-@objc protocol FundDelegate {
+@objc protocol FundDelegate : MonitorableDelegate {
     @objc optional func recievedMarketCapitalization(jpy: Int)
     @objc optional func recievedJpyFund(jpy: Int)
     @objc optional func recievedBtcFund(btc: Double)
@@ -130,29 +130,30 @@ internal class Fund : Monitorable {
     }
     
     override func monitor() {
-        if self.delegate?.recievedMarketCapitalization != nil {
+        let delegate = self.delegate as? FundDelegate
+        if delegate?.recievedMarketCapitalization != nil {
             self.getMarketCapitalization() { (err, jpy) in
                 if err == nil {
-                    self.delegate?.recievedMarketCapitalization?(jpy: jpy)
+                    delegate?.recievedMarketCapitalization?(jpy: jpy)
                 }
             }
         }
-        if self.delegate?.recievedJpyFund != nil {
+        if delegate?.recievedJpyFund != nil {
             self.getJpyFund() { (err, jpy) in
                 if err == nil {
-                    self.delegate?.recievedJpyFund?(jpy: jpy)
+                    delegate?.recievedJpyFund?(jpy: jpy)
                 }
             }
         }
-        if self.delegate?.recievedBtcFund != nil {
+        if delegate?.recievedBtcFund != nil {
             self.getBtcFund() { (err, btc) in
                 if err == nil {
-                    self.delegate?.recievedBtcFund?(btc: btc)
+                    delegate?.recievedBtcFund?(btc: btc)
                 }
             }
         }
     }
     
     fileprivate let privateApi: PrivateApi
-    var delegate: FundDelegate?
+
 }

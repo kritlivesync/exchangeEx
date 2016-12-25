@@ -31,6 +31,10 @@
 		B843CFD91E0816C600CC6656 /* SellOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843CFD71E0816C600CC6656 /* SellOrder.swift */; };
 		B843CFDB1E0CD21300CC6656 /* Position+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843CFDA1E0CD21300CC6656 /* Position+CoreDataProperties.swift */; };
 		B843CFDD1E0D83D100CC6656 /* Order+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843CFDC1E0D83D100CC6656 /* Order+CoreDataProperties.swift */; };
+		B843CFE21E0E741F00CC6656 /* OrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843CFE11E0E741F00CC6656 /* OrdersViewController.swift */; };
+		B843CFE41E0E792D00CC6656 /* OrderListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843CFE31E0E792D00CC6656 /* OrderListViewCell.swift */; };
+		B843CFE61E0E870E00CC6656 /* OrderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843CFE51E0E870E00CC6656 /* OrderListView.swift */; };
+		B843CFE81E0F80D900CC6656 /* ActiveOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843CFE71E0F80D900CC6656 /* ActiveOrder.swift */; };
 		B8521A721DF844380025B60E /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A711DF844380025B60E /* Board.swift */; };
 		B8521A741DF84DE80025B60E /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A731DF84DE80025B60E /* BoardView.swift */; };
 		B8521A761DF8542F0025B60E /* BoardViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A751DF8542F0025B60E /* BoardViewCell.swift */; };
@@ -116,6 +120,10 @@
 		B843CFD71E0816C600CC6656 /* SellOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SellOrder.swift; path = trader/SellOrder.swift; sourceTree = "<group>"; };
 		B843CFDA1E0CD21300CC6656 /* Position+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Position+CoreDataProperties.swift"; path = "trader/Position+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B843CFDC1E0D83D100CC6656 /* Order+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Order+CoreDataProperties.swift"; path = "trader/Order+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		B843CFE11E0E741F00CC6656 /* OrdersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrdersViewController.swift; path = orders/OrdersViewController.swift; sourceTree = "<group>"; };
+		B843CFE31E0E792D00CC6656 /* OrderListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrderListViewCell.swift; path = orders/OrderListViewCell.swift; sourceTree = "<group>"; };
+		B843CFE51E0E870E00CC6656 /* OrderListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrderListView.swift; path = orders/OrderListView.swift; sourceTree = "<group>"; };
+		B843CFE71E0F80D900CC6656 /* ActiveOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActiveOrder.swift; path = trader/ActiveOrder.swift; sourceTree = "<group>"; };
 		B8521A711DF844380025B60E /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Board.swift; path = board/Board.swift; sourceTree = "<group>"; };
 		B8521A731DF84DE80025B60E /* BoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardView.swift; path = board/BoardView.swift; sourceTree = "<group>"; };
 		B8521A751DF8542F0025B60E /* BoardViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardViewCell.swift; path = board/BoardViewCell.swift; sourceTree = "<group>"; };
@@ -232,6 +240,16 @@
 			name = positions;
 			sourceTree = "<group>";
 		};
+		B843CFE01E0E73AB00CC6656 /* orders */ = {
+			isa = PBXGroup;
+			children = (
+				B843CFE11E0E741F00CC6656 /* OrdersViewController.swift */,
+				B843CFE31E0E792D00CC6656 /* OrderListViewCell.swift */,
+				B843CFE51E0E870E00CC6656 /* OrderListView.swift */,
+			);
+			name = orders;
+			sourceTree = "<group>";
+		};
 		B8521A701DF843EB0025B60E /* board */ = {
 			isa = PBXGroup;
 			children = (
@@ -263,6 +281,7 @@
 				B85E8E541D6F3E6F00C029C8 /* TraderRepository.swift */,
 				B827CD0E1D772D2300E9847B /* PositionRepository.swift */,
 				B843CFD01E0814B400CC6656 /* OrderRepository.swift */,
+				B843CFE71E0F80D900CC6656 /* ActiveOrder.swift */,
 			);
 			name = trader;
 			sourceTree = "<group>";
@@ -358,6 +377,7 @@
 		B8B845761D66041D00535638 /* zai */ = {
 			isa = PBXGroup;
 			children = (
+				B843CFE01E0E73AB00CC6656 /* orders */,
 				B81AF6411DFF04F300D4F706 /* assets */,
 				B8521A701DF843EB0025B60E /* board */,
 				B8002D6C1D8D10DA0079AB9B /* analytics */,
@@ -600,10 +620,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B843CFE81E0F80D900CC6656 /* ActiveOrder.swift in Sources */,
 				B80920331DFD3609005667D4 /* Login.swift in Sources */,
 				B825E7761D75E526004FE785 /* LongPosition+CoreDataProperties.swift in Sources */,
 				B8F38B421D8FD2D700731696 /* PriceLogRepository.swift in Sources */,
+				B843CFE41E0E792D00CC6656 /* OrderListViewCell.swift in Sources */,
 				B85E8E451D6F3E4D00C029C8 /* Account+CoreDataProperties.swift in Sources */,
+				B843CFE61E0E870E00CC6656 /* OrderListView.swift in Sources */,
 				B85E8E4C1D6F3E5E00C029C8 /* TradeLog.swift in Sources */,
 				B80920371DFD8817005667D4 /* PositionFundView.swift in Sources */,
 				B843CFD41E0816A400CC6656 /* BuyOrder+CoreDataProperties.swift in Sources */,
@@ -635,6 +658,7 @@
 				B843CFD81E0816C600CC6656 /* BuyOrder.swift in Sources */,
 				B843CFD91E0816C600CC6656 /* SellOrder.swift in Sources */,
 				B85E8E361D6F3E2100C029C8 /* AppDelegate.swift in Sources */,
+				B843CFE21E0E741F00CC6656 /* OrdersViewController.swift in Sources */,
 				B85E8E381D6F3E2100C029C8 /* Database.swift in Sources */,
 				B827CD161D806DF900E9847B /* PositionListViewCell.swift in Sources */,
 				B85E8E2E1D6F3CF800C029C8 /* LoginViewController.swift in Sources */,

@@ -14,6 +14,10 @@ import ZaifSwift
 
 public class BuyOrder: Order {
     
+    public override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
+    }
+    
     override internal func createOrder(_ currencyPair: CurrencyPair, price: Double?, amount: Double) -> ZaifSwift.Order? {
         switch currencyPair {
         case .BTC_JPY:

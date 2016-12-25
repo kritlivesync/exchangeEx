@@ -28,6 +28,13 @@ class MainTabBarController : UITabBarController {
         let positions = self.viewControllers![2] as! PositionsViewController
         positions.account = self.account
         positions.trader = trader
+        
+        let orders = self.viewControllers![3] as! OrdersViewController
+        orders.account = self.account
+        orders.trader = trader
+        
+        // start monitoring active orders to be promised
+        _ = trader?.activeOrders
     }
     
     public func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {

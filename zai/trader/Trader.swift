@@ -62,10 +62,9 @@ open class Trader: NSManagedObject, FundDelegate {
             if let e = err {
                 cb(e, nil)
             } else {
-                let position = PositionRepository.getInstance().createLongPosition(order, trader: self)
+                let position = PositionRepository.getInstance().createLongPosition(trader: self)
                 cb(nil, position)
-                order.delegate = position
-                position.setActiveOrder(order: order)
+                position.order = order
                 self.addPosition(position)
             }
         }
@@ -126,6 +125,18 @@ open class Trader: NSManagedObject, FundDelegate {
             }
         }
         return positions
+    }
+    
+    var activeOrders: [Order] {
+        var orders = [Order]()
+        for position in self.positions {
+            let p = position as! Position
+            if let order = p.order {
+                order.privateApi = self.account.privateApi
+                orders.append(order)
+            }
+        }
+        return orders
     }
     
     var maxProfitPosition: Position? {

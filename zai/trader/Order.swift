@@ -42,15 +42,20 @@ struct PromisedOrder {
     let timestamp: Int64
 }
 
-protocol OrderDelegate : NSObjectProtocol {
+protocol PromisedOrderDelegate {
     func orderPromised(order: Order, price: Double, amount: Double)
     func orderPartiallyPromised(order: Order, price: Double, amount: Double)
     func orderCancelled(order: Order)
 }
 
 
+
 @objc(Order)
-public class Order: NSManagedObject {
+public class Order: NSManagedObject, ActiveOrderDelegate {
+    
+    public override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
+    }
     
     internal func excute(_ cb: @escaping (ZaiError?, String?) -> Void) {
         if self.status.intValue != OrderState.WAITING.rawValue || self.orderId != nil {
@@ -69,6 +74,7 @@ public class Order: NSManagedObject {
                     cb(ZaiError(errorType: .INVALID_ORDER), nil)
                 } else {
                     self.orderId = res!["return"]["order_id"].stringValue
+                    self.orderTime = Int64(Date().timeIntervalSince1970) as NSNumber
                     self.orderPrice = res!["return"]["order_price"].doubleValue as NSNumber?
                     self.status = NSNumber(value: OrderState.ORDERING.rawValue)
                     cb(nil, self.orderId!)
@@ -89,56 +95,42 @@ public class Order: NSManagedObject {
                 cb(ZaiError(errorType: .INVALID_ORDER))
             } else {
                 self.status = NSNumber(value: OrderState.CANCELLED.rawValue)
+                self.delegate?.orderCancelled(order: self)
                 cb(nil)
             }
         }
     }
     
-    @objc func monitor() {
-        if self.isActive == false || self.orderId == nil{
+    func monitorPromised(activeOrders: [String: ActiveOrder]) {
+        if self.orderId == nil {
             return
         }
-        if self.delegate == nil {
-            return
-        }
-        self.privateApi?.activeOrders(self.zaifOrder.currencyPair) { (err, res) in
-            if err != nil {
+        if let activeOrder = activeOrders[self.orderId!] {
+            let promisedOrder = self.extractPromisedOrder(order: activeOrder)
+            if promisedOrder == nil {
                 return
             }
-            if res!["success"].intValue != 1 {
+            self.promisedAmount = NSNumber(value: promisedOrder!.promisedAmount)
+            self.promisedTime = NSNumber(value: promisedOrder!.timestamp)
+            self.delegate?.orderPartiallyPromised(order: self, price: self.orderPrice!.doubleValue, amount: promisedOrder!.newlyPromisedAmount)
+        } else {
+            if self.isActive == false { // safety
                 return
             }
-            
-            let idExists = res?["return"].dictionaryValue.keys.contains(self.orderId!)
-            if idExists == false {
-                if self.isActive == false { // safety
-                    return
-                }
-                self.status = NSNumber(value: OrderState.PROMISED.rawValue)
-                self.promisedTime = NSNumber(value: Int64(NSDate().timeIntervalSince1970))
-                self.promisedPrice = self.orderPrice!
-                let newlyPromisedAmount = self.zaifOrder.amount - self.promisedAmount!.doubleValue
-                self.promisedAmount = NSNumber(value: self.zaifOrder.amount)
-                self.delegate?.orderPromised(order: self, price: self.promisedPrice!.doubleValue, amount: newlyPromisedAmount)
-            } else {
-                let promisedOrder = self.extractPromisedOrder(data: res)
-                if promisedOrder == nil {
-                    return
-                }
-                self.promisedAmount = NSNumber(value: promisedOrder!.promisedAmount)
-                self.promisedTime = NSNumber(value: promisedOrder!.timestamp)
-                self.delegate?.orderPartiallyPromised(order: self, price: self.orderPrice!.doubleValue, amount: promisedOrder!.newlyPromisedAmount)
-            }
+            self.status = NSNumber(value: OrderState.PROMISED.rawValue)
+            self.promisedTime = NSNumber(value: Int64(NSDate().timeIntervalSince1970))
+            self.promisedPrice = self.orderPrice!
+            let newlyPromisedAmount = self.zaifOrder.amount - self.promisedAmount!.doubleValue
+            self.promisedAmount = NSNumber(value: self.zaifOrder.amount)
+            self.delegate?.orderPromised(order: self, price: self.promisedPrice!.doubleValue, amount: newlyPromisedAmount)
         }
     }
     
-    fileprivate func extractPromisedOrder(data: JSON?) -> PromisedOrder? {
-        let order = data?["return"].dictionaryValue[self.orderId!]?.dictionaryValue
-        let timestamp = order?["timestamp"]?.int64Value
-        if timestamp == nil || timestamp! <= self.promisedTime!.int64Value {
+    fileprivate func extractPromisedOrder(order: ActiveOrder) -> PromisedOrder? {
+        if order.timestamp <= self.promisedTime!.int64Value {
             return nil
         }
-        let promisedAmount = self.zaifOrder.amount - (order?["amount"]?.doubleValue)!
+        let promisedAmount = self.zaifOrder.amount - order.amount
         if promisedAmount < self.zaifOrder.currencyPair.minOrderUnit {
             return nil
         }
@@ -146,17 +138,11 @@ public class Order: NSManagedObject {
         if newlyPromisedAmount < self.zaifOrder.currencyPair.minOrderUnit {
             return nil
         }
-        return PromisedOrder(promisedAmount: promisedAmount, newlyPromisedAmount: newlyPromisedAmount, timestamp: timestamp!)
+        return PromisedOrder(promisedAmount: promisedAmount, newlyPromisedAmount: newlyPromisedAmount, timestamp: order.timestamp)
     }
     
     internal func createOrder(_ currencyPair: CurrencyPair, price: Double?, amount: Double) -> ZaifSwift.Order? {
         return nil
-    }
-    
-    internal var currencyPair: CurrencyPair {
-        get {
-            return self.zaifOrder.currencyPair
-        }
     }
     
     internal var orderAction: OrderAction {
@@ -198,8 +184,14 @@ public class Order: NSManagedObject {
         }
     }
     
+    // ActiveOrderDelegate
+    func revievedActiveOrders(activeOrders: [String: ActiveOrder]) {
+        self.monitorPromised(activeOrders: activeOrders)
+    }
+    
     internal var privateApi: PrivateApi?
     internal var zaifOrder: ZaifSwift.Order!
+    var activeOrderMonitor: ActiveOrderMonitor?
     var promiseMonitorTimer: Timer!
-    var delegate: OrderDelegate?
+    var delegate: PromisedOrderDelegate?
 }

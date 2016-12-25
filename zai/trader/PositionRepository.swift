@@ -24,7 +24,7 @@ class PositionRepository {
         }
     }
     
-    func createLongPosition(_ order: BuyOrder, trader: Trader, id: String?=nil) -> LongPosition {
+    func createLongPosition(trader: Trader, id: String?=nil) -> LongPosition {
         let db = Database.getDb()
         
         let newPosition = NSEntityDescription.insertNewObject(forEntityName: PositionRepository.longPositionModelName, into: db.managedObjectContext) as! LongPosition

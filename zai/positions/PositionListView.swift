@@ -17,7 +17,7 @@ import ZaifSwift
 }
 
 
-class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, FundDelegate, BitCoinDelegate, PositionDelegate {
+class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, FundDelegate, BitCoinDelegate {
     
     init(view: UITableView, trader: Trader) {
         self.trader = trader
@@ -39,22 +39,20 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let c = self.positions.count
-        return c
+        return self.positions.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "positionListViewCell", for: indexPath) as! PositionListViewCell
         cell.setPosition(self.positions[(indexPath as NSIndexPath).row] as? Position, btcPrice: self.btcPrice)
         cell.closeButton.addTarget(self, action: #selector(PositionListView.pushCloseButton(_:event:)), for: .touchUpInside)
-        cell.backgroundColor = UIColor.white
         return cell
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tappedRow = (indexPath as NSIndexPath).row
         if self.delegate != nil {
-            self.delegate!.didSelectPosition(self.positions[(indexPath as NSIndexPath).row])
+            self.delegate!.didSelectPosition(self.positions[(indexPath as NSIndexPath).row] as! Position)
         }
     }
     
@@ -66,9 +64,11 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
         }
         if 0 <= row && row < self.positions.count {
             let position = self.positions[row]
-            self.trader.unwindPosition(id: position.id, price: nil, amount: position.balance) { (err, position) in
+            self.trader.unwindPosition(id: position.id, price: nil, amount: position.balance) { err in
                 if err == nil {
-                    position?.delegate = self
+                    DispatchQueue.main.async {
+                        self.reloadData()
+                    }
                 }
             }
         }
@@ -101,6 +101,7 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
     internal func startWatch() {
         self.fund.delegate = self
         self.bitcoin.delegate = self
+        self.reloadData()
     }
     
     internal func stopWatch() {
@@ -108,18 +109,6 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
         self.bitcoin.delegate = nil
     }
     
-    // PositionDelegate
-    func opendPosition(position: Position) {
-        return
-    }
-    func unwindPosition(position: Position) {
-        return
-    }
-    func closedPosition(position: Position) {
-        DispatchQueue.main.async {
-            self.reloadData()
-        }
-    }
     
     internal var delegate: PositionListViewDelegate? = nil
     fileprivate var positions: [Position]
@@ -131,6 +120,4 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
     var trader: Trader! = nil
     var fund: Fund! = nil
     var bitcoin: BitCoin! = nil
-    
-    
 }

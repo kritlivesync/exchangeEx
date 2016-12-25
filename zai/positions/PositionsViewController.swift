@@ -62,9 +62,8 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
         addPositionController.addAction(cancel)
         
         let add = UIAlertAction(title: "追加", style: .default, handler: { action in
-            let order = OrderRepository.getInstance().createBuyOrder(currencyPair: .BTC_JPY, price: Double(priceTextField!.text!)!, amount: Double(amountextField!.text!)!, api: self.trader.account.privateApi)
-            let position = PositionRepository.getInstance().createLongPosition(order, trader: self.trader)
-            let log = TradeLogRepository.getInstance().create(.OPEN_LONG_POSITION, traderName: self.trader.name, account: self.trader.account, order: order, positionId: position.id)
+            let position = PositionRepository.getInstance().createLongPosition(trader: self.trader)
+            let log = TradeLogRepository.getInstance().create(userId: self.trader.account.userId, apiKey: self.trader.account.privateApi.apiKey, action: .OPEN_LONG_POSITION, traderName: self.trader.name, orderAction: "bid", orderId: nil, currencyPair: "btc_jpy", price: Double(priceTextField!.text!)!, amount: Double(amountextField!.text!)!, positionId: position.id)
             position.addLog(log)
             position.open()
             self.trader.addPosition(position)

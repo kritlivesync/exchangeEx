@@ -33,11 +33,10 @@ protocol BoardDelegate {
     func recievedBoard(err: ZaiErrorType?, board: Board?)
 }
 
-class Board : Monitorable {
-    override init() {
+class Board {
+    init() {
         self.asks = []
         self.bids = []
-        super.init()
     }
     
     func addAsk(price: Double, amount: Double) {
@@ -105,10 +104,6 @@ class Board : Monitorable {
     
     var bidCount: Int {
         get { return self.bids.count }
-    }
-    
-    override func monitor() {
-        
     }
     
     var delegate : BoardDelegate? {

@@ -10,17 +10,15 @@ import Foundation
 
 import ZaifSwift
 
+@objc protocol MonitorableDelegate {
+    
+}
 
 internal class Monitorable {
     
     init() {
         self.queue = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default)
-        self.timer = Timer.scheduledTimer(
-            timeInterval: self.monitoringInterval,
-            target: self,
-            selector: #selector(Monitorable.addMonitorOperation),
-            userInfo: nil,
-            repeats: true)
+        
         
         self.addMonitorOperation()
     }
@@ -35,9 +33,28 @@ internal class Monitorable {
         return
     }
     
+    var delegate: MonitorableDelegate? = nil {
+        willSet {
+            if newValue == nil {
+                self.timer?.invalidate()
+                self.timer = nil
+            } else {
+                if self.timer == nil {
+                    self.timer = Timer.scheduledTimer(
+                        timeInterval: self.monitoringInterval,
+                        target: self,
+                        selector: #selector(Monitorable.addMonitorOperation),
+                        userInfo: nil,
+                        repeats: true)
+                }
+            }
+        }
+    }
+    
     let queue: DispatchQueue!
-    var timer: Timer!
+    var timer: Timer?
     var monitoringInterval: Double = 5.0
+    
 }
 
 

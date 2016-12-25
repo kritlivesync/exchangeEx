@@ -29,3 +29,10 @@ func formatValue(_ value: Double, digit: Int=4) -> String {
     let format = "%." + digit.description + "f"
     return NSString(format: format as NSString, value) as String
 }
+
+func formatDate(timestamp: Int64) -> String {
+    let date = Date(timeIntervalSince1970: TimeInterval(timestamp))
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+    return formatter.string(from: date)
+}

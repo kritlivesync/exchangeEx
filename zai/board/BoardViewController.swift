@@ -80,7 +80,9 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     
     func unwindPosition(position: Position) {
         DispatchQueue.main.async {
-            let log = position.lastTrade
+            guard let log = position.lastTrade else {
+                return
+            }
             self.messageLabel.text = "Promised. Price: " + formatValue(Int(log.price)) + " Amount: " + formatValue(log.amount.doubleValue)
             self.messageLabel.textColor = UIColor(red: 0.4, green: 0.7, blue: 0.4, alpha: 1.0)
         }
@@ -88,7 +90,9 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     
     func closedPosition(position: Position) {
         DispatchQueue.main.async {
-            let log = position.lastTrade
+            guard let log = position.lastTrade else {
+                return
+            }
             self.messageLabel.text = "Promised. Price: " + formatValue(Int(log.price)) + " Amount: " + formatValue(log.amount.doubleValue)
             self.messageLabel.textColor = UIColor(red: 0.4, green: 0.7, blue: 0.4, alpha: 1.0)
         }

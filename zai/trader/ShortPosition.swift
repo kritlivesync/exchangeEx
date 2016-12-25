@@ -13,7 +13,7 @@ import ZaifSwift
 
 
 @objc(ShortPosition)
-class ShortPosition: Position, OrderDelegate {
+class ShortPosition: Position {
     
     override internal var balance: Double {
         get {
@@ -94,13 +94,13 @@ class ShortPosition: Position, OrderDelegate {
     }
     
     // OrderDelegate
-    func orderPromised(order: Order, price: Double, amount: Double) {
+    override func orderPromised(order: Order, price: Double, amount: Double) {
         return
     }
-    func orderPartiallyPromised(order: Order, price: Double, amount: Double) {
+    override func orderPartiallyPromised(order: Order, price: Double, amount: Double) {
         return
     }
-    func orderCancelled(order: Order) {
+    override func orderCancelled(order: Order) {
         return
     }
 }

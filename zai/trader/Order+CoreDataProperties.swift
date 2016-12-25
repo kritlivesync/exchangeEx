@@ -2,7 +2,7 @@
 //  Order+CoreDataProperties.swift
 //  
 //
-//  Created by 渡部郷太 on 12/24/16.
+//  Created by 渡部郷太 on 12/25/16.
 //
 //
 
@@ -25,6 +25,8 @@ extension Order {
     @NSManaged public var action: String
     @NSManaged public var orderAmount: NSNumber
     @NSManaged public var orderId: String?
+    @NSManaged public var orderTime: NSNumber?
+    @NSManaged public var currencyPair: String
     @NSManaged public var position: Position?
 
 }
