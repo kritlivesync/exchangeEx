@@ -87,7 +87,6 @@ class OrderRepository {
             } else {
                 let order = orders[0]
                 let cp = CurrencyPair(rawValue: order.currencyPair)!
-                order.zaifOrder = order.createOrder(cp, price: order.orderPrice as Double?, amount: Double(order.orderAmount))
                 order.activeOrderMonitor = ActiveOrderMonitor(currencyPair: cp, api: api)
                 order.activeOrderMonitor?.delegate = order
                 return order
@@ -109,7 +108,6 @@ class OrderRepository {
         order.orderPrice = price as NSNumber?
         order.orderAmount = (amount as NSNumber?)!
         order.currencyPair = currencyPair.rawValue
-        order.zaifOrder = order.createOrder(currencyPair, price: price, amount: amount)
         order.activeOrderMonitor = ActiveOrderMonitor(currencyPair: currencyPair, api: api)
         order.activeOrderMonitor?.delegate = order
     }

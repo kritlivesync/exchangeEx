@@ -35,6 +35,7 @@
 		B843CFE41E0E792D00CC6656 /* OrderListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843CFE31E0E792D00CC6656 /* OrderListViewCell.swift */; };
 		B843CFE61E0E870E00CC6656 /* OrderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843CFE51E0E870E00CC6656 /* OrderListView.swift */; };
 		B843CFE81E0F80D900CC6656 /* ActiveOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843CFE71E0F80D900CC6656 /* ActiveOrder.swift */; };
+		B843CFEA1E12C5C400CC6656 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843CFE91E12C5C300CC6656 /* Color.swift */; };
 		B8521A721DF844380025B60E /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A711DF844380025B60E /* Board.swift */; };
 		B8521A741DF84DE80025B60E /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A731DF84DE80025B60E /* BoardView.swift */; };
 		B8521A761DF8542F0025B60E /* BoardViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A751DF8542F0025B60E /* BoardViewCell.swift */; };
@@ -124,6 +125,7 @@
 		B843CFE31E0E792D00CC6656 /* OrderListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrderListViewCell.swift; path = orders/OrderListViewCell.swift; sourceTree = "<group>"; };
 		B843CFE51E0E870E00CC6656 /* OrderListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrderListView.swift; path = orders/OrderListView.swift; sourceTree = "<group>"; };
 		B843CFE71E0F80D900CC6656 /* ActiveOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActiveOrder.swift; path = trader/ActiveOrder.swift; sourceTree = "<group>"; };
+		B843CFE91E12C5C300CC6656 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Color.swift; path = core/Color.swift; sourceTree = "<group>"; };
 		B8521A711DF844380025B60E /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Board.swift; path = board/Board.swift; sourceTree = "<group>"; };
 		B8521A731DF84DE80025B60E /* BoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardView.swift; path = board/BoardView.swift; sourceTree = "<group>"; };
 		B8521A751DF8542F0025B60E /* BoardViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardViewCell.swift; path = board/BoardViewCell.swift; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 				B85E8E331D6F3E2100C029C8 /* Database.swift */,
 				B85E8E341D6F3E2100C029C8 /* Error.swift */,
 				B85E8E351D6F3E2100C029C8 /* Keys.swift */,
+				B843CFE91E12C5C300CC6656 /* Color.swift */,
 			);
 			name = core;
 			sourceTree = "<group>";
@@ -639,6 +642,7 @@
 				B85E8E4D1D6F3E5E00C029C8 /* TradeLog+CoreDataProperties.swift in Sources */,
 				B843CFDD1E0D83D100CC6656 /* Order+CoreDataProperties.swift in Sources */,
 				B85E8E391D6F3E2100C029C8 /* Error.swift in Sources */,
+				B843CFEA1E12C5C400CC6656 /* Color.swift in Sources */,
 				B85E8E301D6F3DFB00C029C8 /* Currency.swift in Sources */,
 				B85E8E471D6F3E4D00C029C8 /* Fund.swift in Sources */,
 				B843CFD51E0816A400CC6656 /* SellOrder+CoreDataProperties.swift in Sources */,

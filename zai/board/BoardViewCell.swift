@@ -12,17 +12,17 @@ import UIKit
 
 
 class BoardViewCell : UITableViewCell {
-    
+
     func setQuote(_ quote: Quote) {
         self.priceLabel.text = quote.price.description
         self.amountLabel.text = quote.amount.description
         if quote.type == Quote.QuoteType.ASK {
-            let color = UIColor(red: 0.4, green: 0.7, blue: 0.4, alpha: 1.0)
+            let color = Color.askQuoteColor
             self.priceLabel.textColor = color
             self.amountBar.backgroundColor = color
             //self.amountLabel.textColor = color
         } else if quote.type == Quote.QuoteType.BID {
-            let color = UIColor(red: 0.7, green: 0.4, blue: 0.4, alpha: 1.0)
+            let color = Color.bidQuoteColor
             self.priceLabel.textColor = color
             self.amountBar.backgroundColor = color
             //self.amountLabel.textColor = color

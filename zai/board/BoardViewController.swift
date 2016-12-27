@@ -15,6 +15,9 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.askMomentumBar.backgroundColor = Color.askQuoteColor
+        self.bidMomentumBar.backgroundColor = Color.bidQuoteColor
+        
         self.jpyFundLabel.text = "-"
         
         self.bitcoin = BitCoin()
@@ -53,10 +56,11 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     // BoardDelegate
     func recievedBoard(err: ZaiErrorType?, board: Board?) {
         if let _ = err {
+            /*
             DispatchQueue.main.async {
                 self.messageLabel.text = "Failed to connect to Zaif"
                 self.messageLabel.textColor = UIColor.red
-            }
+            }*/
         } else {
             self.boardView = BoardView(view: self.boardTableView, board: board!)
             self.boardView.delegate = self
@@ -72,30 +76,33 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     
     // PositionDelegate
     func opendPosition(position: Position) {
+        /*
         DispatchQueue.main.async {
             self.messageLabel.text = "Promised. Price: " + formatValue(Int(position.price)) + " Amount: " + formatValue(position.balance)
             self.messageLabel.textColor = UIColor(red: 0.7, green: 0.4, blue: 0.4, alpha: 1.0)
-        }
+        }*/
     }
     
     func unwindPosition(position: Position) {
+        /*
         DispatchQueue.main.async {
             guard let log = position.lastTrade else {
                 return
             }
             self.messageLabel.text = "Promised. Price: " + formatValue(Int(log.price)) + " Amount: " + formatValue(log.amount.doubleValue)
             self.messageLabel.textColor = UIColor(red: 0.4, green: 0.7, blue: 0.4, alpha: 1.0)
-        }
+        }*/
     }
     
     func closedPosition(position: Position) {
+        /*
         DispatchQueue.main.async {
             guard let log = position.lastTrade else {
                 return
             }
             self.messageLabel.text = "Promised. Price: " + formatValue(Int(log.price)) + " Amount: " + formatValue(log.amount.doubleValue)
             self.messageLabel.textColor = UIColor(red: 0.4, green: 0.7, blue: 0.4, alpha: 1.0)
-        }
+        }*/
     }
     
     func orderBuy(quote: Quote) {
@@ -143,8 +150,9 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     
     @IBOutlet weak var jpyFundLabel: UILabel!
 
+    @IBOutlet weak var askMomentumBar: UILabel!
+    @IBOutlet weak var bidMomentumBar: UILabel!
     @IBOutlet weak var askAmountMomentumLabel: UILabel!
     @IBOutlet weak var bidMomentumWidth: NSLayoutConstraint!
-    
-    @IBOutlet weak var messageLabel: UILabel!
+
 }

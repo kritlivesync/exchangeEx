@@ -12,24 +12,36 @@ import UIKit
 class MainTabBarController : UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        //UITabBar.appearance().barTintColor = Color.tabBarColor
+        UITabBar.appearance().tintColor = Color.tabBarItemColor
+        //UITabBar.appearance().unselectedItemTintColor = Color.tabBarUnselectedItemColor
         
         let app = UIApplication.shared.delegate as! AppDelegate
         
         let trader = TraderRepository.getInstance().findTraderByName(app.config.currentTraderName, api: self.account.privateApi)
         
-        let assets = self.viewControllers![0] as! AssetsViewController
+        let assetsNavi = self.viewControllers![0] as! UINavigationController
+        assetsNavi.navigationBar.barTintColor = Color.naviBarColor
+        let assets = assetsNavi.viewControllers[0] as! AssetsViewController
         assets.account = self.account
         assets.trader = trader
         
-        let board = self.viewControllers![1] as! BoardViewController
+        let boardNavi = self.viewControllers![1] as! UINavigationController
+        boardNavi.navigationBar.barTintColor = Color.naviBarColor
+        let board = boardNavi.viewControllers[0] as! BoardViewController
         board.account = self.account
         board.trader = trader
         
-        let positions = self.viewControllers![2] as! PositionsViewController
+        let positionsNavi = self.viewControllers![2] as! UINavigationController
+        positionsNavi.navigationBar.barTintColor = Color.naviBarColor
+        let positions = positionsNavi.viewControllers[0] as! PositionsViewController
         positions.account = self.account
         positions.trader = trader
         
-        let orders = self.viewControllers![3] as! OrdersViewController
+        let ordersNavi = self.viewControllers![3] as! UINavigationController
+        ordersNavi.navigationBar.barTintColor = Color.naviBarColor
+        let orders = ordersNavi.viewControllers[0] as! OrdersViewController
         orders.account = self.account
         orders.trader = trader
         

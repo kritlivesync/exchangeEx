@@ -77,6 +77,7 @@ public class Order: NSManagedObject, ActiveOrderDelegate {
                     self.orderTime = Int64(Date().timeIntervalSince1970) as NSNumber
                     self.orderPrice = res!["return"]["order_price"].doubleValue as NSNumber?
                     self.status = NSNumber(value: OrderState.ORDERING.rawValue)
+                    Database.getDb().saveContext()
                     cb(nil, self.orderId!)
                 }
             }
@@ -119,8 +120,14 @@ public class Order: NSManagedObject, ActiveOrderDelegate {
             }
             self.status = NSNumber(value: OrderState.PROMISED.rawValue)
             self.promisedTime = NSNumber(value: Int64(NSDate().timeIntervalSince1970))
-            self.promisedPrice = self.orderPrice!
-            let newlyPromisedAmount = self.zaifOrder.amount - self.promisedAmount!.doubleValue
+            self.promisedPrice = 0.0
+            if let price = self.orderPrice {
+                self.promisedPrice = price
+            }
+            var newlyPromisedAmount = self.zaifOrder.amount
+            if let amount = self.promisedAmount {
+                newlyPromisedAmount = self.zaifOrder.amount - amount.doubleValue
+            }
             self.promisedAmount = NSNumber(value: self.zaifOrder.amount)
             self.delegate?.orderPromised(order: self, price: self.promisedPrice!.doubleValue, amount: newlyPromisedAmount)
         }
@@ -190,7 +197,9 @@ public class Order: NSManagedObject, ActiveOrderDelegate {
     }
     
     internal var privateApi: PrivateApi?
-    internal var zaifOrder: ZaifSwift.Order!
+    internal lazy var zaifOrder: ZaifSwift.Order = {
+        return self.createOrder(CurrencyPair(rawValue: self.currencyPair)!, price: self.orderPrice as Double?, amount: Double(self.orderAmount))!
+    }()
     var activeOrderMonitor: ActiveOrderMonitor?
     var promiseMonitorTimer: Timer!
     var delegate: PromisedOrderDelegate?
