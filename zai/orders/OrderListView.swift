@@ -16,6 +16,7 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
         self.trader = trader
         self.orders = [ActiveOrder]()
         self.view = view
+        self.view.tableFooterView = UIView()
         self.tappedRow = -1
         
         super.init()

@@ -18,6 +18,9 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
         self.askMomentumBar.backgroundColor = Color.askQuoteColor
         self.bidMomentumBar.backgroundColor = Color.bidQuoteColor
         
+        self.boardView = BoardView(view: self.boardTableView)
+        self.boardView.delegate = self
+        
         self.jpyFundLabel.text = "-"
         
         self.bitcoin = BitCoin()
@@ -62,9 +65,7 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
                 self.messageLabel.textColor = UIColor.red
             }*/
         } else {
-            self.boardView = BoardView(view: self.boardTableView, board: board!)
-            self.boardView.delegate = self
-            self.boardView.reloadData()
+            self.boardView.update(board: board!)
             let askMomentum = board!.calculateAskMomentum()
             let bidMomentum = board!.calculateBidMomentum()
             let askWidth = askAmountMomentumLabel.layer.bounds.width

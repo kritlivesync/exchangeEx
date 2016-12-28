@@ -23,6 +23,7 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
         self.trader = trader
         self.positions = trader.activePositions
         self.view = view
+        self.view.tableFooterView = UIView()
         self.tappedRow = -1
         
         self.fund = Fund(api: trader.account.privateApi)

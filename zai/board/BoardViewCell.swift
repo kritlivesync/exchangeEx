@@ -11,6 +11,12 @@ import Foundation
 import UIKit
 
 
+protocol BoardViewCellDelegate {
+    func pushedMakerButton(quote: Quote)
+    func pushedTakerButton(quote: Quote)
+}
+
+
 class BoardViewCell : UITableViewCell {
 
     func setQuote(_ quote: Quote) {
@@ -30,12 +36,26 @@ class BoardViewCell : UITableViewCell {
         var barWidth = CGFloat(quote.amount * 50.0)
         barWidth = min(barWidth, self.amountLabel.layer.bounds.width)
         self.amountBarConstraint.constant = barWidth
+        
+        self.quote = quote
+        
+        self.makerButtonAction = UITableViewRowAction(style: .normal, title: "Make") { (_, _) in
+            self.delegate?.pushedMakerButton(quote: self.quote!)
+        }
+        self.makerButtonAction?.backgroundColor = Color.makerButtonColor
+        
+        self.takerButtonAction = UITableViewRowAction(style: .normal, title: "Take") { (_, _) in
+            self.delegate?.pushedTakerButton(quote: self.quote!)
+        }
+        self.takerButtonAction?.backgroundColor = Color.takerButtonColor
     }
     
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
-    @IBOutlet weak var takerButton: UIButton!
-    @IBOutlet weak var makerButton: UIButton!
     @IBOutlet weak var amountBar: UILabel!
     @IBOutlet weak var amountBarConstraint: NSLayoutConstraint!
+    var quote: Quote?
+    var delegate: BoardViewCellDelegate?
+    var takerButtonAction: UITableViewRowAction?
+    var makerButtonAction: UITableViewRowAction?
 }

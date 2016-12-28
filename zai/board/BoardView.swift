@@ -18,11 +18,11 @@ protocol BoardViewDelegate {
 }
 
 
-class BoardView : NSObject, UITableViewDelegate, UITableViewDataSource {
+class BoardView : NSObject, UITableViewDelegate, UITableViewDataSource, BoardViewCellDelegate {
     
-    init(view: UITableView, board: Board) {
-        self.board = board
+    init(view: UITableView) {
         self.view = view
+        self.view.tableFooterView = UIView()
         self.tappedRow = -1
         
         super.init()
@@ -31,53 +31,64 @@ class BoardView : NSObject, UITableViewDelegate, UITableViewDataSource {
         self.delegate = nil
     }
     
+    public func update(board: Board) {
+        let needReload = (self.board == nil)
+        self.board = board
+        let count = self.board!.quoteCount
+        for i in 0 ... count {
+            let cell = self.view.cellForRow(at: IndexPath(row: i, section: 0)) as? BoardViewCell
+            cell?.setQuote(board.getQuote(index: i)!)
+        }
+        if needReload {
+            self.reloadData()
+        }
+    }
+    
     public func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.board.quoteCount
+        guard let board = self.board else {
+            return 0
+        }
+        return board.quoteCount
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "boardViewCell", for: indexPath) as! BoardViewCell
-        let quote = self.board.getQuote(index: (indexPath as NSIndexPath).row)!
-        cell.setQuote(quote)
-        if quote.type == Quote.QuoteType.ASK {
-            cell.takerButton.addTarget(self, action: #selector(BoardView.pushBuyOrder(_:event:)), for: .touchUpInside)
-            cell.makerButton.addTarget(self, action: #selector(BoardView.pushSellOrder(_:event:)), for: .touchUpInside)
-        } else if quote.type == Quote.QuoteType.BID {
-            cell.takerButton.addTarget(self, action: #selector(BoardView.pushSellOrder(_:event:)), for: .touchUpInside)
-            cell.makerButton.addTarget(self, action: #selector(BoardView.pushBuyOrder(_:event:)), for: .touchUpInside)
+        
+        guard let board = self.board else {
+            return cell
         }
+        let quote = board.getQuote(index: (indexPath as NSIndexPath).row)!
+        cell.setQuote(quote)
+        cell.delegate = self
+        
         return cell
     }
     
-    func pushBuyOrder(_ sender: AnyObject, event: UIEvent?) {
-        var row = -1
-        for touch in (event?.allTouches)! {
-            let point = touch.location(in: self.view)
-            row = (self.view.indexPathForRow(at: point)! as NSIndexPath).row
+    public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        guard let cell = self.view.cellForRow(at: indexPath) as? BoardViewCell else {
+            return nil
         }
-        if 0 <= row && row < self.board.quoteCount {
-            let quote = self.board.getQuote(index: row)!
-            if let d = self.delegate {
-                d.orderBuy(quote: quote)
-            }
+        return [cell.takerButtonAction!, cell.makerButtonAction!]
+    }
+    
+    // BoardViewCellDelegate
+    func pushedMakerButton(quote: Quote) {
+        if quote.type == Quote.QuoteType.ASK {
+            self.delegate?.orderSell(quote: quote)
+        } else if quote.type == Quote.QuoteType.BID {
+            self.delegate?.orderBuy(quote: quote)
         }
     }
     
-    func pushSellOrder(_ sender: AnyObject, event: UIEvent?) {
-        var row = -1
-        for touch in (event?.allTouches)! {
-            let point = touch.location(in: self.view)
-            row = (self.view.indexPathForRow(at: point)! as NSIndexPath).row
-        }
-        if 0 <= row && row < self.board.quoteCount {
-            let quote = self.board.getQuote(index: row)!
-            if let d = self.delegate {
-                d.orderSell(quote: quote)
-            }
+    func pushedTakerButton(quote: Quote) {
+        if quote.type == Quote.QuoteType.ASK {
+            self.delegate?.orderBuy(quote: quote)
+        } else if quote.type == Quote.QuoteType.BID {
+            self.delegate?.orderSell(quote: quote)
         }
     }
     
@@ -85,7 +96,7 @@ class BoardView : NSObject, UITableViewDelegate, UITableViewDataSource {
         self.view.reloadData()
     }
     
-    fileprivate let board: Board
+    fileprivate var board: Board?
     fileprivate let view: UITableView
     fileprivate var tappedRow: Int
     var delegate: BoardViewDelegate?
