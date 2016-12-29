@@ -71,13 +71,7 @@ open class Trader: NSManagedObject, FundDelegate {
     }
     
     func unwindPosition(id: String, price: Double?, amount: Double, cb: @escaping (ZaiError?, Position?) -> Void) {
-        var position: Position? = nil
-        for pos in self.activePositions {
-            if pos.id == id {
-                position = pos
-                break
-            }
-        }
+        let position = self.getPosition(id: id)
         if position == nil {
             cb(ZaiError(errorType: .INVALID_POSITION), nil)
             return
@@ -115,6 +109,16 @@ open class Trader: NSManagedObject, FundDelegate {
         }
     }
     
+    func deletePosition(id: String) -> Bool {
+        guard let position = self.getPosition(id: id) else {
+            return false
+        }
+        let positions = self.mutableOrderedSetValue(forKey: "positions")
+        positions.remove(position)
+        position.delete()
+        return true
+    }
+    
     var activePositions: [Position] {
         var positions = [Position]()
         for position in self.positions {
@@ -123,6 +127,15 @@ open class Trader: NSManagedObject, FundDelegate {
             if (status?.isActive)! {
                 positions.append(p)
             }
+        }
+        return positions
+    }
+    
+    var allPositions: [Position] {
+        var positions = [Position]()
+        for position in self.positions {
+            let p = position as! Position
+            positions.append(p)
         }
         return positions
     }
@@ -195,6 +208,16 @@ open class Trader: NSManagedObject, FundDelegate {
     
     func recievedJpyFund(jpy: Int) {
         self.jpyFund = jpy
+    }
+    
+    fileprivate func getPosition(id: String) -> Position? {
+        for pos in self.positions {
+            let p = pos as! Position
+            if p.id == id {
+                return p
+            }
+        }
+        return nil
     }
     
     var fund: Fund! = nil

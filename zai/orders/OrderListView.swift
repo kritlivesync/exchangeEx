@@ -94,8 +94,6 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
         }
     }
     
-
-    internal var delegate: PositionListViewDelegate? = nil
     fileprivate var orders: [ActiveOrder]
     fileprivate let view: UITableView
     fileprivate var tappedRow: Int

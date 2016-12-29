@@ -20,7 +20,9 @@ protocol BoardViewCellDelegate {
 class BoardViewCell : UITableViewCell {
 
     func setQuote(_ quote: Quote) {
-        self.priceLabel.text = quote.price.description
+        self.selectionStyle = UITableViewCellSelectionStyle.none
+        
+        self.priceLabel.text = Int(quote.price).description
         self.amountLabel.text = quote.amount.description
         if quote.type == Quote.QuoteType.ASK {
             let color = Color.askQuoteColor

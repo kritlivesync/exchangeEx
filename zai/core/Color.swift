@@ -27,4 +27,7 @@ class Color {
     public static let bidQuoteColor = UIColor(red: 0.7, green: 0.4, blue: 0.4, alpha: 1.0)
     public static let makerButtonColor = Color.antiKeyColor
     public static let takerButtonColor = Color .keyColor
+
+    // positions
+    public static let closedPositionColor = UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.0)
 }

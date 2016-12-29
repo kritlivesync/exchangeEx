@@ -23,7 +23,6 @@ class BoardView : NSObject, UITableViewDelegate, UITableViewDataSource, BoardVie
     init(view: UITableView) {
         self.view = view
         self.view.tableFooterView = UIView()
-        self.tappedRow = -1
         
         super.init()
         self.view.delegate = self
@@ -98,7 +97,6 @@ class BoardView : NSObject, UITableViewDelegate, UITableViewDataSource, BoardVie
     
     fileprivate var board: Board?
     fileprivate let view: UITableView
-    fileprivate var tappedRow: Int
     var delegate: BoardViewDelegate?
 }
 

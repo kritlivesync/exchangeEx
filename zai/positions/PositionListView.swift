@@ -12,20 +12,14 @@ import UIKit
 import ZaifSwift
 
 
-@objc protocol PositionListViewDelegate {
-    func didSelectPosition(_ position: Position)
-}
-
-
-class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, FundDelegate, BitCoinDelegate {
+class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, FundDelegate, BitCoinDelegate, PositionListViewCellDelegate {
     
     init(view: UITableView, trader: Trader) {
         self.trader = trader
         self.positions = trader.activePositions
         self.view = view
         self.view.tableFooterView = UIView()
-        self.tappedRow = -1
-        
+
         self.fund = Fund(api: trader.account.privateApi)
         self.bitcoin = BitCoin()
         
@@ -40,50 +34,43 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.positions.count
+        let c = self.positions.count
+        return c
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "positionListViewCell", for: indexPath) as! PositionListViewCell
-        cell.setPosition(self.positions[(indexPath as NSIndexPath).row] as? Position, btcPrice: self.btcPrice)
-        cell.closeButton.addTarget(self, action: #selector(PositionListView.pushCloseButton(_:event:)), for: .touchUpInside)
+        let position = self.positions[(indexPath as NSIndexPath).row]
+        cell.setPosition(position, btcJpyPrice: self.btcPrice)
+        cell.delegate = self
         return cell
     }
     
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.tappedRow = (indexPath as NSIndexPath).row
-        if self.delegate != nil {
-            self.delegate!.didSelectPosition(self.positions[(indexPath as NSIndexPath).row] as! Position)
+    public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        guard let cell = self.view.cellForRow(at: indexPath) as? PositionListViewCell else {
+            return nil
+        }
+        cell.setPosition(cell.position, btcJpyPrice: self.btcPrice)
+        var actions = [UITableViewRowAction]()
+        if let unwind = cell.unwindAction {
+            actions.append(unwind)
+        }
+        if let delete = cell.deleteAction {
+            actions.append(delete)
+        }
+        if let edit = cell.editingAction {
+            actions.append(edit)
+        }
+        if actions.count == 0 {
+            let empty = UITableViewRowAction(style: .normal, title: "") { (_, _) in }
+            empty.backgroundColor = UIColor.white
+            return [empty]
+        } else {
+            return actions
         }
     }
     
-    func pushCloseButton(_ sender: AnyObject, event: UIEvent?) {
-        var row = -1
-        for touch in (event?.allTouches)! {
-            let point = touch.location(in: self.view)
-            row = (self.view.indexPathForRow(at: point)! as NSIndexPath).row
-        }
-        if 0 <= row && row < self.positions.count {
-            let position = self.positions[row]
-            self.trader.unwindPosition(id: position.id, price: nil, amount: position.balance) { err in
-                if err == nil {
-                    DispatchQueue.main.async {
-                        self.reloadData()
-                    }
-                }
-            }
-        }
-    }
-    
-    // FundDelegate
-    func recievedMarketCapitalization(jpy: Int) {
-        return
-    }
-    
-    func recievedJpyFund(jpy: Int) {
-        return
-    }
-    
+    // FundDelegate    
     func recievedBtcFund(btc: Double) {
         self.btcFund = btc
     }
@@ -91,11 +78,40 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
     // BitCoinDelegate
     func recievedJpyPrice(price: Int) {
         self.btcPrice = price
-        self.reloadData()
+        for cell in self.view.visibleCells {
+            let c = cell as! PositionListViewCell
+            c.setPosition(c.position, btcJpyPrice: self.btcPrice)
+        }
+    }
+    
+    // PositionListViewCellDelegate
+    func pushedDeleteButton(cell: PositionListViewCell, position: Position) {
+        if self.trader.deletePosition(id: position.id) {
+            self.positions = self.trader.allPositions
+            if let index = self.view.indexPath(for: cell) {
+                self.view.deleteRows(at: [index], with: UITableViewRowAnimation.fade)
+            }
+        }
+    }
+    
+    func pushedEditButton(cell: PositionListViewCell, position: Position) {
+        
+    }
+    
+    func pushedUnwindButton(cell: PositionListViewCell, position: Position) {
+        if let index = self.view.indexPath(for: cell) {
+            self.view.reloadRows(at: [index], with: UITableViewRowAnimation.right)
+        }
+        self.trader.unwindPosition(id: position.id, price: nil, amount: position.balance) { (err, _) in
+            if err != nil {
+                position.open()
+            }
+            cell.setPosition(position, btcJpyPrice: self.btcPrice)
+        }
     }
     
     internal func reloadData() {
-        self.positions = trader.activePositions
+        self.positions = trader.allPositions
         self.view.reloadData()
     }
     
@@ -111,10 +127,8 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
     }
     
     
-    internal var delegate: PositionListViewDelegate? = nil
     fileprivate var positions: [Position]
     fileprivate let view: UITableView
-    fileprivate var tappedRow: Int
     fileprivate var btcPrice: Int = -1
     fileprivate var btcFund: Double = 0.0
     

@@ -80,11 +80,11 @@ class LongPosition: Position {
     
     override internal var type: String {
         get {
-            return "Long"
+            return "long"
         }
     }
     
-    override internal func unwind(_ amount: Double?=nil, price: Double?, cb: @escaping (ZaiError?) -> Void) {
+    override func unwind(_ amount: Double?=nil, price: Double?, cb: @escaping (ZaiError?) -> Void) {
         let state = PositionState(rawValue: self.status.intValue)
         if state != PositionState.OPEN {
             cb(nil)
@@ -111,6 +111,10 @@ class LongPosition: Position {
             cb(err)
             self.order = order
         }
+    }
+    
+    override func delete() {
+        PositionRepository.getInstance().deleteLongPosition(self)
     }
     
     // OrderDelegate

@@ -60,7 +60,7 @@ class PositionRepository {
         return newPosition
     }
     
-    func deleteShoetPosition(_ position: ShortPosition) {
+    func deleteShortPosition(_ position: ShortPosition) {
         let db = Database.getDb()
         db.managedObjectContext.delete(position)
         db.saveContext()

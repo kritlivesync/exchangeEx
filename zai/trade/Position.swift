@@ -14,6 +14,7 @@ import ZaifSwift
 
 internal protocol PositionProtocol {
     func unwind(_ amount: Double?, price: Double?, cb: @escaping (ZaiError?) -> Void) -> Void
+    func delete()
     
     var price: Double { get }
     var balance: Double { get }
@@ -57,12 +58,28 @@ enum PositionState: Int {
             return false
         }
     }
+    
+    var isOpen: Bool {
+        return self == .OPEN
+    }
+    
+    var isClosed: Bool {
+        return self == .CLOSED
+    }
+    
+    var isWaiting: Bool {
+        return self == .WAITING
+    }
 }
 
 
 public class Position: NSManagedObject, PositionProtocol, PromisedOrderDelegate {
-    internal func unwind(_ amount: Double?, price: Double?, cb: @escaping (ZaiError?) -> Void) {
+    func unwind(_ amount: Double?, price: Double?, cb: @escaping (ZaiError?) -> Void) {
         cb(ZaiError(errorType: .UNKNOWN_ERROR, message: "not implemented"))
+    }
+    
+    func delete() {
+        return
     }
     
     func addLog(_ log: TradeLog) {

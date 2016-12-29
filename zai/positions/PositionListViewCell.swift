@@ -10,6 +10,12 @@ import Foundation
 import UIKit
 
 
+protocol PositionListViewCellDelegate {
+    func pushedDeleteButton(cell: PositionListViewCell, position: Position)
+    func pushedEditButton(cell: PositionListViewCell, position: Position)
+    func pushedUnwindButton(cell: PositionListViewCell, position: Position)
+}
+
 class PositionListViewCell : UITableViewCell {
     
     override func awakeFromNib() {
@@ -23,28 +29,77 @@ class PositionListViewCell : UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setPosition(_ position: Position?, btcPrice: Int) {
+    func setPosition(_ position: Position?, btcJpyPrice: Int) {
+        self.selectionStyle = UITableViewCellSelectionStyle.none
         if let p = position {
-            self.priceLabel.text = Int(p.price).description
+            self.position = p
+            
+            self.priceLabel.text = formatValue(Int(p.price))
             self.amountLabel.text = formatValue(p.balance)
-            if btcPrice < 0 {
-                self.profitLabel.text = "-"
-            } else {
-                let profit = Int(p.profit + (Double(btcPrice) - p.price) * p.balance)
-                let desc = formatValue(profit)
-                self.profitLabel.text = (profit < 0) ? "" + desc : "+" + desc
-                if profit < 0 {
-                    self.profitLabel.textColor = UIColor.red
-                } else {
-                    self.profitLabel.textColor = UIColor.black
+            self.updateProfit(btcJpyPrice: btcJpyPrice)
+            
+            let status = PositionState(rawValue: p.status.intValue)!
+            self.statusLabel.text = status.toString()
+            
+            self.deleteAction = nil
+            self.unwindAction = nil
+            self.editingAction = nil
+            if status.isOpen || status.isClosed || status.isWaiting {
+                self.deleteAction = UITableViewRowAction(style: .default, title: "Delete") { (_, _) in
+                    self.delegate?.pushedDeleteButton(cell: self, position: self.position!)
                 }
+                self.deleteAction?.backgroundColor = Color.keyColor
             }
+            
+            if status.isOpen || status.isWaiting {
+                self.editingAction = UITableViewRowAction(style: .normal, title: "Edit") { (_, _) in
+                    self.delegate?.pushedEditButton(cell: self, position: self.position!)
+                }
+                self.editingAction?.backgroundColor = Color.keyColor
+            }
+            
+            if status.isOpen {
+                self.unwindAction = UITableViewRowAction(style: .normal, title: "Unwind") { (_, _) in
+                    self.delegate?.pushedUnwindButton(cell: self, position: self.position!)
+                }
+                self.unwindAction?.backgroundColor = Color.keyColor
+            }
+            
+            if status.isClosed {
+                self.backgroundColor = Color.closedPositionColor
+            } else {
+                self.backgroundColor = UIColor.white
+            }
+        }
+    }
+    
+    func updateProfit(btcJpyPrice: Int) {
+        guard let position = self.position else {
+            self.profitLabel.text = "-"
+            return
+        }
+        if btcJpyPrice < 0 {
+            self.profitLabel.text = "-"
+            return
+        }
+        
+        let profit = Int(position.profit + (Double(btcJpyPrice) - position.price) * position.balance)
+        let desc = formatValue(profit)
+        self.profitLabel.text = (profit < 0) ? "" + desc : "+" + desc
+        if profit < 0 {
+            self.profitLabel.textColor = UIColor.red
+        } else {
+            self.profitLabel.textColor = UIColor.black
         }
     }
     
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var profitLabel: UILabel!
-    @IBOutlet weak var closeButton: UIButton!
-
+    @IBOutlet weak var statusLabel: UILabel!
+    var deleteAction: UITableViewRowAction?
+    var editingAction: UITableViewRowAction?
+    var unwindAction: UITableViewRowAction?
+    var position: Position?
+    var delegate: PositionListViewCellDelegate?
 }

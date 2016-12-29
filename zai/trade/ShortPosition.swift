@@ -63,11 +63,11 @@ class ShortPosition: Position {
     
     override internal var type: String {
         get {
-            return "Short"
+            return "short"
         }
     }
     
-    override internal func unwind(_ amount: Double?=nil, price: Double?, cb: @escaping (ZaiError?) -> Void) {
+    override func unwind(_ amount: Double?=nil, price: Double?, cb: @escaping (ZaiError?) -> Void) {
         if self.status.intValue != PositionState.OPEN.rawValue {
             cb(nil)
             return
@@ -91,6 +91,10 @@ class ShortPosition: Position {
             cb(err)
             order.delegate = self
         }
+    }
+    
+    override func delete() {
+        PositionRepository.getInstance().deleteShortPosition(self)
     }
     
     // OrderDelegate
