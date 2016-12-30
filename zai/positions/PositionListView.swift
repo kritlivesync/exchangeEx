@@ -12,6 +12,11 @@ import UIKit
 import ZaifSwift
 
 
+protocol PositionListViewDelegate {
+    func editPosition(position: Position)
+}
+
+
 class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, FundDelegate, BitCoinDelegate, PositionListViewCellDelegate {
     
     init(view: UITableView, trader: Trader) {
@@ -34,8 +39,7 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let c = self.positions.count
-        return c
+        return self.positions.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -52,11 +56,11 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
         }
         cell.setPosition(cell.position, btcJpyPrice: self.btcPrice)
         var actions = [UITableViewRowAction]()
-        if let unwind = cell.unwindAction {
-            actions.append(unwind)
-        }
         if let delete = cell.deleteAction {
             actions.append(delete)
+        }
+        if let unwind = cell.unwindAction {
+            actions.append(unwind)
         }
         if let edit = cell.editingAction {
             actions.append(edit)
@@ -95,7 +99,7 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
     }
     
     func pushedEditButton(cell: PositionListViewCell, position: Position) {
-        
+        self.delegate?.editPosition(position: position)
     }
     
     func pushedUnwindButton(cell: PositionListViewCell, position: Position) {
@@ -108,6 +112,13 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
             }
             cell.setPosition(position, btcJpyPrice: self.btcPrice)
         }
+    }
+    
+    func addPosition(position: Position) {
+        self.positions = self.trader.allPositions
+        let row = self.view.numberOfRows(inSection: 0)
+        let index = IndexPath(row: row, section: 0)
+        self.view.insertRows(at: [index], with: UITableViewRowAnimation.bottom)
     }
     
     internal func reloadData() {
@@ -135,4 +146,5 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
     var trader: Trader! = nil
     var fund: Fund! = nil
     var bitcoin: BitCoin! = nil
+    var delegate: PositionListViewDelegate?
 }

@@ -11,7 +11,7 @@ import UIKit
 
 
 
-class PositionsViewController : UIViewController, UITextFieldDelegate, PositionFundViewDelegate {
+class PositionsViewController : UIViewController, UITextFieldDelegate, PositionFundViewDelegate, PositionEditDelegate, PositionCreateDelegate, PositionListViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +21,10 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
         self.btcFund.text = "-"
         
         self.positionListView = PositionListView(view: self.tableView, trader: self.trader)
+        self.positionListView.delegate = self
         self.positionFundView = PositionFundView(trader: self.trader)
+        
+        self.addPositionButton.tintColor = Color.antiKeyColor
     }
     
     open override func viewDidAppear(_ animated: Bool) {
@@ -36,71 +39,9 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
     }
     
     @IBAction func pushAddPositionButton(_ sender: Any) {
-        let addPositionController = UIAlertController(title: "ポシション追加", message: "新しいロングポジションを追加します。注文は執行されません。", preferredStyle: .alert)
-        var priceTextField: UITextField?
-        addPositionController.addTextField { (textField) -> Void in
-            // Enter the textfiled customization code here.
-            priceTextField = textField
-            textField.tag = 0
-            textField.placeholder = "価格"
-            textField.keyboardType = .numberPad
-            textField.delegate = self
-        }
-        var amountextField: UITextField?
-        addPositionController.addTextField { (textField) -> Void in
-            // Enter the textfiled customization code here.
-            amountextField = textField
-            textField.tag = 1
-            textField.placeholder = "数量"
-            textField.keyboardType = .decimalPad
-            textField.delegate = self
-        }
-
-        let cancel = UIAlertAction(title: "キャンセル", style: .cancel) { action in
-            print("Cancel Button Pressed")
-        }
-        addPositionController.addAction(cancel)
-        
-        let add = UIAlertAction(title: "追加", style: .default, handler: { action in
-            let position = PositionRepository.getInstance().createLongPosition(trader: self.trader)
-            let log = TradeLogRepository.getInstance().create(userId: self.trader.account.userId, apiKey: self.trader.account.privateApi.apiKey, action: .OPEN_LONG_POSITION, traderName: self.trader.name, orderAction: "bid", orderId: nil, currencyPair: "btc_jpy", price: Double(priceTextField!.text!)!, amount: Double(amountextField!.text!)!, positionId: position.id)
-            position.addLog(log)
-            position.open()
-            self.trader.addPosition(position)
-            self.positionListView.reloadData()
-            
-        })
-        add.isEnabled = false
-        addPositionController.addAction(add)
-        
-        self.addPositionController = addPositionController
-        self.present(addPositionController, animated: true, completion: nil)
-    }
-    
-    // UITextFieldDelegate
-    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if string.isEmpty {
-            // delete
-            if textField.text?.characters.count == range.length {
-                self.addPositionController?.actions.last?.isEnabled = false
-            }
-            return true
-        } else {
-            if self.validate(string: textField.text!) {
-                self.addPositionController?.actions.last?.isEnabled = true
-                let textFields = self.addPositionController?.textFields
-                for field in textFields! {
-                    if textField.tag != field.tag {
-                        if field.text?.characters.count == 0 {
-                            self.addPositionController?.actions.last?.isEnabled = false
-                        }
-                    }
-                }
-                return true
-            } else {
-                return false
-            }
-        }
+        let addPositionController = PositionCreateViewController(trader: self.trader)
+        addPositionController.delegate = self
+        self.present(addPositionController.controller, animated: true, completion: nil)
     }
     
     // PositionFundViewDelegate
@@ -122,19 +63,30 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
         }
     }
     
-    func validate(string: String) -> Bool {
-        var pattern = "^[0-9]+\\."
-        var reg = try! NSRegularExpression(pattern: pattern)
-        var matches = reg.matches(in: string, options: [], range: NSMakeRange(0, string.characters.count))
-        if matches.count == 0 {
-            return true
-        }
+    // PositionCreateDelegate
+    func createOk(position: Position) {
+        self.trader.addPosition(position)
+        self.positionListView.addPosition(position: position)
+    }
+    
+    func createCancel() {
+        print("Creating position cancelled")
+    }
+    
+    // PositionEditDelegate
+    func editOk(position: Position) {
         
-        // for amount
-        pattern = "^[0-9]+\\.[0-9]{4}$"
-        reg = try! NSRegularExpression(pattern: pattern)
-        matches = reg.matches(in: string, options: [], range: NSMakeRange(0, string.characters.count))
-        return matches.count == 0
+    }
+    
+    func editCancel() {
+        print("Editing position cancelled")
+    }
+    
+    // PositionListViewDelegate
+    func editPosition(position: Position) {
+        let editPositionController = PositionEditViewController(trader: self.trader, position: position)
+        editPositionController.delegate = self
+        self.present(editPositionController.controller, animated: true, completion: nil)
     }
     
     var account: Account! = nil
@@ -142,12 +94,10 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
     
     var positionListView: PositionListView! = nil
     var positionFundView: PositionFundView! = nil
-    var addPositionController: UIAlertController?
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var totalProfit: UILabel!
     @IBOutlet weak var priceAverage: UILabel!
     @IBOutlet weak var btcFund: UILabel!
-    
-
+    @IBOutlet weak var addPositionButton: UIBarButtonItem!
 }

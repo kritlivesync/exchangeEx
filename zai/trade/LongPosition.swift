@@ -18,14 +18,59 @@ class LongPosition: Position {
     override public var price: Double {
         get {
             var prc = 0.0
+            var totalAmount = 0.0
             for log in self.tradeLogs {
                 let l = log as! TradeLog
                 let action = TradeAction(rawValue: l.tradeAction)
                 if action == .OPEN_LONG_POSITION {
-                    prc += l.price.doubleValue
+                    totalAmount += l.amount.doubleValue
                 }
             }
-            return prc
+            
+            var edited = 0.0
+            for log in self.tradeLogs {
+                let l = log as! TradeLog
+                let action = TradeAction(rawValue: l.tradeAction)
+                if action == .OPEN_LONG_POSITION {
+                    let ratio = l.amount.doubleValue / totalAmount
+                    prc += l.price.doubleValue * ratio
+                } else if action == .EDIT_PRICE {
+                    edited += l.price.doubleValue
+                }
+            }
+            return prc + edited
+        }
+        set {
+            let oldValue = self.price
+            let diffValue = Double(newValue) - oldValue
+            if abs(diffValue) <= 0.00000001 {
+                return
+            }
+            let log = TradeLogRepository.getInstance().create(userId: self.trader!.account.userId, apiKey: self.trader!.account.privateApi.apiKey, action: .EDIT_PRICE, traderName: self.trader!.name, orderAction: "bid", orderId: nil, currencyPair: self.currencyPair.rawValue, price: diffValue, amount: 0.0, positionId: self.id)
+            self.addLog(log)
+        }
+    }
+    
+    override public var amount: Double {
+        get {
+            var amt = 0.0
+            for log in self.tradeLogs {
+                let l = log as! TradeLog
+                let action = TradeAction(rawValue: l.tradeAction)
+                if action == .OPEN_LONG_POSITION || action == .EDIT_AMOUNT {
+                    amt += l.amount.doubleValue
+                }
+            }
+            return amt
+        }
+        set {
+            let oldValue = self.amount
+            let diffValue = Double(newValue) - oldValue
+            if abs(diffValue) <= 0.00000001 {
+                return
+            }
+            let log = TradeLogRepository.getInstance().create(userId: self.trader!.account.userId, apiKey: self.trader!.account.privateApi.apiKey, action: .EDIT_AMOUNT, traderName: self.trader!.name, orderAction: "bid", orderId: nil, currencyPair: self.currencyPair.rawValue, price: 0.0, amount: diffValue, positionId: self.id)
+            self.addLog(log)
         }
     }
     

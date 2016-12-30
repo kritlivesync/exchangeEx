@@ -16,7 +16,8 @@ internal protocol PositionProtocol {
     func unwind(_ amount: Double?, price: Double?, cb: @escaping (ZaiError?) -> Void) -> Void
     func delete()
     
-    var price: Double { get }
+    var price: Double { get set }
+    var amount: Double { get set }
     var balance: Double { get }
     var profit: Double { get }
     var type: String { get }
@@ -100,6 +101,12 @@ public class Position: NSManagedObject, PositionProtocol, PromisedOrderDelegate 
     
     var price: Double {
         get { return 0.0 }
+        set {}
+    }
+    
+    var amount: Double {
+        get { return 0.0 }
+        set {}
     }
 
     var balance: Double {

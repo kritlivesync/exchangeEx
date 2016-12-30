@@ -48,15 +48,17 @@ class PositionListViewCell : UITableViewCell {
                 self.deleteAction = UITableViewRowAction(style: .default, title: "Delete") { (_, _) in
                     self.delegate?.pushedDeleteButton(cell: self, position: self.position!)
                 }
-                self.deleteAction?.backgroundColor = Color.keyColor
+                self.deleteAction?.backgroundColor = UIColor.red
             }
             
+            /*
             if status.isOpen || status.isWaiting {
                 self.editingAction = UITableViewRowAction(style: .normal, title: "Edit") { (_, _) in
                     self.delegate?.pushedEditButton(cell: self, position: self.position!)
                 }
                 self.editingAction?.backgroundColor = Color.keyColor
             }
+            */
             
             if status.isOpen {
                 self.unwindAction = UITableViewRowAction(style: .normal, title: "Unwind") { (_, _) in
