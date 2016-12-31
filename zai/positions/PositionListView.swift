@@ -24,6 +24,7 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
         self.positions = trader.activePositions
         self.view = view
         self.view.tableFooterView = UIView()
+        self.view.contentInset = UIEdgeInsetsMake(-1.0, 0.0, 0.0, 0.0);
 
         self.fund = Fund(api: trader.account.privateApi)
         self.bitcoin = BitCoin()
@@ -39,14 +40,28 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.positions.count
+        return self.positions.count + 1 // + header
+    }
+    
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return 70.0
+        } else {
+            return 70.0
+        }
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "positionListViewCell", for: indexPath) as! PositionListViewCell
-        let position = self.positions[(indexPath as NSIndexPath).row]
-        cell.setPosition(position, btcJpyPrice: self.btcPrice)
-        cell.delegate = self
+        let row = indexPath.row
+        if row == 0 {
+            cell.setPosition(nil, btcJpyPrice: self.btcPrice)
+        } else {
+            let position = self.positions[row - 1]
+            cell.setPosition(position, btcJpyPrice: self.btcPrice)
+            cell.delegate = self
+        }
+        
         return cell
     }
     
@@ -59,14 +74,20 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
         if let delete = cell.deleteAction {
             actions.append(delete)
         }
-        if let unwind = cell.unwindAction {
+        if let unwind = cell.unwind100Action {
+            actions.append(unwind)
+        }
+        if let unwind = cell.unwind50Action {
+            actions.append(unwind)
+        }
+        if let unwind = cell.unwind20Action {
             actions.append(unwind)
         }
         if let edit = cell.editingAction {
             actions.append(edit)
         }
         if actions.count == 0 {
-            let empty = UITableViewRowAction(style: .normal, title: "") { (_, _) in }
+            let empty = UITableViewRowAction(style: .normal, title: nil) { (_, _) in }
             empty.backgroundColor = UIColor.white
             return [empty]
         } else {
@@ -102,11 +123,12 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
         self.delegate?.editPosition(position: position)
     }
     
-    func pushedUnwindButton(cell: PositionListViewCell, position: Position) {
+    func pushedUnwindButton(cell: PositionListViewCell, position: Position, rate: Double) {
         if let index = self.view.indexPath(for: cell) {
             self.view.reloadRows(at: [index], with: UITableViewRowAnimation.right)
         }
-        self.trader.unwindPosition(id: position.id, price: nil, amount: position.balance) { (err, _) in
+        let amount = position.balance * rate
+        self.trader.unwindPosition(id: position.id, price: nil, amount: amount) { (err, _) in
             if err != nil {
                 position.open()
             }

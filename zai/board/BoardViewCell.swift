@@ -18,9 +18,34 @@ protocol BoardViewCellDelegate {
 
 
 class BoardViewCell : UITableViewCell {
-
-    func setQuote(_ quote: Quote) {
+    
+    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = UITableViewCellSelectionStyle.none
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.selectionStyle = UITableViewCellSelectionStyle.none
+    }
+    
+    func setQuote(_ quote: Quote?) {
+        self.selectionStyle = UITableViewCellSelectionStyle.none
+        
+        guard let quote = quote else {
+            let fontName = self.priceLabel.font.fontName
+            let fontSize = CGFloat(17.0)
+            self.priceLabel.text = "気配値"
+            self.priceLabel.font = UIFont(name: fontName, size: fontSize)
+            self.priceLabel.textColor = UIColor.black
+            self.amountLabel.text = "気配数量"
+            self.amountLabel.font = UIFont(name: fontName, size: fontSize)
+            self.amountLabel.textColor = UIColor.black
+            self.amountBarConstraint.constant = 0
+            self.makerButtonAction = nil
+            self.takerButtonAction = nil
+            return
+        }
         
         self.priceLabel.text = Int(quote.price).description
         self.amountLabel.text = quote.amount.description
@@ -28,12 +53,10 @@ class BoardViewCell : UITableViewCell {
             let color = Color.askQuoteColor
             self.priceLabel.textColor = color
             self.amountBar.backgroundColor = color
-            //self.amountLabel.textColor = color
         } else if quote.type == Quote.QuoteType.BID {
             let color = Color.bidQuoteColor
             self.priceLabel.textColor = color
             self.amountBar.backgroundColor = color
-            //self.amountLabel.textColor = color
         }
         var barWidth = CGFloat(quote.amount * 50.0)
         barWidth = min(barWidth, self.amountLabel.layer.bounds.width)

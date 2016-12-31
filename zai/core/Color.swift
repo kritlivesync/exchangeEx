@@ -11,8 +11,9 @@ import UIKit
 
 class Color {
     // base colors
-    public static let keyColor = UIColor(red: 0.18, green: 0.49, blue: 0.20, alpha: 1.0)
-    public static let antiKeyColor = UIColor(red: 1.0, green: 0.56, blue: 0.0, alpha: 1.0)
+    public static let keyColor = UIColor(red: 0.18, green: 0.49, blue: 0.20, alpha: 1.0) // rgba(46,125,50 ,1)
+    public static let antiKeyColor = UIColor(red: 0.62, green: 0.62, blue: 0.14, alpha: 1.0) // rgba(158,157,36 ,1)
+    public static let antiKeyColor2 = UIColor(red: 1.0, green: 0.56, blue: 0.0, alpha: 1.0) // rgba(255,143,0 ,1)
     
     // navigation bar
     public static let naviBarColor = Color.keyColor

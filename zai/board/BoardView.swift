@@ -23,6 +23,7 @@ class BoardView : NSObject, UITableViewDelegate, UITableViewDataSource, BoardVie
     init(view: UITableView) {
         self.view = view
         self.view.tableFooterView = UIView()
+        self.view.contentInset = UIEdgeInsetsMake(-1.0, 0.0, 0.0, 0.0);
         
         super.init()
         self.view.delegate = self
@@ -34,9 +35,9 @@ class BoardView : NSObject, UITableViewDelegate, UITableViewDataSource, BoardVie
         let needReload = (self.board == nil)
         self.board = board
         let count = self.board!.quoteCount
-        for i in 0 ... count {
-            let cell = self.view.cellForRow(at: IndexPath(row: i, section: 0)) as? BoardViewCell
-            cell?.setQuote(board.getQuote(index: i)!)
+        for i in 0 ..< count {
+            let cell = self.view.cellForRow(at: IndexPath(row: i + 1, section: 0)) as? BoardViewCell
+            cell?.setQuote(board.getQuote(index: i))
         }
         if needReload {
             self.reloadData()
@@ -51,19 +52,31 @@ class BoardView : NSObject, UITableViewDelegate, UITableViewDataSource, BoardVie
         guard let board = self.board else {
             return 0
         }
-        return board.quoteCount
+        return board.quoteCount + 1 // + header
+    }
+    
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return 20.0
+        } else {
+            return 45.0
+        }
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "boardViewCell", for: indexPath) as! BoardViewCell
-        
-        guard let board = self.board else {
-            return cell
+        let row = indexPath.row
+        if row == 0 {
+            cell.setQuote(nil)
+        } else {
+            guard let board = self.board else {
+                cell.setQuote(nil)
+                return cell
+            }
+            let quote = board.getQuote(index: (indexPath as NSIndexPath).row - 1)!
+            cell.setQuote(quote)
+            cell.delegate = self
         }
-        let quote = board.getQuote(index: (indexPath as NSIndexPath).row)!
-        cell.setQuote(quote)
-        cell.delegate = self
-        
         return cell
     }
     
@@ -71,7 +84,20 @@ class BoardView : NSObject, UITableViewDelegate, UITableViewDataSource, BoardVie
         guard let cell = self.view.cellForRow(at: indexPath) as? BoardViewCell else {
             return nil
         }
-        return [cell.takerButtonAction!, cell.makerButtonAction!]
+        var actions = [UITableViewRowAction]()
+        if let action = cell.takerButtonAction {
+            actions.append(action)
+        }
+        if let action = cell.makerButtonAction {
+            actions.append(action)
+        }
+        if actions.count == 0 {
+            let empty = UITableViewRowAction(style: .normal, title: nil) { (_, _) in }
+            empty.backgroundColor = UIColor.white
+            return [empty]
+        } else {
+            return actions
+        }
     }
     
     // BoardViewCellDelegate

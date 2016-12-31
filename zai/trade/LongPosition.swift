@@ -26,6 +26,9 @@ class LongPosition: Position {
                     totalAmount += l.amount.doubleValue
                 }
             }
+            if totalAmount < 0.00000001 {
+                return 0.0
+            }
             
             var edited = 0.0
             for log in self.tradeLogs {

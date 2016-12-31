@@ -24,7 +24,7 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
         self.positionListView.delegate = self
         self.positionFundView = PositionFundView(trader: self.trader)
         
-        self.addPositionButton.tintColor = Color.antiKeyColor
+        self.addPositionButton.tintColor = Color.antiKeyColor2
     }
     
     open override func viewDidAppear(_ animated: Bool) {

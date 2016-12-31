@@ -13,65 +13,97 @@ import UIKit
 protocol PositionListViewCellDelegate {
     func pushedDeleteButton(cell: PositionListViewCell, position: Position)
     func pushedEditButton(cell: PositionListViewCell, position: Position)
-    func pushedUnwindButton(cell: PositionListViewCell, position: Position)
+    func pushedUnwindButton(cell: PositionListViewCell, position: Position, rate: Double)
 }
 
 class PositionListViewCell : UITableViewCell {
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle = UITableViewCellSelectionStyle.none
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.selectionStyle = UITableViewCellSelectionStyle.none
     }
     
     func setPosition(_ position: Position?, btcJpyPrice: Int) {
-        self.selectionStyle = UITableViewCellSelectionStyle.none
-        if let p = position {
-            self.position = p
-            
-            self.priceLabel.text = formatValue(Int(p.price))
-            self.amountLabel.text = formatValue(p.balance)
-            self.updateProfit(btcJpyPrice: btcJpyPrice)
-            
-            let status = PositionState(rawValue: p.status.intValue)!
-            self.statusLabel.text = status.toString()
-            
+        guard let p = position else {
+            let fontName = self.priceLabel.font.fontName
+            let fontSize = CGFloat(17.0)
+            self.priceLabel.text = "取得価格"
+            self.priceLabel.textColor = UIColor.black
+            self.priceLabel.font = UIFont(name: fontName, size: fontSize)
+            self.amountLabel.text = "数量"
+            self.amountLabel.textColor = UIColor.black
+            self.amountLabel.font = UIFont(name: fontName, size: fontSize)
+            self.balanceLabel.text = "(残高)"
+            self.balanceLabel.textColor = UIColor.black
+            self.balanceLabel.font = UIFont(name: fontName, size: fontSize)
+            self.profitLabel.text = "損益"
+            self.profitLabel.textColor = UIColor.black
+            self.profitLabel.font = UIFont(name: fontName, size: fontSize)
+            self.statusLabel.text = "状態"
+            self.statusLabel.textColor = UIColor.black
+            self.statusLabel.font = UIFont(name: fontName, size: fontSize)
             self.deleteAction = nil
-            self.unwindAction = nil
+            self.unwind100Action = nil
+            self.unwind50Action = nil
+            self.unwind20Action = nil
             self.editingAction = nil
-            if status.isOpen || status.isClosed || status.isWaiting {
-                self.deleteAction = UITableViewRowAction(style: .default, title: "Delete") { (_, _) in
-                    self.delegate?.pushedDeleteButton(cell: self, position: self.position!)
-                }
-                self.deleteAction?.backgroundColor = UIColor.red
+            return
+        }
+        self.position = p
+        
+        self.priceLabel.text = formatValue(Int(p.price))
+        self.amountLabel.text = formatValue(p.amount)
+        self.balanceLabel.text = "(" + formatValue(p.balance) + ")"
+        self.updateProfit(btcJpyPrice: btcJpyPrice)
+        
+        let status = PositionState(rawValue: p.status.intValue)!
+        self.statusLabel.text = status.toString()
+        
+        self.deleteAction = nil
+        self.unwind100Action = nil
+        self.unwind50Action = nil
+        self.unwind20Action = nil
+        self.editingAction = nil
+        if status.isOpen || status.isClosed || status.isWaiting {
+            self.deleteAction = UITableViewRowAction(style: .default, title: "Delete") { (_, _) in
+                self.delegate?.pushedDeleteButton(cell: self, position: self.position!)
             }
-            
-            /*
-            if status.isOpen || status.isWaiting {
-                self.editingAction = UITableViewRowAction(style: .normal, title: "Edit") { (_, _) in
-                    self.delegate?.pushedEditButton(cell: self, position: self.position!)
-                }
-                self.editingAction?.backgroundColor = Color.keyColor
+            self.deleteAction?.backgroundColor = UIColor.red
+        }
+        
+        /*
+         if status.isOpen || status.isWaiting {
+         self.editingAction = UITableViewRowAction(style: .normal, title: "Edit") { (_, _) in
+         self.delegate?.pushedEditButton(cell: self, position: self.position!)
+         }
+         self.editingAction?.backgroundColor = Color.keyColor
+         }
+         */
+        
+        if status.isOpen {
+            self.unwind100Action = UITableViewRowAction(style: .normal, title: "Unwind\n(100%)") { (_, _) in
+                self.delegate?.pushedUnwindButton(cell: self, position: self.position!, rate: 1.0)
             }
-            */
-            
-            if status.isOpen {
-                self.unwindAction = UITableViewRowAction(style: .normal, title: "Unwind") { (_, _) in
-                    self.delegate?.pushedUnwindButton(cell: self, position: self.position!)
-                }
-                self.unwindAction?.backgroundColor = Color.keyColor
+            self.unwind100Action?.backgroundColor = Color.antiKeyColor2
+            self.unwind50Action = UITableViewRowAction(style: .normal, title: "Unwind\n(50%)") { (_, _) in
+                self.delegate?.pushedUnwindButton(cell: self, position: self.position!, rate: 0.5)
             }
-            
-            if status.isClosed {
-                self.backgroundColor = Color.closedPositionColor
-            } else {
-                self.backgroundColor = UIColor.white
+            self.unwind50Action?.backgroundColor = Color.antiKeyColor
+            self.unwind20Action = UITableViewRowAction(style: .normal, title: "Unwind\n(20%)") { (_, _) in
+                self.delegate?.pushedUnwindButton(cell: self, position: self.position!, rate: 0.2)
             }
+            self.unwind20Action?.backgroundColor = Color.keyColor
+        }
+        
+        if status.isClosed {
+            self.backgroundColor = Color.closedPositionColor
+        } else {
+            self.backgroundColor = UIColor.white
         }
     }
     
@@ -97,11 +129,14 @@ class PositionListViewCell : UITableViewCell {
     
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
+    @IBOutlet weak var balanceLabel: UILabel!
     @IBOutlet weak var profitLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
     var deleteAction: UITableViewRowAction?
     var editingAction: UITableViewRowAction?
-    var unwindAction: UITableViewRowAction?
+    var unwind100Action: UITableViewRowAction?
+    var unwind50Action: UITableViewRowAction?
+    var unwind20Action: UITableViewRowAction?
     var position: Position?
     var delegate: PositionListViewCellDelegate?
 }

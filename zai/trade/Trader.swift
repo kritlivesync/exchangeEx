@@ -194,11 +194,20 @@ open class Trader: NSManagedObject, FundDelegate {
         if positions.count == 0 {
             return 0.0
         }
-        var average = 0.0
+        var cost = 0.0
+        var totalAmount = 0.0
         for position in positions {
-            average += position.price
+            let prc = position.price
+            let amt = position.amount
+            cost += prc * amt
+            totalAmount += amt
+            
         }
-        return average / Double(positions.count)
+        if totalAmount <= 0.000000001 {
+            return 0.0
+        } else {
+            return cost / totalAmount
+        }
     }
     
     // FundDelegate
