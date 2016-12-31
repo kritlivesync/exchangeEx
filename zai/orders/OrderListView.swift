@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, ActiveOrderDelegate {
+class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, ActiveOrderDelegate, OrderListViewCellDelegate {
     
     init(view: UITableView, trader: Trader) {
         self.trader = trader
@@ -30,43 +30,65 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.orders.count
+        return self.orders.count + 1 // + header
+    }
+    
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return 20.0
+        } else {
+            return 70.0
+        }
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "orderListViewCell", for: indexPath) as! OrderListViewCell
-        cell.setOrder(order: self.orders[(indexPath as NSIndexPath).row])
-        cell.cancelButton.addTarget(self, action: #selector(OrderListView.pushCancelButton(_:event:)), for: .touchUpInside)
+        let row = indexPath.row
+        if row == 0 {
+            cell.setOrder(order: nil)
+        } else {
+            let order = self.orders[row - 1]
+            cell.setOrder(order: order)
+            cell.delegate = self
+        }
+
         return cell
     }
     
-    func pushCancelButton(_ sender: AnyObject, event: UIEvent?) {
-        var row = -1
-        for touch in (event?.allTouches)! {
-            let point = touch.location(in: self.view)
-            row = (self.view.indexPathForRow(at: point)! as NSIndexPath).row
+    public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        guard let cell = self.view.cellForRow(at: indexPath) as? OrderListViewCell else {
+            return nil
         }
-        
-        if 0 <= row && row < self.orders.count {
-            let order = self.orders[row]
-            let repository = OrderRepository.getInstance()
-            let api = self.trader.account.privateApi
-            if let buyOrder = repository.findBuyOrderByOrderId(orderId: order.id, api: api!) {
-                buyOrder.cancel() { err in
-                    if err == nil {
-                        repository.delete(buyOrder)
-                    }
+        var actions = [UITableViewRowAction]()
+        if let action = cell.cancelAction {
+            actions.append(action)
+        }
+        if actions.count == 0 {
+            let empty = UITableViewRowAction(style: .normal, title: nil) { (_, _) in }
+            empty.backgroundColor = UIColor.white
+            return [empty]
+        } else {
+            return actions
+        }
+    }
+    
+    func pushedCancelButton(cell _: UITableViewCell, order: ActiveOrder) {
+        let repository = OrderRepository.getInstance()
+        let api = self.trader.account.privateApi
+        if let buyOrder = repository.findBuyOrderByOrderId(orderId: order.id, api: api!) {
+            buyOrder.cancel() { err in
+                if err == nil {
+                    repository.delete(buyOrder)
                 }
-            } else if let sellOrder = repository.findSellOrderByOrderId(orderId: order.id, api: api!) {
-                sellOrder.cancel() { err in
-                    if err == nil {
-                        repository.delete(sellOrder)
-                    }
-                }
-            } else {
-                api!.cancelOrder(Int(order.id)!) { _ in }
             }
-            
+        } else if let sellOrder = repository.findSellOrderByOrderId(orderId: order.id, api: api!) {
+            sellOrder.cancel() { err in
+                if err == nil {
+                    repository.delete(sellOrder)
+                }
+            }
+        } else {
+            api!.cancelOrder(Int(order.id)!) { _ in }
         }
     }
     

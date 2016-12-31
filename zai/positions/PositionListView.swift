@@ -104,8 +104,11 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
     func recievedJpyPrice(price: Int) {
         self.btcPrice = price
         for cell in self.view.visibleCells {
-            let c = cell as! PositionListViewCell
-            c.setPosition(c.position, btcJpyPrice: self.btcPrice)
+            let index = self.view.indexPath(for: cell)
+            if index?.row != 0 {
+                let c = cell as! PositionListViewCell
+                c.setPosition(c.position, btcJpyPrice: self.btcPrice)
+            }
         }
     }
     
@@ -127,7 +130,8 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
         if let index = self.view.indexPath(for: cell) {
             self.view.reloadRows(at: [index], with: UITableViewRowAnimation.right)
         }
-        let amount = position.balance * rate
+        var amount = position.balance * rate
+        amount = max(amount, 0.0001)
         self.trader.unwindPosition(id: position.id, price: nil, amount: amount) { (err, _) in
             if err != nil {
                 position.open()

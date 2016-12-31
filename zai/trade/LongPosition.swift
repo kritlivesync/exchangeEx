@@ -151,7 +151,7 @@ class LongPosition: Position {
             amt = balance
         }
         
-        print("sell: " + balance.description)
+        print("sell: " + amt!.description)
         
         let order = OrderRepository.getInstance().createSellOrder(currencyPair: self.currencyPair, price: price, amount: amt!, api: self.trader!.account.privateApi)
         
@@ -213,6 +213,8 @@ class LongPosition: Position {
             if self.balance < 0.0001 {
                 self.close()
                 self.delegate?.closedPosition(position: self)
+            } else {
+                self.open()
             }
         default: break
         }

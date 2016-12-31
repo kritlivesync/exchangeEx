@@ -131,6 +131,18 @@ open class Trader: NSManagedObject, FundDelegate {
         return positions
     }
     
+    var openPositions: [Position] {
+        var positions = [Position]()
+        for position in self.positions {
+            let p = position as! Position
+            let status = PositionState(rawValue: p.status.intValue)
+            if (status?.isOpen)! {
+                positions.append(p)
+            }
+        }
+        return positions
+    }
+    
     var allPositions: [Position] {
         var positions = [Position]()
         for position in self.positions {
@@ -153,7 +165,7 @@ open class Trader: NSManagedObject, FundDelegate {
     }
     
     var maxProfitPosition: Position? {
-        let positions = self.activePositions
+        let positions = self.openPositions
         var maxPos: Position? = nil
         var maxProfit = -DBL_MAX
         for position in positions {
@@ -167,7 +179,7 @@ open class Trader: NSManagedObject, FundDelegate {
     }
     
     var minProfitPosition: Position? {
-        let positions = self.activePositions
+        let positions = self.openPositions
         var minPos: Position? = nil
         var minProfit = DBL_MAX
         for position in positions {
