@@ -30,7 +30,7 @@ class TraderRepository {
         let newTrader = NSEntityDescription.insertNewObject(forEntityName: TraderRepository.traderModelName, into: db.managedObjectContext) as! Trader
         newTrader.name = name
         newTrader.account = account
-        newTrader.fund = Fund(api: account.privateApi)
+        newTrader.fund = Fund(api: account.activeExchange.api)
         newTrader.fund.delegate = newTrader
         newTrader.fund.getBtcFund() { (err, btc) in
             if err == nil {
@@ -54,7 +54,7 @@ class TraderRepository {
         db.saveContext()
     }
     
-    func findTraderByName(_ name: String, api: PrivateApi) -> Trader? {
+    func findTraderByName(_ name: String) -> Trader? {
         let query: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: TraderRepository.traderModelName)
         let predicate = NSPredicate(format: "name = %@", name)
         query.predicate = predicate
@@ -66,8 +66,7 @@ class TraderRepository {
                 return nil
             } else {
                 let trader = traders[0]
-                trader.account.privateApi = api
-                trader.fund = Fund(api: api)
+                trader.fund = Fund(api: trader.account.activeExchange.api)
                 trader.fund.delegate = trader
                 trader.fund.getBtcFund() { (err, btc) in
                     if err == nil {
@@ -86,15 +85,12 @@ class TraderRepository {
         }
     }
     
-    func getAllTraders(_ api: PrivateApi) -> [Trader] {
+    func getAllTraders() -> [Trader] {
         let query = Trader.fetchRequest()
         
         let db = Database.getDb()
         do {
             let traders = try db.managedObjectContext.fetch(query) as! [Trader]
-            for trader in traders {
-                trader.account.privateApi = api
-            }
             return traders
         } catch {
             return []

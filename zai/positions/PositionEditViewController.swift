@@ -149,7 +149,7 @@ class PositionCreateViewController : ValidatablePositionEditor {
     fileprivate func addOkAction() {
         let action = UIAlertAction(title: "追加", style: .default, handler: { action in
             let position = PositionRepository.getInstance().createLongPosition(trader: self.trader)
-            let log = TradeLogRepository.getInstance().create(userId: self.trader.account.userId, apiKey: self.trader.account.privateApi.apiKey, action: .OPEN_LONG_POSITION, traderName: self.trader.name, orderAction: "bid", orderId: nil, currencyPair: "btc_jpy", price: Double(self.priceTextField!.text!)!, amount: Double(self.amountextField!.text!)!, positionId: position.id)
+            let log = TradeLogRepository.getInstance().create(userId: self.trader.account.userId, action: .OPEN_LONG_POSITION, traderName: self.trader.name, orderAction: "bid", orderId: nil, currencyPair: "btc_jpy", price: Double(self.priceTextField!.text!)!, amount: Double(self.amountextField!.text!)!, positionId: position.id)
             position.addLog(log)
             position.open()
             self.delegate?.createOk(position: position)

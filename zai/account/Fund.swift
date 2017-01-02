@@ -8,10 +8,6 @@
 
 import Foundation
 
-import SwiftyJSON
-
-import ZaifSwift
-
 
 @objc protocol FundDelegate : MonitorableDelegate {
     @objc optional func recievedMarketCapitalization(jpy: Int)
@@ -21,110 +17,77 @@ import ZaifSwift
 
 
 internal class Fund : Monitorable {
-    init(api: PrivateApi) {
-        self.privateApi = api
+    init(api: Api) {
+        self.api = api
     }
  
     func getMarketCapitalization(_ cb: @escaping ((ZaiError?, Int) -> Void)) {
-        self.privateApi.getInfo() { (err, res) in
-            if let e = err {
-                cb(ZaiError(errorType: .ZAIF_API_ERROR, message: e.message), 0)
+        self.api.getBalance(currencies: [.BTC, .JPY]) { (err, balances) in
+            if err != nil {
+                cb(ZaiError(errorType: .ZAIF_API_ERROR, message: err!.message), 0)
             } else {
-                if let info = res {
-                    var total = info["return"]["deposit"]["jpy"].doubleValue
-                    let btc = info["return"]["deposit"]["btc"].doubleValue
-                    let mona = info["return"]["deposit"]["mona"].doubleValue
-                    let xem = info["return"]["deposit"]["xem"].doubleValue
-                    BitCoin.getPriceFor(.JPY) { (err, btcPrice) in
-                        if let e = err {
-                            cb(ZaiError(errorType: .ZAIF_API_ERROR, message: e.message), 0)
-                        } else {
-                            total += (btc * Double(btcPrice))
-                            MonaCoin.getPriceFor(.JPY) { (err, monaPrice) in
-                                if let e = err {
-                                    cb(ZaiError(errorType: .ZAIF_API_ERROR, message: e.message), 0)
-                                } else {
-                                    total += (mona * monaPrice)
-                                    XEM.getPriceFor(.JPY) { (err, xemPrice) in
-                                        if let e = err {
-                                            cb(ZaiError(errorType: .ZAIF_API_ERROR, message: e.message), 0)
-                                        } else {
-                                            total += (xem * xemPrice)
-                                            cb(nil, Int(total))
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                var total = balances[ApiCurrency.JPY.rawValue]!
+                let btc = balances[ApiCurrency.BTC.rawValue]!
+                let bitcoin = BitCoin(api: self.api)
+                bitcoin.getPriceFor(.JPY) { (err, price) in
+                    if err != nil {
+                        cb(err, 0)
+                    } else {
+                        total += (btc * price)
+                        cb(nil, Int(total))
                     }
                 }
             }
         }
     }
     
-    func calculateHowManyAmountCanBuy(_ currency: Currency, price: Double? = nil, rate: Double = 1.0, cb: @escaping (ZaiError?, Double, Double) -> Void) {
-        self.privateApi.getInfo() { (err, res) in
-            if let e = err {
-                cb(ZaiError(errorType: .ZAIF_API_ERROR, message: e.message), 0, 0)
-            } else {
-                if let info = res {
-                    let jpyFund = info["return"]["deposit"]["jpy"].doubleValue
-                    var currencyPair = CurrencyPair.BTC_JPY
-                    switch currency {
-                    case .MONA:
-                        currencyPair = .MONA_JPY
-                    case .XEM:
-                        currencyPair = .XEM_JPY
-                    default: break
-                    }
-                    if let p = price {
-                        let amount = jpyFund * rate / p
-                        cb(nil, amount, p)
-                    } else {
-                        PublicApi.lastPrice(currencyPair) { (err, res) in
-                            if let e = err {
-                                cb(ZaiError(errorType: .ZAIF_API_ERROR, message: e.message), 0, 0)
-                            } else {
-                                let price = res!["last_price"].doubleValue
-                                var amount = jpyFund * rate / price
-                                switch currency {
-                                case .BTC:
-                                    amount = Double(Int(amount * 10000)) / 10000.0
-                                case .MONA:
-                                    amount = Double(Int(amount))
-                                default: break
-                                }
-                                cb(nil, amount, price)
-                            }
-                        }
-                    }
+    func calculateHowManyAmountCanBuy(_ currency: ApiCurrency, price: Double? = nil, rate: Double = 1.0, cb: @escaping (ZaiError?, Double, Double) -> Void) {
+        
+        self.api.getBalance(currencies: [.JPY]) { (err, balance) in
+            if err != nil {
+                cb(ZaiError(errorType: .ZAIF_API_ERROR, message: err!.message), 0.0, 0.0)
+                return
+            }
+            
+            let jpyFund = balance[ApiCurrency.JPY.rawValue]!
+            if let p = price {
+                let amount = jpyFund * rate / p
+                cb(nil, amount, p)
+                return
+            }
+            switch currency {
+            case .BTC:
+                let bitcoin = BitCoin(api: self.api)
+                bitcoin.getPriceFor(.JPY) { (err, price) in
+                    let amount = jpyFund * rate / price
+                    cb(err, amount, price)
                 }
+            default:
+                cb(ZaiError(), 0.0, 0.0)
             }
         }
     }
     
     func getJpyFund(_ cb: @escaping ((ZaiError?, Int) -> Void)) {
-        self.privateApi.getInfo() { (err, res) in
-            if let e = err {
-                cb(ZaiError(errorType: .ZAIF_API_ERROR, message: e.message), 0)
+        self.api.getBalance(currencies: [.JPY]) { (err, balance) in
+            if err != nil {
+                cb(ZaiError(errorType: .ZAIF_API_ERROR, message: err!.message), 0)
+                return
             } else {
-                if let info = res {
-                    let jpy = info["return"]["deposit"]["jpy"].intValue
-                    cb(nil, jpy)
-                }
+                let jpyFund = balance[ApiCurrency.JPY.rawValue]!
+                cb(nil, Int(jpyFund))
             }
         }
     }
     
     func getBtcFund(_ cb: @escaping ((ZaiError?, Double) -> Void)) {
-        self.privateApi.getInfo() { (err, res) in
-            if let e = err {
-                cb(ZaiError(errorType: .ZAIF_API_ERROR, message: e.message), 0)
+        self.api.getBalance(currencies: [.BTC]) { (err, balance) in
+            if err != nil {
+                cb(ZaiError(errorType: .ZAIF_API_ERROR, message: err!.message), 0.0)
+                return
             } else {
-                if let info = res {
-                    let btc = info["return"]["deposit"]["btc"].doubleValue
-                    cb(nil, btc)
-                }
+                let btcFund = balance[ApiCurrency.BTC.rawValue]!
+                cb(nil, btcFund)
             }
         }
     }
@@ -154,6 +117,5 @@ internal class Fund : Monitorable {
         }
     }
     
-    fileprivate let privateApi: PrivateApi
-
+    fileprivate let api: Api
 }

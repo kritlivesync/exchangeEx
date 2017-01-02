@@ -31,7 +31,7 @@ open class Trader: NSManagedObject, FundDelegate {
         self.status = TraderState.ACTIVE.rawValue
         self.account = account
         self.positions = []
-        self.fund = Fund(api: self.account.privateApi)
+        self.fund = Fund(api: self.account.activeExchange.api)
         self.fund.delegate = self
         self.fund.getBtcFund() { (err, btc) in
             if err == nil {
@@ -51,13 +51,13 @@ open class Trader: NSManagedObject, FundDelegate {
         Database.getDb().saveContext()
     }
     
-    func createLongPosition(_ currencyPair: CurrencyPair, price: Double?, amount: Double, cb: @escaping (ZaiError?, Position?) -> Void) {
+    func createLongPosition(_ currencyPair: ApiCurrencyPair, price: Double?, amount: Double, cb: @escaping (ZaiError?, Position?) -> Void) {
         var amt = amount
         if let p = price {
             let maxAmount = Double(self.jpyFund) / p
             amt = min(maxAmount, amt)
         }
-        let order = OrderRepository.getInstance().createBuyOrder(currencyPair: currencyPair, price: price, amount: amt, api: self.account.privateApi)
+        let order = OrderRepository.getInstance().createBuyOrder(currencyPair: currencyPair, price: price, amount: amt, api: self.account.activeExchange.api)
         order.excute() { (err, orderId) in
             if let e = err {
                 cb(e, nil)
@@ -157,7 +157,7 @@ open class Trader: NSManagedObject, FundDelegate {
         for position in self.positions {
             let p = position as! Position
             if let order = p.order {
-                order.privateApi = self.account.privateApi
+                order.api = self.account.activeExchange.api
                 orders.append(order)
             }
         }

@@ -22,9 +22,9 @@ class ShortPosition: Position {
                 let l = log as! TradeLog
                 let action = TradeAction(rawValue: l.tradeAction)
                 if action == .OPEN_SHORT_POSITION {
-                    balance += l.amount.doubleValue
+                    balance += l.amount!.doubleValue
                 } else if action == .UNWIND_SHORT_POSITION {
-                    balance -= l.amount.doubleValue
+                    balance -= l.amount!.doubleValue
                 }
             }
             return balance
@@ -38,23 +38,23 @@ class ShortPosition: Position {
                 let l = log as! TradeLog
                 let action = TradeAction(rawValue: l.tradeAction)
                 if action == .OPEN_SHORT_POSITION {
-                    profit += l.price.doubleValue * l.amount.doubleValue
+                    profit += l.price!.doubleValue * l.amount!.doubleValue
                 } else if action == .UNWIND_SHORT_POSITION {
-                    profit -= l.price.doubleValue * l.amount.doubleValue
+                    profit -= l.price!.doubleValue * l.amount!.doubleValue
                 }
             }
             return profit
         }
     }
     
-    override internal var currencyPair: CurrencyPair {
+    override internal var currencyPair: ApiCurrencyPair {
         get {
-            var currencyPair = CurrencyPair.BTC_JPY
+            var currencyPair = ApiCurrencyPair.BTC_JPY
             for log in self.tradeLogs {
                 let l = log as! TradeLog
                 let action = TradeAction(rawValue: l.tradeAction)
                 if action == .OPEN_SHORT_POSITION {
-                    currencyPair = CurrencyPair(rawValue: l.currencyPair)!
+                    currencyPair = ApiCurrencyPair(rawValue: l.currencyPair!)!
                 }
             }
             return currencyPair
@@ -85,7 +85,7 @@ class ShortPosition: Position {
             amt = balance
         }
         
-        let order = OrderRepository.getInstance().createSellOrder(currencyPair: self.currencyPair, price: price, amount: amt!, api: self.trader!.account.privateApi)
+        let order = OrderRepository.getInstance().createSellOrder(currencyPair: self.currencyPair, price: price, amount: amt!, api: self.trader!.account.activeExchange.api)
         
         order.excute() { (err, res) in
             cb(err)

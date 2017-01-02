@@ -20,14 +20,14 @@ class Color {
     
     // tab bar
     public static let tabBarColor = Color.keyColor
-    public static let tabBarItemColor = Color.antiKeyColor
+    public static let tabBarItemColor = Color.antiKeyColor2
     public static let tabBarUnselectedItemColor = UIColor.black
 
     // baord
     public static let askQuoteColor = UIColor(red: 0.12, green: 0.53, blue: 0.90, alpha: 1.0)
     public static let bidQuoteColor = UIColor(red: 0.7, green: 0.4, blue: 0.4, alpha: 1.0)
-    public static let makerButtonColor = Color.antiKeyColor
-    public static let takerButtonColor = Color .keyColor
+    public static let makerButtonColor = Color .keyColor
+    public static let takerButtonColor = Color.antiKeyColor2
 
     // positions
     public static let closedPositionColor = UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.0)

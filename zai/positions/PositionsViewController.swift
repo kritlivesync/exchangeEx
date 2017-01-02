@@ -20,6 +20,9 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
         self.priceAverage.text = "-"
         self.btcFund.text = "-"
         
+        let account = getAccount()
+        self.trader = account!.activeExchange.trader
+        
         self.positionListView = PositionListView(view: self.tableView, trader: self.trader)
         self.positionListView.delegate = self
         self.positionFundView = PositionFundView(trader: self.trader)
@@ -89,8 +92,7 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
         self.present(editPositionController.controller, animated: true, completion: nil)
     }
     
-    var account: Account! = nil
-    var trader: Trader! = nil
+    var trader: Trader!
     
     var positionListView: PositionListView! = nil
     var positionFundView: PositionFundView! = nil

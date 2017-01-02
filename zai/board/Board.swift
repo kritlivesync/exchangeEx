@@ -53,6 +53,10 @@ class Board {
         }
     }
     
+    func getBestAsk() -> Quote? {
+        return self.asks.last
+    }
+    
     func calculateAskMomentum() -> Double {
         let ema = Ema(term: 5)
         for ask in self.asks {
@@ -73,6 +77,10 @@ class Board {
         } else {
             return nil
         }
+    }
+    
+    func getBestBid() -> Quote? {
+        return self.bids.first
     }
     
     func calculateBidMomentum() -> Double {

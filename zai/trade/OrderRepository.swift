@@ -24,7 +24,7 @@ class OrderRepository {
         }
     }
     
-    func createBuyOrder(currencyPair: CurrencyPair, price: Double?, amount: Double, api: PrivateApi) -> BuyOrder {
+    func createBuyOrder(currencyPair: ApiCurrencyPair, price: Double?, amount: Double, api: Api) -> BuyOrder {
         let db = Database.getDb()
         
         var newOrder = NSEntityDescription.insertNewObject(forEntityName: OrderRepository.buyOrderModelName, into: db.managedObjectContext) as! Order
@@ -36,7 +36,7 @@ class OrderRepository {
         return newOrder as! BuyOrder
     }
     
-    func createSellOrder(currencyPair: CurrencyPair, price: Double?, amount: Double, api: PrivateApi) -> SellOrder {
+    func createSellOrder(currencyPair: ApiCurrencyPair, price: Double?, amount: Double, api: Api) -> SellOrder {
         let db = Database.getDb()
         
         var newOrder = NSEntityDescription.insertNewObject(forEntityName: OrderRepository.sellOrderModelName, into: db.managedObjectContext) as! Order
@@ -48,14 +48,14 @@ class OrderRepository {
         return newOrder as! SellOrder
     }
     
-    func findBuyOrderByOrderId(orderId: String, api: PrivateApi) -> BuyOrder? {
+    func findBuyOrderByOrderId(orderId: String, api: Api) -> BuyOrder? {
         let query: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: OrderRepository.buyOrderModelName)
         let predicate = NSPredicate(format: "orderId = %@", orderId)
         query.predicate = predicate
         return self.findOrder(query: query, api: api) as? BuyOrder
     }
     
-    func findSellOrderByOrderId(orderId: String, api: PrivateApi) -> SellOrder? {
+    func findSellOrderByOrderId(orderId: String, api: Api) -> SellOrder? {
         let query: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: OrderRepository.sellOrderModelName)
         let predicate = NSPredicate(format: "orderId = %@", orderId)
         query.predicate = predicate
@@ -78,7 +78,7 @@ class OrderRepository {
         return NSEntityDescription.entity(forEntityName: OrderRepository.sellOrderModelName, in: db.managedObjectContext)!
     }()
     
-    fileprivate func findOrder(query: NSFetchRequest<NSFetchRequestResult>, api: PrivateApi) -> Order? {
+    fileprivate func findOrder(query: NSFetchRequest<NSFetchRequestResult>, api: Api) -> Order? {
         let db = Database.getDb()
         do {
             let orders = try db.managedObjectContext.fetch(query) as! [Order]
@@ -86,7 +86,7 @@ class OrderRepository {
                 return nil
             } else {
                 let order = orders[0]
-                let cp = CurrencyPair(rawValue: order.currencyPair)!
+                let cp = ApiCurrencyPair(rawValue: order.currencyPair)!
                 order.activeOrderMonitor = ActiveOrderMonitor(currencyPair: cp, api: api)
                 order.activeOrderMonitor?.delegate = order
                 return order
@@ -96,7 +96,7 @@ class OrderRepository {
         }
     }
     
-    fileprivate func buildOrder(order: inout Order, action: String, currencyPair: CurrencyPair, price: Double?, amount: Double, api: PrivateApi) {
+    fileprivate func buildOrder(order: inout Order, action: String, currencyPair: ApiCurrencyPair, price: Double?, amount: Double, api: Api) {
     
         order.id = UUID().uuidString
         order.status = NSNumber(value: OrderState.WAITING.rawValue)
@@ -104,7 +104,7 @@ class OrderRepository {
         order.promisedTime = 0
         order.promisedPrice = 0.0
         order.promisedAmount = 0.0
-        order.privateApi = api
+        order.api = api
         order.orderPrice = price as NSNumber?
         order.orderAmount = (amount as NSNumber?)!
         order.currencyPair = currencyPair.rawValue

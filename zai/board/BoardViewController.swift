@@ -15,6 +15,9 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let account = getAccount()!
+        self.trader = account.activeExchange.trader
+        
         self.askMomentumBar.backgroundColor = Color.askQuoteColor
         self.bidMomentumBar.backgroundColor = Color.bidQuoteColor
         
@@ -23,9 +26,9 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
         
         self.jpyFundLabel.text = "-"
         
-        self.bitcoin = BitCoin()
+        self.bitcoin = BitCoin(api: account.activeExchange.api)
         self.board = Board()
-        self.fund = Fund(api: self.account.privateApi)
+        self.fund = Fund(api: account.activeExchange.api)
         self.fund.getBtcFund() { (err, btc) in
             if err == nil {
                 self.btcFund = btc
@@ -135,9 +138,8 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     }
 
     
-    var account: Account! = nil
-    var trader: Trader! = nil
-    
+    var trader: Trader!
+
     fileprivate var currentTraderName: String = ""
     var boardView: BoardView! = nil
     

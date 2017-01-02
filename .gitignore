@@ -3,5 +3,6 @@ Podfile.lock
 Pods/
 zai.xcworkspace
 zai/core/Keys.swift
+zai/core/Hash.swift
 zai/Config.plist
 zai/analytics/Feature.swift

@@ -2,29 +2,31 @@
 //  TradeLog+CoreDataProperties.swift
 //  
 //
-//  Created by 渡部郷太 on 8/23/16.
+//  Created by 渡部郷太 on 1/1/17.
 //
-//
-//  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
-//  to delete and recreate this implementation file for your updated model.
 //
 
 import Foundation
 import CoreData
 
+
 extension TradeLog {
 
-    @NSManaged var id: String
-    @NSManaged var userId: String
-    @NSManaged var apiKey: String
-    @NSManaged var positionId: String
-    @NSManaged var traderName: String
-    @NSManaged var tradeAction: String
-    @NSManaged var orderAction: String
-    @NSManaged var orderId: NSNumber
-    @NSManaged var currencyPair: String
-    @NSManaged var price: NSNumber
-    @NSManaged var amount: NSNumber
-    @NSManaged var timestamp: NSNumber
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<TradeLog> {
+        return NSFetchRequest<TradeLog>(entityName: "TradeLog");
+    }
+
+    @NSManaged public var amount: NSNumber?
+    @NSManaged public var currencyPair: String?
+    @NSManaged public var id: String
+    @NSManaged public var orderAction: String?
+    @NSManaged public var orderId: NSNumber?
+    @NSManaged public var positionId: String?
+    @NSManaged public var price: NSNumber?
+    @NSManaged public var timestamp: NSNumber
+    @NSManaged public var tradeAction: String
+    @NSManaged public var traderName: String
+    @NSManaged public var userId: String
+    @NSManaged public var position: Position?
 
 }

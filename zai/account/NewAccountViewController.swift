@@ -31,16 +31,16 @@ class NewAccountViewController: UIViewController {
             self.errorMessageLabel.text = "Invalid user id"
             return
         }
-        
+        /*
         let repository = AccountRepository.getInstance()
         let dummyApi = PrivateApi(apiKey: "", secretKey: "")
-        let account = repository.findByUserId(userId, api: dummyApi)
+        let account = repository.findByUserId(userId)
         if let _ = account {
             self.errorMessageLabel.text = "User id already exists"
             return
-        }
+        }*/
         
-        repository.create(userId, api: dummyApi)
+        //repository.create(userId, exhange: dummyApi)
         
         self.performSegue(withIdentifier: "backToLoginSegue", sender: self)
     }

@@ -15,37 +15,31 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.loginButton.tintColor = Color.keyColor
+        
         let app = UIApplication.shared.delegate as! AppDelegate
         self.userIdText.text = app.config.previousUserId
-        self.apiKeyText.text = app.config.previousApiKey
-        self.secretKeyText.text = app.config.previousSecretKey
-        
-        if !self.userIdFromNewAccount.isEmpty {
-            self.userIdText.text = self.userIdFromNewAccount
-            self.userIdFromNewAccount = ""
-            self.apiKeyText.text = ""
-            self.secretKeyText.text = ""
-        }
+        self.passwordText.text = ""
     }
 
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         // for debug
-        self.apiKeyText.text = key_full
-        self.secretKeyText.text = secret_full
+        //self.apiKeyText.text = key_full
+        //self.secretKeyText.text = secret_full
         
         let userId = self.userIdText.text!
-        let apiKey = self.apiKeyText.text!
-        let secretKey = self.secretKeyText.text!
+        let password = self.passwordText.text!
         
         var waiting = true
         var goNext = false
+        
+        let app = UIApplication.shared.delegate as! AppDelegate
 
-        login(userId: userId, apiKey: apiKey, secretKey: secretKey) { (err, account) in
+        login(userId: userId, password: password) { (err, account) in
             if let _ = err {
-                self.errorMessageLabel.text = "invalid user name or api keys"
                 goNext = false
             } else {
-                self.account = account
+                app.account = account
                 goNext = true
             }
             waiting = false
@@ -56,23 +50,8 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
         }
         
         if goNext {
-            let app = UIApplication.shared.delegate as! AppDelegate
-            
-            let traderName = "dummyTrader"
-            let repository = TraderRepository.getInstance()
-            let trader = repository.findTraderByName(traderName, api: (self.account?.privateApi)!)
-            if trader == nil {
-                _ = repository.create(traderName, account: account!)
-                app.config.currentTraderName = traderName
-            }
-            
             app.config.previousUserId = userId
-            app.config.previousApiKey = apiKey
-            app.config.previousSecretKey = secretKey
             _ = app.config.save()
-
-            app.analyzer = Analyzer(api: (self.account?.privateApi)!)
-            UIApplication.shared.isIdleTimerDisabled = true
         }
 
         return goNext
@@ -111,10 +90,9 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
     }
 
     @IBOutlet weak var userIdText: UITextField!
-    @IBOutlet weak var apiKeyText: UITextField!
-    @IBOutlet weak var secretKeyText: UITextField!
-    @IBOutlet weak var errorMessageLabel: UILabel!
-    
+    @IBOutlet weak var passwordText: UITextField!
+    @IBOutlet weak var loginButton: UIButton!
+
     fileprivate let newAccountLabelTag = 0
     fileprivate let newAccountSegue = "newAccountSegue"
     fileprivate let mainViewSegue = "mainTabSegue"

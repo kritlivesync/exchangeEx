@@ -15,7 +15,9 @@ class OrdersViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.orderListView = OrderListView(view: self.orderTableView, trader: self.trader)
+        let account = getAccount()
+        
+        self.orderListView = OrderListView(view: self.orderTableView, trader: account!.activeExchange.trader)
     }
     
     open override func viewDidAppear(_ animated: Bool) {
@@ -27,8 +29,7 @@ class OrdersViewController : UIViewController {
         self.orderListView.stopWatch()
     }
     
-    var account: Account!
-    var trader: Trader!
+    var account: Account?
     var orderListView: OrderListView!
     @IBOutlet weak var orderTableView: UITableView!
 }

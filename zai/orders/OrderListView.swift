@@ -22,7 +22,7 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
         super.init()
         self.view.delegate = self
         self.view.dataSource = self
-        self.orderMonitor = ActiveOrderMonitor(currencyPair: .BTC_JPY, api: self.trader.account.privateApi)
+        self.orderMonitor = ActiveOrderMonitor(currencyPair: .BTC_JPY, api: self.trader.account.activeExchange.api)
     }
     
     public func numberOfSections(in tableView: UITableView) -> Int {
@@ -74,21 +74,21 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
     
     func pushedCancelButton(cell _: UITableViewCell, order: ActiveOrder) {
         let repository = OrderRepository.getInstance()
-        let api = self.trader.account.privateApi
-        if let buyOrder = repository.findBuyOrderByOrderId(orderId: order.id, api: api!) {
+        let api = self.trader.account.activeExchange.api
+        if let buyOrder = repository.findBuyOrderByOrderId(orderId: order.id, api: api) {
             buyOrder.cancel() { err in
                 if err == nil {
                     repository.delete(buyOrder)
                 }
             }
-        } else if let sellOrder = repository.findSellOrderByOrderId(orderId: order.id, api: api!) {
+        } else if let sellOrder = repository.findSellOrderByOrderId(orderId: order.id, api: api) {
             sellOrder.cancel() { err in
                 if err == nil {
                     repository.delete(sellOrder)
                 }
             }
         } else {
-            api!.cancelOrder(Int(order.id)!) { _ in }
+            api.cancelOrder(order: order) { _ in }
         }
     }
     

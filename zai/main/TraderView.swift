@@ -33,7 +33,7 @@ class TraderView : NSObject, UITableViewDelegate, UITableViewDataSource {
     }
     
     func reloadTrader(_ traderName: String) {
-        self.trader = TraderRepository.getInstance().findTraderByName(traderName, api: self.api)
+        self.trader = TraderRepository.getInstance().findTraderByName(traderName)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

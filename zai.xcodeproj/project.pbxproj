@@ -10,7 +10,6 @@
 		3761386221FCB5F32FDBFC56 /* Pods_zai.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD254B29072DEED3604B9179 /* Pods_zai.framework */; };
 		B8002D701D8D1C480079AB9B /* ZaifWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8002D6F1D8D1C480079AB9B /* ZaifWatch.swift */; };
 		B80920311DFD03E8005667D4 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80920301DFD03E8005667D4 /* MainTabBarController.swift */; };
-		B80920331DFD3609005667D4 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80920321DFD3609005667D4 /* Login.swift */; };
 		B80920351DFD4555005667D4 /* BitCoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80920341DFD4555005667D4 /* BitCoin.swift */; };
 		B80920371DFD8817005667D4 /* PositionFundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80920361DFD8817005667D4 /* PositionFundView.swift */; };
 		B81AF6431DFF054600D4F706 /* AssetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81AF6421DFF054600D4F706 /* AssetsViewController.swift */; };
@@ -37,6 +36,17 @@
 		B84113E11E141C6F000EB0F8 /* Trader+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84113CF1E141C6F000EB0F8 /* Trader+CoreDataProperties.swift */; };
 		B84113E21E141C6F000EB0F8 /* TraderRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84113D01E141C6F000EB0F8 /* TraderRepository.swift */; };
 		B84113E41E15F7D5000EB0F8 /* PositionEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84113E31E15F7D5000EB0F8 /* PositionEditViewController.swift */; };
+		B84113EE1E18071E000EB0F8 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84113EB1E18071E000EB0F8 /* LaunchViewController.swift */; };
+		B84113EF1E18071E000EB0F8 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84113EC1E18071E000EB0F8 /* Login.swift */; };
+		B84113F01E18071E000EB0F8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84113ED1E18071E000EB0F8 /* LoginViewController.swift */; };
+		B84113F51E1809DD000EB0F8 /* ZaifAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84113F21E1809DD000EB0F8 /* ZaifAccount.swift */; };
+		B84113F61E1809DD000EB0F8 /* ZaifAccount+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84113F31E1809DD000EB0F8 /* ZaifAccount+CoreDataProperties.swift */; };
+		B84113F91E181744000EB0F8 /* ExchangeAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84113F71E181744000EB0F8 /* ExchangeAccount.swift */; };
+		B84113FA1E181744000EB0F8 /* ExchangeAccount+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84113F81E181744000EB0F8 /* ExchangeAccount+CoreDataProperties.swift */; };
+		B84113FD1E18A954000EB0F8 /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84113FC1E18A954000EB0F8 /* Api.swift */; };
+		B84113FF1E18A9FA000EB0F8 /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84113FE1E18A9FA000EB0F8 /* ApiError.swift */; };
+		B84114011E18E293000EB0F8 /* ZaifApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84114001E18E293000EB0F8 /* ZaifApi.swift */; };
+		B84114041E1A8B0E000EB0F8 /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84114031E1A8B0E000EB0F8 /* Hash.swift */; };
 		B843CFE21E0E741F00CC6656 /* OrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843CFE11E0E741F00CC6656 /* OrdersViewController.swift */; };
 		B843CFE41E0E792D00CC6656 /* OrderListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843CFE31E0E792D00CC6656 /* OrderListViewCell.swift */; };
 		B843CFE61E0E870E00CC6656 /* OrderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843CFE51E0E870E00CC6656 /* OrderListView.swift */; };
@@ -45,7 +55,6 @@
 		B8521A741DF84DE80025B60E /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A731DF84DE80025B60E /* BoardView.swift */; };
 		B8521A761DF8542F0025B60E /* BoardViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A751DF8542F0025B60E /* BoardViewCell.swift */; };
 		B8521A781DFC681A0025B60E /* Ema.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A771DFC681A0025B60E /* Ema.swift */; };
-		B85E8E2E1D6F3CF800C029C8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E2D1D6F3CF800C029C8 /* LoginViewController.swift */; };
 		B85E8E301D6F3DFB00C029C8 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E2F1D6F3DFB00C029C8 /* Currency.swift */; };
 		B85E8E361D6F3E2100C029C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E311D6F3E2100C029C8 /* AppDelegate.swift */; };
 		B85E8E371D6F3E2100C029C8 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E321D6F3E2100C029C8 /* Config.swift */; };
@@ -101,7 +110,6 @@
 		47AE790BD03FD1B5B46D105B /* Pods-zai.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zai.debug.xcconfig"; path = "Pods/Target Support Files/Pods-zai/Pods-zai.debug.xcconfig"; sourceTree = "<group>"; };
 		B8002D6F1D8D1C480079AB9B /* ZaifWatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZaifWatch.swift; path = analytics/ZaifWatch.swift; sourceTree = "<group>"; };
 		B80920301DFD03E8005667D4 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainTabBarController.swift; path = main/MainTabBarController.swift; sourceTree = "<group>"; };
-		B80920321DFD3609005667D4 /* Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Login.swift; path = login/Login.swift; sourceTree = "<group>"; };
 		B80920341DFD4555005667D4 /* BitCoin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BitCoin.swift; path = currency/BitCoin.swift; sourceTree = "<group>"; };
 		B80920361DFD8817005667D4 /* PositionFundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PositionFundView.swift; path = positions/PositionFundView.swift; sourceTree = "<group>"; };
 		B81AF6421DFF054600D4F706 /* AssetsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AssetsViewController.swift; path = assets/AssetsViewController.swift; sourceTree = "<group>"; };
@@ -128,6 +136,17 @@
 		B84113CF1E141C6F000EB0F8 /* Trader+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Trader+CoreDataProperties.swift"; path = "trade/Trader+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B84113D01E141C6F000EB0F8 /* TraderRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderRepository.swift; path = trade/TraderRepository.swift; sourceTree = "<group>"; };
 		B84113E31E15F7D5000EB0F8 /* PositionEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PositionEditViewController.swift; path = positions/PositionEditViewController.swift; sourceTree = "<group>"; };
+		B84113EB1E18071E000EB0F8 /* LaunchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LaunchViewController.swift; path = launch/LaunchViewController.swift; sourceTree = "<group>"; };
+		B84113EC1E18071E000EB0F8 /* Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Login.swift; path = launch/Login.swift; sourceTree = "<group>"; };
+		B84113ED1E18071E000EB0F8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = launch/LoginViewController.swift; sourceTree = "<group>"; };
+		B84113F21E1809DD000EB0F8 /* ZaifAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZaifAccount.swift; path = /Users/kyota/work/zai/zai/account/ZaifAccount.swift; sourceTree = "<absolute>"; };
+		B84113F31E1809DD000EB0F8 /* ZaifAccount+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ZaifAccount+CoreDataProperties.swift"; path = "account/ZaifAccount+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		B84113F71E181744000EB0F8 /* ExchangeAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExchangeAccount.swift; path = /Users/kyota/work/zai/zai/account/ExchangeAccount.swift; sourceTree = "<absolute>"; };
+		B84113F81E181744000EB0F8 /* ExchangeAccount+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ExchangeAccount+CoreDataProperties.swift"; path = "account/ExchangeAccount+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		B84113FC1E18A954000EB0F8 /* Api.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Api.swift; path = api/Api.swift; sourceTree = "<group>"; };
+		B84113FE1E18A9FA000EB0F8 /* ApiError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiError.swift; path = api/ApiError.swift; sourceTree = "<group>"; };
+		B84114001E18E293000EB0F8 /* ZaifApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZaifApi.swift; path = api/ZaifApi.swift; sourceTree = "<group>"; };
+		B84114031E1A8B0E000EB0F8 /* Hash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Hash.swift; path = core/Hash.swift; sourceTree = "<group>"; };
 		B843CFE11E0E741F00CC6656 /* OrdersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrdersViewController.swift; path = orders/OrdersViewController.swift; sourceTree = "<group>"; };
 		B843CFE31E0E792D00CC6656 /* OrderListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrderListViewCell.swift; path = orders/OrderListViewCell.swift; sourceTree = "<group>"; };
 		B843CFE51E0E870E00CC6656 /* OrderListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrderListView.swift; path = orders/OrderListView.swift; sourceTree = "<group>"; };
@@ -136,7 +155,6 @@
 		B8521A731DF84DE80025B60E /* BoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardView.swift; path = board/BoardView.swift; sourceTree = "<group>"; };
 		B8521A751DF8542F0025B60E /* BoardViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardViewCell.swift; path = board/BoardViewCell.swift; sourceTree = "<group>"; };
 		B8521A771DFC681A0025B60E /* Ema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Ema.swift; path = analytics/Ema.swift; sourceTree = "<group>"; };
-		B85E8E2D1D6F3CF800C029C8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = login/LoginViewController.swift; sourceTree = "<group>"; };
 		B85E8E2F1D6F3DFB00C029C8 /* Currency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Currency.swift; path = currency/Currency.swift; sourceTree = "<group>"; };
 		B85E8E311D6F3E2100C029C8 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = core/AppDelegate.swift; sourceTree = "<group>"; };
 		B85E8E321D6F3E2100C029C8 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Config.swift; path = core/Config.swift; sourceTree = "<group>"; };
@@ -245,6 +263,26 @@
 			name = positions;
 			sourceTree = "<group>";
 		};
+		B84113EA1E1806FE000EB0F8 /* launch */ = {
+			isa = PBXGroup;
+			children = (
+				B84113EB1E18071E000EB0F8 /* LaunchViewController.swift */,
+				B84113EC1E18071E000EB0F8 /* Login.swift */,
+				B84113ED1E18071E000EB0F8 /* LoginViewController.swift */,
+			);
+			name = launch;
+			sourceTree = "<group>";
+		};
+		B84113FB1E18A88B000EB0F8 /* api */ = {
+			isa = PBXGroup;
+			children = (
+				B84113FC1E18A954000EB0F8 /* Api.swift */,
+				B84113FE1E18A9FA000EB0F8 /* ApiError.swift */,
+				B84114001E18E293000EB0F8 /* ZaifApi.swift */,
+			);
+			name = api;
+			sourceTree = "<group>";
+		};
 		B843CFE01E0E73AB00CC6656 /* orders */ = {
 			isa = PBXGroup;
 			children = (
@@ -276,7 +314,6 @@
 				B84113C31E141C6F000EB0F8 /* LongPosition+CoreDataProperties.swift */,
 				B84113C41E141C6F000EB0F8 /* Order.swift */,
 				B84113C51E141C6F000EB0F8 /* Order+CoreDataProperties.swift */,
-				B84113C61E141C6F000EB0F8 /* OrderRepository.swift */,
 				B84113C71E141C6F000EB0F8 /* Position.swift */,
 				B84113C81E141C6F000EB0F8 /* Position+CoreDataProperties.swift */,
 				B84113C91E141C6F000EB0F8 /* PositionRepository.swift */,
@@ -285,6 +322,7 @@
 				B84113CC1E141C6F000EB0F8 /* ShortPosition.swift */,
 				B84113CD1E141C6F000EB0F8 /* ShortPosition+CoreDataProperties.swift */,
 				B84113CE1E141C6F000EB0F8 /* Trader.swift */,
+				B84113C61E141C6F000EB0F8 /* OrderRepository.swift */,
 				B84113CF1E141C6F000EB0F8 /* Trader+CoreDataProperties.swift */,
 				B84113D01E141C6F000EB0F8 /* TraderRepository.swift */,
 			);
@@ -307,7 +345,11 @@
 		B85E8E261D6F3AA200C029C8 /* account */ = {
 			isa = PBXGroup;
 			children = (
+				B84113F71E181744000EB0F8 /* ExchangeAccount.swift */,
+				B84113F81E181744000EB0F8 /* ExchangeAccount+CoreDataProperties.swift */,
+				B84113F31E1809DD000EB0F8 /* ZaifAccount+CoreDataProperties.swift */,
 				B85E8E3F1D6F3E4D00C029C8 /* Account.swift */,
+				B84113F21E1809DD000EB0F8 /* ZaifAccount.swift */,
 				B85E8E401D6F3E4D00C029C8 /* Account+CoreDataProperties.swift */,
 				B85E8E411D6F3E4D00C029C8 /* AccountRepository.swift */,
 				B85E8E421D6F3E4D00C029C8 /* Fund.swift */,
@@ -336,6 +378,7 @@
 				B85E8E341D6F3E2100C029C8 /* Error.swift */,
 				B85E8E351D6F3E2100C029C8 /* Keys.swift */,
 				B843CFE91E12C5C300CC6656 /* Color.swift */,
+				B84114031E1A8B0E000EB0F8 /* Hash.swift */,
 			);
 			name = core;
 			sourceTree = "<group>";
@@ -347,15 +390,6 @@
 				B80920341DFD4555005667D4 /* BitCoin.swift */,
 			);
 			name = currency;
-			sourceTree = "<group>";
-		};
-		B85E8E2C1D6F3C1600C029C8 /* login */ = {
-			isa = PBXGroup;
-			children = (
-				B85E8E2D1D6F3CF800C029C8 /* LoginViewController.swift */,
-				B80920321DFD3609005667D4 /* Login.swift */,
-			);
-			name = login;
 			sourceTree = "<group>";
 		};
 		B8B8456B1D66041D00535638 = {
@@ -383,12 +417,13 @@
 		B8B845761D66041D00535638 /* zai */ = {
 			isa = PBXGroup;
 			children = (
+				B84113FB1E18A88B000EB0F8 /* api */,
+				B84113EA1E1806FE000EB0F8 /* launch */,
 				B843CFE01E0E73AB00CC6656 /* orders */,
 				B81AF6411DFF04F300D4F706 /* assets */,
 				B8521A701DF843EB0025B60E /* board */,
 				B8002D6C1D8D10DA0079AB9B /* analytics */,
 				B827CD101D7C4F6E00E9847B /* positions */,
-				B85E8E2C1D6F3C1600C029C8 /* login */,
 				B85E8E2B1D6F3BD500C029C8 /* currency */,
 				B85E8E2A1D6F3BC000C029C8 /* core */,
 				B85E8E271D6F3AD200C029C8 /* main */,
@@ -626,7 +661,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B80920331DFD3609005667D4 /* Login.swift in Sources */,
 				B8F38B421D8FD2D700731696 /* PriceLogRepository.swift in Sources */,
 				B843CFE41E0E792D00CC6656 /* OrderListViewCell.swift in Sources */,
 				B84113D71E141C6F000EB0F8 /* Order+CoreDataProperties.swift in Sources */,
@@ -637,6 +671,7 @@
 				B80920371DFD8817005667D4 /* PositionFundView.swift in Sources */,
 				B827CD141D7C523700E9847B /* PositionListView.swift in Sources */,
 				B85E8E3A1D6F3E2100C029C8 /* Keys.swift in Sources */,
+				B84113FA1E181744000EB0F8 /* ExchangeAccount+CoreDataProperties.swift in Sources */,
 				B8521A741DF84DE80025B60E /* BoardView.swift in Sources */,
 				B8F1B2261DC5A9C7001A120E /* ZaiAnalyticsClient.swift in Sources */,
 				B84113D31E141C6F000EB0F8 /* BuyOrder+CoreDataProperties.swift in Sources */,
@@ -648,8 +683,11 @@
 				B84113E21E141C6F000EB0F8 /* TraderRepository.swift in Sources */,
 				B84113D11E141C6F000EB0F8 /* ActiveOrder.swift in Sources */,
 				B85E8E391D6F3E2100C029C8 /* Error.swift in Sources */,
+				B84113F51E1809DD000EB0F8 /* ZaifAccount.swift in Sources */,
 				B84113E41E15F7D5000EB0F8 /* PositionEditViewController.swift in Sources */,
 				B843CFEA1E12C5C400CC6656 /* Color.swift in Sources */,
+				B84114041E1A8B0E000EB0F8 /* Hash.swift in Sources */,
+				B84113EE1E18071E000EB0F8 /* LaunchViewController.swift in Sources */,
 				B84113D51E141C6F000EB0F8 /* LongPosition+CoreDataProperties.swift in Sources */,
 				B84113DC1E141C6F000EB0F8 /* SellOrder.swift in Sources */,
 				B85E8E301D6F3DFB00C029C8 /* Currency.swift in Sources */,
@@ -660,22 +698,27 @@
 				B84113D81E141C6F000EB0F8 /* OrderRepository.swift in Sources */,
 				B80920311DFD03E8005667D4 /* MainTabBarController.swift in Sources */,
 				B8F38B3F1D8FD2AB00731696 /* PriceLog+CoreDataProperties.swift in Sources */,
+				B84113F61E1809DD000EB0F8 /* ZaifAccount+CoreDataProperties.swift in Sources */,
 				B8002D701D8D1C480079AB9B /* ZaifWatch.swift in Sources */,
 				B81AF6451DFF059600D4F706 /* BoardViewController.swift in Sources */,
+				B84114011E18E293000EB0F8 /* ZaifApi.swift in Sources */,
 				B827CD121D7C4FDD00E9847B /* PositionsViewController.swift in Sources */,
 				B8F585271D6964FA008680D8 /* Model.xcdatamodeld in Sources */,
 				B84113DD1E141C6F000EB0F8 /* SellOrder+CoreDataProperties.swift in Sources */,
 				B85E8E5E1D6F477900C029C8 /* TraderView.swift in Sources */,
 				B84113E01E141C6F000EB0F8 /* Trader.swift in Sources */,
 				B8F1B22A1DC5AFDF001A120E /* Utils.swift in Sources */,
+				B84113EF1E18071E000EB0F8 /* Login.swift in Sources */,
 				B85E8E361D6F3E2100C029C8 /* AppDelegate.swift in Sources */,
+				B84113F01E18071E000EB0F8 /* LoginViewController.swift in Sources */,
 				B84113D21E141C6F000EB0F8 /* BuyOrder.swift in Sources */,
 				B843CFE21E0E741F00CC6656 /* OrdersViewController.swift in Sources */,
 				B85E8E381D6F3E2100C029C8 /* Database.swift in Sources */,
+				B84113FD1E18A954000EB0F8 /* Api.swift in Sources */,
 				B84113DE1E141C6F000EB0F8 /* ShortPosition.swift in Sources */,
 				B827CD161D806DF900E9847B /* PositionListViewCell.swift in Sources */,
+				B84113F91E181744000EB0F8 /* ExchangeAccount.swift in Sources */,
 				B84113D41E141C6F000EB0F8 /* LongPosition.swift in Sources */,
-				B85E8E2E1D6F3CF800C029C8 /* LoginViewController.swift in Sources */,
 				B81AF6431DFF054600D4F706 /* AssetsViewController.swift in Sources */,
 				B8521A781DFC681A0025B60E /* Ema.swift in Sources */,
 				B85E8E371D6F3E2100C029C8 /* Config.swift in Sources */,
@@ -683,6 +726,7 @@
 				B80920351DFD4555005667D4 /* BitCoin.swift in Sources */,
 				B8F38B401D8FD2AB00731696 /* PriceLog.swift in Sources */,
 				B85E8E4E1D6F3E5E00C029C8 /* TradeLogRepository.swift in Sources */,
+				B84113FF1E18A9FA000EB0F8 /* ApiError.swift in Sources */,
 				B8F38B3A1D8ECA2600731696 /* Analyzer.swift in Sources */,
 				B85E8E601D6F541800C029C8 /* TraderViewCell.swift in Sources */,
 				B84113DA1E141C6F000EB0F8 /* Position+CoreDataProperties.swift in Sources */,

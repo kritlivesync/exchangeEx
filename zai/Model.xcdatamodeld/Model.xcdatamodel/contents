@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="15G1004" minimumToolsVersion="Xcode 7.0" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Account" representedClassName=".Account" syncable="YES">
+        <attribute name="activeExchangeName" attributeType="String" syncable="YES"/>
+        <attribute name="lastBackgroundDate" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="lastLoginDate" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="password" attributeType="String" syncable="YES"/>
+        <attribute name="salt" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userId" attributeType="String" syncable="YES"/>
-        <relationship name="traders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Trader" inverseName="account" inverseEntity="Trader" syncable="YES"/>
+        <relationship name="exchanges" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExchangeAccount" inverseName="account" inverseEntity="ExchangeAccount" syncable="YES"/>
     </entity>
     <entity name="BuyOrder" representedClassName=".BuyOrder" parentEntity="Order" syncable="YES"/>
+    <entity name="ExchangeAccount" representedClassName=".ExchangeAccount" isAbstract="YES" syncable="YES">
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="exchanges" inverseEntity="Account" syncable="YES"/>
+        <relationship name="trader" maxCount="1" deletionRule="Nullify" destinationEntity="Trader" inverseName="exchange" inverseEntity="Trader" syncable="YES"/>
+    </entity>
     <entity name="LongPosition" representedClassName="LongPosition" parentEntity="Position" syncable="YES"/>
     <entity name="Order" representedClassName="Order" isAbstract="YES" syncable="YES">
         <attribute name="action" attributeType="String" syncable="YES"/>
@@ -36,12 +46,11 @@
     <entity name="ShortPosition" representedClassName="ShortPosition" parentEntity="Position" syncable="YES"/>
     <entity name="TradeLog" representedClassName=".TradeLog" syncable="YES">
         <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="apiKey" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="currencyPair" attributeType="String" syncable="YES"/>
+        <attribute name="currencyPair" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" attributeType="String" syncable="YES"/>
-        <attribute name="orderAction" attributeType="String" syncable="YES"/>
-        <attribute name="orderId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="positionId" attributeType="String" syncable="YES"/>
+        <attribute name="orderAction" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="orderId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="positionId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="timestamp" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="tradeAction" attributeType="String" syncable="YES"/>
@@ -52,19 +61,26 @@
     <entity name="Trader" representedClassName=".Trader" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="traders" inverseEntity="Account" syncable="YES"/>
+        <relationship name="exchange" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ExchangeAccount" inverseName="trader" inverseEntity="ExchangeAccount" syncable="YES"/>
         <relationship name="positions" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Position" inverseName="trader" inverseEntity="Position" syncable="YES"/>
     </entity>
+    <entity name="ZaifAccount" representedClassName=".ZaifAccount" parentEntity="ExchangeAccount" syncable="YES">
+        <attribute name="apiKey" attributeType="String" syncable="YES"/>
+        <attribute name="nonce" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="secretKey" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
-        <element name="Account" positionX="-36" positionY="90" width="128" height="75"/>
+        <element name="Account" positionX="-36" positionY="90" width="128" height="150"/>
+        <element name="BuyOrder" positionX="-27" positionY="117" width="128" height="45"/>
         <element name="LongPosition" positionX="-36" positionY="90" width="128" height="45"/>
+        <element name="Order" positionX="-36" positionY="90" width="128" height="225"/>
         <element name="Position" positionX="-54" positionY="81" width="128" height="120"/>
         <element name="PriceLog" positionX="-36" positionY="90" width="128" height="90"/>
-        <element name="ShortPosition" positionX="-27" positionY="99" width="128" height="45"/>
-        <element name="TradeLog" positionX="-63" positionY="-18" width="128" height="240"/>
-        <element name="Trader" positionX="-18" positionY="117" width="128" height="105"/>
-        <element name="Order" positionX="-36" positionY="90" width="128" height="225"/>
-        <element name="BuyOrder" positionX="-27" positionY="117" width="128" height="45"/>
         <element name="SellOrder" positionX="-18" positionY="126" width="128" height="45"/>
+        <element name="ShortPosition" positionX="-27" positionY="99" width="128" height="45"/>
+        <element name="TradeLog" positionX="-63" positionY="-18" width="128" height="225"/>
+        <element name="Trader" positionX="-18" positionY="117" width="128" height="105"/>
+        <element name="ZaifAccount" positionX="-45" positionY="135" width="128" height="90"/>
+        <element name="ExchangeAccount" positionX="-36" positionY="144" width="128" height="90"/>
     </elements>
 </model>

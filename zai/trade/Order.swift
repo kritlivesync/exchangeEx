@@ -64,22 +64,17 @@ public class Order: NSManagedObject, ActiveOrderDelegate {
             return
         }
         
-        self.privateApi?.trade(self.zaifOrder, validate: false) { (err, res) in
+        self.api?.trade(order: self) { (err, orderId, price) in
             if let e = err {
                 self.status = NSNumber(value: OrderState.INVALID.rawValue)
                 cb(ZaiError(errorType: .INVALID_ORDER, message: e.message), nil)
             } else {
-                if res!["success"].intValue != 1 {
-                    self.status = NSNumber(value: OrderState.INVALID.rawValue)
-                    cb(ZaiError(errorType: .INVALID_ORDER), nil)
-                } else {
-                    self.orderId = res!["return"]["order_id"].stringValue
-                    self.orderTime = Int64(Date().timeIntervalSince1970) as NSNumber
-                    self.orderPrice = res!["return"]["order_price"].doubleValue as NSNumber?
-                    self.status = NSNumber(value: OrderState.ORDERING.rawValue)
-                    Database.getDb().saveContext()
-                    cb(nil, self.orderId!)
-                }
+                self.orderId = orderId
+                self.orderTime = Int64(Date().timeIntervalSince1970) as NSNumber
+                self.orderPrice = price as NSNumber?
+                self.status = NSNumber(value: OrderState.ORDERING.rawValue)
+                Database.getDb().saveContext()
+                cb(nil, self.orderId!)
             }
         }
     }
@@ -90,8 +85,9 @@ public class Order: NSManagedObject, ActiveOrderDelegate {
             cb(ZaiError(errorType: .INVALID_ORDER, message: "order is not excuted"))
             return
         }
-        self.privateApi?.cancelOrder(Int(self.orderId!)!) { (err, res) in
-            if res!["success"].intValue != 1 {
+        let activeOrder = ActiveOrder(id: self.id, action: self.action, currencyPair: ApiCurrencyPair(rawValue: self.currencyPair)!, price: self.orderPrice!.doubleValue, amount: self.orderAmount.doubleValue, timestamp: self.orderTime!.int64Value)
+        self.api?.cancelOrder(order: activeOrder) { err in
+            if let e = err {
                 self.status = NSNumber(value: OrderState.INVALID.rawValue)
                 cb(ZaiError(errorType: .INVALID_ORDER))
             } else {
@@ -124,11 +120,11 @@ public class Order: NSManagedObject, ActiveOrderDelegate {
             if let price = self.orderPrice {
                 self.promisedPrice = price
             }
-            var newlyPromisedAmount = self.zaifOrder.amount
+            var newlyPromisedAmount = self.orderAmount.doubleValue
             if let amount = self.promisedAmount {
-                newlyPromisedAmount = self.zaifOrder.amount - amount.doubleValue
+                newlyPromisedAmount = self.orderAmount.doubleValue - amount.doubleValue
             }
-            self.promisedAmount = NSNumber(value: self.zaifOrder.amount)
+            self.promisedAmount = NSNumber(value: self.orderAmount.doubleValue)
             self.delegate?.orderPromised(order: self, price: self.promisedPrice!.doubleValue, amount: newlyPromisedAmount)
         }
     }
@@ -137,45 +133,16 @@ public class Order: NSManagedObject, ActiveOrderDelegate {
         if order.timestamp <= self.promisedTime!.int64Value {
             return nil
         }
-        let promisedAmount = self.zaifOrder.amount - order.amount
-        if promisedAmount < self.zaifOrder.currencyPair.minOrderUnit {
+        let promisedAmount = self.orderAmount.doubleValue - order.amount
+        let orderUnit = self.api!.orderUnit(currencyPair: ApiCurrencyPair(rawValue: self.currencyPair)!)
+        if promisedAmount < orderUnit {
             return nil
         }
         let newlyPromisedAmount = promisedAmount - self.promisedAmount!.doubleValue
-        if newlyPromisedAmount < self.zaifOrder.currencyPair.minOrderUnit {
+        if newlyPromisedAmount < orderUnit {
             return nil
         }
         return PromisedOrder(promisedAmount: promisedAmount, newlyPromisedAmount: newlyPromisedAmount, timestamp: order.timestamp)
-    }
-    
-    internal func createOrder(_ currencyPair: CurrencyPair, price: Double?, amount: Double) -> ZaifSwift.Order? {
-        return nil
-    }
-    
-    internal var orderAction: OrderAction {
-        get {
-            return self.zaifOrder.action
-        }
-    }
-    
-    internal var price: Double {
-        get {
-            if self.isPromised {
-                return self.promisedPrice!.doubleValue
-            } else {
-                if let p = self.orderPrice {
-                    return p.doubleValue
-                } else {
-                    return 0.0 // 成行き注文の約定前
-                }
-            }
-        }
-    }
-    
-    internal var amount: Double {
-        get {
-            return self.zaifOrder.amount
-        }
     }
     
     internal var isPromised: Bool {
@@ -196,10 +163,7 @@ public class Order: NSManagedObject, ActiveOrderDelegate {
         self.monitorPromised(activeOrders: activeOrders)
     }
     
-    internal var privateApi: PrivateApi?
-    internal lazy var zaifOrder: ZaifSwift.Order = {
-        return self.createOrder(CurrencyPair(rawValue: self.currencyPair)!, price: self.orderPrice as Double?, amount: Double(self.orderAmount))!
-    }()
+    internal var api: Api?
     var activeOrderMonitor: ActiveOrderMonitor?
     var promiseMonitorTimer: Timer!
     var delegate: PromisedOrderDelegate?

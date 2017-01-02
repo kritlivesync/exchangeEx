@@ -15,6 +15,4 @@ extension BuyOrder {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<BuyOrder> {
         return NSFetchRequest<BuyOrder>(entityName: "BuyOrder");
     }
-
-
 }

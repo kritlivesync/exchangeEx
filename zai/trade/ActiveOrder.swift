@@ -8,8 +8,6 @@
 
 import Foundation
 
-import ZaifSwift
-
 
 protocol ActiveOrderDelegate : MonitorableDelegate {
     func revievedActiveOrders(activeOrders: [String: ActiveOrder])
@@ -17,7 +15,7 @@ protocol ActiveOrderDelegate : MonitorableDelegate {
 
 
 struct ActiveOrder {
-    init(id: String, action: String, currencyPair: CurrencyPair, price: Double, amount: Double, timestamp: Int64) {
+    init(id: String, action: String, currencyPair: ApiCurrencyPair, price: Double, amount: Double, timestamp: Int64) {
         self.id = id
         self.action = action
         self.price = price
@@ -28,7 +26,7 @@ struct ActiveOrder {
     
     let id: String
     let action: String
-    let currencyPair: CurrencyPair
+    let currencyPair: ApiCurrencyPair
     let price: Double
     let amount: Double
     let timestamp: Int64
@@ -36,33 +34,20 @@ struct ActiveOrder {
 
 class ActiveOrderMonitor : Monitorable {
     
-    init(currencyPair: CurrencyPair, api: PrivateApi) {
+    init(currencyPair: ApiCurrencyPair, api: Api) {
         self.currencyPair = currencyPair
         self.api = api
     }
     
     override func monitor() {
         let delegate = self.delegate as? ActiveOrderDelegate
-        self.api.activeOrders(self.currencyPair) { (err, res) in
-            if err != nil {
-                return
+        self.api.getActiveOrders(currencyPair: self.currencyPair) { (err, orders) in
+            if err == nil {
+                delegate?.revievedActiveOrders(activeOrders: orders)
             }
-            if res!["success"].intValue != 1 {
-                return
-            }
-            var activeOrders = [String: ActiveOrder]()
-            for (id, order) in res!["return"].dictionaryValue {
-                let action = order["action"].stringValue
-                let price = order["price"].doubleValue
-                let amount = order["amount"].doubleValue
-                let timestamp = order["timestamp"].int64Value
-                let activeOrder = ActiveOrder(id: id, action: action, currencyPair: self.currencyPair, price: price, amount: amount, timestamp: timestamp)
-                activeOrders[id] = activeOrder
-            }
-            delegate?.revievedActiveOrders(activeOrders: activeOrders)
         }
     }
     
-    let currencyPair: CurrencyPair
-    let api: PrivateApi
+    let currencyPair: ApiCurrencyPair
+    let api: Api
 }

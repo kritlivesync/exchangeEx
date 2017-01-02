@@ -117,8 +117,8 @@ public class Position: NSManagedObject, PositionProtocol, PromisedOrderDelegate 
         get { return 0.0 }
     }
     
-    var currencyPair: CurrencyPair {
-        get { return .BTC_JPY }
+    var currencyPair: ApiCurrencyPair {
+        get { return ApiCurrencyPair.BTC_JPY }
     }
     
     var type: String {
@@ -142,7 +142,7 @@ public class Position: NSManagedObject, PositionProtocol, PromisedOrderDelegate 
             }
             order.delegate = self
             if order.activeOrderMonitor == nil {
-                order.activeOrderMonitor = ActiveOrderMonitor(currencyPair: CurrencyPair(rawValue: order.currencyPair)!, api: self.trader!.account.privateApi)
+                order.activeOrderMonitor = ActiveOrderMonitor(currencyPair: ApiCurrencyPair(rawValue: order.currencyPair)!, api: self.trader!.account.activeExchange.api)
                 order.activeOrderMonitor?.delegate = order
             }
             return order
@@ -151,7 +151,7 @@ public class Position: NSManagedObject, PositionProtocol, PromisedOrderDelegate 
             if let newOrder = newValue {
                 newOrder.delegate = self
                 if newOrder.activeOrderMonitor == nil {
-                    newOrder.activeOrderMonitor = ActiveOrderMonitor(currencyPair: CurrencyPair(rawValue: newOrder.currencyPair)!, api: self.trader!.account.privateApi)
+                    newOrder.activeOrderMonitor = ActiveOrderMonitor(currencyPair: ApiCurrencyPair(rawValue: newOrder.currencyPair)!, api: self.trader!.account.activeExchange.api)
                     newOrder.activeOrderMonitor?.delegate = newOrder
                 }
             } else {

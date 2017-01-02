@@ -24,19 +24,22 @@ class AccountRepository {
         }
     }
     
-    func create(_ userId: String, api: PrivateApi) -> Account {
+    func create(_ userId: String, exhange: ExchangeAccount) -> Account {
         let db = Database.getDb()
         
         let newAccount = NSEntityDescription.insertNewObject(forEntityName: AccountRepository.accountModelName, into: db.managedObjectContext) as! Account
         newAccount.userId = userId
-        newAccount.privateApi = api
-        
+        newAccount.activeExchangeName = exhange.name
+        let exchanges = newAccount.mutableOrderedSetValue(forKey: "exchanges")
+        exchanges.add(exhange)
+        newAccount.activeExchangeName = exhange.name
+  
         db.saveContext()
         
         return newAccount
     }
     
-    func findByUserId(_ userId: String, api: PrivateApi) -> Account? {
+    func findByUserId(_ userId: String) -> Account? {
         let query: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: AccountRepository.accountModelName)
         let predicate = NSPredicate(format: "userId = %@", userId)
         query.predicate = predicate
@@ -48,11 +51,22 @@ class AccountRepository {
                 return nil
             } else {
                 let account = accounts[0]
-                account.privateApi = api
                 return account
             }
         } catch {
             return nil
+        }
+    }
+    
+    func count() -> Int {
+        let query: NSFetchRequest<Account> = Account.fetchRequest()
+        
+        let db = Database.getDb()
+        do {
+            let accounts = try db.managedObjectContext.fetch(query)
+            return accounts.count
+        } catch {
+            return 0
         }
     }
     
