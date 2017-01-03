@@ -26,7 +26,7 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
         self.view.tableFooterView = UIView()
         self.view.contentInset = UIEdgeInsetsMake(-1.0, 0.0, 0.0, 0.0);
 
-        let api = trader.account.activeExchange.api
+        let api = trader.exchange.api
         self.fund = Fund(api: api)
         self.bitcoin = BitCoin(api: api)
         

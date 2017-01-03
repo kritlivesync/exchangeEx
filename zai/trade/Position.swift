@@ -142,7 +142,7 @@ public class Position: NSManagedObject, PositionProtocol, PromisedOrderDelegate 
             }
             order.delegate = self
             if order.activeOrderMonitor == nil {
-                order.activeOrderMonitor = ActiveOrderMonitor(currencyPair: ApiCurrencyPair(rawValue: order.currencyPair)!, api: self.trader!.account.activeExchange.api)
+                order.activeOrderMonitor = ActiveOrderMonitor(currencyPair: ApiCurrencyPair(rawValue: order.currencyPair)!, api: self.trader!.exchange.api)
                 order.activeOrderMonitor?.delegate = order
             }
             return order
@@ -151,7 +151,7 @@ public class Position: NSManagedObject, PositionProtocol, PromisedOrderDelegate 
             if let newOrder = newValue {
                 newOrder.delegate = self
                 if newOrder.activeOrderMonitor == nil {
-                    newOrder.activeOrderMonitor = ActiveOrderMonitor(currencyPair: ApiCurrencyPair(rawValue: newOrder.currencyPair)!, api: self.trader!.account.activeExchange.api)
+                    newOrder.activeOrderMonitor = ActiveOrderMonitor(currencyPair: ApiCurrencyPair(rawValue: newOrder.currencyPair)!, api: self.trader!.exchange.api)
                     newOrder.activeOrderMonitor?.delegate = newOrder
                 }
             } else {

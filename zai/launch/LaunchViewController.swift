@@ -16,5 +16,6 @@ class LaunchViewController : UINavigationController {
         super.viewDidLoad()
         
         self.navigationBar.barTintColor = Color.naviBarColor
+        self.navigationBar.tintColor = Color.antiKeyColor2
     }
 }

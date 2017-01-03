@@ -22,7 +22,7 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
         super.init()
         self.view.delegate = self
         self.view.dataSource = self
-        self.orderMonitor = ActiveOrderMonitor(currencyPair: .BTC_JPY, api: self.trader.account.activeExchange.api)
+        self.orderMonitor = ActiveOrderMonitor(currencyPair: .BTC_JPY, api: self.trader.exchange.api)
     }
     
     public func numberOfSections(in tableView: UITableView) -> Int {
@@ -74,7 +74,7 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
     
     func pushedCancelButton(cell _: UITableViewCell, order: ActiveOrder) {
         let repository = OrderRepository.getInstance()
-        let api = self.trader.account.activeExchange.api
+        let api = self.trader.exchange.api
         if let buyOrder = repository.findBuyOrderByOrderId(orderId: order.id, api: api) {
             buyOrder.cancel() { err in
                 if err == nil {

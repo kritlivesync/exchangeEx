@@ -11,18 +11,6 @@ import Foundation
 
 open class Config {
     
-    var currentTraderName: String {
-        get {
-            if let val = Config.configDict.value(forKey: "currentTraderName") {
-                return val as! String
-            }
-            return ""
-        }
-        set {
-            Config.configDict.setValue(newValue, forKey: "currentTraderName")
-        }
-    }
-    
     var previousUserId: String {
         get {
             if let val = Config.configDict.value(forKey: "previousUserId") {
@@ -34,31 +22,6 @@ open class Config {
             Config.configDict.setValue(newValue, forKey: "previousUserId")
         }
     }
-
-    var previousApiKey: String {
-        get {
-            if let val = Config.configDict.value(forKey: "previousApiKey") {
-                return val as! String
-            }
-            return ""
-        }
-        set {
-            Config.configDict.setValue(newValue, forKey: "previousApiKey")
-        }
-    }
-    
-    var previousSecretKey: String {
-        get {
-            if let val = Config.configDict.value(forKey: "previousSecretKey") {
-                return val as! String
-            }
-            return ""
-        }
-        set {
-            Config.configDict.setValue(newValue, forKey: "previousSecretKey")
-        }
-    }
-    
     var sellMaxProfitPosition: Bool {
         get {
             if let val = Config.configDict.value(forKey: "sellMaxProfitPosition") {
@@ -77,20 +40,11 @@ open class Config {
     
     fileprivate static var configDict: NSMutableDictionary = {
         let path = Config.configPath
-        var plist = NSMutableDictionary(contentsOfFile: path)
-        if plist == nil {
-            let prePath = Config.preInstallPath
-            plist = NSMutableDictionary(contentsOfFile: prePath)
-            if plist == nil {
-                plist = Config.createDefaultConfigPlist(path)
-            }
+        guard let plist = NSMutableDictionary(contentsOfFile: path) else {
+            return Config.createDefaultConfigPlist(path)
         }
-        return plist!
+        return plist
     }()
-    
-    fileprivate static var preInstallPath: String {
-        return Bundle.main.path(forResource: "Config", ofType: "plist")!
-    }
     
     fileprivate static var configPath: String {
         let docs = URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent("Documents").path

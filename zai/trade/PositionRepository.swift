@@ -52,7 +52,7 @@ class PositionRepository {
         newPosition.id = UUID().uuidString
         newPosition.trader = trader
         
-        let log = TradeLogRepository.getInstance().create(.OPEN_SHORT_POSITION, traderName: trader.name, account: trader.account, order: order, positionId: newPosition.id)
+        let log = TradeLogRepository.getInstance().create(.OPEN_SHORT_POSITION, traderName: trader.name, account: trader.exchange.account, order: order, positionId: newPosition.id)
         newPosition.addLog(log)
         
         db.saveContext()

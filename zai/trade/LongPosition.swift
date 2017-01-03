@@ -49,7 +49,7 @@ class LongPosition: Position {
             if abs(diffValue) <= 0.00000001 {
                 return
             }
-            let log = TradeLogRepository.getInstance().create(userId: self.trader!.account.userId, action: .EDIT_PRICE, traderName: self.trader!.name, orderAction: "bid", orderId: nil, currencyPair: self.currencyPair.rawValue, price: diffValue, amount: nil, positionId: self.id)
+            let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .EDIT_PRICE, traderName: self.trader!.name, orderAction: "bid", orderId: nil, currencyPair: self.currencyPair.rawValue, price: diffValue, amount: nil, positionId: self.id)
             self.addLog(log)
         }
     }
@@ -72,7 +72,7 @@ class LongPosition: Position {
             if abs(diffValue) <= 0.00000001 {
                 return
             }
-            let log = TradeLogRepository.getInstance().create(userId: self.trader!.account.userId, action: .EDIT_AMOUNT, traderName: self.trader!.name, orderAction: "bid", orderId: nil, currencyPair: self.currencyPair.rawValue, price: 0.0, amount: diffValue, positionId: self.id)
+            let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .EDIT_AMOUNT, traderName: self.trader!.name, orderAction: "bid", orderId: nil, currencyPair: self.currencyPair.rawValue, price: 0.0, amount: diffValue, positionId: self.id)
             self.addLog(log)
         }
     }
@@ -153,7 +153,7 @@ class LongPosition: Position {
         
         print("sell: " + amt!.description)
         
-        let order = OrderRepository.getInstance().createSellOrder(currencyPair: self.currencyPair, price: price, amount: amt!, api: self.trader!.account.activeExchange.api)
+        let order = OrderRepository.getInstance().createSellOrder(currencyPair: self.currencyPair, price: price, amount: amt!, api: self.trader!.exchange.api)
         
         order.excute() { (err, _) in
             cb(err)
@@ -170,13 +170,13 @@ class LongPosition: Position {
         self.order = nil
         switch self.status.intValue {
         case PositionState.OPENING.rawValue:
-            let log = TradeLogRepository.getInstance().create(userId: self.trader!.account.userId, action: .OPEN_LONG_POSITION, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: price, amount: amount, positionId: self.id)
+            let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .OPEN_LONG_POSITION, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: price, amount: amount, positionId: self.id)
 
             self.addLog(log)
             self.open()
             self.delegate?.opendPosition(position: self)
         case PositionState.UNWINDING.rawValue:
-            let log = TradeLogRepository.getInstance().create(userId: self.trader!.account.userId, action: .UNWIND_LONG_POSITION, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: price, amount: amount, positionId: self.id)
+            let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .UNWIND_LONG_POSITION, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: price, amount: amount, positionId: self.id)
             self.addLog(log)
             if self.balance < 0.0001 {
                 self.close()
@@ -192,10 +192,10 @@ class LongPosition: Position {
     override func orderPartiallyPromised(order: Order, price: Double, amount: Double) {
         switch self.status.intValue {
         case PositionState.OPENING.rawValue:
-            let log = TradeLogRepository.getInstance().create(userId: self.trader!.account.userId, action: .OPEN_LONG_POSITION, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: price, amount: amount, positionId: self.id)
+            let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .OPEN_LONG_POSITION, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: price, amount: amount, positionId: self.id)
             self.addLog(log)
         case PositionState.UNWINDING.rawValue:
-            let log = TradeLogRepository.getInstance().create(userId: self.trader!.account.userId, action: .UNWIND_LONG_POSITION, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: price, amount: amount, positionId: self.id)
+            let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .UNWIND_LONG_POSITION, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: price, amount: amount, positionId: self.id)
             self.addLog(log)
         default: break
         }
@@ -205,7 +205,7 @@ class LongPosition: Position {
         self.order = nil
         switch self.status.intValue {
         case PositionState.OPENING.rawValue:
-            let log = TradeLogRepository.getInstance().create(userId: self.trader!.account.userId, action: .CANCEL, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: price, amount: Double(order.orderAmount), positionId: self.id)
+            let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .CANCEL, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: price, amount: Double(order.orderAmount), positionId: self.id)
             self.addLog(log)
             self.close()
             self.delegate?.closedPosition(position: self)

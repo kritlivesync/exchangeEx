@@ -12,16 +12,26 @@ import CoreData
 import ZaifSwift
 
 
-protocol ExchangeAccountProtocol {
+protocol ExchangeProtocol {
     func validateApiKey(_ cb: @escaping (ZaiError?) -> Void)
+    func loadApiKey(password: String) -> Bool
+    func saveApiKey(password: String) -> Bool
     
     var api: Api { get }
 }
 
-public class ExchangeAccount: NSManagedObject, ExchangeAccountProtocol {
+public class Exchange: NSManagedObject, ExchangeProtocol {
     
     func validateApiKey(_ callback: @escaping (ZaiError?) -> Void) {
         callback(ZaiError(errorType: .UNKNOWN_ERROR))
+    }
+    
+    func loadApiKey(password: String) -> Bool {
+        return false
+    }
+    
+    func saveApiKey(password: String) -> Bool {
+        return false
     }
 
     var api: Api {

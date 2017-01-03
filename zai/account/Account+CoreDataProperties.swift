@@ -30,10 +30,10 @@ extension Account {
 extension Account {
 
     @objc(addExchangesObject:)
-    @NSManaged public func addToExchanges(_ value: ExchangeAccount)
+    @NSManaged public func addToExchanges(_ value: Exchange)
 
     @objc(removeExchangesObject:)
-    @NSManaged public func removeFromExchanges(_ value: ExchangeAccount)
+    @NSManaged public func removeFromExchanges(_ value: Exchange)
 
     @objc(addExchanges:)
     @NSManaged public func addToExchanges(_ values: NSSet)

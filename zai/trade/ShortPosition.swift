@@ -85,7 +85,7 @@ class ShortPosition: Position {
             amt = balance
         }
         
-        let order = OrderRepository.getInstance().createSellOrder(currencyPair: self.currencyPair, price: price, amount: amt!, api: self.trader!.account.activeExchange.api)
+        let order = OrderRepository.getInstance().createSellOrder(currencyPair: self.currencyPair, price: price, amount: amt!, api: self.trader!.exchange.api)
         
         order.excute() { (err, res) in
             cb(err)

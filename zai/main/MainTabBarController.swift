@@ -12,6 +12,8 @@ import UIKit
 class MainTabBarController : UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationItem.hidesBackButton = true
 
         UITabBar.appearance().tintColor = Color.tabBarItemColor
         
@@ -34,6 +36,4 @@ class MainTabBarController : UITabBarController {
     public func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         
     }
-    
-    internal var account: Account!
 }

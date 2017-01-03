@@ -7,10 +7,10 @@
         <attribute name="password" attributeType="String" syncable="YES"/>
         <attribute name="salt" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userId" attributeType="String" syncable="YES"/>
-        <relationship name="exchanges" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExchangeAccount" inverseName="account" inverseEntity="ExchangeAccount" syncable="YES"/>
+        <relationship name="exchanges" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Exchange" inverseName="account" inverseEntity="Exchange" syncable="YES"/>
     </entity>
     <entity name="BuyOrder" representedClassName=".BuyOrder" parentEntity="Order" syncable="YES"/>
-    <entity name="ExchangeAccount" representedClassName=".ExchangeAccount" isAbstract="YES" syncable="YES">
+    <entity name="Exchange" representedClassName=".Exchange" isAbstract="YES" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="exchanges" inverseEntity="Account" syncable="YES"/>
         <relationship name="trader" maxCount="1" deletionRule="Nullify" destinationEntity="Trader" inverseName="exchange" inverseEntity="Trader" syncable="YES"/>
@@ -61,17 +61,18 @@
     <entity name="Trader" representedClassName=".Trader" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="exchange" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ExchangeAccount" inverseName="trader" inverseEntity="ExchangeAccount" syncable="YES"/>
+        <relationship name="exchange" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Exchange" inverseName="trader" inverseEntity="Exchange" syncable="YES"/>
         <relationship name="positions" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Position" inverseName="trader" inverseEntity="Position" syncable="YES"/>
     </entity>
-    <entity name="ZaifAccount" representedClassName=".ZaifAccount" parentEntity="ExchangeAccount" syncable="YES">
-        <attribute name="apiKey" attributeType="String" syncable="YES"/>
+    <entity name="ZaifExchange" representedClassName=".ZaifExchange" parentEntity="Exchange" syncable="YES">
+        <attribute name="apiKey" attributeType="Binary" syncable="YES"/>
         <attribute name="nonce" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="secretKey" attributeType="String" syncable="YES"/>
+        <attribute name="secretKey" attributeType="Binary" syncable="YES"/>
     </entity>
     <elements>
         <element name="Account" positionX="-36" positionY="90" width="128" height="150"/>
         <element name="BuyOrder" positionX="-27" positionY="117" width="128" height="45"/>
+        <element name="Exchange" positionX="-36" positionY="144" width="128" height="90"/>
         <element name="LongPosition" positionX="-36" positionY="90" width="128" height="45"/>
         <element name="Order" positionX="-36" positionY="90" width="128" height="225"/>
         <element name="Position" positionX="-54" positionY="81" width="128" height="120"/>
@@ -80,7 +81,6 @@
         <element name="ShortPosition" positionX="-27" positionY="99" width="128" height="45"/>
         <element name="TradeLog" positionX="-63" positionY="-18" width="128" height="225"/>
         <element name="Trader" positionX="-18" positionY="117" width="128" height="105"/>
-        <element name="ZaifAccount" positionX="-45" positionY="135" width="128" height="90"/>
-        <element name="ExchangeAccount" positionX="-36" positionY="144" width="128" height="90"/>
+        <element name="ZaifExchange" positionX="-45" positionY="135" width="128" height="90"/>
     </elements>
 </model>

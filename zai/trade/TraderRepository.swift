@@ -24,13 +24,13 @@ class TraderRepository {
         }
     }
     
-    func create(_ name: String, account: Account) -> Trader {
+    func create(_ name: String, exchange: Exchange) -> Trader? {
         let db = Database.getDb()
         
         let newTrader = NSEntityDescription.insertNewObject(forEntityName: TraderRepository.traderModelName, into: db.managedObjectContext) as! Trader
         newTrader.name = name
-        newTrader.account = account
-        newTrader.fund = Fund(api: account.activeExchange.api)
+        newTrader.exchange = exchange
+        newTrader.fund = Fund(api: exchange.api)
         newTrader.fund.delegate = newTrader
         newTrader.fund.getBtcFund() { (err, btc) in
             if err == nil {
@@ -43,7 +43,7 @@ class TraderRepository {
             }
         }
         
-        //db.saveContext()
+        db.saveContext()
         
         return newTrader
     }
@@ -66,7 +66,7 @@ class TraderRepository {
                 return nil
             } else {
                 let trader = traders[0]
-                trader.fund = Fund(api: trader.account.activeExchange.api)
+                trader.fund = Fund(api: trader.exchange.api)
                 trader.fund.delegate = trader
                 trader.fund.getBtcFund() { (err, btc) in
                     if err == nil {
@@ -86,11 +86,11 @@ class TraderRepository {
     }
     
     func getAllTraders() -> [Trader] {
-        let query = Trader.fetchRequest()
+        let query: NSFetchRequest<Trader> = Trader.fetchRequest()
         
         let db = Database.getDb()
         do {
-            let traders = try db.managedObjectContext.fetch(query) as! [Trader]
+            let traders = try db.managedObjectContext.fetch(query)
             return traders
         } catch {
             return []
@@ -98,11 +98,11 @@ class TraderRepository {
     }
     
     func count() -> Int {
-        let query = Trader.fetchRequest()
+        let query: NSFetchRequest<Trader> = Trader.fetchRequest()
         
         let db = Database.getDb()
         do {
-            let traders = try db.managedObjectContext.fetch(query) as! [Trader]
+            let traders = try db.managedObjectContext.fetch(query)
             return traders.count
         } catch {
             return 0

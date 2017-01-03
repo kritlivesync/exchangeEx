@@ -13,6 +13,8 @@ class AssetsViewController: UIViewController, FundDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        
         self.marketCapitalizationLabel.text = "-"
         self.jpyFundLabel.text = "-"
         self.btcFundLabel.text = "-"

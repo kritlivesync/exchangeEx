@@ -183,7 +183,7 @@ class ZaifApi : Api {
             let orderId = ordered["order_id"]!.stringValue
             let orderedPrice = ordered["order_price"]!.doubleValue
             
-            callback(ApiError(errorType: .UNKNOWN_ERROR), orderId, orderedPrice)
+            callback(nil, orderId, orderedPrice)
         }
     }
     

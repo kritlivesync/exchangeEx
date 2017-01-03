@@ -12,17 +12,7 @@ import ZaifSwift
 
 
 func login(userId: String, password: String, callback: @escaping (_ err: ZaiError?, _ account: Account?) -> Void) {
-    guard let account = AccountRepository.getInstance().findByUserId(userId) else {
-        callback(ZaiError(errorType: .INVALID_ACCOUNT_INFO), nil)
-        return
-    }
-
-    guard let cryptPass = hash(src: password, salt: account.salt) else {
-        callback(ZaiError(errorType: .UNKNOWN_ERROR), nil)
-        return
-    }
-    
-    if cryptPass != account.password {
+    guard let account = AccountRepository.getInstance().findByUserIdAndPassword(userId, password: password) else {
         callback(ZaiError(errorType: .INVALID_ACCOUNT_INFO), nil)
         return
     }

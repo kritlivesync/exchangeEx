@@ -7,61 +7,75 @@
 //
 
 import Foundation
-
 import UIKit
 
 import ZaifSwift
-
-
-@objc protocol NewAccountViewDelegate {
-    func didCreateNewAccount(_ userId: String)
-}
 
 
 class NewAccountViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        self.saveButton.tintColor = Color.antiKeyColor2
+        self.cancelButton.tintColor = Color.antiKeyColor2
+        let backButtonItem = UIBarButtonItem(title: "ログイン", style: .plain, target: nil, action: nil)
+        backButtonItem.tintColor = Color.antiKeyColor2
+        self.navigationItem.backBarButtonItem = backButtonItem
+        
+        // for degug
+        self.zaifApiKeyText.text = key_full
+        self.zaifSecretKeyText.text = secret_full
     }
     
-    @IBAction func pushCreateButton(_ sender: AnyObject) {
+    @IBAction func pushSaveButton(_ sender: Any) {        
         let userId = self.userIdText.text!
         if userId == "" {
-            self.errorMessageLabel.text = "Invalid user id"
             return
         }
-        /*
-        let repository = AccountRepository.getInstance()
-        let dummyApi = PrivateApi(apiKey: "", secretKey: "")
-        let account = repository.findByUserId(userId)
-        if let _ = account {
-            self.errorMessageLabel.text = "User id already exists"
+        let password = self.passwordText.text!
+        if password == "" {
             return
-        }*/
+        }
+        if let _ = AccountRepository.getInstance().findByUserId(userId) {
+            return
+        }
+        let passwordAgain = self.passwordAgainText.text!
+        if password != passwordAgain {
+            return
+        }
         
-        //repository.create(userId, exhange: dummyApi)
-        
-        self.performSegue(withIdentifier: "backToLoginSegue", sender: self)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
-        if let ident = segue.identifier {
-            switch ident {
-            case "backToLoginSegue":
-                let destController = segue.destination as! LoginViewController
-                destController.userIdFromNewAccount = self.userIdText.text!
-            default: break
+        let apiKey = self.zaifApiKeyText.text!
+        let secretKey = self.zaifSecretKeyText.text!
+        let zaifApi = ZaifApi(apiKey: apiKey, secretKey: secretKey)
+        zaifApi.getPrice(currencyPair: .BTC_JPY) { (err, _) in
+            if err == nil {
+                let repository = AccountRepository.getInstance()
+                guard let account = repository.create(userId, password: password) else {
+                    return
+                }
+                guard repository.createZaifExchange(account: account, apiKey: apiKey, secretKey: secretKey) else {
+                    repository.delete(account)
+                    return
+                }
+                let app = UIApplication.shared.delegate as! AppDelegate
+                app.config.previousUserId = userId
+                _ = app.config.save()
+                self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self)
+            } else {
+                return
             }
         }
     }
     
-    @IBAction func back(_ segue:UIStoryboardSegue) {
-        print("bbb")
-    }
-    
+
     @IBOutlet weak var userIdText: UITextField!
-    @IBOutlet weak var errorMessageLabel: UILabel!
+    @IBOutlet weak var passwordText: UITextField!
+    @IBOutlet weak var passwordAgainText: UITextField!
     
-    weak var delegate: NewAccountViewDelegate?
+    @IBOutlet weak var zaifApiKeyText: UITextField!
+    @IBOutlet weak var zaifSecretKeyText: UITextField!
+    
+    @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
 }

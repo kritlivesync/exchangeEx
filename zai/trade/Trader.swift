@@ -19,31 +19,6 @@ public enum TraderState : String {
 
 
 open class Trader: NSManagedObject, FundDelegate {
-
-    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertInto: context)
-    }
-    
-    convenience init(name: String, account: Account) {
-        self.init(entity: TraderRepository.getInstance().traderDescription, insertInto: nil)
-        
-        self.name = name
-        self.status = TraderState.ACTIVE.rawValue
-        self.account = account
-        self.positions = []
-        self.fund = Fund(api: self.account.activeExchange.api)
-        self.fund.delegate = self
-        self.fund.getBtcFund() { (err, btc) in
-            if err == nil {
-                self.btcFund = btc
-            }
-        }
-        self.fund.getJpyFund() { (err, jpy) in
-            if err == nil {
-                self.jpyFund = jpy
-            }
-        }
-    }
     
     func addPosition(_ position: Position) {
         let positions = self.mutableOrderedSetValue(forKey: "positions")
@@ -57,7 +32,7 @@ open class Trader: NSManagedObject, FundDelegate {
             let maxAmount = Double(self.jpyFund) / p
             amt = min(maxAmount, amt)
         }
-        let order = OrderRepository.getInstance().createBuyOrder(currencyPair: currencyPair, price: price, amount: amt, api: self.account.activeExchange.api)
+        let order = OrderRepository.getInstance().createBuyOrder(currencyPair: currencyPair, price: price, amount: amt, api: self.exchange.api)
         order.excute() { (err, orderId) in
             if let e = err {
                 cb(e, nil)
@@ -157,7 +132,7 @@ open class Trader: NSManagedObject, FundDelegate {
         for position in self.positions {
             let p = position as! Position
             if let order = p.order {
-                order.api = self.account.activeExchange.api
+                order.api = self.exchange.api
                 orders.append(order)
             }
         }

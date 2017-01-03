@@ -25,7 +25,7 @@ class PositionFundView : Monitorable {
         if self.delegate != nil {
             delegate?.recievedTotalProfit(profit: formatValue(Int(self.trader.totalProfit)))
             delegate?.recievedPriceAverage(average: formatValue(Int(round(self.trader.priceAverage))))
-            let fund = Fund(api: self.trader.account.activeExchange.api)
+            let fund = Fund(api: self.trader.exchange.api)
             fund.getBtcFund() { (err, btc) in
                 if err == nil {
                     delegate?.recievedBtcFund(btc: formatValue(btc))

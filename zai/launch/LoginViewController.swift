@@ -10,7 +10,7 @@ import UIKit
 
 import ZaifSwift
 
-class LoginViewController: UIViewController, NewAccountViewDelegate {
+class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,9 +23,9 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
     }
 
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        // for debug
-        //self.apiKeyText.text = key_full
-        //self.secretKeyText.text = secret_full
+        if identifier == self.newAccountSegue {
+            return true
+        }
         
         let userId = self.userIdText.text!
         let password = self.passwordText.text!
@@ -57,33 +57,13 @@ class LoginViewController: UIViewController, NewAccountViewDelegate {
         return goNext
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
-        switch segue.identifier! {
-        case self.mainViewSegue:
-            let destController = segue.destination as! MainTabBarController
-            destController.account = account!
-            
-        case self.newAccountSegue:
-            let destController = segue.destination as! NewAccountViewController
-            destController.delegate = self
-        default: break
-        }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesEnded(touches, with: event)
-        for touch: UITouch in touches {
-            let tag = touch.view!.tag
-            switch tag {
-            case self.newAccountLabelTag:
-                self.performSegue(withIdentifier: self.newAccountSegue, sender: self)
-            default:
-                break
-            }
-        }
-    }
-    
     @IBAction func unwindToLogin(_ segue: UIStoryboardSegue) {}
+    
+    @IBAction func unwindWithSave(_ segue:UIStoryboardSegue) {
+        let app = UIApplication.shared.delegate as! AppDelegate
+        self.userIdText.text = app.config.previousUserId
+    }
+    
     
     func didCreateNewAccount(_ userId: String) {
         self.userIdFromNewAccount = userId
