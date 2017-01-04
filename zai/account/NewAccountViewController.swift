@@ -28,7 +28,7 @@ class NewAccountViewController: UIViewController {
         self.zaifSecretKeyText.text = secret_full
     }
     
-    @IBAction func pushSaveButton(_ sender: Any) {        
+    @IBAction func pushSaveButton(_ sender: Any) {
         let userId = self.userIdText.text!
         if userId == "" {
             return
@@ -67,7 +67,7 @@ class NewAccountViewController: UIViewController {
             }
         }
     }
-    
+
 
     @IBOutlet weak var userIdText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
@@ -78,4 +78,6 @@ class NewAccountViewController: UIViewController {
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
+    @IBOutlet weak var navigationBar: UINavigationItem!
+
 }

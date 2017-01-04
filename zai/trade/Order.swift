@@ -85,9 +85,9 @@ public class Order: NSManagedObject, ActiveOrderDelegate {
             cb(ZaiError(errorType: .INVALID_ORDER, message: "order is not excuted"))
             return
         }
-        let activeOrder = ActiveOrder(id: self.id, action: self.action, currencyPair: ApiCurrencyPair(rawValue: self.currencyPair)!, price: self.orderPrice!.doubleValue, amount: self.orderAmount.doubleValue, timestamp: self.orderTime!.int64Value)
+        let activeOrder = ActiveOrder(id: self.orderId!, action: self.action, currencyPair: ApiCurrencyPair(rawValue: self.currencyPair)!, price: self.orderPrice!.doubleValue, amount: self.orderAmount.doubleValue, timestamp: self.orderTime!.int64Value)
         self.api?.cancelOrder(order: activeOrder) { err in
-            if let e = err {
+            if let _ = err {
                 self.status = NSNumber(value: OrderState.INVALID.rawValue)
                 cb(ZaiError(errorType: .INVALID_ORDER))
             } else {

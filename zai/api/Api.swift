@@ -28,6 +28,7 @@ protocol Api {
     func getBoard(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, Board) -> Void)
     func getBalance(currencies: [ApiCurrency], callback: @escaping (ApiError?, [String:Double]) -> Void)
     func getActiveOrders(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, [String:ActiveOrder]) -> Void)
+    func getTrades(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, [Trade]) -> Void)
     
     func trade(order: Order, callback: @escaping (_ err: ApiError?, _ orderId: String, _ orderedPrice: Double) -> Void)
     func cancelOrder(order: ActiveOrder, callback: @escaping (_ err: ApiError?) -> Void)

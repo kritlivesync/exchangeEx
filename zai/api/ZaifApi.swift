@@ -43,9 +43,9 @@ fileprivate extension Order {
         case .BTC_JPY:
             let price = self.orderPrice == nil ? nil : Int(self.orderPrice!.doubleValue)
             if self.action == "bid" {
-                return Trade.Buy.Btc.In.Jpy.createOrder(price, amount: self.orderAmount.doubleValue)
+                return ZaifSwift.Trade.Buy.Btc.In.Jpy.createOrder(price, amount: self.orderAmount.doubleValue)
             } else if self.action == "ask" {
-                return Trade.Buy.Btc.In.Jpy.createOrder(price, amount: self.orderAmount.doubleValue)
+                return ZaifSwift.Trade.Sell.Btc.For.Jpy.createOrder(price, amount: self.orderAmount.doubleValue)
             } else {
                 return nil
             }
@@ -74,7 +74,7 @@ class ZaifApi : Api {
     }
     
     func getBoard(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, Board) -> Void) {
-        PublicApi.depth(CurrencyPair.BTC_JPY) { (err, res) in
+        PublicApi.depth(currencyPair.zaifCurrencyPair) { (err, res) in
             let board = Board()
             if err != nil {
                 callback(ApiError(errorType: err!.errorType.apiError, message: err!.message), board)
@@ -154,6 +154,34 @@ class ZaifApi : Api {
                 activeOrders[id] = activeOrder
             }
             callback(nil, activeOrders)
+        }
+    }
+    
+    func getTrades(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, [Trade]) -> Void) {
+        PublicApi.trades(currencyPair.zaifCurrencyPair) { (err, res) in
+            var trades = [Trade]()
+            if err != nil {
+                callback(ApiError(errorType: err!.errorType.apiError, message: err!.message), trades)
+            } else {
+                guard let tradeArray = res?.array else {
+                    callback(ApiError(errorType: .UNKNOWN_ERROR), trades)
+                    return
+                }
+                for tradeData in tradeArray {
+                    guard let data = tradeData.dictionary else {
+                        continue
+                    }
+                    let trade = Trade(
+                        id: data["tid"]!.stringValue,
+                        price: data["price"]!.doubleValue,
+                        amount: data["amount"]!.doubleValue,
+                        currencyPair: data["currency_pair"]!.stringValue,
+                        action: data["trade_type"]!.stringValue,
+                        timestamp: data["date"]!.int64Value)
+                    trades.append(trade)
+                }
+                callback(nil, trades)
+            }
         }
     }
     

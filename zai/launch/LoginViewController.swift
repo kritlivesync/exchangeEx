@@ -10,12 +10,18 @@ import UIKit
 
 import ZaifSwift
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UINavigationBarDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.loginButton.tintColor = Color.keyColor
+        self.loginButton.tintColor = UIColor.white
+        self.loginButton.layer.borderWidth = 1.0
+        self.loginButton.layer.borderColor = Color.keyColor.cgColor
+        self.loginButton.titleLabel?.textColor = Color.keyColor
+        self.navigationBar.delegate = self
+        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+        self.navigationBar.frame = self.navigationBar.frame.offsetBy(dx: 0.0, dy: statusBarHeight)
         
         let app = UIApplication.shared.delegate as! AppDelegate
         self.userIdText.text = app.config.previousUserId
@@ -57,6 +63,11 @@ class LoginViewController: UIViewController {
         return goNext
     }
     
+    // UIBarPositioningDelegate
+    public func position(for bar: UIBarPositioning) -> UIBarPosition {
+        return UIBarPosition.topAttached
+    }
+    
     @IBAction func unwindToLogin(_ segue: UIStoryboardSegue) {}
     
     @IBAction func unwindWithSave(_ segue:UIStoryboardSegue) {
@@ -72,6 +83,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var userIdText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var navigationBar: UINavigationBar!
 
     fileprivate let newAccountLabelTag = 0
     fileprivate let newAccountSegue = "newAccountSegue"
