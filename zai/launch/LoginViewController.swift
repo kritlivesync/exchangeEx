@@ -15,10 +15,13 @@ class LoginViewController: UIViewController, UINavigationBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationBar.barTintColor = Color.keyColor
+        
         self.loginButton.tintColor = UIColor.white
         self.loginButton.layer.borderWidth = 1.0
         self.loginButton.layer.borderColor = Color.keyColor.cgColor
-        self.loginButton.titleLabel?.textColor = Color.keyColor
+        self.loginButton.setTitleColor(Color.keyColor, for: UIControlState.normal)
+        self.newAccountButton.setTitleColor(Color.keyColor, for: UIControlState.normal)
         self.navigationBar.delegate = self
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
         self.navigationBar.frame = self.navigationBar.frame.offsetBy(dx: 0.0, dy: statusBarHeight)
@@ -83,6 +86,7 @@ class LoginViewController: UIViewController, UINavigationBarDelegate {
     @IBOutlet weak var userIdText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var newAccountButton: UIButton!
     @IBOutlet weak var navigationBar: UINavigationBar!
 
     fileprivate let newAccountLabelTag = 0

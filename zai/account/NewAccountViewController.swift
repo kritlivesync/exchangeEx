@@ -17,10 +17,12 @@ class NewAccountViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.saveButton.tintColor = Color.antiKeyColor2
-        self.cancelButton.tintColor = Color.antiKeyColor2
+        self.navigationController?.navigationBar.barTintColor = Color.keyColor
+        
+        self.saveButton.tintColor = Color.antiKeyColor
+        self.cancelButton.tintColor = Color.antiKeyColor
         let backButtonItem = UIBarButtonItem(title: "ログイン", style: .plain, target: nil, action: nil)
-        backButtonItem.tintColor = Color.antiKeyColor2
+        backButtonItem.tintColor = Color.antiKeyColor
         self.navigationItem.backBarButtonItem = backButtonItem
         
         // for degug

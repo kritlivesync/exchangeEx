@@ -8,12 +8,15 @@
 
 import Foundation
 
+import AMScrollingNavbar
 import ZaifSwift
 
 class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, BoardDelegate, BoardViewDelegate, PositionDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.navigationBar.barTintColor = Color.keyColor
         
         let account = getAccount()!
         self.trader = account.activeExchange.trader
@@ -32,12 +35,14 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     }
     
     open override func viewDidAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.board.delegate = self
         self.bitcoin.delegate = self
         self.fund.delegate = self
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         self.board.delegate = nil
         self.bitcoin.delegate = nil
         self.fund.delegate = nil
@@ -46,12 +51,8 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     // FundDelegate
     func recievedJpyFund(jpy: Int) {
         DispatchQueue.main.async {
-            self.jpyFundLabel.text = jpy.description
+            self.jpyFundLabel.text = formatValue(jpy)
         }
-    }
-    
-    func recievedBtcFund(btc: Double) {
-        self.btcFund = btc
     }
     
     // BoardDelegate
@@ -141,7 +142,6 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     
     fileprivate var fund: Fund!
     fileprivate var bitcoin: BitCoin!
-    fileprivate var btcFund: Double = 0.0
     
     fileprivate var board: Board!
     

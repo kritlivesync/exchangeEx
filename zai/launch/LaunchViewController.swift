@@ -15,7 +15,7 @@ class LaunchViewController : UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationBar.barTintColor = Color.naviBarColor
-        self.navigationBar.tintColor = Color.antiKeyColor2
+        self.navigationBar.barTintColor = Color.keyColor
+        self.navigationBar.tintColor = Color.antiKeyColor
     }
 }

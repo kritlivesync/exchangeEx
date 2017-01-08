@@ -85,10 +85,11 @@ class BoardView : NSObject, UITableViewDelegate, UITableViewDataSource, BoardVie
             return nil
         }
         var actions = [UITableViewRowAction]()
-        if let action = cell.takerButtonAction {
+        
+        if let action = cell.makerButtonAction {
             actions.append(action)
         }
-        if let action = cell.makerButtonAction {
+        if let action = cell.takerButtonAction {
             actions.append(action)
         }
         if actions.count == 0 {

@@ -13,7 +13,7 @@ class AssetsViewController: UIViewController, FundDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.navigationBar.barTintColor = Color.keyColor
         
         self.marketCapitalizationLabel.text = "-"
         self.jpyFundLabel.text = "-"
@@ -24,10 +24,12 @@ class AssetsViewController: UIViewController, FundDelegate {
     }
     
     open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.fund.delegate = self
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         self.fund.delegate = nil
     }
 

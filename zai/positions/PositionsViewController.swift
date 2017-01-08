@@ -16,6 +16,8 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.navigationBar.barTintColor = Color.keyColor
+        
         self.totalProfit.text = "-"
         self.priceAverage.text = "-"
         self.btcFund.text = "-"
@@ -27,16 +29,18 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
         self.positionListView.delegate = self
         self.positionFundView = PositionFundView(trader: self.trader)
         
-        self.addPositionButton.tintColor = Color.antiKeyColor2
+        self.addPositionButton.tintColor = Color.antiKeyColor
     }
     
     open override func viewDidAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.positionListView.startWatch()
         self.positionListView.reloadData()
         self.positionFundView.delegate = self
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         self.positionListView.stopWatch()
         self.positionFundView.delegate = nil
     }

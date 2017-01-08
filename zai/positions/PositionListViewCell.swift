@@ -89,15 +89,15 @@ class PositionListViewCell : UITableViewCell {
             self.unwind100Action = UITableViewRowAction(style: .normal, title: "Unwind\n(100%)") { (_, _) in
                 self.delegate?.pushedUnwindButton(cell: self, position: self.position!, rate: 1.0)
             }
-            self.unwind100Action?.backgroundColor = Color.antiKeyColor2
+            self.unwind100Action?.backgroundColor = Color.unwind100Color
             self.unwind50Action = UITableViewRowAction(style: .normal, title: "Unwind\n(50%)") { (_, _) in
                 self.delegate?.pushedUnwindButton(cell: self, position: self.position!, rate: 0.5)
             }
-            self.unwind50Action?.backgroundColor = Color.antiKeyColor
+            self.unwind50Action?.backgroundColor = Color.unwind50Color
             self.unwind20Action = UITableViewRowAction(style: .normal, title: "Unwind\n(20%)") { (_, _) in
                 self.delegate?.pushedUnwindButton(cell: self, position: self.position!, rate: 0.2)
             }
-            self.unwind20Action?.backgroundColor = Color.keyColor
+            self.unwind20Action?.backgroundColor = Color.unwind20Color
         }
         
         if status.isClosed {
