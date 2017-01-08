@@ -11,6 +11,8 @@ import Foundation
 
 @objc protocol BitCoinDelegate : MonitorableDelegate {
     @objc optional func recievedJpyPrice(price: Int)
+    @objc optional func recievedBestJpyBid(price: Int, amount: Double)
+    @objc optional func recievedBestJpyAsk(price: Int, amount: Double)
 }
 
 
@@ -82,7 +84,22 @@ internal class BitCoin : Monitorable {
                 }
             }
         }
+        if delegate?.recievedBestJpyBid != nil {
+            self.getBestBidQuote(.JPY) { (err, quote) in
+                if err == nil {
+                    delegate?.recievedBestJpyBid?(price: Int(quote!.price), amount: quote!.amount)
+                }
+            }
+        }
+        if delegate?.recievedBestJpyAsk != nil {
+            self.getBestAskQuote(.JPY) { (err, quote) in
+                if err == nil {
+                    delegate?.recievedBestJpyAsk?(price: Int(quote!.price), amount: quote!.amount)
+                }
+            }
+        }
     }
 
     let api: Api
+    static let Satoshi = 0.00000001
 }

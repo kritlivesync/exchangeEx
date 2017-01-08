@@ -33,6 +33,12 @@ class Candle {
         self.trades.append(trade)
         return true
     }
+    
+    var isEmpty: Bool {
+        get {
+            return self.trades.count == 0
+        }
+    }
 
     var openPrice: Double? {
         get {
@@ -125,6 +131,8 @@ class CandleChart : Monitorable {
         
         super.init()
         
+        self.monitoringInterval = 1.0
+        
         let now = Int64(Date().timeIntervalSince1970)
         let period = self.calculatePeriod(date: now)
         var startDate = period.0
@@ -170,7 +178,7 @@ class CandleChart : Monitorable {
             return
         }
         
-        if self.isFirstUpdate {
+        if self.isHeighPrecision {
             self.api.getTrades(currencyPair: self.currencyPair) { (err, trades) in
                 if err != nil {
                     return
@@ -185,7 +193,7 @@ class CandleChart : Monitorable {
                 self.lastTradeId = trades.first!.id
                 delegate.recievedChart(chart: self, shifted: shifted)
             }
-            //self.isFirstUpdate = false
+            self.isHeighPrecision = false
         } else {
             self.api.getPrice(currencyPair: self.currencyPair) { (err, price) in
                 let trade = Trade(id: "", price: price, amount: 0.0, currencyPair: self.currencyPair.rawValue, action: "bid", timestamp: Int64(Date().timeIntervalSince1970))
@@ -200,6 +208,6 @@ class CandleChart : Monitorable {
     let interval: ChartInterval
     let candleCount: Int
     var candles: [Candle]
-    var isFirstUpdate = true
+    var isHeighPrecision = true
     var lastTradeId = String()
 }

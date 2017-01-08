@@ -17,9 +17,9 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
         
         let account = getAccount()!
         self.trader = account.activeExchange.trader
-        
-        self.askMomentumBar.backgroundColor = Color.askQuoteColor
-        self.bidMomentumBar.backgroundColor = Color.bidQuoteColor
+
+        self.askMomentumBar.backgroundColor = Color.askQuoteColor.withAlphaComponent(0.4)
+        self.bidMomentumBar.backgroundColor = Color.bidQuoteColor.withAlphaComponent(0.4)
         
         self.boardView = BoardView(view: self.boardTableView)
         self.boardView.delegate = self
@@ -29,11 +29,6 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
         self.bitcoin = BitCoin(api: account.activeExchange.api)
         self.board = Board()
         self.fund = Fund(api: account.activeExchange.api)
-        self.fund.getBtcFund() { (err, btc) in
-            if err == nil {
-                self.btcFund = btc
-            }
-        }
     }
     
     open override func viewDidAppear(_ animated: Bool) {
@@ -71,10 +66,11 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
             self.boardView.update(board: board!)
             let askMomentum = board!.calculateAskMomentum()
             let bidMomentum = board!.calculateBidMomentum()
-            let askWidth = askAmountMomentumLabel.layer.bounds.width
             let ratio = bidMomentum / askMomentum
-            let bidWidth = CGFloat(Double(askWidth) * (ratio) * 0.5)
-            self.bidMomentumWidth.constant = min(bidWidth, askWidth)
+            let barWidth = self.momentumBar.layer.bounds.width
+            let bidWidth = CGFloat(Double(barWidth) * (ratio) * 0.5)
+            self.bidMomentumWidth.constant = min(bidWidth, barWidth)
+            self.askMomentumWidth.constant = CGFloat(barWidth) - self.bidMomentumWidth.constant
         }
     }
     
@@ -153,9 +149,10 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     
     @IBOutlet weak var jpyFundLabel: UILabel!
 
+    @IBOutlet weak var momentumBar: UIView!
     @IBOutlet weak var askMomentumBar: UILabel!
     @IBOutlet weak var bidMomentumBar: UILabel!
-    @IBOutlet weak var askAmountMomentumLabel: UILabel!
+    @IBOutlet weak var askMomentumWidth: NSLayoutConstraint!
     @IBOutlet weak var bidMomentumWidth: NSLayoutConstraint!
 
 }

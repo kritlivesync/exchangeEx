@@ -36,3 +36,10 @@ func formatDate(timestamp: Int64) -> String {
     formatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
     return formatter.string(from: date)
 }
+
+func formatHms(timestamp: Int64) -> String {
+    let date = Date(timeIntervalSince1970: TimeInterval(timestamp))
+    let formatter = DateFormatter()
+    formatter.dateFormat = "HH:mm:ss"
+    return formatter.string(from: date)
+}

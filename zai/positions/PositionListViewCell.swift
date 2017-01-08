@@ -121,9 +121,9 @@ class PositionListViewCell : UITableViewCell {
         let desc = formatValue(profit)
         self.profitLabel.text = (profit < 0) ? "" + desc : "+" + desc
         if profit < 0 {
-            self.profitLabel.textColor = UIColor.red
+            self.profitLabel.textColor = Color.askQuoteColor
         } else {
-            self.profitLabel.textColor = UIColor.black
+            self.profitLabel.textColor = Color.bidQuoteColor
         }
     }
     

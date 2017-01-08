@@ -47,6 +47,9 @@ internal class Monitorable {
                 }
             }
         }
+        didSet {
+            self.monitor()
+        }
     }
     
     let queue: DispatchQueue!

@@ -78,6 +78,7 @@
 		B8E9E2D01E1B867F003B298F /* Exchange+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E9E2CE1E1B867F003B298F /* Exchange+CoreDataProperties.swift */; };
 		B8E9E2D31E1D186E003B298F /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E9E2D21E1D186E003B298F /* ChartViewController.swift */; };
 		B8E9E2D51E1D2108003B298F /* CandleChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E9E2D41E1D2108003B298F /* CandleChart.swift */; };
+		B8E9E2D71E1E9146003B298F /* ValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E9E2D61E1E9146003B298F /* ValueFormatter.swift */; };
 		B8F1B2241DC0D37D001A120E /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F1B2231DC0D37D001A120E /* Feature.swift */; };
 		B8F1B2261DC5A9C7001A120E /* ZaiAnalyticsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F1B2251DC5A9C7001A120E /* ZaiAnalyticsClient.swift */; };
 		B8F1B22A1DC5AFDF001A120E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F1B2291DC5AFDF001A120E /* Utils.swift */; };
@@ -185,6 +186,7 @@
 		B8E9E2CE1E1B867F003B298F /* Exchange+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Exchange+CoreDataProperties.swift"; path = "account/Exchange+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B8E9E2D21E1D186E003B298F /* ChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChartViewController.swift; path = chart/ChartViewController.swift; sourceTree = "<group>"; };
 		B8E9E2D41E1D2108003B298F /* CandleChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CandleChart.swift; path = chart/CandleChart.swift; sourceTree = "<group>"; };
+		B8E9E2D61E1E9146003B298F /* ValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValueFormatter.swift; path = chart/ValueFormatter.swift; sourceTree = "<group>"; };
 		B8F1B2231DC0D37D001A120E /* Feature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Feature.swift; path = analytics/Feature.swift; sourceTree = "<group>"; };
 		B8F1B2251DC5A9C7001A120E /* ZaiAnalyticsClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZaiAnalyticsClient.swift; path = analytics/ZaiAnalyticsClient.swift; sourceTree = "<group>"; };
 		B8F1B2291DC5AFDF001A120E /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = core/Utils.swift; sourceTree = "<group>"; };
@@ -465,6 +467,7 @@
 			children = (
 				B8E9E2D21E1D186E003B298F /* ChartViewController.swift */,
 				B8E9E2D41E1D2108003B298F /* CandleChart.swift */,
+				B8E9E2D61E1E9146003B298F /* ValueFormatter.swift */,
 			);
 			name = chart;
 			sourceTree = "<group>";
@@ -702,6 +705,7 @@
 				B84113D51E141C6F000EB0F8 /* LongPosition+CoreDataProperties.swift in Sources */,
 				B84113DC1E141C6F000EB0F8 /* SellOrder.swift in Sources */,
 				B85E8E301D6F3DFB00C029C8 /* Currency.swift in Sources */,
+				B8E9E2D71E1E9146003B298F /* ValueFormatter.swift in Sources */,
 				B84113D91E141C6F000EB0F8 /* Position.swift in Sources */,
 				B85E8E471D6F3E4D00C029C8 /* Fund.swift in Sources */,
 				B84113DF1E141C6F000EB0F8 /* ShortPosition+CoreDataProperties.swift in Sources */,

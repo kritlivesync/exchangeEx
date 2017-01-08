@@ -99,6 +99,7 @@ class ZaifApi : Api {
                         board.addBid(price: quote[0].doubleValue, amount: quote[1].doubleValue)
                     }
                 }
+                callback(nil, board)
             }
         }
     }
