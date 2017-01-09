@@ -17,7 +17,6 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
         self.orders = [ActiveOrder]()
         self.view = view
         self.view.tableFooterView = UIView()
-        self.tappedRow = -1
         
         super.init()
         self.view.delegate = self
@@ -30,27 +29,19 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.orders.count + 1 // + header
+        return self.orders.count
     }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return 20.0
-        } else {
-            return 70.0
-        }
+        return 70.0
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "orderListViewCell", for: indexPath) as! OrderListViewCell
         let row = indexPath.row
-        if row == 0 {
-            cell.setOrder(order: nil)
-        } else {
-            let order = self.orders[row - 1]
-            cell.setOrder(order: order)
-            cell.delegate = self
-        }
+        let order = self.orders[row]
+        cell.setOrder(order: order)
+        cell.delegate = self
 
         return cell
     }
@@ -73,22 +64,12 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
     }
     
     func pushedCancelButton(cell _: UITableViewCell, order: ActiveOrder) {
-        let repository = OrderRepository.getInstance()
-        let api = self.trader.exchange.api
-        if let buyOrder = repository.findBuyOrderByOrderId(orderId: order.id, api: api) {
-            buyOrder.cancel() { err in
-                if err == nil {
-                    repository.delete(buyOrder)
+        self.trader.cancelOrder(id: order.id) { err in
+            if let e = err {
+                if e.errorType == .INVALID_ORDER {
+                    self.trader.exchange.api.cancelOrder(order: order) { _ in }
                 }
             }
-        } else if let sellOrder = repository.findSellOrderByOrderId(orderId: order.id, api: api) {
-            sellOrder.cancel() { err in
-                if err == nil {
-                    repository.delete(sellOrder)
-                }
-            }
-        } else {
-            api.cancelOrder(order: order) { _ in }
         }
     }
     
@@ -118,7 +99,6 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
     
     fileprivate var orders: [ActiveOrder]
     fileprivate let view: UITableView
-    fileprivate var tappedRow: Int
     
     var trader: Trader! = nil
     var orderMonitor: ActiveOrderMonitor?

@@ -29,17 +29,9 @@ class OrderListViewCell : UITableViewCell {
     
     internal func setOrder(order: ActiveOrder?) {
         guard let order = order else {
-            let fontName = self.orderTimeLabel.font.fontName
-            let fontSize = CGFloat(17.0)
-            self.orderTimeLabel.text = "注文日時"
-            self.orderTimeLabel.font = UIFont(name: fontName, size: fontSize)
-            self.orderTimeLabel.textColor = UIColor.black
-            self.orderPriceLabel.text = "価格"
-            self.orderPriceLabel.font = UIFont(name: fontName, size: fontSize)
-            self.orderPriceLabel.textColor = UIColor.black
-            self.orderAmountLabel.text = "数量"
-            self.orderAmountLabel.font = UIFont(name: fontName, size: fontSize)
-            self.orderAmountLabel.textColor = UIColor.black
+            self.orderTimeLabel.text = "-"
+            self.orderPriceLabel.text = "-"
+            self.orderAmountLabel.text = "-"
             self.cancelAction = nil
             return
         }

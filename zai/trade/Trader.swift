@@ -21,9 +21,7 @@ public enum TraderState : String {
 open class Trader: NSManagedObject, FundDelegate {
     
     func addPosition(_ position: Position) {
-        let positions = self.mutableOrderedSetValue(forKey: "positions")
-        positions.add(position)
-        Database.getDb().saveContext()
+        self.addToPositions(position)
     }
     
     func createLongPosition(_ currencyPair: ApiCurrencyPair, price: Double?, amount: Double, cb: @escaping (ZaiError?, Position?) -> Void) {
@@ -84,14 +82,30 @@ open class Trader: NSManagedObject, FundDelegate {
         }
     }
     
+    func cancelOrder(id: String, cb: @escaping (ZaiError?) -> Void) {
+        for position in self.positions {
+        let pos = position as! Position
+            if let order = pos.order {
+                if order.orderId == id {
+                    order.cancel() { err in
+                        if err == nil {
+                            OrderRepository.getInstance().delete(order)
+                        }
+                    }
+                }
+            }
+        }
+        cb(ZaiError(errorType: .INVALID_ORDER))
+    }
+    
     func deletePosition(id: String) -> Bool {
         guard let position = self.getPosition(id: id) else {
             return false
         }
-        if let order = position.order {
-            let activeOrder = ActiveOrder(id: order.orderId!, action: order.action, currencyPair: ApiCurrencyPair(rawValue: order.currencyPair)!, price: order.orderPrice!.doubleValue, amount: order.orderAmount.doubleValue, timestamp: order.orderTime!.int64Value)
+        if let id = position.order?.orderId {
+            let activeOrder = ActiveOrder(id: id, action: "bid", currencyPair: .BTC_JPY, price: 0.0, amount: 0.0, timestamp: 0)
             self.exchange.api.cancelOrder(order: activeOrder) { _ in }
-            order.delegate = nil
+            position.order?.delegate = nil
         }
         position.delete()
         return true

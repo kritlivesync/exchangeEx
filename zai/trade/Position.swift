@@ -87,9 +87,7 @@ public class Position: NSManagedObject, PositionProtocol, PromisedOrderDelegate 
     }
     
     func addLog(_ log: TradeLog) {
-        let logs = self.mutableOrderedSetValue(forKey: "tradeLogs")
-        logs.add(log)
-        Database.getDb().saveContext()
+        self.addToTradeLogs(log)
     }
     
     func open() {
@@ -153,6 +151,7 @@ public class Position: NSManagedObject, PositionProtocol, PromisedOrderDelegate 
                 order.activeOrderMonitor = ActiveOrderMonitor(currencyPair: ApiCurrencyPair(rawValue: order.currencyPair)!, api: self.trader!.exchange.api)
                 order.activeOrderMonitor?.delegate = order
             }
+            order.api = self.trader!.exchange.api
             return order
         }
         set {

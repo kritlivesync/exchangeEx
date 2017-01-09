@@ -89,6 +89,7 @@ class OrderRepository {
                 let cp = ApiCurrencyPair(rawValue: order.currencyPair)!
                 order.activeOrderMonitor = ActiveOrderMonitor(currencyPair: cp, api: api)
                 order.activeOrderMonitor?.delegate = order
+                order.api = api
                 return order
             }
         } catch {

@@ -41,27 +41,19 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.positions.count + 1 // + header
+        return self.positions.count
     }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return 70.0
-        } else {
-            return 70.0
-        }
+        return 70.0
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "positionListViewCell", for: indexPath) as! PositionListViewCell
         let row = indexPath.row
-        if row == 0 {
-            cell.setPosition(nil, btcJpyPrice: self.btcPrice)
-        } else {
-            let position = self.positions[row - 1]
-            cell.setPosition(position, btcJpyPrice: self.btcPrice)
-            cell.delegate = self
-        }
+        let position = self.positions[row]
+        cell.setPosition(position, btcJpyPrice: self.btcPrice)
+        cell.delegate = self
         
         return cell
     }
@@ -105,11 +97,8 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
     func recievedJpyPrice(price: Int) {
         self.btcPrice = price
         for cell in self.view.visibleCells {
-            let index = self.view.indexPath(for: cell)
-            if index?.row != 0 {
-                let c = cell as! PositionListViewCell
-                c.setPosition(c.position, btcJpyPrice: self.btcPrice)
-            }
+            let c = cell as! PositionListViewCell
+            c.setPosition(c.position, btcJpyPrice: self.btcPrice)
         }
     }
     

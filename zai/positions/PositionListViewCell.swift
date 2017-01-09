@@ -30,23 +30,11 @@ class PositionListViewCell : UITableViewCell {
     
     func setPosition(_ position: Position?, btcJpyPrice: Int) {
         guard let p = position else {
-            let fontName = self.priceLabel.font.fontName
-            let fontSize = CGFloat(17.0)
-            self.priceLabel.text = "取得価格"
-            self.priceLabel.textColor = UIColor.black
-            self.priceLabel.font = UIFont(name: fontName, size: fontSize)
-            self.amountLabel.text = "数量"
-            self.amountLabel.textColor = UIColor.black
-            self.amountLabel.font = UIFont(name: fontName, size: fontSize)
-            self.balanceLabel.text = "(残高)"
-            self.balanceLabel.textColor = UIColor.black
-            self.balanceLabel.font = UIFont(name: fontName, size: fontSize)
-            self.profitLabel.text = "損益"
-            self.profitLabel.textColor = UIColor.black
-            self.profitLabel.font = UIFont(name: fontName, size: fontSize)
-            self.statusLabel.text = "状態"
-            self.statusLabel.textColor = UIColor.black
-            self.statusLabel.font = UIFont(name: fontName, size: fontSize)
+            self.priceLabel.text = "-"
+            self.amountLabel.text = "-"
+            self.balanceLabel.text = "(-)"
+            self.profitLabel.text = "-"
+            self.statusLabel.text = "-"
             self.deleteAction = nil
             self.unwind100Action = nil
             self.unwind50Action = nil

@@ -260,7 +260,6 @@
 			children = (
 				B827CD111D7C4FDD00E9847B /* PositionsViewController.swift */,
 				B827CD131D7C523700E9847B /* PositionListView.swift */,
-				B8521A751DF8542F0025B60E /* BoardViewCell.swift */,
 				B827CD151D806DF900E9847B /* PositionListViewCell.swift */,
 				B80920361DFD8817005667D4 /* PositionFundView.swift */,
 				B84113E31E15F7D5000EB0F8 /* PositionEditViewController.swift */,
@@ -304,6 +303,7 @@
 				B81AF6441DFF059600D4F706 /* BoardViewController.swift */,
 				B8521A711DF844380025B60E /* Board.swift */,
 				B8521A731DF84DE80025B60E /* BoardView.swift */,
+				B8521A751DF8542F0025B60E /* BoardViewCell.swift */,
 			);
 			name = board;
 			sourceTree = "<group>";
