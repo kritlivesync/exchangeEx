@@ -18,6 +18,31 @@ struct Trade {
     let timestamp: Int64
 }
 
+struct Tick {
+    
+    init(lastPrice: Double, highPrice: Double, lowPrice: Double, vwap: Double, volume: Double, bid: Double, ask: Double) {
+        self.lastPrice = lastPrice
+        self.highPrice = highPrice
+        self.lowPrice = lowPrice
+        self.vwap = vwap
+        self.volume = volume
+        self.bid = bid
+        self.ask = ask
+    }
+
+    init() {
+        self.init(lastPrice: 0.0, highPrice: 0.0, lowPrice: 0.0, vwap: 0.0, volume: 0.0, bid: 0.0, ask: 0.0)
+    }
+    
+    let lastPrice: Double
+    let highPrice: Double
+    let lowPrice: Double
+    let vwap: Double
+    let volume: Double
+    let bid: Double
+    let ask: Double
+}
+
 
 class Candle {
     init(startDate: Int64, endDate: Int64) {
@@ -27,7 +52,7 @@ class Candle {
     }
     
     func add(trade: Trade) -> Bool {
-        if trade.timestamp < self.startDate || self.endDate < trade.timestamp {
+        if trade.timestamp < self.startDate || self.endDate <= trade.timestamp {
             return false
         }
         self.trades.append(trade)
@@ -104,8 +129,8 @@ class Candle {
     }
     
 
-    let startDate: Int64
-    let endDate: Int64
+    var startDate: Int64
+    var endDate: Int64
     var trades: [Trade]
 }
 
@@ -147,14 +172,18 @@ class CandleChart : Monitorable {
         self.candles = self.candles.reversed()
     }
     
-    func addTrade(trade: Trade) -> Bool {
+    open func addTrade(trade: Trade) -> Bool {
         if trade.timestamp < self.candles.first!.startDate {
             return false
         } else if self.candles.last!.endDate < trade.timestamp {
             let period = self.calculatePeriod(date: trade.timestamp)
             let candle = Candle(startDate: period.0, endDate: period.1)
             _ = candle.add(trade: trade)
-            self.candles.remove(at: 0)
+            let blankPeriodCount = (candle.startDate - self.candles.last!.endDate) / self.interval.rawValue
+            for _ in 0 ..< blankPeriodCount {
+                self.addNextPeriod()
+            }
+            self.candles.removeFirst()
             self.candles.append(candle)
             return true
         } else {
@@ -167,10 +196,43 @@ class CandleChart : Monitorable {
         }
     }
     
+    fileprivate func addNextPeriod() {
+        let naxtStartDate = self.candles.last!.endDate
+        let candle = Candle(startDate: naxtStartDate, endDate: naxtStartDate + self.interval.rawValue)
+        self.candles.removeFirst()
+        self.candles.append(candle)
+    }
+    
+    open var average: Double {
+        get {
+            var sum = 0.0
+            var validCount = 0.0
+            for candle in self.candles {
+                if candle.isEmpty == false {
+                    sum += ((candle.highPrice! + candle.lowPrice!) / 2)
+                    validCount += 1.0
+                }
+            }
+            return sum / validCount
+        }
+    }
+    
     fileprivate func calculatePeriod(date: Int64) -> (Int64, Int64) {
         let startDate = date - (date % self.interval.rawValue)
         let endDate = startDate + self.interval.rawValue
         return (startDate, endDate)
+    }
+    
+    fileprivate func compensateBlankPeriod() {
+        let reversed = self.candles.reversed()
+        var nextStartDate = self.candles.last!.startDate
+        for candle in reversed {
+            if candle.startDate < nextStartDate {
+                candle.trades.removeAll(keepingCapacity: false)
+                candle.startDate = nextStartDate
+                candle.endDate = nextStartDate + self.interval.rawValue
+            }
+        }
     }
     
     override func monitor() {

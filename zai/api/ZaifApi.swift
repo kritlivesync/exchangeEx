@@ -54,6 +54,11 @@ fileprivate extension Order {
 }
 
 
+protocol ZaiApiDelegate {
+    func privateApiCalled(apiName: String)
+}
+
+
 class ZaifApi : Api {
     init(apiKey: String, secretKey: String, nonce: NonceProtocol?=nil) {
         self.api = PrivateApi(apiKey: apiKey, secretKey: secretKey, nonce: nonce)
@@ -69,6 +74,45 @@ class ZaifApi : Api {
                     return
                 }
                 callback(nil, price)
+            }
+        }
+    }
+    
+    func getTicker(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, Tick) -> Void) {
+        PublicApi.ticker(currencyPair.zaifCurrencyPair) { (err, res) in
+            if err != nil {
+                callback(ApiError(errorType: err!.errorType.apiError, message: err!.message), Tick())
+            } else {
+                guard let last = res?["last"].double else {
+                    callback(ApiError(errorType: .UNKNOWN_ERROR), Tick())
+                    return
+                }
+                guard let high = res?["high"].double else {
+                    callback(ApiError(errorType: .UNKNOWN_ERROR), Tick())
+                    return
+                }
+                guard let low = res?["low"].double else {
+                    callback(ApiError(errorType: .UNKNOWN_ERROR), Tick())
+                    return
+                }
+                guard let vwap = res?["vwap"].double else {
+                    callback(ApiError(errorType: .UNKNOWN_ERROR), Tick())
+                    return
+                }
+                guard let volume = res?["volume"].double else {
+                    callback(ApiError(errorType: .UNKNOWN_ERROR), Tick())
+                    return
+                }
+                guard let bid = res?["bid"].double else {
+                    callback(ApiError(errorType: .UNKNOWN_ERROR), Tick())
+                    return
+                }
+                guard let ask = res?["ask"].double else {
+                    callback(ApiError(errorType: .UNKNOWN_ERROR), Tick())
+                    return
+                }
+                let tick = Tick(lastPrice: last, highPrice: high, lowPrice: low, vwap: vwap, volume: volume, bid: bid, ask: ask)
+                callback(nil, tick)
             }
         }
     }
@@ -121,6 +165,7 @@ class ZaifApi : Api {
                 }
                 callback(nil, balance)
             }
+            self.delegate?.privateApiCalled(apiName: "getBalance")
         }
     }
     
@@ -155,6 +200,7 @@ class ZaifApi : Api {
                 activeOrders[id] = activeOrder
             }
             callback(nil, activeOrders)
+            self.delegate?.privateApiCalled(apiName: "activeOrders")
         }
     }
     
@@ -213,6 +259,7 @@ class ZaifApi : Api {
             let orderedPrice = ordered["order_price"]!.doubleValue
             
             callback(nil, orderId, orderedPrice)
+            self.delegate?.privateApiCalled(apiName: "trade")
         }
     }
     
@@ -231,6 +278,7 @@ class ZaifApi : Api {
                 return
             }
             callback(nil)
+            self.delegate?.privateApiCalled(apiName: "cancelOrder")
         }
     }
     
@@ -249,4 +297,5 @@ class ZaifApi : Api {
     var rawApi: Any { get { return self.api } }
     
     let api: PrivateApi
+    var delegate: ZaiApiDelegate?
 }

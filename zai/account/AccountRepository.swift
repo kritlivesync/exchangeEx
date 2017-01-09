@@ -113,7 +113,9 @@ class AccountRepository {
         exchange.name = "zaif"
         exchange.apiKey = NSData(bytes: encryptedApiKey, length: encryptedApiKey.count)
         exchange.secretKey = NSData(bytes: encryptedSecret, length: encryptedSecret.count)
-        exchange.serviceApi = ZaifApi(apiKey: apiKey, secretKey: secretKey)
+        let api = ZaifApi(apiKey: apiKey, secretKey: secretKey)
+        api.delegate = exchange
+        exchange.serviceApi = api
         guard let trader = TraderRepository.getInstance().create("trader", exchange: exchange) else {
             return false
         }

@@ -149,10 +149,6 @@ class LongPosition: Position {
         }
     }
     
-    override func delete() {
-        PositionRepository.getInstance().deleteLongPosition(self)
-    }
-    
     // OrderDelegate
     override func orderPromised(order: Order, price: Double, amount: Double) {
         self.order = nil
@@ -195,8 +191,12 @@ class LongPosition: Position {
         case PositionState.OPENING.rawValue:
             let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .CANCEL, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: price, amount: Double(order.orderAmount), positionId: self.id)
             self.addLog(log)
-            self.close()
-            self.delegate?.closedPosition(position: self)
+            if self.balance < 0.0001 {
+                self.close()
+                self.delegate?.closedPosition(position: self)
+            } else {
+                self.open()
+            }
         case PositionState.UNWINDING.rawValue:
             if self.balance < 0.0001 {
                 self.close()

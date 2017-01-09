@@ -64,20 +64,23 @@ class ChartViewController : UIViewController, CandleChartDelegate, BitCoinDelega
             return
         }
         var entries = [CandleChartDataEntry]()
+        var emptyEntries = [CandleChartDataEntry]()
         let formatter = XValueFormatter()
         for i in 0 ..< chart.candles.count {
             let candle = chart.candles[i]
             if candle.isEmpty {
-                continue
+               let average = chart.average
+                let entry = CandleChartDataEntry(x: Double(i), shadowH: average, shadowL: average, open: average, close: average)
+                emptyEntries.append(entry)
+            } else {
+                let entry = CandleChartDataEntry(x: Double(i), shadowH: candle.highPrice!, shadowL: candle.lowPrice!, open: candle.openPrice!, close: candle.lastPrice!)
+                entries.append(entry)
             }
-            let entry = CandleChartDataEntry(x: Double(i), shadowH: candle.highPrice!, shadowL: candle.lowPrice!, open: candle.openPrice!, close: candle.lastPrice!)
-            entries.append(entry)
             
             formatter.times[i] = formatHms(timestamp: candle.startDate)
         }
-        let dataSet = CandleChartDataSet(values: entries, label: "1分足")
+        let dataSet = CandleChartDataSet(values: entries, label: "data")
         dataSet.axisDependency = YAxis.AxisDependency.left;
-        
         dataSet.shadowColorSameAsCandle = true
         dataSet.shadowWidth = 0.7
         dataSet.decreasingColor = Color.askQuoteColor
@@ -85,11 +88,30 @@ class ChartViewController : UIViewController, CandleChartDelegate, BitCoinDelega
         dataSet.increasingColor = Color.bidQuoteColor
         dataSet.increasingFilled = true
         dataSet.neutralColor = UIColor.black
+        dataSet.setDrawHighlightIndicators(false)
+        
+        let emptyDataSet = CandleChartDataSet(values: emptyEntries, label: "empty")
+        emptyDataSet.axisDependency = YAxis.AxisDependency.left;
+        emptyDataSet.shadowColorSameAsCandle = true
+        emptyDataSet.shadowWidth = 0.7
+        emptyDataSet.decreasingColor = Color.askQuoteColor
+        emptyDataSet.decreasingFilled = true
+        emptyDataSet.increasingColor = Color.bidQuoteColor
+        emptyDataSet.increasingFilled = true
+        emptyDataSet.neutralColor = UIColor.white
+        emptyDataSet.setDrawHighlightIndicators(false)
         
         chartView.xAxis.valueFormatter = formatter
         chartView.rightAxis.valueFormatter = YValueFormatter()
         
-        chartView.data = CandleChartData(dataSet: dataSet)
+        var dataSets = [IChartDataSet]()
+        if dataSet.entryCount > 0 {
+            dataSets.append(dataSet)
+        }
+        if emptyDataSet.entryCount > 0 {
+            dataSets.append(emptyDataSet)
+        }
+        chartView.data = CandleChartData(dataSets: dataSets)
     }
     
     // BitCoinDelegate

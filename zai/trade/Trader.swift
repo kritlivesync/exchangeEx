@@ -88,8 +88,11 @@ open class Trader: NSManagedObject, FundDelegate {
         guard let position = self.getPosition(id: id) else {
             return false
         }
-        let positions = self.mutableOrderedSetValue(forKey: "positions")
-        positions.remove(position)
+        if let order = position.order {
+            let activeOrder = ActiveOrder(id: order.orderId!, action: order.action, currencyPair: ApiCurrencyPair(rawValue: order.currencyPair)!, price: order.orderPrice!.doubleValue, amount: order.orderAmount.doubleValue, timestamp: order.orderTime!.int64Value)
+            self.exchange.api.cancelOrder(order: activeOrder) { _ in }
+            order.delegate = nil
+        }
         position.delete()
         return true
     }
@@ -122,9 +125,35 @@ open class Trader: NSManagedObject, FundDelegate {
         var positions = [Position]()
         for position in self.positions {
             let p = position as! Position
-            positions.append(p)
+            let status = PositionState(rawValue: p.status.intValue)!
+            if status.isDelete == false {
+                positions.append(p)
+            }
         }
         return positions
+    }
+    
+    var sortedPositions: [Position] {
+        var opens = [Position]()
+        var closeds = [Position]()
+        var openings = [Position]()
+        var unwindings = [Position]()
+        for position in self.positions {
+            let p = position as! Position
+            let status = PositionState(rawValue: p.status.intValue)!
+            switch status {
+            case .OPEN:
+                opens.append(p)
+            case .CLOSED:
+                closeds.append(p)
+            case .OPENING:
+                openings.append(p)
+            case .UNWINDING:
+                unwindings.append(p)
+            default: break
+            }
+        }
+        return opens + unwindings + openings + closeds
     }
     
     var activeOrders: [Order] {

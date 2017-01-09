@@ -35,6 +35,7 @@ enum PositionState: Int {
     case CLOSED=2
     case UNWINDING=3
     case WAITING=4
+    case DELETED=5
     
     func toString() -> String {
         switch self {
@@ -48,6 +49,8 @@ enum PositionState: Int {
             return "Unwinding"
         case .WAITING:
             return "Waiting"
+        case .DELETED:
+            return "Deleted"
         }
     }
     
@@ -55,7 +58,7 @@ enum PositionState: Int {
         switch self {
         case .OPENING, .OPEN, .UNWINDING:
             return true
-        case .CLOSED, .WAITING:
+        default:
             return false
         }
     }
@@ -71,16 +74,16 @@ enum PositionState: Int {
     var isWaiting: Bool {
         return self == .WAITING
     }
+    
+    var isDelete: Bool {
+        return self == .DELETED
+    }
 }
 
 
 public class Position: NSManagedObject, PositionProtocol, PromisedOrderDelegate {
     func unwind(_ amount: Double?, price: Double?, cb: @escaping (ZaiError?) -> Void) {
         cb(ZaiError(errorType: .UNKNOWN_ERROR, message: "not implemented"))
-    }
-    
-    func delete() {
-        return
     }
     
     func addLog(_ log: TradeLog) {
@@ -96,6 +99,11 @@ public class Position: NSManagedObject, PositionProtocol, PromisedOrderDelegate 
     
     func close() {
         self.status = NSNumber(value: PositionState.CLOSED.rawValue)
+        Database.getDb().saveContext()
+    }
+    
+    func delete() {
+        self.status = NSNumber(value: PositionState.DELETED.rawValue)
         Database.getDb().saveContext()
     }
     

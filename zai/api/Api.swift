@@ -23,8 +23,10 @@ public enum ApiCurrency : String {
     case JPY = "jpy"
 }
 
+
 protocol Api {
     func getPrice(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, Double) -> Void)
+    func getTicker(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, Tick) -> Void)
     func getBoard(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, Board) -> Void)
     func getBalance(currencies: [ApiCurrency], callback: @escaping (ApiError?, [String:Double]) -> Void)
     func getActiveOrders(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, [String:ActiveOrder]) -> Void)

@@ -19,7 +19,7 @@ extension NSData {
     }
 }
 
-public class ZaifExchange: Exchange {
+public class ZaifExchange: Exchange, ZaiApiDelegate {
 
     override func validateApiKey(_ cb: @escaping (ZaiError?) -> Void) {
         let rawApi = self.api.rawApi as! PrivateApi
@@ -40,7 +40,9 @@ public class ZaifExchange: Exchange {
             return false
         }
         let nonce = TimeNonce(initialValue: self.nonce.int64Value)
-        self.serviceApi = ZaifApi(apiKey: apiKey, secretKey: secretKey, nonce: nonce)
+        let api = ZaifApi(apiKey: apiKey, secretKey: secretKey, nonce: nonce)
+        api.delegate = self
+        self.serviceApi = api
         return true
     }
     
@@ -59,6 +61,10 @@ public class ZaifExchange: Exchange {
         return true
     }
     
+    // ZaiApiDelegate
+    func privateApiCalled(apiName: String) {
+        self.nonce = (self.serviceApi?.rawApi as! PrivateApi).nonceValue as NSNumber
+    }
     
     override var api: Api {
         get {

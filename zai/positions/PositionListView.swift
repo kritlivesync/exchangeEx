@@ -1,4 +1,4 @@
-//
+    //
 //  PositionListView.swift
 //  zai
 //
@@ -21,7 +21,7 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
     
     init(view: UITableView, trader: Trader) {
         self.trader = trader
-        self.positions = trader.activePositions
+        self.positions = trader.allPositions
         self.view = view
         self.view.tableFooterView = UIView()
         self.view.contentInset = UIEdgeInsetsMake(-1.0, 0.0, 0.0, 0.0);
@@ -133,11 +133,13 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
         }
         var amount = position.balance * rate
         amount = max(amount, 0.0001)
-        self.trader.unwindPosition(id: position.id, price: nil, amount: amount) { (err, _) in
-            if err != nil {
-                position.open()
+        self.trader.exchange.api.getTicker(currencyPair: position.currencyPair) { (err, tick) in
+            self.trader.unwindPosition(id: position.id, price: tick.bid, amount: amount) { (err, _) in
+                if err != nil {
+                    position.open()
+                }
+                cell.setPosition(position, btcJpyPrice: self.btcPrice)
             }
-            cell.setPosition(position, btcJpyPrice: self.btcPrice)
         }
     }
     

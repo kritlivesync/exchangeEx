@@ -93,10 +93,6 @@ class ShortPosition: Position {
         }
     }
     
-    override func delete() {
-        PositionRepository.getInstance().deleteShortPosition(self)
-    }
-    
     // OrderDelegate
     override func orderPromised(order: Order, price: Double, amount: Double) {
         return

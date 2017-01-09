@@ -69,7 +69,7 @@ class PositionListViewCell : UITableViewCell {
         self.unwind50Action = nil
         self.unwind20Action = nil
         self.editingAction = nil
-        if status.isOpen || status.isClosed || status.isWaiting {
+        if status.isDelete == false {
             self.deleteAction = UITableViewRowAction(style: .default, title: "Delete") { (_, _) in
                 self.delegate?.pushedDeleteButton(cell: self, position: self.position!)
             }
