@@ -12,22 +12,18 @@ import UIKit
 import Charts
 
 
-class ChartViewController : UIViewController, CandleChartDelegate, BitCoinDelegate, PositionDelegate, FundDelegate {
+class ChartViewController : UIViewController, CandleChartDelegate, PositionDelegate, FundDelegate, BitCoinDelegate, BestQuoteViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.barTintColor = Color.keyColor
         
-        self.bestAskPriceLabel.text = "0"
-        self.bestAskAmountLabel.text = "0.0"
-        self.bestBidPriceLabel.text = "0"
-        self.bestBidAmountLabel.text = "0.0"
-        self.takeAskButton.backgroundColor = Color.keyColor
-        self.takeBidButton.backgroundColor = Color.keyColor
-        
         let api = getAccount()!.activeExchange.api
-        self.bitcoint = BitCoin(api: api)
         self.fund = Fund(api: api)
+        self.bitcoin = BitCoin(api: api)
+        
+        self.bestQuoteView = BestQuoteView(view: bestQuoteTableView)
+        self.bestQuoteView.delegate = self
         
         self.candleStickChartView.legend.enabled = false
         self.candleStickChartView.chartDescription?.enabled = false
@@ -48,14 +44,14 @@ class ChartViewController : UIViewController, CandleChartDelegate, BitCoinDelega
     
     open override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.bitcoint.delegate = self
         self.fund.delegate = self
+        self.bitcoin.delegate = self
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.bitcoint.delegate = nil
         self.fund.delegate = nil
+        self.bitcoin.delegate = nil
     }
     
     // CandleChartDelegate
@@ -114,21 +110,6 @@ class ChartViewController : UIViewController, CandleChartDelegate, BitCoinDelega
         chartView.data = CandleChartData(dataSets: dataSets)
     }
     
-    // BitCoinDelegate
-    func recievedBestJpyBid(price: Int, amount: Double) {
-        self.bestBidPriceLabel.text = formatValue(price)
-        self.bestBidAmountLabel.text = formatValue(amount)
-        self.bestBidPrice = Double(price)
-        self.bestBidAmount = amount
-    }
-    
-    func recievedBestJpyAsk(price: Int, amount: Double) {
-        self.bestAskPriceLabel.text = formatValue(price)
-        self.bestAskAmountLabel.text = formatValue(amount)
-        self.bestAskPrice = Double(price)
-        self.bestAskAmount = amount
-    }
-    
     // PositionDelegate
     func opendPosition(position: Position) {
         return
@@ -147,9 +128,21 @@ class ChartViewController : UIViewController, CandleChartDelegate, BitCoinDelega
         }
     }
     
-    @IBAction func pushTakeBestAskButton(_ sender: Any) {
-        let price = self.bestAskPrice
-        let amount = min(self.bestAskAmount, 1.0)
+    // BitCoinDelegate
+    func recievedBestJpyBid(price: Int, amount: Double) {
+        let quote = Quote(price: Double(price), amount: amount, type: .BID)
+        self.bestQuoteView.setBestBid(quote: quote)
+    }
+    
+    func recievedBestJpyAsk(price: Int, amount: Double) {
+        let quote = Quote(price: Double(price), amount: amount, type: .ASK)
+        self.bestQuoteView.setBestAsk(quote: quote)
+    }
+    
+    // BestQuoteViewDelegate
+    func orderBuy(quote: Quote) {
+        let price = quote.price
+        let amount = min(quote.amount, 1.0)
         
         guard let trader = getAccount()?.activeExchange.trader else {
             return
@@ -164,9 +157,9 @@ class ChartViewController : UIViewController, CandleChartDelegate, BitCoinDelega
         }
     }
 
-    @IBAction func pushTakeBestBidButton(_ sender: Any) {
-        let price = self.bestAskPrice
-        let amount = min(self.bestAskAmount, 1.0)
+    func orderSell(quote: Quote) {
+        let price = quote.price
+        let amount = min(quote.amount, 1.0)
         
         guard let trader = getAccount()?.activeExchange.trader else {
             return
@@ -189,22 +182,11 @@ class ChartViewController : UIViewController, CandleChartDelegate, BitCoinDelega
     
     
     fileprivate var fund: Fund!
-    fileprivate var bitcoint: BitCoin!
-    fileprivate var bestAskPrice: Double = 0.0
-    fileprivate var bestAskAmount: Double = 0.0
-    fileprivate var bestBidPrice: Double = 0.0
-    fileprivate var bestBidAmount: Double = 0.0
-    
+    fileprivate var bitcoin: BitCoin!
     var candleChart: CandleChart!
+    var bestQuoteView: BestQuoteView!
     @IBOutlet weak var candleStickChartView: CandleStickChartView!
-
-
     @IBOutlet weak var fundLabel: UILabel!
-    @IBOutlet weak var bestAskPriceLabel: UILabel!
-    @IBOutlet weak var bestAskAmountLabel: UILabel!
-    @IBOutlet weak var bestBidPriceLabel: UILabel!
-    @IBOutlet weak var bestBidAmountLabel: UILabel!
-    @IBOutlet weak var takeAskButton: UIButton!
-    @IBOutlet weak var takeBidButton: UIButton!
+    @IBOutlet weak var bestQuoteTableView: UITableView!
     
 }

@@ -63,7 +63,10 @@ public class ZaifExchange: Exchange, ZaiApiDelegate {
     
     // ZaiApiDelegate
     func privateApiCalled(apiName: String) {
-        self.nonce = (self.serviceApi?.rawApi as! PrivateApi).nonceValue as NSNumber
+        guard let nonce = (self.serviceApi?.rawApi as? PrivateApi)?.nonceValue else {
+            return
+        }
+        self.nonce = NSNumber(value: nonce)
     }
     
     override var api: Api {

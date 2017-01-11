@@ -41,8 +41,8 @@ class BoardViewCell : UITableViewCell {
             return
         }
         
-        self.priceLabel.text = Int(quote.price).description
-        self.amountLabel.text = quote.amount.description
+        self.priceLabel.text = formatValue(Int(quote.price))
+        self.amountLabel.text = formatValue(quote.amount)
         if quote.type == Quote.QuoteType.ASK {
             let color = Color.askQuoteColor
             self.priceLabel.textColor = color
