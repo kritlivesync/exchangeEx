@@ -52,6 +52,12 @@ class AssetsViewController: UIViewController, FundDelegate {
         }
     }
     
+    @IBAction func pushSettingsButton(_ sender: Any) {
+        let storyboard: UIStoryboard = self.storyboard!
+        let settings = storyboard.instantiateViewController(withIdentifier: "settingsViewController") as! UINavigationController
+        self.present(settings, animated: true, completion: nil)
+    }
+
     var account: Account?
     var fund: Fund!
     

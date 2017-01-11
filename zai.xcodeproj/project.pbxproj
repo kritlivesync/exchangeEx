@@ -51,6 +51,7 @@
 		B843CFEA1E12C5C400CC6656 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843CFE91E12C5C300CC6656 /* Color.swift */; };
 		B84E60851E251AD2004EA77C /* BestQuoteViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84E60841E251AD1004EA77C /* BestQuoteViewCell.swift */; };
 		B84E60871E251E63004EA77C /* BestQuoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84E60861E251E63004EA77C /* BestQuoteView.swift */; };
+		B84E608A1E265B7D004EA77C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84E60891E265B7D004EA77C /* SettingsViewController.swift */; };
 		B8521A721DF844380025B60E /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A711DF844380025B60E /* Board.swift */; };
 		B8521A741DF84DE80025B60E /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A731DF84DE80025B60E /* BoardView.swift */; };
 		B8521A761DF8542F0025B60E /* BoardViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A751DF8542F0025B60E /* BoardViewCell.swift */; };
@@ -71,6 +72,11 @@
 		B85E8E4E1D6F3E5E00C029C8 /* TradeLogRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E4B1D6F3E5E00C029C8 /* TradeLogRepository.swift */; };
 		B85E8E5E1D6F477900C029C8 /* TraderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E5D1D6F477900C029C8 /* TraderView.swift */; };
 		B85E8E601D6F541800C029C8 /* TraderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E5F1D6F541800C029C8 /* TraderViewCell.swift */; };
+		B893793D1E26788500F693A3 /* ReadOnlySettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B893793C1E26788400F693A3 /* ReadOnlySettingCell.xib */; };
+		B893793F1E2678A400F693A3 /* ReadOnlySettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B893793E1E2678A400F693A3 /* ReadOnlySettingCell.swift */; };
+		B89379411E26822C00F693A3 /* UserAccountSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89379401E26822C00F693A3 /* UserAccountSettingView.swift */; };
+		B89379431E26938700F693A3 /* ValueActionSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B89379421E26938700F693A3 /* ValueActionSettingCell.xib */; };
+		B89379451E26942500F693A3 /* ValueActionSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89379441E26942500F693A3 /* ValueActionSettingCell.swift */; };
 		B8B8457D1D66041D00535638 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B8457B1D66041D00535638 /* Main.storyboard */; settings = {ASSET_TAGS = (4, ); }; };
 		B8B8457F1D66041D00535638 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8B8457E1D66041D00535638 /* Assets.xcassets */; };
 		B8B845821D66041D00535638 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B845801D66041D00535638 /* LaunchScreen.storyboard */; };
@@ -155,6 +161,7 @@
 		B843CFE91E12C5C300CC6656 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Color.swift; path = core/Color.swift; sourceTree = "<group>"; };
 		B84E60841E251AD1004EA77C /* BestQuoteViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BestQuoteViewCell.swift; path = chart/BestQuoteViewCell.swift; sourceTree = "<group>"; };
 		B84E60861E251E63004EA77C /* BestQuoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BestQuoteView.swift; path = chart/BestQuoteView.swift; sourceTree = "<group>"; };
+		B84E60891E265B7D004EA77C /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = settings/SettingsViewController.swift; sourceTree = "<group>"; };
 		B8521A711DF844380025B60E /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Board.swift; path = board/Board.swift; sourceTree = "<group>"; };
 		B8521A731DF84DE80025B60E /* BoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardView.swift; path = board/BoardView.swift; sourceTree = "<group>"; };
 		B8521A751DF8542F0025B60E /* BoardViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardViewCell.swift; path = board/BoardViewCell.swift; sourceTree = "<group>"; };
@@ -175,6 +182,11 @@
 		B85E8E4B1D6F3E5E00C029C8 /* TradeLogRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TradeLogRepository.swift; path = log/TradeLogRepository.swift; sourceTree = "<group>"; };
 		B85E8E5D1D6F477900C029C8 /* TraderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderView.swift; path = main/TraderView.swift; sourceTree = "<group>"; };
 		B85E8E5F1D6F541800C029C8 /* TraderViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderViewCell.swift; path = main/TraderViewCell.swift; sourceTree = "<group>"; };
+		B893793C1E26788400F693A3 /* ReadOnlySettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReadOnlySettingCell.xib; path = settings/ReadOnlySettingCell.xib; sourceTree = "<group>"; };
+		B893793E1E2678A400F693A3 /* ReadOnlySettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReadOnlySettingCell.swift; path = settings/ReadOnlySettingCell.swift; sourceTree = "<group>"; };
+		B89379401E26822C00F693A3 /* UserAccountSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserAccountSettingView.swift; path = settings/UserAccountSettingView.swift; sourceTree = "<group>"; };
+		B89379421E26938700F693A3 /* ValueActionSettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ValueActionSettingCell.xib; path = settings/ValueActionSettingCell.xib; sourceTree = "<group>"; };
+		B89379441E26942500F693A3 /* ValueActionSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValueActionSettingCell.swift; path = settings/ValueActionSettingCell.swift; sourceTree = "<group>"; };
 		B8B845741D66041D00535638 /* zai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = zai.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8B8457C1D66041D00535638 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B8B8457E1D66041D00535638 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -301,6 +313,19 @@
 			name = orders;
 			sourceTree = "<group>";
 		};
+		B84E60881E265AC8004EA77C /* settings */ = {
+			isa = PBXGroup;
+			children = (
+				B84E60891E265B7D004EA77C /* SettingsViewController.swift */,
+				B893793C1E26788400F693A3 /* ReadOnlySettingCell.xib */,
+				B893793E1E2678A400F693A3 /* ReadOnlySettingCell.swift */,
+				B89379401E26822C00F693A3 /* UserAccountSettingView.swift */,
+				B89379421E26938700F693A3 /* ValueActionSettingCell.xib */,
+				B89379441E26942500F693A3 /* ValueActionSettingCell.swift */,
+			);
+			name = settings;
+			sourceTree = "<group>";
+		};
 		B8521A701DF843EB0025B60E /* board */ = {
 			isa = PBXGroup;
 			children = (
@@ -425,6 +450,7 @@
 		B8B845761D66041D00535638 /* zai */ = {
 			isa = PBXGroup;
 			children = (
+				B84E60881E265AC8004EA77C /* settings */,
 				B8E9E2D11E1D182B003B298F /* chart */,
 				B84113FB1E18A88B000EB0F8 /* api */,
 				B84113EA1E1806FE000EB0F8 /* launch */,
@@ -605,6 +631,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B893793D1E26788500F693A3 /* ReadOnlySettingCell.xib in Resources */,
+				B89379431E26938700F693A3 /* ValueActionSettingCell.xib in Resources */,
 				B8B845821D66041D00535638 /* LaunchScreen.storyboard in Resources */,
 				B8B8457F1D66041D00535638 /* Assets.xcassets in Resources */,
 				B8B8457D1D66041D00535638 /* Main.storyboard in Resources */,
@@ -687,6 +715,7 @@
 				B84113D71E141C6F000EB0F8 /* Order+CoreDataProperties.swift in Sources */,
 				B85E8E451D6F3E4D00C029C8 /* Account+CoreDataProperties.swift in Sources */,
 				B8E9E2D51E1D2108003B298F /* CandleChart.swift in Sources */,
+				B89379411E26822C00F693A3 /* UserAccountSettingView.swift in Sources */,
 				B84113E11E141C6F000EB0F8 /* Trader+CoreDataProperties.swift in Sources */,
 				B843CFE61E0E870E00CC6656 /* OrderListView.swift in Sources */,
 				B85E8E4C1D6F3E5E00C029C8 /* TradeLog.swift in Sources */,
@@ -703,6 +732,7 @@
 				B85E8E4D1D6F3E5E00C029C8 /* TradeLog+CoreDataProperties.swift in Sources */,
 				B84113E21E141C6F000EB0F8 /* TraderRepository.swift in Sources */,
 				B84113D11E141C6F000EB0F8 /* ActiveOrder.swift in Sources */,
+				B84E608A1E265B7D004EA77C /* SettingsViewController.swift in Sources */,
 				B85E8E391D6F3E2100C029C8 /* Error.swift in Sources */,
 				B84113F51E1809DD000EB0F8 /* ZaifExchange.swift in Sources */,
 				B84113E41E15F7D5000EB0F8 /* PositionEditViewController.swift in Sources */,
@@ -741,6 +771,8 @@
 				B84113FD1E18A954000EB0F8 /* Api.swift in Sources */,
 				B84113DE1E141C6F000EB0F8 /* ShortPosition.swift in Sources */,
 				B827CD161D806DF900E9847B /* PositionListViewCell.swift in Sources */,
+				B89379451E26942500F693A3 /* ValueActionSettingCell.swift in Sources */,
+				B893793F1E2678A400F693A3 /* ReadOnlySettingCell.swift in Sources */,
 				B84113F91E181744000EB0F8 /* Exchange.swift in Sources */,
 				B84113D41E141C6F000EB0F8 /* LongPosition.swift in Sources */,
 				B81AF6431DFF054600D4F706 /* AssetsViewController.swift in Sources */,

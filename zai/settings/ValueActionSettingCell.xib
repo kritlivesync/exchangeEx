@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="valueActionSettingCell" id="dZy-gl-Qbj" customClass="ValueActionSettingCell" customModule="zai" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dZy-gl-Qbj" id="wXD-c8-WFY">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Value" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G9p-gy-1Yi">
+                        <rect key="frame" x="0.0" y="0.0" width="182" height="43"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Av-za-SG3">
+                        <rect key="frame" x="329" y="0.0" width="46" height="43"/>
+                        <state key="normal" title="Button">
+                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="pushActionButton:" destination="dZy-gl-Qbj" eventType="touchUpInside" id="ogh-gr-Bcy"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="G9p-gy-1Yi" firstAttribute="width" secondItem="wXD-c8-WFY" secondAttribute="width" multiplier="0.5" id="8Oo-OE-vDc"/>
+                    <constraint firstItem="4Av-za-SG3" firstAttribute="top" secondItem="wXD-c8-WFY" secondAttribute="top" id="Gmz-W5-XYk"/>
+                    <constraint firstAttribute="bottom" secondItem="G9p-gy-1Yi" secondAttribute="bottom" id="GpO-1A-wbt"/>
+                    <constraint firstAttribute="trailing" secondItem="4Av-za-SG3" secondAttribute="trailing" constant="20" id="S3w-le-o0i"/>
+                    <constraint firstAttribute="bottom" secondItem="4Av-za-SG3" secondAttribute="bottom" id="Ybr-39-EgG"/>
+                    <constraint firstItem="G9p-gy-1Yi" firstAttribute="top" secondItem="wXD-c8-WFY" secondAttribute="top" id="e64-7M-vbM"/>
+                    <constraint firstItem="G9p-gy-1Yi" firstAttribute="leading" secondItem="wXD-c8-WFY" secondAttribute="leading" constant="20" id="lQY-Ih-Jqq"/>
+                </constraints>
+            </tableViewCellContentView>
+            <inset key="separatorInset" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+            <connections>
+                <outlet property="actionButton" destination="4Av-za-SG3" id="c81-UV-5JF"/>
+                <outlet property="valueLabel" destination="G9p-gy-1Yi" id="GdV-k8-OVD"/>
+            </connections>
+            <point key="canvasLocation" x="42.5" y="-2"/>
+        </tableViewCell>
+    </objects>
+</document>
