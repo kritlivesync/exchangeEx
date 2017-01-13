@@ -29,6 +29,7 @@ class SettingsViewController : UITableViewController, UserAccountSettingDelegate
         self.tableView.bounces = false
         
         self.tableView.register(UINib(nibName: "ReadOnlySettingCell", bundle: nil), forCellReuseIdentifier: "readOnlySettingCell")
+        self.tableView.register(UINib(nibName: "VariableSettingCell", bundle: nil), forCellReuseIdentifier: "variableSettingCell")
         self.tableView.register(UINib(nibName: "ValueActionSettingCell", bundle: nil), forCellReuseIdentifier: "valueActionSettingCell")
         
         let account = getAccount()!

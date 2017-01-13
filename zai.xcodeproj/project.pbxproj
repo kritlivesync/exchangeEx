@@ -77,6 +77,8 @@
 		B89379411E26822C00F693A3 /* UserAccountSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89379401E26822C00F693A3 /* UserAccountSettingView.swift */; };
 		B89379431E26938700F693A3 /* ValueActionSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B89379421E26938700F693A3 /* ValueActionSettingCell.xib */; };
 		B89379451E26942500F693A3 /* ValueActionSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89379441E26942500F693A3 /* ValueActionSettingCell.swift */; };
+		B89D5C811E2932A7004FF743 /* VariableSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B89D5C801E2932A7004FF743 /* VariableSettingCell.xib */; };
+		B89D5C831E293445004FF743 /* VariableSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89D5C821E293445004FF743 /* VariableSettingCell.swift */; };
 		B8B8457D1D66041D00535638 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B8457B1D66041D00535638 /* Main.storyboard */; settings = {ASSET_TAGS = (4, ); }; };
 		B8B8457F1D66041D00535638 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8B8457E1D66041D00535638 /* Assets.xcassets */; };
 		B8B845821D66041D00535638 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B845801D66041D00535638 /* LaunchScreen.storyboard */; };
@@ -187,6 +189,8 @@
 		B89379401E26822C00F693A3 /* UserAccountSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserAccountSettingView.swift; path = settings/UserAccountSettingView.swift; sourceTree = "<group>"; };
 		B89379421E26938700F693A3 /* ValueActionSettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ValueActionSettingCell.xib; path = settings/ValueActionSettingCell.xib; sourceTree = "<group>"; };
 		B89379441E26942500F693A3 /* ValueActionSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValueActionSettingCell.swift; path = settings/ValueActionSettingCell.swift; sourceTree = "<group>"; };
+		B89D5C801E2932A7004FF743 /* VariableSettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VariableSettingCell.xib; path = settings/VariableSettingCell.xib; sourceTree = "<group>"; };
+		B89D5C821E293445004FF743 /* VariableSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VariableSettingCell.swift; path = settings/VariableSettingCell.swift; sourceTree = "<group>"; };
 		B8B845741D66041D00535638 /* zai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = zai.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8B8457C1D66041D00535638 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B8B8457E1D66041D00535638 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -322,6 +326,8 @@
 				B89379401E26822C00F693A3 /* UserAccountSettingView.swift */,
 				B89379421E26938700F693A3 /* ValueActionSettingCell.xib */,
 				B89379441E26942500F693A3 /* ValueActionSettingCell.swift */,
+				B89D5C801E2932A7004FF743 /* VariableSettingCell.xib */,
+				B89D5C821E293445004FF743 /* VariableSettingCell.swift */,
 			);
 			name = settings;
 			sourceTree = "<group>";
@@ -633,6 +639,7 @@
 			files = (
 				B893793D1E26788500F693A3 /* ReadOnlySettingCell.xib in Resources */,
 				B89379431E26938700F693A3 /* ValueActionSettingCell.xib in Resources */,
+				B89D5C811E2932A7004FF743 /* VariableSettingCell.xib in Resources */,
 				B8B845821D66041D00535638 /* LaunchScreen.storyboard in Resources */,
 				B8B8457F1D66041D00535638 /* Assets.xcassets in Resources */,
 				B8B8457D1D66041D00535638 /* Main.storyboard in Resources */,
@@ -754,6 +761,7 @@
 				B8002D701D8D1C480079AB9B /* ZaifWatch.swift in Sources */,
 				B81AF6451DFF059600D4F706 /* BoardViewController.swift in Sources */,
 				B84114011E18E293000EB0F8 /* ZaifApi.swift in Sources */,
+				B89D5C831E293445004FF743 /* VariableSettingCell.swift in Sources */,
 				B827CD121D7C4FDD00E9847B /* PositionsViewController.swift in Sources */,
 				B8F585271D6964FA008680D8 /* Model.xcdatamodeld in Sources */,
 				B84113DD1E141C6F000EB0F8 /* SellOrder+CoreDataProperties.swift in Sources */,

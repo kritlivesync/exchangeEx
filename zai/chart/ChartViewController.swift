@@ -25,6 +25,9 @@ class ChartViewController : UIViewController, CandleChartDelegate, PositionDeleg
         self.bestQuoteView = BestQuoteView(view: bestQuoteTableView)
         self.bestQuoteView.delegate = self
         
+        self.chartHeaderLabel.text = "1分足"
+        self.chartHeaderLabel.backgroundColor = Color.keyColor2
+        
         self.candleStickChartView.legend.enabled = false
         self.candleStickChartView.chartDescription?.enabled = false
         self.candleStickChartView.maxVisibleCount = 60
@@ -185,6 +188,8 @@ class ChartViewController : UIViewController, CandleChartDelegate, PositionDeleg
     fileprivate var bitcoin: BitCoin!
     var candleChart: CandleChart!
     var bestQuoteView: BestQuoteView!
+    
+    @IBOutlet weak var chartHeaderLabel: UILabel!
     @IBOutlet weak var candleStickChartView: CandleStickChartView!
     @IBOutlet weak var fundLabel: UILabel!
     @IBOutlet weak var bestQuoteTableView: UITableView!

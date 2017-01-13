@@ -17,6 +17,8 @@ class OrdersViewController : UIViewController {
         
         self.navigationController?.navigationBar.barTintColor = Color.keyColor
         
+        self.ordersHeadersLabel.backgroundColor = Color.keyColor2
+        
         let account = getAccount()
         
         self.orderListView = OrderListView(view: self.orderTableView, trader: account!.activeExchange.trader)
@@ -35,5 +37,7 @@ class OrdersViewController : UIViewController {
     
     var account: Account?
     var orderListView: OrderListView!
+    
+    @IBOutlet weak var ordersHeadersLabel: UILabel!
     @IBOutlet weak var orderTableView: UITableView!
 }

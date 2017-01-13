@@ -12,6 +12,7 @@ import UIKit
 class Color {
     // base colors
     public static let keyColor = UIColor(red: 0.3, green: 0.69, blue: 0.31, alpha: 1.0) // rgba(76,175,80 ,1)
+    public static let keyColor2 = UIColor(red: 0.26, green: 0.63, blue: 0.29, alpha: 1.0) // rgba(67,160,71 ,1)
     public static let antiKeyColor = UIColor.white
     public static let antiKeyColor2 = UIColor(red: 1.0, green: 0.56, blue: 0.0, alpha: 1.0)
     

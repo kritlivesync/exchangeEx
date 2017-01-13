@@ -31,9 +31,9 @@ class UserAccountSettingView : SettingProtocol, ValueActionSettingDelegate {
             cell.delegate = self
             return cell
         case 1:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "readOnlySettingCell", for: indexPath) as! ReadOnlySettingCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "variableSettingCell", for: indexPath) as! VariableSettingCell
             cell.nameLabel.text = "パスワード"
-            cell.valueLabel.text = account.plainPassword
+            cell.valueLabel.text = "*****"
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "readOnlySettingCell", for: indexPath) as! ReadOnlySettingCell

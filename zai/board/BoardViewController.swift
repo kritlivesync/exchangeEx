@@ -21,6 +21,7 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
         let account = getAccount()!
         self.trader = account.activeExchange.trader
 
+        self.boardHeaderLabel.backgroundColor = Color.keyColor2
         self.askMomentumBar.backgroundColor = Color.askQuoteColor.withAlphaComponent(0.4)
         self.bidMomentumBar.backgroundColor = Color.bidQuoteColor.withAlphaComponent(0.4)
         
@@ -145,6 +146,7 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     
     fileprivate var board: Board!
     
+    @IBOutlet weak var boardHeaderLabel: UILabel!
     @IBOutlet weak var boardTableView: UITableView!
     
     @IBOutlet weak var jpyFundLabel: UILabel!
