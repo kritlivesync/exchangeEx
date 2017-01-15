@@ -29,6 +29,9 @@ class ChangePasswordViewController : UIViewController {
         guard let newPw = self.newPassword.text else {
             return
         }
+        if password == newPw {
+            return
+        }
         guard let pwAgain = self.passwordAgain.text else {
             return
         }

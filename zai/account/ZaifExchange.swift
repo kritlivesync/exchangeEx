@@ -22,10 +22,14 @@ extension NSData {
 public class ZaifExchange: Exchange, ZaiApiDelegate {
 
     override func validateApiKey(_ cb: @escaping (ZaiError?) -> Void) {
-        let rawApi = self.api.rawApi as! PrivateApi
-        rawApi.searchValidNonce() { err in
+        self.serviceApi?.validateApi() { err in
             if err != nil {
-                cb(ZaiError(errorType: .INVALID_API_KEYS, message: err!.message))
+                switch err!.errorType {
+                case ApiErrorType.NO_PERMISSION:
+                    cb(ZaiError(errorType: .INVALID_API_KEYS_NO_PERMISSION, message: err!.message))
+                default:
+                    cb(ZaiError(errorType: .INVALID_API_KEYS, message: err!.message))
+                }
             } else {
                 cb(nil)
             }
@@ -61,11 +65,13 @@ public class ZaifExchange: Exchange, ZaiApiDelegate {
         return true
     }
     
-    override func reEncryptApiKey(oldCryptKey: String, newCryptKey: String) -> Bool {
-        if !self.loadApiKey(cryptKey: oldCryptKey) {
-            return false
-        }
-        if !self.saveApiKey(cryptKey: newCryptKey) {
+    func setApiKeys(apiKey: String, secretKey: String, cryptKey: String) -> Bool {
+        let nonce = TimeNonce(initialValue: self.nonce.int64Value)
+        let api = ZaifApi(apiKey: apiKey, secretKey: secretKey, nonce: nonce)
+        api.delegate = self
+        self.serviceApi = api
+        
+        if !self.saveApiKey(cryptKey: cryptKey) {
             return false
         }
         return true

@@ -86,6 +86,7 @@
 		B8B8458D1D66041D00535638 /* zaiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B8458C1D66041D00535638 /* zaiTests.swift */; };
 		B8B845981D66041D00535638 /* zaiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845971D66041D00535638 /* zaiUITests.swift */; };
 		B8C7DEE51E2B263D00E666F0 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C7DEE41E2B263D00E666F0 /* ChangePasswordViewController.swift */; };
+		B8C7DEEB1E2B620C00E666F0 /* ChangeZaifApiKeyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C7DEEA1E2B620C00E666F0 /* ChangeZaifApiKeyController.swift */; };
 		B8E9E2CF1E1B867F003B298F /* ZaifExchange+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E9E2CD1E1B867F003B298F /* ZaifExchange+CoreDataProperties.swift */; };
 		B8E9E2D01E1B867F003B298F /* Exchange+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E9E2CE1E1B867F003B298F /* Exchange+CoreDataProperties.swift */; };
 		B8E9E2D31E1D186E003B298F /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E9E2D21E1D186E003B298F /* ChartViewController.swift */; };
@@ -206,6 +207,7 @@
 		B8B845971D66041D00535638 /* zaiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = zaiUITests.swift; sourceTree = "<group>"; };
 		B8B845991D66041D00535638 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B8C7DEE41E2B263D00E666F0 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChangePasswordViewController.swift; path = settings/ChangePasswordViewController.swift; sourceTree = "<group>"; };
+		B8C7DEEA1E2B620C00E666F0 /* ChangeZaifApiKeyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChangeZaifApiKeyController.swift; path = settings/ChangeZaifApiKeyController.swift; sourceTree = "<group>"; };
 		B8E9E2CD1E1B867F003B298F /* ZaifExchange+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ZaifExchange+CoreDataProperties.swift"; path = "account/ZaifExchange+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B8E9E2CE1E1B867F003B298F /* Exchange+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Exchange+CoreDataProperties.swift"; path = "account/Exchange+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B8E9E2D21E1D186E003B298F /* ChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChartViewController.swift; path = chart/ChartViewController.swift; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 				B89D5C821E293445004FF743 /* VariableSettingCell.swift */,
 				B89D5C841E29C66F004FF743 /* ZaifSettingView.swift */,
 				B8C7DEE41E2B263D00E666F0 /* ChangePasswordViewController.swift */,
+				B8C7DEEA1E2B620C00E666F0 /* ChangeZaifApiKeyController.swift */,
 			);
 			name = settings;
 			sourceTree = "<group>";
@@ -747,6 +750,7 @@
 				B84113D11E141C6F000EB0F8 /* ActiveOrder.swift in Sources */,
 				B84E608A1E265B7D004EA77C /* SettingsViewController.swift in Sources */,
 				B85E8E391D6F3E2100C029C8 /* Error.swift in Sources */,
+				B8C7DEEB1E2B620C00E666F0 /* ChangeZaifApiKeyController.swift in Sources */,
 				B84113F51E1809DD000EB0F8 /* ZaifExchange.swift in Sources */,
 				B84113E41E15F7D5000EB0F8 /* PositionEditViewController.swift in Sources */,
 				B843CFEA1E12C5C400CC6656 /* Color.swift in Sources */,

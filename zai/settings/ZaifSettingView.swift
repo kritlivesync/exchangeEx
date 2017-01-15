@@ -10,7 +10,12 @@ import Foundation
 import UIKit
 
 
-class ZaifSettingView : SettingProtocol {
+protocol ZaifSettingViewDelegate {
+    func changeApiKeys()
+}
+
+
+class ZaifSettingView : SettingProtocol, VariableSettingCellDelegate {
     
     init(zaifExchange: ZaifExchange) {
         self.zaifExchange = zaifExchange
@@ -23,6 +28,7 @@ class ZaifSettingView : SettingProtocol {
             let cell = tableView.dequeueReusableCell(withIdentifier: "variableSettingCell", for: indexPath) as! VariableSettingCell
             cell.nameLabel.text = "APIキー"
             cell.valueLabel.text = ""
+            cell.delegate = self
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "readOnlySettingCell", for: indexPath) as! ReadOnlySettingCell
@@ -39,6 +45,11 @@ class ZaifSettingView : SettingProtocol {
         }
     }
     
+    // VariableSettingCellDelegate
+    func touchesEnded(name: String, value: String) {
+        self.delegate?.changeApiKeys()
+    }
+    
     var settingName: String {
         return self.zaifExchange.name
     }
@@ -48,4 +59,5 @@ class ZaifSettingView : SettingProtocol {
     }
     
     let zaifExchange: ZaifExchange
+    var delegate: ZaifSettingViewDelegate?
 }

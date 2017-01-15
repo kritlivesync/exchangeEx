@@ -19,7 +19,7 @@ protocol SettingProtocol {
     var settingCount: Int { get }
 }
 
-class SettingsViewController : UITableViewController, UserAccountSettingDelegate {
+class SettingsViewController : UITableViewController, UserAccountSettingDelegate, ZaifSettingViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +39,7 @@ class SettingsViewController : UITableViewController, UserAccountSettingDelegate
         
         if let zaif = account.getExchange(exchangeName: "Zaif") {
             self.zaifSetting = ZaifSettingView(zaifExchange: zaif as! ZaifExchange)
+            self.zaifSetting?.delegate = self
             self.settings.append(self.zaifSetting!)
         }
     }
@@ -101,6 +102,11 @@ class SettingsViewController : UITableViewController, UserAccountSettingDelegate
         self.performSegue(withIdentifier: "changePasswordSegue", sender: nil)
     }
     
+    // ZaifSettingViewDelegate
+    func changeApiKeys() {
+        self.performSegue(withIdentifier: "changeZaifApiKeysSegue", sender: nil)
+    }
+    
     @IBAction func pushBackButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -108,6 +114,18 @@ class SettingsViewController : UITableViewController, UserAccountSettingDelegate
     @IBAction func unwindToSettings(_ segue: UIStoryboardSegue) {}
     
     @IBAction func passwordSaved(_ segue: UIStoryboardSegue) {}
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let ident = segue.identifier else {
+            return
+        }
+        switch ident {
+        case "changeZaifApiKeysSegue":
+            let dst = segue.destination as! ChangeZaifApiKeyController
+            dst.zaifExchange = self.zaifSetting?.zaifExchange
+        default: break
+        }
+    }
     
     var userSetting: UserAccountSettingView?
     var zaifSetting: ZaifSettingView?

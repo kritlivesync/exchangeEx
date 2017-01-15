@@ -16,7 +16,6 @@ protocol ExchangeProtocol {
     func validateApiKey(_ cb: @escaping (ZaiError?) -> Void)
     func loadApiKey(cryptKey: String) -> Bool
     func saveApiKey(cryptKey: String) -> Bool
-    func reEncryptApiKey(oldCryptKey: String, newCryptKey: String) -> Bool
     
     var handlingCurrencyPairs: [ApiCurrencyPair] { get }
     var displayCurrencyPair: String { get }

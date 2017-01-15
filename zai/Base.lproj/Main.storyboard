@@ -854,47 +854,62 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="8XU-L3-g6n">
-                                <rect key="frame" x="21" y="108" width="373" height="100"/>
+                                <rect key="frame" x="21" y="108" width="373" height="142"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="User ID" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6an-3B-fnB">
-                                        <rect key="frame" x="0.0" y="0.0" width="373" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="373" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="6ZS-71-e28"/>
+                                        </constraints>
                                         <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AzN-d6-IkF">
-                                        <rect key="frame" x="0.0" y="35" width="373" height="30"/>
+                                        <rect key="frame" x="0.0" y="49" width="373" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="NZ0-HO-WZH"/>
+                                        </constraints>
                                         <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter password again" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0FP-bP-yze">
-                                        <rect key="frame" x="0.0" y="70" width="373" height="30"/>
+                                        <rect key="frame" x="0.0" y="98" width="373" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="XQT-13-1Cq"/>
+                                        </constraints>
                                         <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
                                     </textField>
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" distribution="equalCentering" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="oDc-3P-oLz">
-                                <rect key="frame" x="21" y="247" width="372" height="95"/>
+                                <rect key="frame" x="22" y="298" width="372" height="130"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Zaif API Key" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Njs-s3-137">
-                                        <rect key="frame" x="0.0" y="0.0" width="372" height="20.333333333333343"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="372" height="20.333333333333314"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="APIキー" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V8e-0W-lZS">
-                                        <rect key="frame" x="0.0" y="30.333333333333343" width="372" height="29.999999999999972"/>
+                                        <rect key="frame" x="0.0" y="37.333333333333314" width="372" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="HVk-jw-aXS"/>
+                                        </constraints>
                                         <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Secretキー" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mAY-HA-Q30">
-                                        <rect key="frame" x="0.0" y="65.333333333333314" width="372" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="シークレットキー" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mAY-HA-Q30">
+                                        <rect key="frame" x="0.0" y="86.333333333333314" width="372" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="rUI-I7-QIG"/>
+                                        </constraints>
                                         <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                 </subviews>
@@ -1209,6 +1224,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <segue destination="ySg-0N-fSD" kind="show" identifier="changePasswordSegue" id="Paz-yc-8lo"/>
+                        <segue destination="oQX-rA-4mB" kind="show" identifier="changeZaifApiKeysSegue" id="XfH-uk-79T"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="paJ-7q-rJu" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1228,24 +1244,33 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="tK5-A3-qkk">
-                                <rect key="frame" x="20" y="50" width="373" height="100"/>
+                                <rect key="frame" x="20" y="50" width="373" height="142"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="現在のパスワード" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lDH-Cz-kTU">
-                                        <rect key="frame" x="0.0" y="0.0" width="373" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="373" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="u2U-8b-8bX"/>
+                                        </constraints>
                                         <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="新しいパスワード" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bvi-MU-ROX">
-                                        <rect key="frame" x="0.0" y="35" width="373" height="30"/>
+                                        <rect key="frame" x="0.0" y="49" width="373" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="ia1-RT-RTk"/>
+                                        </constraints>
                                         <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="もう一度入力してください" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jy3-AB-f3b">
-                                        <rect key="frame" x="0.0" y="70" width="373" height="30"/>
+                                        <rect key="frame" x="0.0" y="98" width="373" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="fjb-f2-IFA"/>
+                                        </constraints>
                                         <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                 </subviews>
@@ -1253,7 +1278,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="lDH-Cz-kTU" firstAttribute="centerX" secondItem="Es6-pj-SwU" secondAttribute="centerX" id="5py-Pq-QZY"/>
+                            <constraint firstItem="tK5-A3-qkk" firstAttribute="centerX" secondItem="Es6-pj-SwU" secondAttribute="centerX" id="PWv-yz-SAb"/>
                             <constraint firstItem="tK5-A3-qkk" firstAttribute="top" secondItem="nHq-Pu-WdV" secondAttribute="bottom" constant="50" id="Rb6-yj-Jlm"/>
                             <constraint firstItem="tK5-A3-qkk" firstAttribute="width" secondItem="Es6-pj-SwU" secondAttribute="width" multiplier="0.9" id="vkj-Yx-Uea"/>
                         </constraints>
@@ -1277,13 +1302,79 @@
                         <outlet property="currentPassword" destination="lDH-Cz-kTU" id="oR2-C7-9Gy"/>
                         <outlet property="newPassword" destination="Bvi-MU-ROX" id="BIG-rC-lN2"/>
                         <outlet property="passwordAgain" destination="Jy3-AB-f3b" id="Bv6-wt-9PY"/>
-                        <segue destination="ulu-SU-yxD" kind="unwind" identifier="passwordSavedSegue" unwindAction="passwordSaved:" id="K8d-IF-nfd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QOX-iP-nRc" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="ulu-SU-yxD" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="6736" y="-1326"/>
+        </scene>
+        <!--Zaif APIキーの変更-->
+        <scene sceneID="W1V-Ea-znc">
+            <objects>
+                <viewController title="Zaif APIキーの変更" id="oQX-rA-4mB" customClass="ChangeZaifApiKeyController" customModule="zai" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="f5C-7I-wjS"/>
+                        <viewControllerLayoutGuide type="bottom" id="B1D-Jo-fha"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="oLl-9w-JzX">
+                        <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" tag="5" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="9T1-BP-odD">
+                                <rect key="frame" x="20" y="50" width="373" height="93"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="APIキー" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Yks-MA-4g4">
+                                        <rect key="frame" x="0.0" y="0.0" width="373" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="Aid-84-4kr"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="シークレットキー" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1De-wl-uma">
+                                        <rect key="frame" x="0.0" y="49" width="373" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="4U3-Q0-yyU"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="9T1-BP-odD" firstAttribute="width" secondItem="oLl-9w-JzX" secondAttribute="width" multiplier="0.9" id="XpU-CN-hcc"/>
+                            <constraint firstItem="9T1-BP-odD" firstAttribute="top" secondItem="f5C-7I-wjS" secondAttribute="bottom" constant="50" id="cht-2M-TiB"/>
+                            <constraint firstItem="9T1-BP-odD" firstAttribute="centerX" secondItem="oLl-9w-JzX" secondAttribute="centerX" id="gM9-5m-qUa"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Zaif APIキーの変更" id="Pc2-Ey-KzA">
+                        <barButtonItem key="leftBarButtonItem" title="キャンセル" id="TG5-pl-HKl">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <segue destination="47z-Eg-dux" kind="unwind" identifier="unwindToSettings" unwindAction="unwindToSettings:" id="HaK-gh-yex"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="保存" id="N39-Uk-vKN">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="pushSaveButton:" destination="oQX-rA-4mB" id="kza-BC-YrW"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="apiKeyLabel" destination="Yks-MA-4g4" id="AaJ-Bc-LCV"/>
+                        <outlet property="secretKeyLabel" destination="1De-wl-uma" id="jMH-vu-Sqj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dXo-l9-yd4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="47z-Eg-dux" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="6734.7826086956529" y="-567.39130434782612"/>
         </scene>
         <!--設定-->
         <scene sceneID="NkH-SE-2vE">

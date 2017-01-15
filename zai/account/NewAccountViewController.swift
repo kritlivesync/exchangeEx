@@ -50,7 +50,7 @@ class NewAccountViewController: UIViewController {
         let apiKey = self.zaifApiKeyText.text!
         let secretKey = self.zaifSecretKeyText.text!
         let zaifApi = ZaifApi(apiKey: apiKey, secretKey: secretKey)
-        zaifApi.getPrice(currencyPair: .BTC_JPY) { (err, _) in
+        zaifApi.validateApi() { err in
             if err == nil {
                 let repository = AccountRepository.getInstance()
                 guard let account = repository.create(userId, password: password) else {

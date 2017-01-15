@@ -282,6 +282,24 @@ class ZaifApi : Api {
         }
     }
     
+    func validateApi(callback: @escaping (_ err: ApiError?) -> Void) {
+        self.api.searchValidNonce() { err in
+            if err != nil {
+                self.validatePermission() { err in
+                    if err != nil {
+                        callback(ApiError(errorType: .NO_PERMISSION, message: err!.message))
+                        return
+                    } else {
+                        callback(ApiError(errorType: .NONCE_NOT_INCREMENTED, message: err!.message))
+                        return
+                    }
+                }
+            } else {
+                self.validatePermission(callback: callback)
+            }
+        }
+    }
+
     func currencyPairs() -> [ApiCurrencyPair] {
         return [ApiCurrencyPair.BTC_JPY]
     }
@@ -292,6 +310,36 @@ class ZaifApi : Api {
     
     func orderUnit(currencyPair: ApiCurrencyPair) -> Double {
         return currencyPair.zaifCurrencyPair.orderUnit
+    }
+    
+    fileprivate func validatePermission(callback: @escaping (_ err: ApiError?) -> Void) {
+        self.api.getInfo2() { (err, res) in
+            if err != nil {
+                callback(ApiError(errorType: err!.errorType.apiError, message: err!.message))
+                return
+            }
+            guard let result = res?["success"].int else {
+                callback(ApiError(errorType: .NO_PERMISSION))
+                return
+            }
+            if result != 1 {
+                callback(ApiError(errorType: .NO_PERMISSION))
+                return
+            }
+            guard let rights = res?["return"]["rights"] else {
+                callback(ApiError(errorType: .NO_PERMISSION))
+                return
+            }
+            if rights["info"].intValue != 1 {
+                callback(ApiError(errorType: .NO_PERMISSION))
+                return
+            }
+            if rights["trade"].intValue != 1 {
+                callback(ApiError(errorType: .NO_PERMISSION))
+                return
+            }
+            callback(nil)
+        }
     }
     
     var rawApi: Any { get { return self.api } }

@@ -35,6 +35,8 @@ protocol Api {
     func trade(order: Order, callback: @escaping (_ err: ApiError?, _ orderId: String, _ orderedPrice: Double) -> Void)
     func cancelOrder(order: ActiveOrder, callback: @escaping (_ err: ApiError?) -> Void)
     
+    func validateApi(callback: @escaping (_ err: ApiError?) -> Void)
+    
     func currencyPairs() -> [ApiCurrencyPair]
     func currencies() -> [ApiCurrency]
     func orderUnit(currencyPair: ApiCurrencyPair) -> Double
