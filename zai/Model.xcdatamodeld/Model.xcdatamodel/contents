@@ -11,6 +11,7 @@
     </entity>
     <entity name="BuyOrder" representedClassName=".BuyOrder" parentEntity="Order" syncable="YES"/>
     <entity name="Exchange" representedClassName=".Exchange" isAbstract="YES" syncable="YES">
+        <attribute name="currencyPair" attributeType="String" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="exchanges" inverseEntity="Account" syncable="YES"/>
         <relationship name="trader" maxCount="1" deletionRule="Nullify" destinationEntity="Trader" inverseName="exchange" inverseEntity="Trader" syncable="YES"/>
@@ -72,7 +73,7 @@
     <elements>
         <element name="Account" positionX="-36" positionY="90" width="128" height="150"/>
         <element name="BuyOrder" positionX="-27" positionY="117" width="128" height="45"/>
-        <element name="Exchange" positionX="-36" positionY="144" width="128" height="90"/>
+        <element name="Exchange" positionX="-36" positionY="144" width="128" height="105"/>
         <element name="LongPosition" positionX="-36" positionY="90" width="128" height="45"/>
         <element name="Order" positionX="-36" positionY="90" width="128" height="225"/>
         <element name="Position" positionX="-54" positionY="81" width="128" height="120"/>

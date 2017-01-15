@@ -31,8 +31,8 @@ class AccountRepository {
         newAccount.userId = userId
         newAccount.salt = Crypt.salt()
         newAccount.activeExchangeName = ""
-        newAccount.plainPassword = password
-        guard newAccount.setPassword(password: password) else {
+        newAccount.ppw = password
+        if let _ =  newAccount.setPassword(password: password) {
             return nil
         }
 
@@ -72,10 +72,10 @@ class AccountRepository {
             return nil
         }
         if encrypted == account.password {
-            account.plainPassword = password
+            account.ppw = password
             for exchange in account.exchanges {
                 let ex = exchange as! Exchange
-                guard ex.loadApiKey(password: password) else {
+                guard ex.loadApiKey(cryptKey: password) else {
                     return nil
                 }
                 ex.trader.fund = Fund(api: ex.api)
@@ -102,15 +102,16 @@ class AccountRepository {
     func createZaifExchange(account: Account, apiKey: String, secretKey: String) -> Bool {
         let db = Database.getDb()
         
-        guard let encryptedApiKey = Crypt.encrypt(key: account.plainPassword!, src: apiKey) else {
+        guard let encryptedApiKey = Crypt.encrypt(key: account.ppw!, src: apiKey) else {
             return false
         }
-        guard let encryptedSecret = Crypt.encrypt(key: account.plainPassword!, src: secretKey) else {
+        guard let encryptedSecret = Crypt.encrypt(key: account.ppw!, src: secretKey) else {
             return false
         }
         
         let exchange = NSEntityDescription.insertNewObject(forEntityName: AccountRepository.zaifExchangeModelName, into: db.managedObjectContext) as! ZaifExchange
-        exchange.name = "zaif"
+        exchange.name = "Zaif"
+        exchange.currencyPair = ApiCurrencyPair.BTC_JPY.rawValue
         exchange.apiKey = NSData(bytes: encryptedApiKey, length: encryptedApiKey.count)
         exchange.secretKey = NSData(bytes: encryptedSecret, length: encryptedSecret.count)
         let api = ZaifApi(apiKey: apiKey, secretKey: secretKey)

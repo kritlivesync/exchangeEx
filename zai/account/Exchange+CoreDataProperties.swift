@@ -2,7 +2,7 @@
 //  Exchange+CoreDataProperties.swift
 //  
 //
-//  Created by 渡部郷太 on 1/3/17.
+//  Created by 渡部郷太 on 1/14/17.
 //
 //
 
@@ -17,6 +17,7 @@ extension Exchange {
     }
 
     @NSManaged public var name: String
+    @NSManaged public var currencyPair: String
     @NSManaged public var account: Account
     @NSManaged public var trader: Trader
 

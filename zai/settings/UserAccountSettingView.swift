@@ -12,9 +12,10 @@ import UIKit
 
 protocol UserAccountSettingDelegate {
     func loggedOut(userId: String)
+    func changePassword()
 }
 
-class UserAccountSettingView : SettingProtocol, ValueActionSettingDelegate {
+class UserAccountSettingView : SettingProtocol, ValueActionSettingDelegate, VariableSettingCellDelegate {
     
     init(account: Account) {
         self.account = account
@@ -34,10 +35,36 @@ class UserAccountSettingView : SettingProtocol, ValueActionSettingDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "variableSettingCell", for: indexPath) as! VariableSettingCell
             cell.nameLabel.text = "パスワード"
             cell.valueLabel.text = "*****"
+            cell.delegate = self
+            return cell
+        case 2:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "readOnlySettingCell", for: indexPath) as! ReadOnlySettingCell
+            cell.nameLabel.text = "現在の取引所"
+            cell.valueLabel.text = self.account.activeExchange.name
+            return cell
+        case 3:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "readOnlySettingCell", for: indexPath) as! ReadOnlySettingCell
+            cell.nameLabel.text = "取引中の通貨ペア"
+            cell.valueLabel.text = self.account.activeExchange.displayCurrencyPair
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "readOnlySettingCell", for: indexPath) as! ReadOnlySettingCell
             return cell
+        }
+    }
+    
+    func shouldHighlightRowAt(row: Int) -> Bool {
+        switch row {
+        case 0:
+            return false
+        case 1:
+            return true
+        case 2:
+            return false
+        case 3:
+            return false
+        default:
+            return false
         }
     }
     
@@ -47,12 +74,17 @@ class UserAccountSettingView : SettingProtocol, ValueActionSettingDelegate {
         self.delegate?.loggedOut(userId: userId)
     }
     
+    // VariableSettingCellDelegate
+    func touchesEnded(name: String, value: String) {
+        self.delegate?.changePassword()
+    }
+    
     var settingName: String {
         return "アカウント情報"
     }
     
     var settingCount: Int {
-        return 2
+        return 4
     }
     
     let account: Account

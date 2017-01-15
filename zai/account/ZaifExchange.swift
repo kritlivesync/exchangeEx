@@ -32,11 +32,11 @@ public class ZaifExchange: Exchange, ZaiApiDelegate {
         }
     }
     
-    override func loadApiKey(password: String) -> Bool {
-        guard let apiKey = Crypt.decrypt(key: password, src: self.apiKey.toBytes()) else {
+    override func loadApiKey(cryptKey: String) -> Bool {
+        guard let apiKey = Crypt.decrypt(key: cryptKey, src: self.apiKey.toBytes()) else {
             return false
         }
-        guard let secretKey = Crypt.decrypt(key: password, src: self.secretKey.toBytes()) else {
+        guard let secretKey = Crypt.decrypt(key: cryptKey, src: self.secretKey.toBytes()) else {
             return false
         }
         let nonce = TimeNonce(initialValue: self.nonce.int64Value)
@@ -46,12 +46,12 @@ public class ZaifExchange: Exchange, ZaiApiDelegate {
         return true
     }
     
-    override func saveApiKey(password: String) -> Bool {
+    override func saveApiKey(cryptKey: String) -> Bool {
         let rawApi = self.serviceApi?.rawApi as! PrivateApi
-        guard let encryptedApiKey = Crypt.encrypt(key: password, src: rawApi.apiKey) else {
+        guard let encryptedApiKey = Crypt.encrypt(key: cryptKey, src: rawApi.apiKey) else {
             return false
         }
-        guard let encryptedSecret = Crypt.encrypt(key: password, src: rawApi.secretKey) else {
+        guard let encryptedSecret = Crypt.encrypt(key: cryptKey, src: rawApi.secretKey) else {
             return false
         }
         self.apiKey = NSData(bytes: encryptedApiKey, length: encryptedApiKey.count)
@@ -61,12 +61,33 @@ public class ZaifExchange: Exchange, ZaiApiDelegate {
         return true
     }
     
+    override func reEncryptApiKey(oldCryptKey: String, newCryptKey: String) -> Bool {
+        if !self.loadApiKey(cryptKey: oldCryptKey) {
+            return false
+        }
+        if !self.saveApiKey(cryptKey: newCryptKey) {
+            return false
+        }
+        return true
+    }
+    
     // ZaiApiDelegate
     func privateApiCalled(apiName: String) {
         guard let nonce = (self.serviceApi?.rawApi as? PrivateApi)?.nonceValue else {
             return
         }
         self.nonce = NSNumber(value: nonce)
+    }
+    
+    override var handlingCurrencyPairs: [ApiCurrencyPair] {
+        return [.BTC_JPY]
+    }
+    
+    override var displayCurrencyPair: String {
+        switch self.currencyPair {
+        case "btc_jpy": return "BTC/JPY"
+        default: return ""
+        }
     }
     
     override var api: Api {

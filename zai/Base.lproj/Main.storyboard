@@ -170,7 +170,7 @@
                                         <rect key="frame" x="0.0" y="1" width="414" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jaK-DH-bk8" id="TCu-CG-dqG">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="3.2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jGh-kE-3zc">
@@ -733,7 +733,7 @@
                                         <rect key="frame" x="0.0" y="1" width="414" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="b3h-rG-yoV" id="SBc-wd-2LL">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="69"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="69.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="2016/12/12 21:11:11" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7fZ-7G-b6L">
@@ -913,13 +913,13 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="新しいアカウント" id="Xmb-fe-ymZ">
                         <barButtonItem key="leftBarButtonItem" title="キャンセル" id="p3G-cu-rt5">
-                            <color key="tintColor" red="1" green="0.56470588239999997" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <segue destination="iKS-7S-egT" kind="unwind" unwindAction="unwindToLogin:" id="hNM-42-mQK"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="保存" id="6Cx-xY-Xfu">
-                            <color key="tintColor" red="1" green="0.56470588239999997" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="pushSaveButton:" destination="KyU-pL-Rpf" id="08c-w0-X4d"/>
                             </connections>
@@ -1199,7 +1199,7 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="設定" id="CGZ-or-Q3m">
-                        <barButtonItem key="leftBarButtonItem" systemItem="undo" id="NzL-Mm-H2c">
+                        <barButtonItem key="leftBarButtonItem" title="戻る" id="NzL-Mm-H2c">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="pushBackButton:" destination="sqU-Nh-Yg6" id="Dgs-A1-C3y"/>
@@ -1207,10 +1207,83 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <segue destination="ySg-0N-fSD" kind="show" identifier="changePasswordSegue" id="Paz-yc-8lo"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="paJ-7q-rJu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5111.594202898551" y="-1354.0760869565217"/>
+            <point key="canvasLocation" x="5614" y="-1326"/>
+        </scene>
+        <!--パスワードの変更-->
+        <scene sceneID="Aqi-cU-kva">
+            <objects>
+                <viewController title="パスワードの変更" modalTransitionStyle="flipHorizontal" id="ySg-0N-fSD" customClass="ChangePasswordViewController" customModule="zai" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nHq-Pu-WdV"/>
+                        <viewControllerLayoutGuide type="bottom" id="q3S-kd-A2b"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Es6-pj-SwU">
+                        <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="tK5-A3-qkk">
+                                <rect key="frame" x="20" y="50" width="373" height="100"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="現在のパスワード" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lDH-Cz-kTU">
+                                        <rect key="frame" x="0.0" y="0.0" width="373" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="新しいパスワード" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bvi-MU-ROX">
+                                        <rect key="frame" x="0.0" y="35" width="373" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="もう一度入力してください" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jy3-AB-f3b">
+                                        <rect key="frame" x="0.0" y="70" width="373" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="lDH-Cz-kTU" firstAttribute="centerX" secondItem="Es6-pj-SwU" secondAttribute="centerX" id="5py-Pq-QZY"/>
+                            <constraint firstItem="tK5-A3-qkk" firstAttribute="top" secondItem="nHq-Pu-WdV" secondAttribute="bottom" constant="50" id="Rb6-yj-Jlm"/>
+                            <constraint firstItem="tK5-A3-qkk" firstAttribute="width" secondItem="Es6-pj-SwU" secondAttribute="width" multiplier="0.9" id="vkj-Yx-Uea"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="パスワードの変更" id="yie-hp-muk">
+                        <barButtonItem key="leftBarButtonItem" title="キャンセル" id="h2r-ZC-B3L">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <segue destination="ulu-SU-yxD" kind="unwind" identifier="unwindToSettings" unwindAction="unwindToSettings:" id="0c4-q8-SlV"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="保存" id="z3B-ci-3kM">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="pushSaveButton:" destination="ySg-0N-fSD" id="YnP-Ji-s25"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="currentPassword" destination="lDH-Cz-kTU" id="oR2-C7-9Gy"/>
+                        <outlet property="newPassword" destination="Bvi-MU-ROX" id="BIG-rC-lN2"/>
+                        <outlet property="passwordAgain" destination="Jy3-AB-f3b" id="Bv6-wt-9PY"/>
+                        <segue destination="ulu-SU-yxD" kind="unwind" identifier="passwordSavedSegue" unwindAction="passwordSaved:" id="K8d-IF-nfd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QOX-iP-nRc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="ulu-SU-yxD" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="6736" y="-1326"/>
         </scene>
         <!--設定-->
         <scene sceneID="NkH-SE-2vE">
@@ -1230,7 +1303,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="awj-RH-q6b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4171" y="-1354"/>
+            <point key="canvasLocation" x="4326" y="-1326"/>
         </scene>
         <!--Chart-->
         <scene sceneID="S0R-r4-BJX">
@@ -1340,7 +1413,7 @@
                                         <rect key="frame" x="0.0" y="1" width="414" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YG3-a4-IBe" id="X5v-vV-I3W">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="69"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="69.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="128000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FUq-Ms-xbU">

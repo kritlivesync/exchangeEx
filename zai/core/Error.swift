@@ -29,6 +29,12 @@ public enum ZaiErrorType : Error {
     }
 }
 
+public enum PasswordErrorType : Error {
+    case SHORT_LENGTH
+    case LONG_LENGTH
+    case CRYPTION_ERROR
+}
+
 public struct ZaiError {
     public init(errorType: ZaiErrorType=ZaiErrorType.UNKNOWN_ERROR, message: String="") {
         self.errorType = errorType

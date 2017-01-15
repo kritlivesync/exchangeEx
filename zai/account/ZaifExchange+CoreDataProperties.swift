@@ -2,7 +2,7 @@
 //  ZaifExchange+CoreDataProperties.swift
 //  
 //
-//  Created by 渡部郷太 on 1/3/17.
+//  Created by 渡部郷太 on 1/14/17.
 //
 //
 

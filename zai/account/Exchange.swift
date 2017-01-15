@@ -14,9 +14,12 @@ import ZaifSwift
 
 protocol ExchangeProtocol {
     func validateApiKey(_ cb: @escaping (ZaiError?) -> Void)
-    func loadApiKey(password: String) -> Bool
-    func saveApiKey(password: String) -> Bool
+    func loadApiKey(cryptKey: String) -> Bool
+    func saveApiKey(cryptKey: String) -> Bool
+    func reEncryptApiKey(oldCryptKey: String, newCryptKey: String) -> Bool
     
+    var handlingCurrencyPairs: [ApiCurrencyPair] { get }
+    var displayCurrencyPair: String { get }
     var api: Api { get }
 }
 
@@ -26,16 +29,32 @@ public class Exchange: NSManagedObject, ExchangeProtocol {
         callback(ZaiError(errorType: .UNKNOWN_ERROR))
     }
     
-    func loadApiKey(password: String) -> Bool {
+    func loadApiKey(cryptKey: String) -> Bool {
         return false
     }
     
-    func saveApiKey(password: String) -> Bool {
+    func saveApiKey(cryptKey: String) -> Bool {
         return false
+    }
+    
+    func reEncryptApiKey(oldCryptKey: String, newCryptKey: String) -> Bool {
+        return true
+    }
+    
+    var handlingCurrencyPairs: [ApiCurrencyPair] {
+        return [ApiCurrencyPair]()
+    }
+    
+    var displayCurrencyPair: String {
+        return ""
     }
 
     var api: Api {
-        get { return self.serviceApi! }
+        return self.serviceApi!
+    }
+    
+    var apiCurrencyPair: ApiCurrencyPair {
+        return ApiCurrencyPair(rawValue: self.currencyPair)!
     }
     
     var serviceApi: Api?

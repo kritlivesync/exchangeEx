@@ -22,13 +22,40 @@ open class Account: NSManagedObject {
         Database.getDb().saveContext()
     }
     
-    func setPassword(password: String) -> Bool {
+    func setPassword(password: String) -> PasswordErrorType? {
+        if let err = self.validatePassword(password: password) {
+            return err
+        }
         guard let encrypted = Crypt.hash(src: password, salt: self.salt) else {
-            return false
+            return .CRYPTION_ERROR
+        }
+        
+        for exchange in self.exchanges {
+            let ex = exchange as! Exchange
+            if !ex.saveApiKey(cryptKey: password) {
+                return .CRYPTION_ERROR
+            }
         }
         self.password = encrypted
+        self.ppw = password
+        
         Database.getDb().saveContext()
-        return true
+        return nil
+    }
+    
+    func isEqualPassword(password: String) -> Bool {
+        if let p = self.ppw {
+            return (p == password)
+        } else {
+            guard let encrypted = Crypt.hash(src: password, salt: self.salt) else {
+                return false
+            }
+            return (self.password == encrypted)
+        }
+    }
+    
+    func validatePassword(password: String) -> PasswordErrorType? {
+        return nil
     }
     
     func getMarketCapitalization(_ cb: @escaping ((ZaiError?, Int) -> Void)) {
@@ -36,19 +63,21 @@ open class Account: NSManagedObject {
         fund.getMarketCapitalization(cb)
     }
     
-    var activeExchange: Exchange {
-        get {
-            var ret: Exchange?
-            for exchange in self.exchanges {
-                let ex = exchange as! Exchange
-                ret = ex
-                if ex.name == self.activeExchangeName {
-                    break
-                }
+    func getExchange(exchangeName: String) -> Exchange? {
+        var ret: Exchange?
+        for exchange in self.exchanges {
+            let ex = exchange as! Exchange
+            ret = ex
+            if ex.name == exchangeName {
+                break
             }
-            return ret!
         }
+        return ret
     }
     
-    var plainPassword: String?
+    var activeExchange: Exchange {
+        return self.getExchange(exchangeName: self.activeExchangeName)!
+    }
+    
+    var ppw: String?
 }

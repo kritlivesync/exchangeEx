@@ -30,6 +30,7 @@ open class Trader: NSManagedObject, FundDelegate {
             let maxAmount = Double(self.jpyFund) / p
             amt = min(maxAmount, amt)
         }
+        amt = min(amt, 0.0001)
         let order = OrderRepository.getInstance().createBuyOrder(currencyPair: currencyPair, price: price, amount: amt, api: self.exchange.api)
         order.excute() { (err, orderId) in
             if let e = err {
