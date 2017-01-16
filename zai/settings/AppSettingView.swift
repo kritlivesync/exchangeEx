@@ -1,8 +1,8 @@
 //
-//  ZaifSettingView.swift
+//  AppSettingView.swift
 //  zai
 //
-//  Created by 渡部郷太 on 1/14/17.
+//  Created by 渡部郷太 on 1/16/17.
 //  Copyright © 2017 watanabe kyota. All rights reserved.
 //
 
@@ -10,15 +10,16 @@ import Foundation
 import UIKit
 
 
-protocol ZaifSettingViewDelegate {
-    func changeApiKeys()
+protocol AppSettingViewDelegate {
+    func changeUpdateInterval()
 }
 
 
-class ZaifSettingView : SettingView, VariableSettingCellDelegate {
+
+class AppSettingView : SettingView, VariableSettingCellDelegate {
     
-    init(zaifExchange: ZaifExchange, section: Int) {
-        self.zaifExchange = zaifExchange
+    init(config: Config, section: Int) {
+        self.config = config
         super.init(section: section)
     }
     
@@ -27,8 +28,8 @@ class ZaifSettingView : SettingView, VariableSettingCellDelegate {
         switch row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "variableSettingCell", for: indexPath) as! VariableSettingCell
-            cell.nameLabel.text = "APIキー"
-            cell.valueLabel.text = ""
+            cell.nameLabel.text = "自動更新間隔"
+            cell.valueLabel.text = self.config.autoUpdateInterval.string
             cell.delegate = self
             return cell
         default:
@@ -46,19 +47,27 @@ class ZaifSettingView : SettingView, VariableSettingCellDelegate {
         }
     }
     
+    func updateAutoUpdateInterval(tableView: UITableView, interval: UpdateInterval) {
+        let index = IndexPath(row: 0, section: self.section)
+        guard let cell = tableView.cellForRow(at: index) as? VariableSettingCell else {
+            return
+        }
+        cell.valueLabel.text = interval.string
+    }
+    
     // VariableSettingCellDelegate
     func touchesEnded(name: String, value: String) {
-        self.delegate?.changeApiKeys()
+        self.delegate?.changeUpdateInterval()
     }
     
     override var settingName: String {
-        return self.zaifExchange.name
+        return ""
     }
     
     override var settingCount: Int {
         return 1
     }
     
-    let zaifExchange: ZaifExchange
-    var delegate: ZaifSettingViewDelegate?
+    let config: Config
+    var delegate: AppSettingViewDelegate?
 }

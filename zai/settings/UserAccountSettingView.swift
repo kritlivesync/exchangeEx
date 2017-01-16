@@ -15,13 +15,14 @@ protocol UserAccountSettingDelegate {
     func changePassword()
 }
 
-class UserAccountSettingView : SettingProtocol, ValueActionSettingDelegate, VariableSettingCellDelegate {
+class UserAccountSettingView : SettingView, ValueActionSettingDelegate, VariableSettingCellDelegate {
     
-    init(account: Account) {
+    init(account: Account, section: Int) {
         self.account = account
+        super.init(section: section)
     }
     
-    func getCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+    override func getCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
         let row = indexPath.row
         switch row {
         case 0:
@@ -53,7 +54,7 @@ class UserAccountSettingView : SettingProtocol, ValueActionSettingDelegate, Vari
         }
     }
     
-    func shouldHighlightRowAt(row: Int) -> Bool {
+    override func shouldHighlightRowAt(row: Int) -> Bool {
         switch row {
         case 0:
             return false
@@ -79,11 +80,11 @@ class UserAccountSettingView : SettingProtocol, ValueActionSettingDelegate, Vari
         self.delegate?.changePassword()
     }
     
-    var settingName: String {
+    override var settingName: String {
         return "アカウント情報"
     }
     
-    var settingCount: Int {
+    override var settingCount: Int {
         return 4
     }
     

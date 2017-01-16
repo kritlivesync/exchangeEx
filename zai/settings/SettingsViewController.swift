@@ -10,16 +10,21 @@ import Foundation
 import UIKit
 
 
-protocol SettingProtocol {
-    func getCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell
+class SettingView {
+    init(section: Int) {
+        self.section = section
+    }
     
-    func shouldHighlightRowAt(row: Int) -> Bool
+    func getCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell { return UITableViewCell() }
     
-    var settingName: String { get }
-    var settingCount: Int { get }
+    func shouldHighlightRowAt(row: Int) -> Bool { return false}
+    
+    var settingName: String { get { return "" } }
+    var settingCount: Int { get { return 0 } }
+    let section: Int
 }
 
-class SettingsViewController : UITableViewController, UserAccountSettingDelegate, ZaifSettingViewDelegate {
+class SettingsViewController : UITableViewController, UserAccountSettingDelegate, ZaifSettingViewDelegate, AppSettingViewDelegate, ChangeUpdateIntervalDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,15 +38,19 @@ class SettingsViewController : UITableViewController, UserAccountSettingDelegate
         self.tableView.register(UINib(nibName: "ValueActionSettingCell", bundle: nil), forCellReuseIdentifier: "valueActionSettingCell")
         
         let account = getAccount()!
-        self.userSetting = UserAccountSettingView(account: account)
+        self.userSetting = UserAccountSettingView(account: account, section: self.settings.count)
         self.userSetting?.delegate = self
         self.settings.append(self.userSetting!)
         
         if let zaif = account.getExchange(exchangeName: "Zaif") {
-            self.zaifSetting = ZaifSettingView(zaifExchange: zaif as! ZaifExchange)
+            self.zaifSetting = ZaifSettingView(zaifExchange: zaif as! ZaifExchange, section: self.settings.count)
             self.zaifSetting?.delegate = self
             self.settings.append(self.zaifSetting!)
         }
+        
+        self.appSetting = AppSettingView(config: getConfig(), section: self.settings.count)
+        self.appSetting?.delegate = self
+        self.settings.append(self.appSetting!)
     }
     
     public override func numberOfSections(in tableView: UITableView) -> Int {
@@ -107,6 +116,16 @@ class SettingsViewController : UITableViewController, UserAccountSettingDelegate
         self.performSegue(withIdentifier: "changeZaifApiKeysSegue", sender: nil)
     }
     
+    // AppSettingViewDelegate
+    func changeUpdateInterval() {
+        self.performSegue(withIdentifier: "changeUpdateIntervalSegue", sender: nil)
+    }
+    
+    // ChangeUpdateIntervalDelegate
+    func saved(interval: UpdateInterval) {
+        self.appSetting?.updateAutoUpdateInterval(tableView: self.tableView, interval: interval)
+    }
+    
     @IBAction func pushBackButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -123,11 +142,16 @@ class SettingsViewController : UITableViewController, UserAccountSettingDelegate
         case "changeZaifApiKeysSegue":
             let dst = segue.destination as! ChangeZaifApiKeyController
             dst.zaifExchange = self.zaifSetting?.zaifExchange
+        case "changeUpdateIntervalSegue":
+            let dst = segue.destination as! ChangeUpdateIntervalController
+            dst.config = self.appSetting?.config
+            dst.delegate = self
         default: break
         }
     }
     
     var userSetting: UserAccountSettingView?
     var zaifSetting: ZaifSettingView?
-    var settings = [SettingProtocol]()
+    var appSetting: AppSettingView?
+    var settings = [SettingView]()
 }

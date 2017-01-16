@@ -26,8 +26,3 @@ func isLogined() -> Bool {
     let app = UIApplication.shared.delegate as! AppDelegate
     return app.account != nil
 }
-
-func getAccount() -> Account? {
-    let app = UIApplication.shared.delegate as! AppDelegate
-    return app.account
-}

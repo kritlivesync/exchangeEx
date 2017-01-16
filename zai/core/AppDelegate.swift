@@ -49,3 +49,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var account: Account?
 }
 
+func getAccount() -> Account? {
+    let app = UIApplication.shared.delegate as! AppDelegate
+    return app.account
+}
+
+func getConfig() -> Config {
+    let app = UIApplication.shared.delegate as! AppDelegate
+    return app.config
+}
+

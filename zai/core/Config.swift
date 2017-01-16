@@ -8,6 +8,56 @@
 
 import Foundation
 
+enum UpdateInterval : Int {
+    case oneSecond
+    case fiveSeconds
+    case tenSeconds
+    case thirtySeconds
+    case oneMinute
+    case realTime
+    
+    var string: String {
+        switch self {
+        case .oneSecond: return "1秒"
+        case .fiveSeconds: return "5秒"
+        case .tenSeconds: return "10秒"
+        case .thirtySeconds: return "30秒"
+        case .oneMinute: return "60秒"
+        case .realTime: return "リアルタイム"
+        }
+    }
+    
+    var int: Int {
+        switch self {
+        case .oneSecond: return 1
+        case .fiveSeconds: return 5
+        case .tenSeconds: return 10
+        case .thirtySeconds: return 30
+        case .oneMinute: return 60
+        case .realTime: return 0
+        }
+    }
+    
+    var double: Double {
+        switch self {
+        case .oneSecond: return 1.0
+        case .fiveSeconds: return 5.0
+        case .tenSeconds: return 10.0
+        case .thirtySeconds: return 30.0
+        case .oneMinute: return 60.0
+        case .realTime: return 0.5
+        }
+    }
+    
+    static var count: Int = {
+        var i = 0
+        while let _ = UpdateInterval(rawValue: i) {
+            i += 1
+        }
+        return i
+    }()
+}
+
 
 open class Config {
     
@@ -22,6 +72,19 @@ open class Config {
             Config.configDict.setValue(newValue, forKey: "previousUserId")
         }
     }
+    
+    var autoUpdateInterval: UpdateInterval {
+        get {
+            if let val = Config.configDict.value(forKey: "autoUpdateInterval") {
+                return UpdateInterval(rawValue: (val as! Int))!
+            }
+            return UpdateInterval.fiveSeconds
+        }
+        set {
+            Config.configDict.setValue(newValue.rawValue, forKey: "autoUpdateInterval")
+        }
+    }
+    
     var sellMaxProfitPosition: Bool {
         get {
             if let val = Config.configDict.value(forKey: "sellMaxProfitPosition") {
