@@ -32,6 +32,14 @@ class BoardView : NSObject, UITableViewDelegate, UITableViewDataSource, BoardVie
     }
     
     public func update(board: Board) {
+        if let prevBoard = self.board {
+            if prevBoard.quoteCount != board.quoteCount {
+                self.board = board
+                self.reloadData()
+                return
+            }
+        }
+        
         let needReload = (self.board == nil)
         self.board = board
         let count = self.board!.quoteCount

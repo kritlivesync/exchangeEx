@@ -19,6 +19,7 @@ import Foundation
 internal class Fund : Monitorable {
     init(api: Api) {
         self.api = api
+        super.init(target: "Fund")
     }
  
     func getMarketCapitalization(_ cb: @escaping ((ZaiError?, Int) -> Void)) {

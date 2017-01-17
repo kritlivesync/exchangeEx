@@ -78,6 +78,7 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
     }
     
     internal func startWatch() {
+        self.orderMonitor?.monitoringInterval = getConfig().autoUpdateInterval
         self.orderMonitor?.delegate = self
     }
     

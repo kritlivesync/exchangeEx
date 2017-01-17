@@ -32,7 +32,7 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
         self.addPositionButton.tintColor = Color.antiKeyColor
     }
     
-    open override func viewDidAppear(_ animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.positionListView.startWatch()
         self.positionListView.reloadData()

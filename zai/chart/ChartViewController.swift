@@ -47,7 +47,11 @@ class ChartViewController : UIViewController, CandleChartDelegate, PositionDeleg
     
     open override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        let config = getConfig()
+        self.fund.monitoringInterval = config.autoUpdateInterval
         self.fund.delegate = self
+        self.bitcoin.monitoringInterval = config.autoUpdateInterval
         self.bitcoin.delegate = self
     }
     

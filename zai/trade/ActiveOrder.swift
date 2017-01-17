@@ -37,6 +37,7 @@ class ActiveOrderMonitor : Monitorable {
     init(currencyPair: ApiCurrencyPair, api: Api) {
         self.currencyPair = currencyPair
         self.api = api
+        super.init(target: "Order")
     }
     
     override func monitor() {

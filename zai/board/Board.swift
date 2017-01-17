@@ -29,9 +29,10 @@ struct Quote {
 }
 
 
-protocol BoardDelegate {
+protocol BoardDelegate : MonitorableDelegate {
     func recievedBoard(err: ZaiErrorType?, board: Board?)
 }
+
 
 class Board {
     init() {
@@ -114,36 +115,101 @@ class Board {
         get { return self.bids.count }
     }
     
-    var delegate : BoardDelegate? {
-        get { return self.delegate }
-        set {
-            if let val = newValue {
-                self.dlgt = val
+    
+    private var asks: [Quote]
+    private var bids: [Quote]
+}
+
+class BoardMonitor : BoardDelegate {
+    
+    init(currencyPair: ApiCurrencyPair, api: Api) {
+        self.monitorableBoard = MonitorableBoard(currencyPair: currencyPair, api: api)
+        self.streamingBoard = StreamingBoard(currencyPair: currencyPair, api: api)
+    }
+    
+    var delegate: BoardDelegate? = nil {
+        didSet {
+            if self.delegate != nil {
+                if self.updateInterval == UpdateInterval.realTime {
+                    self.streamingBoard.delegate = self
+                    self.monitorableBoard.delegate = nil
+                } else {
+                    self.monitorableBoard.monitoringInterval = self.updateInterval
+                    self.monitorableBoard.delegate = self
+                    self.streamingBoard.delegate = nil
+                }
+            } else {
+                self.streamingBoard.delegate = nil
+                self.monitorableBoard.delegate = nil
+            }
+        }
+    }
+
+    
+    // BoardDelegate
+    func recievedBoard(err: ZaiErrorType?, board: Board?) {
+        self.delegate?.recievedBoard(err: err, board: board)
+    }
+    
+    
+    var updateInterval = UpdateInterval.fiveSeconds
+    let monitorableBoard: MonitorableBoard
+    let streamingBoard: StreamingBoard
+}
+
+
+class MonitorableBoard : Monitorable {
+    
+    init(currencyPair: ApiCurrencyPair, api: Api) {
+        self.api = api
+        self.currencyPair = currencyPair
+        super.init(target: "Board")
+    }
+    
+    override func monitor() {
+        let delegate = self.delegate as? BoardDelegate
+        api.getBoard(currencyPair: self.currencyPair) { (err, board) in
+            delegate?.recievedBoard(err: nil, board: board)
+        }
+    }
+    
+    let api: Api
+    let currencyPair: ApiCurrencyPair
+}
+
+
+class StreamingBoard {
+    
+    init(currencyPair: ApiCurrencyPair, api: Api) {
+        self.api = api
+        self.currencyPair = currencyPair
+    }
+    
+    var delegate: BoardDelegate? = nil {
+        willSet {
+            if newValue != nil {
                 self.stream = StreamingApi.stream(.BTC_JPY, openCallback: self.onOpen)
                 self.stream!.onError(callback: self.onError)
                 self.stream!.onData(callback: self.onData)
             } else {
                 if let s = self.stream {
+                    print(getNow() + " closed btc_jpy streaming")
                     s.close()
                 }
-                self.dlgt = nil
             }
         }
     }
     
-    func onOpen(_ err: ZSError?, _ res: JSON?) {
-        print("opened btc_jpy streaming")
+    fileprivate func onOpen(_ err: ZSError?, _ res: JSON?) {
+        print(getNow() + " opened btc_jpy streaming")
     }
     
-    func onError(_ err: ZSError?, _ res: JSON?) {
-        print("error in streaming")
-        if let d = self.dlgt {
-            d.recievedBoard(err: .ZAIF_CONNECTION_ERROR, board: nil)
-        }
-        
+    fileprivate func onError(_ err: ZSError?, _ res: JSON?) {
+        print(getNow() +  "error in streaming")
+        self.delegate?.recievedBoard(err: .ZAIF_CONNECTION_ERROR, board: nil)
     }
     
-    func onData(_ err: ZSError?, _ res: JSON?) {
+    fileprivate func onData(_ err: ZSError?, _ res: JSON?) {
         if let e = err {
             print(e.message)
             return
@@ -161,13 +227,10 @@ class Board {
             let b = bid.arrayValue
             board.addBid(price: b[0].doubleValue, amount: b[1].doubleValue)
         }
-        if let d = self.dlgt {
-            d.recievedBoard(err: nil, board: board)
-        }
+        self.delegate?.recievedBoard(err: nil, board: board)
     }
     
-    private var asks: [Quote]
-    private var bids: [Quote]
     var stream: ZaifSwift.Stream? = nil
-    var dlgt: BoardDelegate? = nil
+    let api: Api
+    let currencyPair: ApiCurrencyPair
 }

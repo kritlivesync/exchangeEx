@@ -17,7 +17,7 @@ protocol PositionFundViewDelegate : MonitorableDelegate {
 class PositionFundView : Monitorable {
     init(trader: Trader) {
         self.trader = trader
-        super.init()
+        super.init(target: "Position")
     }
     
     override func monitor() {

@@ -16,7 +16,8 @@ import ZaifSwift
 
 internal class Monitorable {
     
-    init() {
+    init(target: String) {
+        self.target = target
         self.queue = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default)
         self.addMonitorOperation()
     }
@@ -31,15 +32,36 @@ internal class Monitorable {
         return
     }
     
+    var monitoringInterval: UpdateInterval {
+        get {
+            return self._monitoringInterval
+        }
+        set {
+            self._monitoringInterval = newValue
+            if self.timer != nil {
+                self.timer?.invalidate()
+                print(getNow() + " start monitoring " + self.target)
+                self.timer = Timer.scheduledTimer(
+                    timeInterval: self._monitoringInterval.double,
+                    target: self,
+                    selector: #selector(Monitorable.addMonitorOperation),
+                    userInfo: nil,
+                    repeats: true)
+            }
+        }
+    }
+    
     var delegate: MonitorableDelegate? = nil {
         willSet {
             if newValue == nil {
+                print(getNow() + " end monitoring " + self.target)
                 self.timer?.invalidate()
                 self.timer = nil
             } else {
                 if self.timer == nil {
+                    print(getNow() + " start monitoring " + self.target)
                     self.timer = Timer.scheduledTimer(
-                        timeInterval: self.monitoringInterval,
+                        timeInterval: self._monitoringInterval.double,
                         target: self,
                         selector: #selector(Monitorable.addMonitorOperation),
                         userInfo: nil,
@@ -52,9 +74,11 @@ internal class Monitorable {
         }
     }
     
+    
+    let target: String
     let queue: DispatchQueue!
     var timer: Timer?
-    var monitoringInterval: Double = 5.0
+    var _monitoringInterval = UpdateInterval.fiveSeconds
     
 }
 

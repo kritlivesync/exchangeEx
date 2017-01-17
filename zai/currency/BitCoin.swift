@@ -20,6 +20,7 @@ internal class BitCoin : Monitorable {
     
     init(api: Api) {
         self.api = api
+        super.init(target: "BitCoin")
     }
     
     func getPriceFor(_ currency: ApiCurrency, cb: @escaping (ZaiError?, Double) -> Void) {

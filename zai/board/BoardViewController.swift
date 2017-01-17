@@ -30,15 +30,22 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
         
         self.jpyFundLabel.text = "-"
         
-        self.bitcoin = BitCoin(api: account.activeExchange.api)
-        self.board = Board()
-        self.fund = Fund(api: account.activeExchange.api)
+        let api = account.activeExchange.api
+        let currencyPair = ApiCurrencyPair(rawValue: account.activeExchange.currencyPair)!
+        self.bitcoin = BitCoin(api: api)
+        self.board = BoardMonitor(currencyPair: currencyPair, api: api)
+        self.fund = Fund(api: api)
     }
     
     open override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        let interval = getConfig().autoUpdateInterval
+        self.board.updateInterval = interval
         self.board.delegate = self
+        self.bitcoin.monitoringInterval = interval
         self.bitcoin.delegate = self
+        self.fund.monitoringInterval = interval
         self.fund.delegate = self
     }
     
@@ -144,7 +151,7 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     fileprivate var fund: Fund!
     fileprivate var bitcoin: BitCoin!
     
-    fileprivate var board: Board!
+    fileprivate var board: BoardMonitor!
     
     @IBOutlet weak var boardHeaderLabel: UILabel!
     @IBOutlet weak var boardTableView: UITableView!
