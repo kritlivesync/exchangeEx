@@ -160,7 +160,7 @@ open class BoardConfig : Config {
             if let val = Config.configDict.value(forKey: "autoUpdateInterval_board") {
                 return UpdateInterval(rawValue: (val as! Int))!
             }
-            return UpdateInterval.fiveSeconds
+            return UpdateInterval.realTime
         }
         set {
             Config.configDict.setValue(newValue.rawValue, forKey: "autoUpdateInterval_board")
