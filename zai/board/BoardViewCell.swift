@@ -47,10 +47,18 @@ class BoardViewCell : UITableViewCell {
             let color = Color.askQuoteColor
             self.priceLabel.textColor = color
             self.amountBar.backgroundColor = color
+            self.takerButtonAction = UITableViewRowAction(style: .normal, title: "買う") { (_, _) in
+                self.delegate?.pushedTakerButton(quote: self.quote!)
+            }
+            self.takerButtonAction?.backgroundColor = Color.takerButtonColor
         } else if quote.type == Quote.QuoteType.BID {
             let color = Color.bidQuoteColor
             self.priceLabel.textColor = color
             self.amountBar.backgroundColor = color
+            self.takerButtonAction = UITableViewRowAction(style: .normal, title: "売る") { (_, _) in
+                self.delegate?.pushedTakerButton(quote: self.quote!)
+            }
+            self.takerButtonAction?.backgroundColor = Color.takerButtonColor
         }
         var barWidth = CGFloat(quote.amount * 50.0)
         barWidth = min(barWidth, self.amountLabel.layer.bounds.width)
@@ -58,15 +66,10 @@ class BoardViewCell : UITableViewCell {
         
         self.quote = quote
         
-        self.makerButtonAction = UITableViewRowAction(style: .normal, title: "Make") { (_, _) in
+        self.makerButtonAction = UITableViewRowAction(style: .normal, title: "メイク") { (_, _) in
             self.delegate?.pushedMakerButton(quote: self.quote!)
         }
         self.makerButtonAction?.backgroundColor = Color.makerButtonColor
-        
-        self.takerButtonAction = UITableViewRowAction(style: .normal, title: "Take") { (_, _) in
-            self.delegate?.pushedTakerButton(quote: self.quote!)
-        }
-        self.takerButtonAction?.backgroundColor = Color.takerButtonColor
     }
     
     @IBOutlet weak var priceLabel: UILabel!

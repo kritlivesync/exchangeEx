@@ -40,7 +40,7 @@ internal class Monitorable {
             self._monitoringInterval = newValue
             if self.timer != nil {
                 self.timer?.invalidate()
-                print(getNow() + " start monitoring " + self.target)
+                print(getNow() + " start monitoring " + self.target + " interval: " + self._monitoringInterval.string)
                 self.timer = Timer.scheduledTimer(
                     timeInterval: self._monitoringInterval.double,
                     target: self,
@@ -59,7 +59,7 @@ internal class Monitorable {
                 self.timer = nil
             } else {
                 if self.timer == nil {
-                    print(getNow() + " start monitoring " + self.target)
+                    print(getNow() + " start monitoring " + self.target + " interval: " + self._monitoringInterval.string)
                     self.timer = Timer.scheduledTimer(
                         timeInterval: self._monitoringInterval.double,
                         target: self,

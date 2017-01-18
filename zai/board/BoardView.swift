@@ -32,23 +32,26 @@ class BoardView : NSObject, UITableViewDelegate, UITableViewDataSource, BoardVie
     }
     
     public func update(board: Board) {
-        if let prevBoard = self.board {
-            if prevBoard.quoteCount != board.quoteCount {
-                self.board = board
-                self.reloadData()
-                return
-            }
+        guard let prevBoard = self.board else {
+            self.board = board
+            self.reloadData()
+            let mid = (board.quoteCount / 2)
+            self.view.scrollToRow(at: IndexPath(row: mid, section: 0), at: UITableViewScrollPosition.middle, animated: true)
+            return
         }
         
-        let needReload = (self.board == nil)
         self.board = board
-        let count = self.board!.quoteCount
-        for i in 0 ..< count {
+        
+        if prevBoard.quoteCount != board.quoteCount {
+            self.reloadData()
+            let mid = (board.quoteCount / 2)
+            self.view.scrollToRow(at: IndexPath(row: mid, section: 0), at: UITableViewScrollPosition.middle, animated: true)
+            return
+        }
+
+        for i in 0 ..< self.board!.quoteCount {
             let cell = self.view.cellForRow(at: IndexPath(row: i, section: 0)) as? BoardViewCell
             cell?.setQuote(board.getQuote(index: i))
-        }
-        if needReload {
-            self.reloadData()
         }
     }
     
@@ -77,6 +80,7 @@ class BoardView : NSObject, UITableViewDelegate, UITableViewDataSource, BoardVie
         let quote = board.getQuote(index: row)!
         cell.setQuote(quote)
         cell.delegate = self
+        
         return cell
     }
     

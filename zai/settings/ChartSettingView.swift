@@ -1,8 +1,8 @@
 //
-//  AppSettingView.swift
+//  ChartSettingView.swift
 //  zai
 //
-//  Created by 渡部郷太 on 1/16/17.
+//  Created by 渡部郷太 on 1/18/17.
 //  Copyright © 2017 watanabe kyota. All rights reserved.
 //
 
@@ -10,15 +10,16 @@ import Foundation
 import UIKit
 
 
-protocol AppSettingViewDelegate {
-    func changeUpdateInterval(setting: AppSettingView)
+protocol ChartSettingViewDelegate {
+    func changeUpdateInterval(setting: ChartSettingView)
 }
 
 
-class AppSettingView : SettingView, VariableSettingCellDelegate {
+
+class ChartSettingView : SettingView, VariableSettingCellDelegate {
     
     override init(section: Int, tableView: UITableView) {
-        self._config = getAppConfig()
+        self._config = getChartConfig()
         super.init(section: section, tableView: tableView)
     }
     
@@ -65,17 +66,18 @@ class AppSettingView : SettingView, VariableSettingCellDelegate {
     }
     
     override var settingName: String {
-        return ""
+        return "Chart"
     }
     
     override var settingCount: Int {
-        return 0
+        return 1
     }
     
     override var config: Config {
         return self._config
     }
     
-    let _config: AppConfig
-    var delegate: AppSettingViewDelegate?
+    
+    let _config: ChartConfig
+    var delegate: ChartSettingViewDelegate?
 }

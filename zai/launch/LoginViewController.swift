@@ -26,8 +26,7 @@ class LoginViewController: UIViewController, UINavigationBarDelegate {
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
         self.navigationBar.frame = self.navigationBar.frame.offsetBy(dx: 0.0, dy: statusBarHeight)
         
-        let app = UIApplication.shared.delegate as! AppDelegate
-        self.userIdText.text = app.config.previousUserId
+        self.userIdText.text = getAppConfig().previousUserId
         self.passwordText.text = ""
     }
 
@@ -59,8 +58,9 @@ class LoginViewController: UIViewController, UINavigationBarDelegate {
         }
         
         if goNext {
-            app.config.previousUserId = userId
-            _ = app.config.save()
+            let config = getAppConfig()
+            config.previousUserId = userId
+            _ = config.save()
         }
 
         return goNext
@@ -74,8 +74,7 @@ class LoginViewController: UIViewController, UINavigationBarDelegate {
     @IBAction func unwindToLogin(_ segue: UIStoryboardSegue) {}
     
     @IBAction func unwindWithSave(_ segue:UIStoryboardSegue) {
-        let app = UIApplication.shared.delegate as! AppDelegate
-        self.userIdText.text = app.config.previousUserId
+        self.userIdText.text = getAppConfig().previousUserId
     }
     
     

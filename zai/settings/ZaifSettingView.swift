@@ -17,9 +17,9 @@ protocol ZaifSettingViewDelegate {
 
 class ZaifSettingView : SettingView, VariableSettingCellDelegate {
     
-    init(zaifExchange: ZaifExchange, section: Int) {
+    init(zaifExchange: ZaifExchange, section: Int, tableView: UITableView) {
         self.zaifExchange = zaifExchange
-        super.init(section: section)
+        super.init(section: section, tableView: tableView)
     }
     
     override func getCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {

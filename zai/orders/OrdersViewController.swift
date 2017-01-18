@@ -35,6 +35,12 @@ class OrdersViewController : UIViewController {
         self.orderListView.stopWatch()
     }
     
+    @IBAction func pushSettingsButton(_ sender: Any) {
+        let storyboard: UIStoryboard = self.storyboard!
+        let settings = storyboard.instantiateViewController(withIdentifier: "settingsViewController") as! UINavigationController
+        self.present(settings, animated: true, completion: nil)
+    }
+    
     var account: Account?
     var orderListView: OrderListView!
     

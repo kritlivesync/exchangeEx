@@ -145,7 +145,7 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
     }
     
     internal func startWatch() {
-        let interval = getConfig().autoUpdateInterval
+        let interval = getPositionsConfig().autoUpdateInterval
         self.fund.monitoringInterval = interval
         self.fund.delegate = self
         self.bitcoin.monitoringInterval = interval

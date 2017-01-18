@@ -17,6 +17,10 @@
 		B827CD121D7C4FDD00E9847B /* PositionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827CD111D7C4FDD00E9847B /* PositionsViewController.swift */; };
 		B827CD141D7C523700E9847B /* PositionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827CD131D7C523700E9847B /* PositionListView.swift */; };
 		B827CD161D806DF900E9847B /* PositionListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827CD151D806DF900E9847B /* PositionListViewCell.swift */; };
+		B83F727F1E2F9B590077B566 /* ChartSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83F727E1E2F9B590077B566 /* ChartSettingView.swift */; };
+		B83F72811E2F9D8B0077B566 /* BoardSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83F72801E2F9D8B0077B566 /* BoardSettingView.swift */; };
+		B83F72831E2F9F230077B566 /* PositionsSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83F72821E2F9F230077B566 /* PositionsSettingView.swift */; };
+		B83F72851E2FA24B0077B566 /* OrdersSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83F72841E2FA24B0077B566 /* OrdersSettingView.swift */; };
 		B84113D11E141C6F000EB0F8 /* ActiveOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84113BF1E141C6F000EB0F8 /* ActiveOrder.swift */; };
 		B84113D21E141C6F000EB0F8 /* BuyOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84113C01E141C6F000EB0F8 /* BuyOrder.swift */; };
 		B84113D31E141C6F000EB0F8 /* BuyOrder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84113C11E141C6F000EB0F8 /* BuyOrder+CoreDataProperties.swift */; };
@@ -89,6 +93,7 @@
 		B8C7DEEB1E2B620C00E666F0 /* ChangeZaifApiKeyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C7DEEA1E2B620C00E666F0 /* ChangeZaifApiKeyController.swift */; };
 		B8C7DEED1E2D026300E666F0 /* AppSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C7DEEC1E2D026300E666F0 /* AppSettingView.swift */; };
 		B8C7DEEF1E2D15FD00E666F0 /* ChangeUpdateIntervalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C7DEEE1E2D15FD00E666F0 /* ChangeUpdateIntervalController.swift */; };
+		B8C7DEF11E2F866F00E666F0 /* AssetsSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C7DEF01E2F866F00E666F0 /* AssetsSettingView.swift */; };
 		B8E9E2CF1E1B867F003B298F /* ZaifExchange+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E9E2CD1E1B867F003B298F /* ZaifExchange+CoreDataProperties.swift */; };
 		B8E9E2D01E1B867F003B298F /* Exchange+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E9E2CE1E1B867F003B298F /* Exchange+CoreDataProperties.swift */; };
 		B8E9E2D31E1D186E003B298F /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E9E2D21E1D186E003B298F /* ChartViewController.swift */; };
@@ -134,6 +139,10 @@
 		B827CD111D7C4FDD00E9847B /* PositionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PositionsViewController.swift; path = positions/PositionsViewController.swift; sourceTree = "<group>"; };
 		B827CD131D7C523700E9847B /* PositionListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PositionListView.swift; path = positions/PositionListView.swift; sourceTree = "<group>"; };
 		B827CD151D806DF900E9847B /* PositionListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PositionListViewCell.swift; path = positions/PositionListViewCell.swift; sourceTree = "<group>"; };
+		B83F727E1E2F9B590077B566 /* ChartSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChartSettingView.swift; path = settings/ChartSettingView.swift; sourceTree = "<group>"; };
+		B83F72801E2F9D8B0077B566 /* BoardSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardSettingView.swift; path = settings/BoardSettingView.swift; sourceTree = "<group>"; };
+		B83F72821E2F9F230077B566 /* PositionsSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PositionsSettingView.swift; path = settings/PositionsSettingView.swift; sourceTree = "<group>"; };
+		B83F72841E2FA24B0077B566 /* OrdersSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrdersSettingView.swift; path = settings/OrdersSettingView.swift; sourceTree = "<group>"; };
 		B84113BF1E141C6F000EB0F8 /* ActiveOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActiveOrder.swift; path = trade/ActiveOrder.swift; sourceTree = "<group>"; };
 		B84113C01E141C6F000EB0F8 /* BuyOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuyOrder.swift; path = trade/BuyOrder.swift; sourceTree = "<group>"; };
 		B84113C11E141C6F000EB0F8 /* BuyOrder+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "BuyOrder+CoreDataProperties.swift"; path = "trade/BuyOrder+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -212,6 +221,7 @@
 		B8C7DEEA1E2B620C00E666F0 /* ChangeZaifApiKeyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChangeZaifApiKeyController.swift; path = settings/ChangeZaifApiKeyController.swift; sourceTree = "<group>"; };
 		B8C7DEEC1E2D026300E666F0 /* AppSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppSettingView.swift; path = settings/AppSettingView.swift; sourceTree = "<group>"; };
 		B8C7DEEE1E2D15FD00E666F0 /* ChangeUpdateIntervalController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChangeUpdateIntervalController.swift; path = settings/ChangeUpdateIntervalController.swift; sourceTree = "<group>"; };
+		B8C7DEF01E2F866F00E666F0 /* AssetsSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AssetsSettingView.swift; path = settings/AssetsSettingView.swift; sourceTree = "<group>"; };
 		B8E9E2CD1E1B867F003B298F /* ZaifExchange+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ZaifExchange+CoreDataProperties.swift"; path = "account/ZaifExchange+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B8E9E2CE1E1B867F003B298F /* Exchange+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Exchange+CoreDataProperties.swift"; path = "account/Exchange+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B8E9E2D21E1D186E003B298F /* ChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChartViewController.swift; path = chart/ChartViewController.swift; sourceTree = "<group>"; };
@@ -343,6 +353,11 @@
 				B8C7DEEA1E2B620C00E666F0 /* ChangeZaifApiKeyController.swift */,
 				B8C7DEEC1E2D026300E666F0 /* AppSettingView.swift */,
 				B8C7DEEE1E2D15FD00E666F0 /* ChangeUpdateIntervalController.swift */,
+				B8C7DEF01E2F866F00E666F0 /* AssetsSettingView.swift */,
+				B83F727E1E2F9B590077B566 /* ChartSettingView.swift */,
+				B83F72801E2F9D8B0077B566 /* BoardSettingView.swift */,
+				B83F72821E2F9F230077B566 /* PositionsSettingView.swift */,
+				B83F72841E2FA24B0077B566 /* OrdersSettingView.swift */,
 			);
 			name = settings;
 			sourceTree = "<group>";
@@ -730,6 +745,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B83F727F1E2F9B590077B566 /* ChartSettingView.swift in Sources */,
 				B84E60871E251E63004EA77C /* BestQuoteView.swift in Sources */,
 				B8E9E2CF1E1B867F003B298F /* ZaifExchange+CoreDataProperties.swift in Sources */,
 				B8F38B421D8FD2D700731696 /* PriceLogRepository.swift in Sources */,
@@ -779,6 +795,7 @@
 				B84114011E18E293000EB0F8 /* ZaifApi.swift in Sources */,
 				B89D5C831E293445004FF743 /* VariableSettingCell.swift in Sources */,
 				B827CD121D7C4FDD00E9847B /* PositionsViewController.swift in Sources */,
+				B83F72851E2FA24B0077B566 /* OrdersSettingView.swift in Sources */,
 				B8F585271D6964FA008680D8 /* Model.xcdatamodeld in Sources */,
 				B84113DD1E141C6F000EB0F8 /* SellOrder+CoreDataProperties.swift in Sources */,
 				B85E8E5E1D6F477900C029C8 /* TraderView.swift in Sources */,
@@ -800,6 +817,7 @@
 				B84113F91E181744000EB0F8 /* Exchange.swift in Sources */,
 				B84113D41E141C6F000EB0F8 /* LongPosition.swift in Sources */,
 				B89D5C851E29C66F004FF743 /* ZaifSettingView.swift in Sources */,
+				B83F72831E2F9F230077B566 /* PositionsSettingView.swift in Sources */,
 				B8C7DEE51E2B263D00E666F0 /* ChangePasswordViewController.swift in Sources */,
 				B81AF6431DFF054600D4F706 /* AssetsViewController.swift in Sources */,
 				B8521A781DFC681A0025B60E /* Ema.swift in Sources */,
@@ -816,6 +834,8 @@
 				B85E8E461D6F3E4D00C029C8 /* AccountRepository.swift in Sources */,
 				B8521A761DF8542F0025B60E /* BoardViewCell.swift in Sources */,
 				B85E8E481D6F3E4D00C029C8 /* NewAccountViewController.swift in Sources */,
+				B8C7DEF11E2F866F00E666F0 /* AssetsSettingView.swift in Sources */,
+				B83F72811E2F9D8B0077B566 /* BoardSettingView.swift in Sources */,
 				B8C7DEED1E2D026300E666F0 /* AppSettingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

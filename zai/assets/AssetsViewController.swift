@@ -25,7 +25,7 @@ class AssetsViewController: UIViewController, FundDelegate {
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.fund.monitoringInterval = getConfig().autoUpdateInterval
+        self.fund.monitoringInterval = getAssetsConfig().autoUpdateInterval
         self.fund.delegate = self
     }
     

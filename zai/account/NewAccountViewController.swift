@@ -60,9 +60,9 @@ class NewAccountViewController: UIViewController {
                     repository.delete(account)
                     return
                 }
-                let app = UIApplication.shared.delegate as! AppDelegate
-                app.config.previousUserId = userId
-                _ = app.config.save()
+                let config = getAppConfig()
+                config.previousUserId = userId
+                _ = config.save()
                 self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self)
             } else {
                 return

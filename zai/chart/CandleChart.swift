@@ -156,7 +156,7 @@ class CandleChart : Monitorable {
         
         super.init(target: "Candle")
         
-        self.monitoringInterval = getConfig().autoUpdateInterval
+        self.monitoringInterval = getChartConfig().autoUpdateInterval
         
         let now = Int64(Date().timeIntervalSince1970)
         let period = self.calculatePeriod(date: now)

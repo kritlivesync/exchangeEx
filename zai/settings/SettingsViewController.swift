@@ -10,21 +10,38 @@ import Foundation
 import UIKit
 
 
-class SettingView {
-    init(section: Int) {
+class SettingView : ChangeUpdateIntervalDelegate {
+    init(section: Int, tableView: UITableView) {
         self.section = section
+        self.tableView = tableView
     }
     
     func getCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell { return UITableViewCell() }
     
     func shouldHighlightRowAt(row: Int) -> Bool { return false}
     
+    // ChangeUpdateIntervalDelegate
+    func saved(interval: UpdateInterval) {
+        return
+    }
+    
     var settingName: String { get { return "" } }
     var settingCount: Int { get { return 0 } }
+    var config: Config { get { return getAppConfig() } }
     let section: Int
+    let tableView: UITableView
 }
 
-class SettingsViewController : UITableViewController, UserAccountSettingDelegate, ZaifSettingViewDelegate, AppSettingViewDelegate, ChangeUpdateIntervalDelegate {
+class SettingsViewController
+    : UITableViewController
+    , UserAccountSettingDelegate
+    , ZaifSettingViewDelegate
+    , AppSettingViewDelegate
+    , AssetsSettingViewDelegate
+    , ChartSettingViewDelegate
+    , BoardSettingViewDelegate
+    , PositionsSettingViewDelegate
+    , OrdersSettingViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,19 +55,39 @@ class SettingsViewController : UITableViewController, UserAccountSettingDelegate
         self.tableView.register(UINib(nibName: "ValueActionSettingCell", bundle: nil), forCellReuseIdentifier: "valueActionSettingCell")
         
         let account = getAccount()!
-        self.userSetting = UserAccountSettingView(account: account, section: self.settings.count)
+        self.userSetting = UserAccountSettingView(account: account, section: self.settings.count, tableView: self.tableView)
         self.userSetting?.delegate = self
         self.settings.append(self.userSetting!)
         
         if let zaif = account.getExchange(exchangeName: "Zaif") {
-            self.zaifSetting = ZaifSettingView(zaifExchange: zaif as! ZaifExchange, section: self.settings.count)
+            self.zaifSetting = ZaifSettingView(zaifExchange: zaif as! ZaifExchange, section: self.settings.count, tableView: self.tableView)
             self.zaifSetting?.delegate = self
             self.settings.append(self.zaifSetting!)
         }
         
-        self.appSetting = AppSettingView(config: getConfig(), section: self.settings.count)
+        self.appSetting = AppSettingView(section: self.settings.count, tableView: self.tableView)
         self.appSetting?.delegate = self
         self.settings.append(self.appSetting!)
+        
+        self.assetsSetting = AssetsSettingView(section: self.settings.count, tableView: self.tableView)
+        self.assetsSetting?.delegate = self
+        self.settings.append(self.assetsSetting!)
+        
+        self.chartSetting = ChartSettingView(section: self.settings.count, tableView: self.tableView)
+        self.chartSetting?.delegate = self
+        self.settings.append(self.chartSetting!)
+        
+        self.boardSetting = BoardSettingView(section: self.settings.count, tableView: self.tableView)
+        self.boardSetting?.delegate = self
+        self.settings.append(self.boardSetting!)
+        
+        self.positionsSetting = PositionsSettingView(section: self.settings.count, tableView: self.tableView)
+        self.positionsSetting?.delegate = self
+        self.settings.append(self.positionsSetting!)
+        
+        self.ordersSetting = OrdersSettingView(section: self.settings.count, tableView: self.tableView)
+        self.ordersSetting?.delegate = self
+        self.settings.append(self.ordersSetting!)
     }
     
     public override func numberOfSections(in tableView: UITableView) -> Int {
@@ -117,13 +154,33 @@ class SettingsViewController : UITableViewController, UserAccountSettingDelegate
     }
     
     // AppSettingViewDelegate
-    func changeUpdateInterval() {
-        self.performSegue(withIdentifier: "changeUpdateIntervalSegue", sender: nil)
+    func changeUpdateInterval(setting: AppSettingView) {
+        self.performSegue(withIdentifier: "changeUpdateIntervalSegue", sender: setting)
     }
     
-    // ChangeUpdateIntervalDelegate
-    func saved(interval: UpdateInterval) {
-        self.appSetting?.updateAutoUpdateInterval(tableView: self.tableView, interval: interval)
+    // AssetsSettingViewDelegate
+    func changeUpdateInterval(setting: AssetsSettingView) {
+        self.performSegue(withIdentifier: "changeUpdateIntervalSegue", sender: setting)
+    }
+    
+    // ChartSettingViewDelegate
+    func changeUpdateInterval(setting: ChartSettingView) {
+        self.performSegue(withIdentifier: "changeUpdateIntervalSegue", sender: setting)
+    }
+    
+    // BoardSettingViewDelegate
+    func changeUpdateInterval(setting: BoardSettingView) {
+        self.performSegue(withIdentifier: "changeUpdateIntervalSegue", sender: setting)
+    }
+    
+    // PositionsSettingViewDelegate
+    func changeUpdateInterval(setting: PositionsSettingView) {
+        self.performSegue(withIdentifier: "changeUpdateIntervalSegue", sender: setting)
+    }
+    
+    // OrdersSettingViewDelegate
+    func changeUpdateInterval(setting: OrdersSettingView) {
+        self.performSegue(withIdentifier: "changeUpdateIntervalSegue", sender: setting)
     }
     
     @IBAction func pushBackButton(_ sender: Any) {
@@ -144,8 +201,9 @@ class SettingsViewController : UITableViewController, UserAccountSettingDelegate
             dst.zaifExchange = self.zaifSetting?.zaifExchange
         case "changeUpdateIntervalSegue":
             let dst = segue.destination as! ChangeUpdateIntervalController
-            dst.config = self.appSetting?.config
-            dst.delegate = self
+            let setting = sender as! SettingView
+            dst.config = setting.config
+            dst.delegate = setting
         default: break
         }
     }
@@ -153,5 +211,10 @@ class SettingsViewController : UITableViewController, UserAccountSettingDelegate
     var userSetting: UserAccountSettingView?
     var zaifSetting: ZaifSettingView?
     var appSetting: AppSettingView?
+    var assetsSetting: AssetsSettingView?
+    var chartSetting: ChartSettingView?
+    var boardSetting: BoardSettingView?
+    var positionsSetting: PositionsSettingView?
+    var ordersSetting: OrdersSettingView?
     var settings = [SettingView]()
 }

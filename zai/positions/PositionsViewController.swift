@@ -18,6 +18,8 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
         
         self.navigationController?.navigationBar.barTintColor = Color.keyColor
         
+        self.positionsHeaderLabel.backgroundColor = Color.keyColor2
+        
         self.totalProfit.text = "-"
         self.priceAverage.text = "-"
         self.btcFund.text = "-"
@@ -36,6 +38,7 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
         super.viewWillAppear(animated)
         self.positionListView.startWatch()
         self.positionListView.reloadData()
+        self.positionFundView.monitoringInterval = getPositionsConfig().autoUpdateInterval
         self.positionFundView.delegate = self
     }
     
@@ -96,12 +99,20 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
         self.present(editPositionController.controller, animated: true, completion: nil)
     }
     
+    @IBAction func pushSettingsButton(_ sender: Any) {
+        let storyboard: UIStoryboard = self.storyboard!
+        let settings = storyboard.instantiateViewController(withIdentifier: "settingsViewController") as! UINavigationController
+        self.present(settings, animated: true, completion: nil)
+    }
+    
     var trader: Trader!
     
     var positionListView: PositionListView! = nil
     var positionFundView: PositionFundView! = nil
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var positionsHeaderLabel: UILabel!
+    
     @IBOutlet weak var totalProfit: UILabel!
     @IBOutlet weak var priceAverage: UILabel!
     @IBOutlet weak var btcFund: UILabel!

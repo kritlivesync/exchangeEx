@@ -1,8 +1,8 @@
 //
-//  AppSettingView.swift
+//  BoardSettingView.swift
 //  zai
 //
-//  Created by 渡部郷太 on 1/16/17.
+//  Created by 渡部郷太 on 1/18/17.
 //  Copyright © 2017 watanabe kyota. All rights reserved.
 //
 
@@ -10,15 +10,16 @@ import Foundation
 import UIKit
 
 
-protocol AppSettingViewDelegate {
-    func changeUpdateInterval(setting: AppSettingView)
+protocol BoardSettingViewDelegate {
+    func changeUpdateInterval(setting: BoardSettingView)
 }
 
 
-class AppSettingView : SettingView, VariableSettingCellDelegate {
+
+class BoardSettingView : SettingView, VariableSettingCellDelegate {
     
     override init(section: Int, tableView: UITableView) {
-        self._config = getAppConfig()
+        self._config = getBoardConfig()
         super.init(section: section, tableView: tableView)
     }
     
@@ -65,17 +66,18 @@ class AppSettingView : SettingView, VariableSettingCellDelegate {
     }
     
     override var settingName: String {
-        return ""
+        return "Board"
     }
     
     override var settingCount: Int {
-        return 0
+        return 1
     }
     
     override var config: Config {
         return self._config
     }
     
-    let _config: AppConfig
-    var delegate: AppSettingViewDelegate?
+    
+    let _config: BoardConfig
+    var delegate: BoardSettingViewDelegate?
 }

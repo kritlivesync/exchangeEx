@@ -17,9 +17,9 @@ protocol UserAccountSettingDelegate {
 
 class UserAccountSettingView : SettingView, ValueActionSettingDelegate, VariableSettingCellDelegate {
     
-    init(account: Account, section: Int) {
+    init(account: Account, section: Int, tableView: UITableView) {
         self.account = account
-        super.init(section: section)
+        super.init(section: section, tableView: tableView)
     }
     
     override func getCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {

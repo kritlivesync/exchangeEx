@@ -40,7 +40,7 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     open override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let interval = getConfig().autoUpdateInterval
+        let interval = getBoardConfig().autoUpdateInterval
         self.board.updateInterval = interval
         self.board.delegate = self
         self.bitcoin.monitoringInterval = interval
@@ -126,8 +126,7 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     }
     
     func orderSell(quote: Quote) {
-        let app = UIApplication.shared.delegate as! AppDelegate
-        if app.config.sellMaxProfitPosition {
+        if getAppConfig().sellMaxProfitPosition {
             self.trader.unwindMaxProfitPosition(price: quote.price, amount: quote.amount) { (err, position) in
                 if err != nil {
                     position?.delegate = self
@@ -142,6 +141,12 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
         }
     }
 
+    @IBAction func pushSettingsButton(_ sender: Any) {
+        let storyboard: UIStoryboard = self.storyboard!
+        let settings = storyboard.instantiateViewController(withIdentifier: "settingsViewController") as! UINavigationController
+        self.present(settings, animated: true, completion: nil)
+    }
+    
     
     var trader: Trader!
 

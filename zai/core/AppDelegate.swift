@@ -45,7 +45,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var analyzer: Analyzer? = nil
     var nonce: TimeNonce? = nil
-    let config = Config()
+    let appConfig = AppConfig()
+    let assetsConfig = AssetsConfig()
+    let chartConfig = ChartConfig()
+    let boardConfig = BoardConfig()
+    let positionsConfig = PositionsConfig()
+    let ordersConfig = OrdersConfig()
+    
     var account: Account?
 }
 
@@ -54,8 +60,33 @@ func getAccount() -> Account? {
     return app.account
 }
 
-func getConfig() -> Config {
+func getAppConfig() -> AppConfig {
     let app = UIApplication.shared.delegate as! AppDelegate
-    return app.config
+    return app.appConfig
+}
+
+func getAssetsConfig() -> AssetsConfig {
+    let app = UIApplication.shared.delegate as! AppDelegate
+    return app.assetsConfig
+}
+
+func getChartConfig() -> ChartConfig {
+    let app = UIApplication.shared.delegate as! AppDelegate
+    return app.chartConfig
+}
+
+func getBoardConfig() -> BoardConfig {
+    let app = UIApplication.shared.delegate as! AppDelegate
+    return app.boardConfig
+}
+
+func getPositionsConfig() -> PositionsConfig {
+    let app = UIApplication.shared.delegate as! AppDelegate
+    return app.positionsConfig
+}
+
+func getOrdersConfig() -> OrdersConfig {
+    let app = UIApplication.shared.delegate as! AppDelegate
+    return app.ordersConfig
 }
 

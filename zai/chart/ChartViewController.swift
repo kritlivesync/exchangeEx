@@ -48,11 +48,12 @@ class ChartViewController : UIViewController, CandleChartDelegate, PositionDeleg
     open override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let config = getConfig()
+        let config = getChartConfig()
         self.fund.monitoringInterval = config.autoUpdateInterval
         self.fund.delegate = self
         self.bitcoin.monitoringInterval = config.autoUpdateInterval
         self.bitcoin.delegate = self
+        self.candleChart.monitoringInterval = config.autoUpdateInterval
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
@@ -171,8 +172,8 @@ class ChartViewController : UIViewController, CandleChartDelegate, PositionDeleg
         guard let trader = getAccount()?.activeExchange.trader else {
             return
         }
-        let app = UIApplication.shared.delegate as! AppDelegate
-        if app.config.sellMaxProfitPosition {
+
+        if getAppConfig().sellMaxProfitPosition {
             trader.unwindMaxProfitPosition(price: price, amount: amount) { (err, position) in
                 if err != nil {
                     position?.delegate = self
@@ -187,6 +188,12 @@ class ChartViewController : UIViewController, CandleChartDelegate, PositionDeleg
         }
     }
     
+    @IBAction func pushSettingsButton(_ sender: Any) {
+        let storyboard: UIStoryboard = self.storyboard!
+        let settings = storyboard.instantiateViewController(withIdentifier: "settingsViewController") as! UINavigationController
+        self.present(settings, animated: true, completion: nil)
+    }
+
     
     fileprivate var fund: Fund!
     fileprivate var bitcoin: BitCoin!
