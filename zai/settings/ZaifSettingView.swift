@@ -51,11 +51,11 @@ class ZaifSettingView : SettingView, VariableSettingCellDelegate {
         self.delegate?.changeApiKeys()
     }
     
-    override var settingName: String {
+    override var sectionName: String {
         return self.zaifExchange.name
     }
     
-    override var settingCount: Int {
+    override var rowCount: Int {
         return 1
     }
     

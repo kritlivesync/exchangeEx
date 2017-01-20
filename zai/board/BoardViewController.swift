@@ -11,7 +11,7 @@ import Foundation
 import AMScrollingNavbar
 import ZaifSwift
 
-class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, BoardDelegate, BoardViewDelegate, PositionDelegate {
+class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardViewDelegate, PositionDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +32,6 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
         
         let api = account.activeExchange.api
         let currencyPair = ApiCurrencyPair(rawValue: account.activeExchange.currencyPair)!
-        self.bitcoin = BitCoin(api: api)
         self.board = BoardMonitor(currencyPair: currencyPair, api: api)
         self.fund = Fund(api: api)
     }
@@ -43,8 +42,6 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
         let interval = getBoardConfig().autoUpdateInterval
         self.board.updateInterval = interval
         self.board.delegate = self
-        self.bitcoin.monitoringInterval = interval
-        self.bitcoin.delegate = self
         self.fund.monitoringInterval = interval
         self.fund.delegate = self
     }
@@ -52,7 +49,6 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.board.delegate = nil
-        self.bitcoin.delegate = nil
         self.fund.delegate = nil
     }
     
@@ -154,8 +150,6 @@ class BoardViewController: UIViewController, FundDelegate, BitCoinDelegate, Boar
     var boardView: BoardView! = nil
     
     fileprivate var fund: Fund!
-    fileprivate var bitcoin: BitCoin!
-    
     fileprivate var board: BoardMonitor!
     
     @IBOutlet weak var boardHeaderLabel: UILabel!

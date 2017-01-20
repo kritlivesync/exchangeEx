@@ -80,11 +80,11 @@ class UserAccountSettingView : SettingView, ValueActionSettingDelegate, Variable
         self.delegate?.changePassword()
     }
     
-    override var settingName: String {
+    override var sectionName: String {
         return "アカウント情報"
     }
     
-    override var settingCount: Int {
+    override var rowCount: Int {
         return 4
     }
     

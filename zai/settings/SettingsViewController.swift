@@ -10,26 +10,15 @@ import Foundation
 import UIKit
 
 
-class SettingView : ChangeUpdateIntervalDelegate {
-    init(section: Int, tableView: UITableView) {
-        self.section = section
-        self.tableView = tableView
-    }
-    
-    func getCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell { return UITableViewCell() }
-    
-    func shouldHighlightRowAt(row: Int) -> Bool { return false}
+class SettingView : SectionView, ChangeUpdateIntervalDelegate {
     
     // ChangeUpdateIntervalDelegate
     func saved(interval: UpdateInterval) {
         return
     }
     
-    var settingName: String { get { return "" } }
-    var settingCount: Int { get { return 0 } }
     var config: Config { get { return getAppConfig() } }
-    let section: Int
-    let tableView: UITableView
+
 }
 
 class SettingsViewController
@@ -106,7 +95,7 @@ class SettingsViewController
         let label = UILabel(frame: CGRect(x: 20.0, y: 0.0, width: 100.0, height: 28.0))
         label.textColor = UIColor.gray
         label.font = label.font.withSize(14.0)
-        label.text = self.settings[section].settingName
+        label.text = self.settings[section].sectionName
         
         let view = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 100.0, height: 28.0))
         view.backgroundColor = UIColor.groupTableViewBackground
@@ -118,7 +107,7 @@ class SettingsViewController
         guard section < self.settings.count else {
             return 0
         }
-        return self.settings[section].settingCount
+        return self.settings[section].rowCount
     }
     
     public override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

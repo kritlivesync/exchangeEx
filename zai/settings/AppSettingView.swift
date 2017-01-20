@@ -64,11 +64,11 @@ class AppSettingView : SettingView, VariableSettingCellDelegate {
         self.updateAutoUpdateInterval(tableView: self.tableView, interval: interval)
     }
     
-    override var settingName: String {
+    override var sectionName: String {
         return ""
     }
     
-    override var settingCount: Int {
+    override var rowCount: Int {
         return 0
     }
     
