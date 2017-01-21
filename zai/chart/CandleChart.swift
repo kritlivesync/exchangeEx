@@ -243,14 +243,18 @@ class CandleChart : Monitorable {
                     shifted = self.addTrade(trade: trade)
                 }
                 self.lastTradeId = trades.first!.id
-                delegate.recievedChart(chart: self, shifted: shifted)
+                DispatchQueue.main.async {
+                    delegate.recievedChart(chart: self, shifted: shifted)
+                }
             }
             self.isHeighPrecision = false
         } else {
             self.api.getPrice(currencyPair: self.currencyPair) { (err, price) in
                 let trade = Trade(id: "", price: price, amount: 0.0, currencyPair: self.currencyPair.rawValue, action: "bid", timestamp: Int64(Date().timeIntervalSince1970))
                 let shifted = self.addTrade(trade: trade)
-                delegate.recievedChart(chart: self, shifted: shifted)
+                DispatchQueue.main.async {
+                    delegate.recievedChart(chart: self, shifted: shifted)
+                }
             }
         }
     }

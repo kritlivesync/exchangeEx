@@ -44,7 +44,9 @@ class ActiveOrderMonitor : Monitorable {
         let delegate = self.delegate as? ActiveOrderDelegate
         self.api.getActiveOrders(currencyPair: self.currencyPair) { (err, orders) in
             if err == nil {
-                delegate?.revievedActiveOrders(activeOrders: orders)
+                DispatchQueue.main.async {
+                    delegate?.revievedActiveOrders(activeOrders: orders)
+                }
             }
         }
     }

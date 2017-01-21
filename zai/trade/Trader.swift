@@ -44,21 +44,20 @@ open class Trader: NSManagedObject, FundDelegate {
     }
     
     func unwindPosition(id: String, price: Double?, amount: Double, cb: @escaping (ZaiError?, Position?) -> Void) {
-        let position = self.getPosition(id: id)
-        if position == nil {
+        guard let position = self.getPosition(id: id) else {
             cb(ZaiError(errorType: .INVALID_POSITION), nil)
             return
         }
         
-        let balance = position!.balance
+        let balance = position.balance
         let btcFundAmount = self.btcFund
         let amt = min(min(balance, amount), btcFundAmount)
-        if amt < 0.0001 {
+        if amt < self.exchange.api.orderUnit(currencyPair: position.currencyPair) {
             cb(nil, position)
-            position!.close()
-            position?.delegate?.closedPosition(position: position!)
+            position.close()
+            position.delegate?.closedPosition(position: position)
         } else {
-            position!.unwind(amt, price: price) { err in
+            position.unwind(amt, price: price) { err in
                 cb(err, position)
             }
         }
@@ -233,7 +232,7 @@ open class Trader: NSManagedObject, FundDelegate {
             totalAmount += amt
             
         }
-        if totalAmount <= 0.000000001 {
+        if totalAmount <= BitCoin.Satoshi {
             return 0.0
         } else {
             return cost / totalAmount

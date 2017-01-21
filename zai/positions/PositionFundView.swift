@@ -28,7 +28,9 @@ class PositionFundView : Monitorable {
             let fund = Fund(api: self.trader.exchange.api)
             fund.getBtcFund() { (err, btc) in
                 if err == nil {
-                    delegate?.recievedBtcFund(btc: formatValue(btc))
+                    DispatchQueue.main.async {
+                        delegate?.recievedBtcFund(btc: formatValue(btc))
+                    }
                 }
             }
         }

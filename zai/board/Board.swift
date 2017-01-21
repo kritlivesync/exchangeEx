@@ -169,7 +169,9 @@ class MonitorableBoard : Monitorable {
     override func monitor() {
         let delegate = self.delegate as? BoardDelegate
         api.getBoard(currencyPair: self.currencyPair) { (err, board) in
-            delegate?.recievedBoard(err: nil, board: board)
+            DispatchQueue.main.async {
+                delegate?.recievedBoard(err: nil, board: board)
+            }
         }
     }
     

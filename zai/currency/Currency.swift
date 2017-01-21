@@ -18,12 +18,12 @@ internal class Monitorable {
     
     init(target: String) {
         self.target = target
-        self.queue = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default)
+        self.queue = DispatchQueue.global()
         self.addMonitorOperation()
     }
     
     @objc func addMonitorOperation() {
-        self.queue.async {
+        DispatchQueue.main.async {
             self.monitor()
         }
     }

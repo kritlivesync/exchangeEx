@@ -95,28 +95,32 @@ internal class Fund : Monitorable {
     
     override func monitor() {
         let delegate = self.delegate as? FundDelegate
-        if delegate?.recievedMarketCapitalization != nil {
-            self.getMarketCapitalization() { (err, jpy) in
+        if delegate?.recievedMarketCapitalization != nil || delegate?.recievedJpyFund != nil || delegate?.recievedBtcFund != nil {
+            self.api.getBalance(currencies: [.BTC, .JPY]) { (err, balances) in
                 if err == nil {
-                    delegate?.recievedMarketCapitalization?(jpy: jpy)
-                }
-            }
-        }
-        if delegate?.recievedJpyFund != nil {
-            self.getJpyFund() { (err, jpy) in
-                if err == nil {
-                    delegate?.recievedJpyFund?(jpy: jpy)
-                }
-            }
-        }
-        if delegate?.recievedBtcFund != nil {
-            self.getBtcFund() { (err, btc) in
-                if err == nil {
-                    delegate?.recievedBtcFund?(btc: btc)
+                    let jpy = balances[ApiCurrency.JPY.rawValue]!
+                    let btc = balances[ApiCurrency.BTC.rawValue]!
+                    DispatchQueue.main.async {
+                        delegate?.recievedJpyFund?(jpy: Int(jpy))
+                    }
+                    DispatchQueue.main.async {
+                        delegate?.recievedBtcFund?(btc: btc)
+                    }
+                    
+                    let bitcoin = BitCoin(api: self.api)
+                    bitcoin.getPriceFor(.JPY) { (err, price) in
+                        if err == nil {
+                            DispatchQueue.main.async {
+                                let total = jpy + (btc * price)
+                                delegate?.recievedMarketCapitalization?(jpy: Int(total))
+                            }
+                        }
+                    }
                 }
             }
         }
     }
+    
     
     fileprivate let api: Api
 }

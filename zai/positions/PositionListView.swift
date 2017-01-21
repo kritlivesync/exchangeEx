@@ -17,7 +17,7 @@ protocol PositionListViewDelegate {
 }
 
 
-class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, FundDelegate, BitCoinDelegate, PositionListViewCellDelegate {
+class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, BitCoinDelegate, PositionListViewCellDelegate {
     
     init(view: UITableView, trader: Trader) {
         self.trader = trader
@@ -27,7 +27,6 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
         self.view.contentInset = UIEdgeInsetsMake(-1.0, 0.0, 0.0, 0.0);
 
         let api = trader.exchange.api
-        self.fund = Fund(api: api)
         self.bitcoin = BitCoin(api: api)
         
         super.init()
@@ -88,11 +87,6 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
         }
     }
     
-    // FundDelegate    
-    func recievedBtcFund(btc: Double) {
-        self.btcFund = btc
-    }
-    
     // BitCoinDelegate
     func recievedJpyPrice(price: Int) {
         self.btcPrice = price
@@ -121,7 +115,7 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
             self.view.reloadRows(at: [index], with: UITableViewRowAnimation.right)
         }
         var amount = position.balance * rate
-        amount = max(amount, 0.0001)
+        amount = max(amount, self.trader.exchange.api.orderUnit(currencyPair: position.currencyPair))
         self.trader.exchange.api.getTicker(currencyPair: position.currencyPair) { (err, tick) in
             self.trader.unwindPosition(id: position.id, price: tick.bid, amount: amount) { (err, _) in
                 if err != nil {
@@ -146,15 +140,12 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
     
     internal func startWatch() {
         let interval = getPositionsConfig().autoUpdateInterval
-        self.fund.monitoringInterval = interval
-        self.fund.delegate = self
         self.bitcoin.monitoringInterval = interval
         self.bitcoin.delegate = self
         self.reloadData()
     }
     
     internal func stopWatch() {
-        self.fund.delegate = nil
         self.bitcoin.delegate = nil
     }
     
@@ -162,10 +153,8 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, F
     fileprivate var positions: [Position]
     fileprivate let view: UITableView
     fileprivate var btcPrice: Int = -1
-    fileprivate var btcFund: Double = 0.0
     
     var trader: Trader! = nil
-    var fund: Fund! = nil
     var bitcoin: BitCoin! = nil
     var delegate: PositionListViewDelegate?
 }

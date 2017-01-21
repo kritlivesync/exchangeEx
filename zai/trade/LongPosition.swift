@@ -15,6 +15,16 @@ import ZaifSwift
 @objc(LongPosition)
 class LongPosition: Position {
     
+    override func close() {
+        let balance = self.balance
+        let t = self.trader
+        if BitCoin.Satoshi <= balance {
+            let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .UNWIND_LONG_POSITION, traderName: self.trader!.name, orderAction: "ask", orderId: "", currencyPair: self.currencyPair.rawValue, price: 0.0, amount: balance, positionId: self.id)
+            self.addLog(log)
+        }
+        super.close()
+    }
+    
     override public var price: Double {
         get {
             var prc = 0.0
@@ -83,17 +93,17 @@ class LongPosition: Position {
     
     override internal var profit: Double {
         get {
-            var buyPrice = 0.0
+            let buyPrice = self.price
             var sellPriceSum = 0.0
             var sellAmount = 0.0
             for log in self.tradeLogs {
                 let l = log as! TradeLog
                 let action = TradeAction(rawValue: l.tradeAction)
-                if action == .OPEN_LONG_POSITION {
-                    buyPrice = l.price!.doubleValue
-                } else if action == .UNWIND_LONG_POSITION {
-                    sellAmount += l.amount!.doubleValue
-                    sellPriceSum += l.price!.doubleValue * l.amount!.doubleValue
+                if action == .UNWIND_LONG_POSITION {
+                    if 0.0 < l.price!.doubleValue {
+                        sellAmount += l.amount!.doubleValue
+                        sellPriceSum += l.price!.doubleValue * l.amount!.doubleValue
+                    }
                 }
             }
             return sellPriceSum - (buyPrice * sellAmount)
@@ -108,6 +118,7 @@ class LongPosition: Position {
                 let action = TradeAction(rawValue: l.tradeAction)
                 if action == .OPEN_LONG_POSITION {
                     currencyPair = ApiCurrencyPair(rawValue: l.currencyPair!)!
+                    break
                 }
             }
             return currencyPair

@@ -35,9 +35,7 @@ class TradeLogRepository {
         newLog.traderName = traderName
         newLog.tradeAction = action.rawValue
         newLog.orderAction = orderAction
-        if let id = orderId {
-            newLog.orderId = Int(id)! as NSNumber
-        }
+        newLog.orderId = orderId
         newLog.currencyPair = currencyPair
         if let p = price {
             newLog.price = NSNumber(value: p)

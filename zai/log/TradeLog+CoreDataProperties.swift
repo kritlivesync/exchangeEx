@@ -2,7 +2,7 @@
 //  TradeLog+CoreDataProperties.swift
 //  
 //
-//  Created by 渡部郷太 on 1/1/17.
+//  Created by 渡部郷太 on 1/22/17.
 //
 //
 
@@ -20,7 +20,7 @@ extension TradeLog {
     @NSManaged public var currencyPair: String?
     @NSManaged public var id: String
     @NSManaged public var orderAction: String?
-    @NSManaged public var orderId: NSNumber?
+    @NSManaged public var orderId: String?
     @NSManaged public var positionId: String?
     @NSManaged public var price: NSNumber?
     @NSManaged public var timestamp: NSNumber
