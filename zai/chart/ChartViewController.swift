@@ -25,8 +25,8 @@ class ChartViewController : UIViewController, CandleChartDelegate, PositionDeleg
         self.bestQuoteView = BestQuoteView(view: bestQuoteTableView)
         self.bestQuoteView.delegate = self
         
-        self.chartHeaderLabel.text = "1分足"
-        self.chartHeaderLabel.backgroundColor = Color.keyColor2
+        self.chartSelectorView.backgroundColor = Color.keyColor2
+        self.heilightChartButton(type: self.candleChart.interval)
         
         self.candleStickChartView.legend.enabled = false
         self.candleStickChartView.chartDescription?.enabled = false
@@ -188,6 +188,72 @@ class ChartViewController : UIViewController, CandleChartDelegate, PositionDeleg
         }
     }
     
+    fileprivate func switchChart(type: ChandleChartType, currencyPair: ApiCurrencyPair, api: Api) {
+        if type == self.candleChart.interval {
+            return
+        }
+        let prevChart = self.candleChart
+        prevChart?.delegate = nil
+        self.candleChart = CandleChart(currencyPair: currencyPair, interval: type, candleCount: 60, api: api)
+        self.candleChart.copyTrades(chart: prevChart!)
+        self.candleChart.delegate = self
+        
+        self.heilightChartButton(type: type)
+        
+        let config = getChartConfig()
+        config.selectedCandleChart = type
+        _ = config.save()
+    }
+    
+    fileprivate func heilightChartButton(type: ChandleChartType) {
+        self.oneMinuteButton.setTitleColor(UIColor.white, for: UIControlState.normal)
+        self.oneMinuteButton.isEnabled = true
+        self.fiveMinutesButton.setTitleColor(UIColor.white, for: UIControlState.normal)
+        self.fiveMinutesButton.isEnabled = true
+        self.fifteenMinutesButton.setTitleColor(UIColor.white, for: UIControlState.normal)
+        self.fifteenMinutesButton.isEnabled = true
+        self.thirtyMinutesButton.setTitleColor(UIColor.white, for: UIControlState.normal)
+        self.thirtyMinutesButton.isEnabled = true
+        switch type {
+        case .oneMinute:
+            self.oneMinuteButton.setTitleColor(Color.antiKeyColor2, for: UIControlState.normal)
+            self.oneMinuteButton.isEnabled = false
+        case .fiveMinutes:
+            self.fiveMinutesButton.setTitleColor(Color.antiKeyColor2, for: UIControlState.normal)
+            self.fiveMinutesButton.isEnabled = false
+        case .fifteenMinutes:
+            self.fifteenMinutesButton.setTitleColor(Color.antiKeyColor2, for: UIControlState.normal)
+            self.fifteenMinutesButton.isEnabled = false
+        case .thirtyMinutes:
+            self.thirtyMinutesButton.setTitleColor(Color.antiKeyColor2, for: UIControlState.normal)
+            self.thirtyMinutesButton.isEnabled = false
+        }
+    }
+    
+    @IBAction func pushOneMinuteChart(_ sender: Any) {
+        let currencyPair = self.candleChart.currencyPair
+        let api = getAccount()!.activeExchange.api
+        self.switchChart(type: .oneMinute, currencyPair: currencyPair, api: api)
+    }
+    
+    @IBAction func pushFiveMinutesChart(_ sender: Any) {
+        let currencyPair = self.candleChart.currencyPair
+        let api = getAccount()!.activeExchange.api
+        self.switchChart(type: .fiveMinutes, currencyPair: currencyPair, api: api)
+    }
+    
+    @IBAction func pushFifteenMinutesChart(_ sender: Any) {
+        let currencyPair = self.candleChart.currencyPair
+        let api = getAccount()!.activeExchange.api
+        self.switchChart(type: .fifteenMinutes, currencyPair: currencyPair, api: api)
+    }
+    
+    @IBAction func pushThirtyMinutesChart(_ sender: Any) {
+        let currencyPair = self.candleChart.currencyPair
+        let api = getAccount()!.activeExchange.api
+        self.switchChart(type: .thirtyMinutes, currencyPair: currencyPair, api: api)
+    }
+    
     @IBAction func pushSettingsButton(_ sender: Any) {
         let storyboard: UIStoryboard = self.storyboard!
         let settings = storyboard.instantiateViewController(withIdentifier: "settingsViewController") as! UINavigationController
@@ -199,9 +265,15 @@ class ChartViewController : UIViewController, CandleChartDelegate, PositionDeleg
     fileprivate var bitcoin: BitCoin!
     var candleChart: CandleChart!
     var bestQuoteView: BestQuoteView!
-    
-    @IBOutlet weak var chartHeaderLabel: UILabel!
+
+    @IBOutlet weak var chartSelectorView: UIView!
     @IBOutlet weak var candleStickChartView: CandleStickChartView!
+    
+    @IBOutlet weak var oneMinuteButton: UIButton!
+    @IBOutlet weak var fiveMinutesButton: UIButton!
+    @IBOutlet weak var thirtyMinutesButton: UIButton!
+    @IBOutlet weak var fifteenMinutesButton: UIButton!
+    
     @IBOutlet weak var fundLabel: UILabel!
     @IBOutlet weak var bestQuoteTableView: UITableView!
     

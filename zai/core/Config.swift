@@ -138,6 +138,32 @@ open class AssetsConfig : Config {
     }
 }
 
+
+enum ChandleChartType: Int {
+    case oneMinute = 1
+    case fiveMinutes = 5
+    case fifteenMinutes = 15
+    case thirtyMinutes = 30
+    
+    var string: String {
+        switch self {
+        case .oneMinute: return "1分足"
+        case .fiveMinutes: return "5分足"
+        case .fifteenMinutes: return "15分足"
+        case .thirtyMinutes: return "30分足"
+        }
+    }
+    
+    var seconds: Int {
+        switch self {
+        case .oneMinute: return 60
+        case .fiveMinutes: return 300
+        case .fifteenMinutes: return 900
+        case .thirtyMinutes: return 1800
+        }
+    }
+}
+
 open class ChartConfig : Config {
     
     override var autoUpdateInterval: UpdateInterval {
@@ -149,6 +175,18 @@ open class ChartConfig : Config {
         }
         set {
             Config.configDict.setValue(newValue.rawValue, forKey: "autoUpdateInterval_chart")
+        }
+    }
+    
+    var selectedCandleChart: ChandleChartType {
+        get {
+            if let val = Config.configDict.value(forKey: "selectedCandleChart") {
+                return ChandleChartType(rawValue: (val as! Int))!
+            }
+            return ChandleChartType.oneMinute
+        }
+        set {
+            Config.configDict.setValue(newValue.rawValue, forKey: "selectedCandleChart")
         }
     }
 }
