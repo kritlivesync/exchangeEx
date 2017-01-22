@@ -63,22 +63,36 @@ open class Trader: NSManagedObject, FundDelegate {
         }
     }
     
-    func unwindMaxProfitPosition(price: Double?, amount: Double, cb: @escaping (ZaiError?, Position?) -> Void) {
-        let position = self.maxProfitPosition
-        if let pos = position {
-            self.unwindPosition(id: pos.id, price: price, amount: amount, cb: cb)
-        } else {
+    func unwindMaxProfitPosition(price: Double?, amount: Double, marketPrice: Double, cb: @escaping (ZaiError?, Position?) -> Void) {
+        guard let position = self.maxUnrealizedProfitPosition(marketPrice: marketPrice) else {
             cb(ZaiError(errorType: .INVALID_POSITION), nil)
+            return
         }
+        self.unwindPosition(id: position.id, price: price, amount: amount, cb: cb)
     }
     
-    func unwindMinProfitPosition(price: Double?, amount: Double, cb: @escaping (ZaiError?, Position?) -> Void) {
-        let position = self.minProfitPosition
-        if let pos = position {
-            self.unwindPosition(id: pos.id, price: price, amount: amount, cb: cb)
-        } else {
+    func unwindMaxLossPosition(price: Double?, amount: Double, marketPrice: Double, cb: @escaping (ZaiError?, Position?) -> Void) {
+        guard let position = self.maxUnrealizedLossPosition(marketPrice: marketPrice) else {
             cb(ZaiError(errorType: .INVALID_POSITION), nil)
+            return
         }
+        self.unwindPosition(id: position.id, price: price, amount: amount, cb: cb)
+    }
+    
+    func unwindMostRecentPosition(price: Double?, amount: Double, cb: @escaping (ZaiError?, Position?) -> Void) {
+        guard let position = self.mostRecentPosition else {
+            cb(ZaiError(errorType: .INVALID_POSITION), nil)
+            return
+        }
+        self.unwindPosition(id: position.id, price: price, amount: amount, cb: cb)
+    }
+    
+    func unwindMostOldPosition(price: Double?, amount: Double, cb: @escaping (ZaiError?, Position?) -> Void) {
+        guard let position = self.mostOldPosition else {
+            cb(ZaiError(errorType: .INVALID_POSITION), nil)
+            return
+        }
+        self.unwindPosition(id: position.id, price: price, amount: amount, cb: cb)
     }
     
     func cancelOrder(id: String, cb: @escaping (ZaiError?) -> Void) {
@@ -108,6 +122,34 @@ open class Trader: NSManagedObject, FundDelegate {
         }
         position.delete()
         return true
+    }
+    
+    func maxUnrealizedProfitPosition(marketPrice: Double) -> Position? {
+        let positions = self.openPositions
+        var maxPos: Position? = nil
+        var maxProfit = -DBL_MAX
+        for position in positions {
+            let profit = position.calculateUnrealizedProfit(marketPrice: marketPrice)
+            if maxProfit < profit {
+                maxPos = position
+                maxProfit = profit
+            }
+        }
+        return maxPos
+    }
+    
+    func maxUnrealizedLossPosition(marketPrice: Double) -> Position? {
+        let positions = self.openPositions
+        var minPos: Position? = nil
+        var minProfit = DBL_MAX
+        for position in positions {
+            let profit = position.calculateUnrealizedProfit(marketPrice: marketPrice)
+            if profit < minProfit {
+                minPos = position
+                minProfit = profit
+            }
+        }
+        return minPos
     }
     
     var activePositions: [Position] {
@@ -195,7 +237,7 @@ open class Trader: NSManagedObject, FundDelegate {
         return maxPos
     }
     
-    var minProfitPosition: Position? {
+    var maxLossPosition: Position? {
         let positions = self.openPositions
         var minPos: Position? = nil
         var minProfit = DBL_MAX
@@ -207,6 +249,34 @@ open class Trader: NSManagedObject, FundDelegate {
             }
         }
         return minPos
+    }
+    
+    var mostRecentPosition: Position? {
+        let positions = self.openPositions
+        var recentPos: Position? = nil
+        var recentDate = -LLONG_MAX
+        for position in positions {
+            let date = position.timestamp
+            if recentDate < date {
+                recentPos = position
+                recentDate = date
+            }
+        }
+        return recentPos
+    }
+    
+    var mostOldPosition: Position? {
+        let positions = self.openPositions
+        var oldPos: Position? = nil
+        var oldDate = LLONG_MAX
+        for position in positions {
+            let date = position.timestamp
+            if date < oldDate {
+                oldPos = position
+                oldDate = date
+            }
+        }
+        return oldPos
     }
     
     var totalProfit: Double {

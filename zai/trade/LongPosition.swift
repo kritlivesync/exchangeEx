@@ -17,12 +17,15 @@ class LongPosition: Position {
     
     override func close() {
         let balance = self.balance
-        let t = self.trader
         if BitCoin.Satoshi <= balance {
             let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .UNWIND_LONG_POSITION, traderName: self.trader!.name, orderAction: "ask", orderId: "", currencyPair: self.currencyPair.rawValue, price: 0.0, amount: balance, positionId: self.id)
             self.addLog(log)
         }
         super.close()
+    }
+    
+    override func calculateUnrealizedProfit(marketPrice: Double) -> Double {
+        return self.profit + (marketPrice - self.price) * self.balance
     }
     
     override public var price: Double {
@@ -128,6 +131,19 @@ class LongPosition: Position {
     override internal var type: String {
         get {
             return "long"
+        }
+    }
+    
+    override var timestamp: Int64 {
+        get {
+            for log in self.tradeLogs {
+                let l = log as! TradeLog
+                let action = TradeAction(rawValue: l.tradeAction)
+                if action == .OPEN_LONG_POSITION {
+                    return l.timestamp.int64Value
+                }
+            }
+            return 0
         }
     }
     

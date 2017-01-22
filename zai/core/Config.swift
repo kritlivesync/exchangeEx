@@ -95,6 +95,31 @@ open class Config {
     }
 }
 
+
+enum UnwindingRule : Int {
+    case mostBenefit
+    case mostLoss
+    case mostRecent
+    case mostOld
+    
+    var string: String {
+        switch self {
+        case .mostBenefit: return "最も含み益の大きいポジション"
+        case .mostLoss: return "最も含み損の大きいポジション"
+        case .mostRecent: return "最も新しいポジション"
+        case .mostOld: return "最も古いポジション"
+        }
+    }
+    
+    static var count: Int = {
+        var i = 0
+        while let _ = UnwindingRule(rawValue: i) {
+            i += 1
+        }
+        return i
+    }()
+}
+
 open class AppConfig : Config {
     
     var previousUserId: String {
@@ -109,15 +134,15 @@ open class AppConfig : Config {
         }
     }
     
-    var sellMaxProfitPosition: Bool {
+    var unwindingRule: UnwindingRule {
         get {
-            if let val = Config.configDict.value(forKey: "sellMaxProfitPosition") {
-                return val as! Bool
+            if let val = Config.configDict.value(forKey: "unwindingRule") {
+                return UnwindingRule(rawValue: (val as! Int))!
             }
-            return true
+            return UnwindingRule.mostBenefit
         }
         set {
-            Config.configDict.setValue(newValue, forKey: "sellMaxProfitPosition")
+            Config.configDict.setValue(newValue.rawValue, forKey: "unwindingRule")
         }
     }
 }

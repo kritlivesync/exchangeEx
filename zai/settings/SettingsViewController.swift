@@ -143,8 +143,8 @@ class SettingsViewController
     }
     
     // AppSettingViewDelegate
-    func changeUpdateInterval(setting: AppSettingView) {
-        self.performSegue(withIdentifier: "changeUpdateIntervalSegue", sender: setting)
+    func changeUnwindingPositionRule(setting: AppSettingView) {
+        self.performSegue(withIdentifier: "changeUnwindingRuleSegue", sender: setting)
     }
     
     // AssetsSettingViewDelegate
@@ -189,9 +189,13 @@ class SettingsViewController
             let dst = segue.destination as! ChangeZaifApiKeyController
             dst.zaifExchange = self.zaifSetting?.zaifExchange
         case "changeUpdateIntervalSegue":
-            let dst = segue.destination as! ChangeUpdateIntervalController
+            let dst = segue.destination as! ChangeUpdateIntervalViewController
             let setting = sender as! SettingView
             dst.config = setting.config
+            dst.delegate = setting
+        case "changeUnwindingRuleSegue":
+            let dst = segue.destination as! ChangeUnwindingRuleViewController
+            let setting = sender as! AppSettingView
             dst.delegate = setting
         default: break
         }

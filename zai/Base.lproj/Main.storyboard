@@ -984,6 +984,7 @@
                         <segue destination="ySg-0N-fSD" kind="show" identifier="changePasswordSegue" id="Paz-yc-8lo"/>
                         <segue destination="oQX-rA-4mB" kind="show" identifier="changeZaifApiKeysSegue" id="XfH-uk-79T"/>
                         <segue destination="4S5-Vg-VP0" kind="show" identifier="changeUpdateIntervalSegue" id="Mw7-sE-F81"/>
+                        <segue destination="Njh-CO-Ub9" kind="show" identifier="changeUnwindingRuleSegue" id="k0M-tQ-xx4"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="paJ-7q-rJu" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1135,10 +1136,10 @@
             </objects>
             <point key="canvasLocation" x="6734.7826086956529" y="-567.39130434782612"/>
         </scene>
-        <!--自動更新間隔の変更-->
+        <!--自動更新間隔-->
         <scene sceneID="i1O-f0-5DD">
             <objects>
-                <tableViewController id="4S5-Vg-VP0" customClass="ChangeUpdateIntervalController" customModule="zai" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="4S5-Vg-VP0" customClass="ChangeUpdateIntervalViewController" customModule="zai" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="V8Z-Wa-CIk">
                         <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1159,7 +1160,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="自動更新間隔の変更" id="QSt-0d-svt">
+                    <navigationItem key="navigationItem" title="自動更新間隔" id="QSt-0d-svt">
                         <barButtonItem key="leftBarButtonItem" title="キャンセル" id="LWz-et-KTL">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -1177,7 +1178,50 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oqK-nW-gvf" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="x3s-7D-mEm" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="6735" y="308"/>
+            <point key="canvasLocation" x="6735" y="213"/>
+        </scene>
+        <!--ポジション解消ルール-->
+        <scene sceneID="WLK-o6-gVV">
+            <objects>
+                <tableViewController id="Njh-CO-Ub9" customClass="ChangeUnwindingRuleViewController" customModule="zai" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="rLW-m3-hVS">
+                        <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Xgj-4M-Z6s">
+                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xgj-4M-Z6s" id="rLC-2w-VlE">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Njh-CO-Ub9" id="g7b-gb-rK2"/>
+                            <outlet property="delegate" destination="Njh-CO-Ub9" id="1EM-Kf-hfU"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="ポジション解消ルール" id="p7H-iE-Ar9">
+                        <barButtonItem key="leftBarButtonItem" title="キャンセル" id="Jg8-oe-JhU">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <segue destination="udk-yM-SVZ" kind="unwind" identifier="unwindToSettings" unwindAction="unwindToSettings:" id="DBy-LQ-4Es"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="保存" id="bxd-wO-GFq">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="pushSaveButton:" destination="Njh-CO-Ub9" id="ZZF-cf-CGu"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="veg-sg-Qdt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="udk-yM-SVZ" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="6735" y="984"/>
         </scene>
         <!--設定-->
         <scene sceneID="NkH-SE-2vE">

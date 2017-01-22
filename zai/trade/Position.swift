@@ -15,12 +15,14 @@ import ZaifSwift
 internal protocol PositionProtocol {
     func unwind(_ amount: Double?, price: Double?, cb: @escaping (ZaiError?) -> Void) -> Void
     func delete()
+    func calculateUnrealizedProfit(marketPrice: Double) -> Double
     
     var price: Double { get set }
     var amount: Double { get set }
     var balance: Double { get }
     var profit: Double { get }
     var type: String { get }
+    var timestamp: Int64 { get }
 }
 
 protocol PositionDelegate {
@@ -105,6 +107,10 @@ public class Position: NSManagedObject, PositionProtocol, PromisedOrderDelegate 
         Database.getDb().saveContext()
     }
     
+    func calculateUnrealizedProfit(marketPrice: Double) -> Double {
+        return 0.0
+    }
+    
     var price: Double {
         get { return 0.0 }
         set {}
@@ -129,6 +135,10 @@ public class Position: NSManagedObject, PositionProtocol, PromisedOrderDelegate 
     
     var type: String {
         get { return "" }
+    }
+    
+    var timestamp: Int64 {
+        get { return 0 }
     }
     
     var lastTrade: TradeLog? {

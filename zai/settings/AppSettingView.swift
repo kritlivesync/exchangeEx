@@ -11,11 +11,11 @@ import UIKit
 
 
 protocol AppSettingViewDelegate {
-    func changeUpdateInterval(setting: AppSettingView)
+    func changeUnwindingPositionRule(setting: AppSettingView)
 }
 
 
-class AppSettingView : SettingView, VariableSettingCellDelegate {
+class AppSettingView : SettingView, VariableSettingCellDelegate, ChangeUnwindingRuleDelegate {
     
     override init(section: Int, tableView: UITableView) {
         self._config = getAppConfig()
@@ -27,8 +27,8 @@ class AppSettingView : SettingView, VariableSettingCellDelegate {
         switch row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "variableSettingCell", for: indexPath) as! VariableSettingCell
-            cell.nameLabel.text = "自動更新間隔"
-            cell.valueLabel.text = self.config.autoUpdateInterval.string
+            cell.nameLabel.text = "ポジション解消ルール"
+            cell.valueLabel.text = self._config.unwindingRule.string
             cell.delegate = self
             return cell
         default:
@@ -46,22 +46,22 @@ class AppSettingView : SettingView, VariableSettingCellDelegate {
         }
     }
     
-    func updateAutoUpdateInterval(tableView: UITableView, interval: UpdateInterval) {
+    func updateUnwindingRule(tableView: UITableView, rule: UnwindingRule) {
         let index = IndexPath(row: 0, section: self.section)
         guard let cell = tableView.cellForRow(at: index) as? VariableSettingCell else {
             return
         }
-        cell.valueLabel.text = interval.string
+        cell.valueLabel.text = rule.string
     }
     
     // VariableSettingCellDelegate
     func touchesEnded(name: String, value: String) {
-        self.delegate?.changeUpdateInterval(setting: self)
+        self.delegate?.changeUnwindingPositionRule(setting: self)
     }
     
-    // ChangeUpdateIntervalDelegate
-    override func saved(interval: UpdateInterval) {
-        self.updateAutoUpdateInterval(tableView: self.tableView, interval: interval)
+    // ChangeUnwindingRuleDelegate
+    func saved(rule: UnwindingRule) {
+        self.updateUnwindingRule(tableView: self.tableView, rule: rule)
     }
     
     override var sectionName: String {
@@ -69,7 +69,7 @@ class AppSettingView : SettingView, VariableSettingCellDelegate {
     }
     
     override var rowCount: Int {
-        return 0
+        return 1
     }
     
     override var config: Config {

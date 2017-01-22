@@ -67,6 +67,19 @@ class ShortPosition: Position {
         }
     }
     
+    override var timestamp: Int64 {
+        get {
+            for log in self.tradeLogs {
+                let l = log as! TradeLog
+                let action = TradeAction(rawValue: l.tradeAction)
+                if action == .OPEN_SHORT_POSITION {
+                    return l.timestamp.int64Value
+                }
+            }
+            return 0
+        }
+    }
+    
     override func unwind(_ amount: Double?=nil, price: Double?, cb: @escaping (ZaiError?) -> Void) {
         if self.status.intValue != PositionState.OPEN.rawValue {
             cb(nil)

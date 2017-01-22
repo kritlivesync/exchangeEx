@@ -13,8 +13,8 @@ import ZaifSwift
 
 
 protocol BoardViewDelegate {
-    func orderSell(quote: Quote)
-    func orderBuy(quote: Quote)
+    func orderSell(quote: Quote, bestBid: Quote, bestAsk: Quote)
+    func orderBuy(quote: Quote, bestBid: Quote, bestAsk: Quote)
 }
 
 
@@ -107,18 +107,36 @@ class BoardView : NSObject, UITableViewDelegate, UITableViewDataSource, BoardVie
     
     // BoardViewCellDelegate
     func pushedMakerButton(quote: Quote) {
+        guard let board = self.board else {
+            return
+        }
+        guard let bestBid = board.getBestBid() else {
+            return
+        }
+        guard let bestAsk = board.getBestAsk() else {
+            return
+        }
         if quote.type == Quote.QuoteType.ASK {
-            self.delegate?.orderSell(quote: quote)
+            self.delegate?.orderSell(quote: quote, bestBid: bestBid, bestAsk: bestAsk)
         } else if quote.type == Quote.QuoteType.BID {
-            self.delegate?.orderBuy(quote: quote)
+            self.delegate?.orderBuy(quote: quote, bestBid: bestBid, bestAsk: bestAsk)
         }
     }
     
     func pushedTakerButton(quote: Quote) {
+        guard let board = self.board else {
+            return
+        }
+        guard let bestBid = board.getBestBid() else {
+            return
+        }
+        guard let bestAsk = board.getBestAsk() else {
+            return
+        }
         if quote.type == Quote.QuoteType.ASK {
-            self.delegate?.orderBuy(quote: quote)
+            self.delegate?.orderBuy(quote: quote, bestBid: bestBid, bestAsk: bestAsk)
         } else if quote.type == Quote.QuoteType.BID {
-            self.delegate?.orderSell(quote: quote)
+            self.delegate?.orderSell(quote: quote, bestBid: bestBid, bestAsk: bestAsk)
         }
     }
     

@@ -67,12 +67,26 @@ class BestQuoteView : NSObject, UITableViewDelegate, UITableViewDataSource, Best
         }
     }
     
+    func getBestAsk() -> Quote? {
+        guard let cell = self.view.cellForRow(at: IndexPath(row: 0, section: 0)) as? BestQuoteViewCell else {
+            return nil
+        }
+        return cell.quote
+    }
+    
     func setBestAsk(quote: Quote) {
         guard let cell = self.view.cellForRow(at: IndexPath(row: 0, section: 0)) as? BestQuoteViewCell else {
             return
         }
         cell.setQuote(quote: quote)
         cell.delegate = self
+    }
+    
+    func getBestBid() -> Quote? {
+        guard let cell = self.view.cellForRow(at: IndexPath(row: 1, section: 0)) as? BestQuoteViewCell else {
+            return nil
+        }
+        return cell.quote
     }
     
     func setBestBid(quote: Quote) {

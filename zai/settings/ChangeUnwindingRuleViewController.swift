@@ -1,24 +1,26 @@
 //
-//  ChangeUpdateIntervalController.swift
+//  ChangeUnwindingRuleViewController.swift
 //  zai
 //
-//  Created by 渡部郷太 on 1/16/17.
+//  Created by 渡部郷太 on 1/22/17.
 //  Copyright © 2017 watanabe kyota. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-protocol ChangeUpdateIntervalDelegate {
-    func saved(interval: UpdateInterval)
+protocol ChangeUnwindingRuleDelegate {
+    func saved(rule: UnwindingRule)
 }
 
-class ChangeUpdateIntervalController : UITableViewController {
+class ChangeUnwindingRuleViewController : UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.tableFooterView = UIView()
+        
+        self.config = getAppConfig()
     }
     
     public override func numberOfSections(in tableView: UITableView) -> Int {
@@ -26,17 +28,17 @@ class ChangeUpdateIntervalController : UITableViewController {
     }
     
     public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return UpdateInterval.count
+        return UnwindingRule.count
     }
     
     public override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        guard let interval = UpdateInterval(rawValue: indexPath.row) else {
+        guard let rule = UnwindingRule(rawValue: indexPath.row) else {
             return cell
         }
-        cell.textLabel?.text = interval.string
-        if interval == self.config.autoUpdateInterval {
-            self.selectedInterval = interval
+        cell.textLabel?.text = rule.string
+        if rule == self.config.unwindingRule {
+            self.selectedRule = rule
             cell.accessoryType = UITableViewCellAccessoryType.checkmark
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
         }
@@ -49,7 +51,7 @@ class ChangeUpdateIntervalController : UITableViewController {
             return
         }
         cell.accessoryType = UITableViewCellAccessoryType.checkmark
-        self.selectedInterval = UpdateInterval(rawValue: indexPath.row)!
+        self.selectedRule = UnwindingRule(rawValue: indexPath.row)!
     }
     
     public override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -60,14 +62,14 @@ class ChangeUpdateIntervalController : UITableViewController {
     }
     
     @IBAction func pushSaveButton(_ sender: Any) {
-        self.config.autoUpdateInterval = self.selectedInterval
+        self.config.unwindingRule = self.selectedRule
         _ = self.config.save()
-        self.delegate?.saved(interval: self.config.autoUpdateInterval)
+        self.delegate?.saved(rule: self.config.unwindingRule)
         self.performSegue(withIdentifier: "unwindToSettings", sender: self)
     }
     
-
-    var config: Config!
-    var selectedInterval: UpdateInterval = UpdateInterval.oneSecond
-    var delegate: ChangeUpdateIntervalDelegate?
+    
+    var config: AppConfig!
+    var selectedRule: UnwindingRule = UnwindingRule.mostBenefit
+    var delegate: ChangeUnwindingRuleDelegate?
 }

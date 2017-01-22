@@ -105,7 +105,7 @@ class PositionListViewCell : UITableViewCell {
             return
         }
         
-        let profit = Int(position.profit + (Double(btcJpyPrice) - position.price) * position.balance)
+        let profit = Int(position.calculateUnrealizedProfit(marketPrice: Double(btcJpyPrice)))
         let desc = formatValue(profit)
         self.profitLabel.text = (profit < 0) ? "" + desc : "+" + desc
         if profit < 0 {

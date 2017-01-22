@@ -87,20 +87,18 @@ internal class BitCoin : Monitorable {
                 }
             }
         }
-        if delegate?.recievedBestJpyBid != nil {
-            self.getBestBidQuote(.JPY) { (err, quote) in
+        if delegate?.recievedBestJpyBid != nil || delegate?.recievedBestJpyAsk != nil {
+            self.api.getBoard(currencyPair: ApiCurrencyPair.BTC_JPY) { (err, board) in
                 if err == nil {
-                    DispatchQueue.main.async {
-                        delegate?.recievedBestJpyBid?(price: Int(quote!.price), amount: quote!.amount)
+                    if let bestBid = board.getBestBid() {
+                        DispatchQueue.main.async {
+                            delegate?.recievedBestJpyBid?(price: Int(bestBid.price), amount: bestBid.amount)
+                        }
                     }
-                }
-            }
-        }
-        if delegate?.recievedBestJpyAsk != nil {
-            self.getBestAskQuote(.JPY) { (err, quote) in
-                if err == nil {
-                    DispatchQueue.main.async {
-                        delegate?.recievedBestJpyAsk?(price: Int(quote!.price), amount: quote!.amount)
+                    if let bestAsk = board.getBestAsk() {
+                        DispatchQueue.main.async {
+                            delegate?.recievedBestJpyAsk?(price: Int(bestAsk.price), amount: bestAsk.amount)
+                        }
                     }
                 }
             }

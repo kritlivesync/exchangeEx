@@ -173,14 +173,33 @@ class ChartViewController : UIViewController, CandleChartDelegate, PositionDeleg
             return
         }
 
-        if getAppConfig().sellMaxProfitPosition {
-            trader.unwindMaxProfitPosition(price: price, amount: amount) { (err, position) in
+        switch getAppConfig().unwindingRule {
+        case .mostBenefit:
+            guard let bestBid = self.bestQuoteView.getBestBid() else {
+                return
+            }
+            trader.unwindMaxProfitPosition(price: price, amount: amount, marketPrice: bestBid.price) { (err, position) in
                 if err != nil {
                     position?.delegate = self
                 }
             }
-        } else {
-            trader.unwindMinProfitPosition(price: price, amount: amount) { (err, position) in
+        case .mostLoss:
+            guard let bestBid = self.bestQuoteView.getBestBid() else {
+                return
+            }
+            trader.unwindMaxLossPosition(price: price, amount: amount, marketPrice: bestBid.price) { (err, position) in
+                if err != nil {
+                    position?.delegate = self
+                }
+            }
+        case .mostRecent:
+            trader.unwindMostRecentPosition(price: price, amount: amount) { (err, position) in
+                if err != nil {
+                    position?.delegate = self
+                }
+            }
+        case .mostOld:
+            trader.unwindMostOldPosition(price: price, amount: amount) { (err, position) in
                 if err != nil {
                     position?.delegate = self
                 }
