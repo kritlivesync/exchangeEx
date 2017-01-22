@@ -29,7 +29,7 @@ class ValidatablePositionEditor : PositionEditor, UITextFieldDelegate {
     // UITextFieldDelegate
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        if !self.allowInput(existingInput: textField.text!, addedString: string) {
+        if !allowBtcAmountInput(existingInput: textField.text!, addedString: string) {
             return false
         }
         
@@ -58,45 +58,6 @@ class ValidatablePositionEditor : PositionEditor, UITextFieldDelegate {
                     }
                 }
             }
-        }
-        return true
-    }
-    
-    func allowInput(existingInput: String, addedString: String) -> Bool {
-        if addedString.isEmpty {
-            return true
-        } else {
-            if self.validateExistingInput(string: existingInput) &&
-               self.validateInput(string: addedString) &&
-               self.validateCombinationInput(existingInput: existingInput, addedString: addedString) {
-                return true
-            }
-        }
-        return false
-    }
-    
-    func validateExistingInput(string: String) -> Bool {
-        var pattern = "^[0-9]+\\."
-        var reg = try! NSRegularExpression(pattern: pattern)
-        var matches = reg.matches(in: string, options: [], range: NSMakeRange(0, string.characters.count))
-        if matches.count == 0 {
-            return true
-        }
-        
-        // for amount
-        pattern = "^[0-9]+\\.[0-9]{4}$"
-        reg = try! NSRegularExpression(pattern: pattern)
-        matches = reg.matches(in: string, options: [], range: NSMakeRange(0, string.characters.count))
-        return matches.count == 0
-    }
-    
-    func validateInput(string: String) -> Bool {
-        return Double(string) != nil || string == "."
-    }
-    
-    func validateCombinationInput(existingInput: String, addedString: String) -> Bool {
-        if addedString == "." && existingInput.contains(".") {
-            return false
         }
         return true
     }

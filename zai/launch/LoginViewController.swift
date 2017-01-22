@@ -10,7 +10,7 @@ import UIKit
 
 import ZaifSwift
 
-class LoginViewController: UIViewController, UINavigationBarDelegate {
+class LoginViewController: UIViewController, UINavigationBarDelegate, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +28,9 @@ class LoginViewController: UIViewController, UINavigationBarDelegate {
         
         self.userIdText.text = getAppConfig().previousUserId
         self.passwordText.text = ""
+        
+        self.userIdText.delegate = self
+        self.passwordText.delegate = self
     }
 
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
@@ -69,6 +72,18 @@ class LoginViewController: UIViewController, UINavigationBarDelegate {
     // UIBarPositioningDelegate
     public func position(for bar: UIBarPositioning) -> UIBarPosition {
         return UIBarPosition.topAttached
+    }
+    
+    // UITextFieldDelegate
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        switch textField.tag {
+        case 0:
+            return validateUserId(existingInput: textField.text!, addedString: string)
+        case 1:
+            return validatePassword(existingInput: textField.text!, addedString: string)
+        default: return false
+        }
     }
     
     @IBAction func unwindToLogin(_ segue: UIStoryboardSegue) {}

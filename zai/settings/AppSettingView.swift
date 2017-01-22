@@ -11,11 +11,12 @@ import UIKit
 
 
 protocol AppSettingViewDelegate {
+    func changeBuyAmountLimit(setting: AppSettingView)
     func changeUnwindingPositionRule(setting: AppSettingView)
 }
 
 
-class AppSettingView : SettingView, VariableSettingCellDelegate, ChangeUnwindingRuleDelegate {
+class AppSettingView : SettingView, VariableSettingCellDelegate, ChangeUnwindingRuleDelegate, ChangeBuyAmountLimitDelegate {
     
     override init(section: Int, tableView: UITableView) {
         self._config = getAppConfig()
@@ -27,8 +28,16 @@ class AppSettingView : SettingView, VariableSettingCellDelegate, ChangeUnwinding
         switch row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "variableSettingCell", for: indexPath) as! VariableSettingCell
+            cell.nameLabel.text = "買注文の上限数量"
+            cell.valueLabel.text = formatValue(self._config.buyAmountLimitBtc) + "BTC"
+            cell.id = 0
+            cell.delegate = self
+            return cell
+        case 1:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "variableSettingCell", for: indexPath) as! VariableSettingCell
             cell.nameLabel.text = "ポジション解消ルール"
             cell.valueLabel.text = self._config.unwindingRule.string
+            cell.id = 1
             cell.delegate = self
             return cell
         default:
@@ -39,15 +48,23 @@ class AppSettingView : SettingView, VariableSettingCellDelegate, ChangeUnwinding
     
     override func shouldHighlightRowAt(row: Int) -> Bool {
         switch row {
-        case 0:
+        case 0, 1:
             return true
         default:
             return false
         }
     }
     
-    func updateUnwindingRule(tableView: UITableView, rule: UnwindingRule) {
+    func updateBuyAmountLimit(tableView: UITableView, amout: Double) {
         let index = IndexPath(row: 0, section: self.section)
+        guard let cell = tableView.cellForRow(at: index) as? VariableSettingCell else {
+            return
+        }
+        cell.valueLabel.text = formatValue(self._config.buyAmountLimitBtc) + "BTC"
+    }
+    
+    func updateUnwindingRule(tableView: UITableView, rule: UnwindingRule) {
+        let index = IndexPath(row: 1, section: self.section)
         guard let cell = tableView.cellForRow(at: index) as? VariableSettingCell else {
             return
         }
@@ -55,8 +72,20 @@ class AppSettingView : SettingView, VariableSettingCellDelegate, ChangeUnwinding
     }
     
     // VariableSettingCellDelegate
-    func touchesEnded(name: String, value: String) {
-        self.delegate?.changeUnwindingPositionRule(setting: self)
+    func touchesEnded(id: Int, name: String, value: String) {
+        switch id {
+        case 0:
+            self.delegate?.changeBuyAmountLimit(setting: self)
+        case 1:
+            self.delegate?.changeUnwindingPositionRule(setting: self)
+        default: break
+            
+        }
+    }
+    
+    // ChangeBuyAmountLimitDelegate
+    func saved(amount: Double) {
+        self.updateBuyAmountLimit(tableView: self.tableView, amout: amount)
     }
     
     // ChangeUnwindingRuleDelegate
@@ -69,7 +98,7 @@ class AppSettingView : SettingView, VariableSettingCellDelegate, ChangeUnwinding
     }
     
     override var rowCount: Int {
-        return 1
+        return 2
     }
     
     override var config: Config {

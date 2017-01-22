@@ -10,10 +10,24 @@ import Foundation
 import UIKit
 
 
-class ChangePasswordViewController : UIViewController {
+class ChangePasswordViewController : UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.currentPassword.delegate = self
+        self.newPassword.delegate = self
+        self.passwordAgain.delegate = self
+    }
+    
+    // UITextFieldDelegate
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        switch textField.tag {
+        case 0, 1, 2:
+            return validatePassword(existingInput: textField.text!, addedString: string)
+        default: return false
+        }
     }
     
     @IBAction func pushSaveButton(_ sender: Any) {

@@ -143,6 +143,10 @@ class SettingsViewController
     }
     
     // AppSettingViewDelegate
+    func changeBuyAmountLimit(setting: AppSettingView) {
+        self.performSegue(withIdentifier: "changeBuyAmountLimitSegue", sender: setting)
+    }
+    
     func changeUnwindingPositionRule(setting: AppSettingView) {
         self.performSegue(withIdentifier: "changeUnwindingRuleSegue", sender: setting)
     }
@@ -195,6 +199,10 @@ class SettingsViewController
             dst.delegate = setting
         case "changeUnwindingRuleSegue":
             let dst = segue.destination as! ChangeUnwindingRuleViewController
+            let setting = sender as! AppSettingView
+            dst.delegate = setting
+        case "changeBuyAmountLimitSegue":
+            let dst = segue.destination as! ChangeBuyAmountLimitViewController
             let setting = sender as! AppSettingView
             dst.delegate = setting
         default: break

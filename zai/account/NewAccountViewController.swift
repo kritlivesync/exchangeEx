@@ -12,7 +12,7 @@ import UIKit
 import ZaifSwift
 
 
-class NewAccountViewController: UIViewController {
+class NewAccountViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +28,22 @@ class NewAccountViewController: UIViewController {
         // for degug
         self.zaifApiKeyText.text = key_full
         self.zaifSecretKeyText.text = secret_full
+        
+        self.userIdText.delegate = self
+        self.passwordText.delegate = self
+        self.passwordAgainText.delegate = self
+    }
+    
+    // UITextFieldDelegate
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        switch textField.tag {
+        case 0:
+            return validateUserId(existingInput: textField.text!, addedString: string)
+        case 1, 2:
+            return validatePassword(existingInput: textField.text!, addedString: string)
+        default: return false
+        }
     }
     
     @IBAction func pushSaveButton(_ sender: Any) {

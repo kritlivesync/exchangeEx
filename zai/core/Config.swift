@@ -134,6 +134,18 @@ open class AppConfig : Config {
         }
     }
     
+    var buyAmountLimitBtc: Double {
+        get {
+            if let val = Config.configDict.value(forKey: "buyAmountLimitBtc") {
+                return val as! Double
+            }
+            return 0.0001
+        }
+        set {
+            Config.configDict.setValue(newValue, forKey: "buyAmountLimitBtc")
+        }
+    }
+    
     var unwindingRule: UnwindingRule {
         get {
             if let val = Config.configDict.value(forKey: "unwindingRule") {

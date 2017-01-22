@@ -11,7 +11,7 @@ import UIKit
 
 
 protocol VariableSettingCellDelegate {
-    func touchesEnded(name: String, value: String)
+    func touchesEnded(id: Int, name: String, value: String)
 }
 
 
@@ -23,12 +23,13 @@ class VariableSettingCell : UITableViewCell {
     
     open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
-        self.delegate?.touchesEnded(name: self.nameLabel.text!, value: self.valueLabel.text!)
+        self.delegate?.touchesEnded(id: self.id, name: self.nameLabel.text!, value: self.valueLabel.text!)
     }
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var valueLabel: UILabel!
     
+    var id: Int = 0
     var delegate: VariableSettingCellDelegate?
 
 }

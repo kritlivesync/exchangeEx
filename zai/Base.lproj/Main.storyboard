@@ -44,19 +44,19 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7X6-5e-4Fy">
+                                    <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7X6-5e-4Fy">
                                         <rect key="frame" x="0.0" y="49" width="373" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="dcu-8b-YpQ"/>
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="alphabet" secureTextEntry="YES"/>
                                     </textField>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RbW-DL-xad">
-                                <rect key="frame" x="21" y="286" width="373" height="44"/>
+                                <rect key="frame" x="21" y="303" width="373" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="cAX-p6-w7s"/>
                                 </constraints>
@@ -510,7 +510,7 @@
                                         <rect key="frame" x="0.0" y="60" width="414" height="72"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ybn-GK-IWf" id="ytd-yO-J2U">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="71"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="71.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="98211" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rBu-VL-QGO">
@@ -804,23 +804,23 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AzN-d6-IkF">
+                                    <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AzN-d6-IkF">
                                         <rect key="frame" x="0.0" y="49" width="373" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="NZ0-HO-WZH"/>
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="alphabet" secureTextEntry="YES"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter password again" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0FP-bP-yze">
+                                    <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter password again" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0FP-bP-yze">
                                         <rect key="frame" x="0.0" y="98" width="373" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="XQT-13-1Cq"/>
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="alphabet" secureTextEntry="YES"/>
                                     </textField>
                                 </subviews>
                             </stackView>
@@ -985,11 +985,12 @@
                         <segue destination="oQX-rA-4mB" kind="show" identifier="changeZaifApiKeysSegue" id="XfH-uk-79T"/>
                         <segue destination="4S5-Vg-VP0" kind="show" identifier="changeUpdateIntervalSegue" id="Mw7-sE-F81"/>
                         <segue destination="Njh-CO-Ub9" kind="show" identifier="changeUnwindingRuleSegue" id="k0M-tQ-xx4"/>
+                        <segue destination="vH1-YE-4lp" kind="show" identifier="changeBuyAmountLimitSegue" id="v3V-3l-mBb"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="paJ-7q-rJu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5614" y="-1326"/>
+            <point key="canvasLocation" x="5630" y="-1326"/>
         </scene>
         <!--パスワードの変更-->
         <scene sceneID="Aqi-cU-kva">
@@ -1013,25 +1014,25 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="新しいパスワード" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bvi-MU-ROX">
+                                    <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="新しいパスワード" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bvi-MU-ROX">
                                         <rect key="frame" x="0.0" y="49" width="373" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="ia1-RT-RTk"/>
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="もう一度入力してください" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jy3-AB-f3b">
+                                    <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="もう一度入力してください" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jy3-AB-f3b">
                                         <rect key="frame" x="0.0" y="98" width="373" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="fjb-f2-IFA"/>
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
                                 </subviews>
                             </stackView>
@@ -1193,7 +1194,7 @@
                                 <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xgj-4M-Z6s" id="rLC-2w-VlE">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -1222,6 +1223,76 @@
                 <exit id="udk-yM-SVZ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="6735" y="984"/>
+        </scene>
+        <!--買注文の上限数量-->
+        <scene sceneID="a8I-Xp-ugu">
+            <objects>
+                <viewController id="vH1-YE-4lp" customClass="ChangeBuyAmountLimitViewController" customModule="zai" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="84V-0E-TZe"/>
+                        <viewControllerLayoutGuide type="bottom" id="Vle-1M-ANF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cyu-v8-32Y">
+                        <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="10w-ro-QsS">
+                                <rect key="frame" x="6" y="50" width="402" height="44"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hb6-KR-NCh">
+                                        <rect key="frame" x="0.0" y="8" width="365" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="BTC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z02-Ch-dlW">
+                                        <rect key="frame" x="372" y="13" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="hb6-KR-NCh" secondAttribute="bottom" id="CPe-Px-GRj"/>
+                                    <constraint firstItem="z02-Ch-dlW" firstAttribute="leading" secondItem="hb6-KR-NCh" secondAttribute="trailing" constant="5" id="cFM-Rs-64n"/>
+                                    <constraint firstItem="hb6-KR-NCh" firstAttribute="top" secondItem="10w-ro-QsS" secondAttribute="top" id="pgT-1v-jLc"/>
+                                    <constraint firstItem="hb6-KR-NCh" firstAttribute="leading" secondItem="10w-ro-QsS" secondAttribute="leading" constant="5" id="szP-ID-I0O"/>
+                                    <constraint firstAttribute="trailing" secondItem="z02-Ch-dlW" secondAttribute="trailing" constant="5" id="wpO-KL-hGi"/>
+                                    <constraint firstItem="z02-Ch-dlW" firstAttribute="centerY" secondItem="hb6-KR-NCh" secondAttribute="centerY" id="znZ-Cd-8rO"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="10w-ro-QsS" firstAttribute="centerX" secondItem="cyu-v8-32Y" secondAttribute="centerX" id="94g-Cc-Xtj"/>
+                            <constraint firstItem="10w-ro-QsS" firstAttribute="width" secondItem="cyu-v8-32Y" secondAttribute="width" multiplier="0.9" id="BVa-j1-Rye"/>
+                            <constraint firstItem="10w-ro-QsS" firstAttribute="top" secondItem="84V-0E-TZe" secondAttribute="bottom" constant="50" id="xGI-YA-F3x"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="買注文の上限数量" id="lP0-kx-bWz">
+                        <barButtonItem key="leftBarButtonItem" title="キャンセル" id="yeQ-Ta-qcI">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <segue destination="I8H-ZX-RhM" kind="unwind" identifier="unwindToSettings" unwindAction="unwindToSettings:" id="Cf6-cL-2Jo"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="保存" id="IU9-L6-EIX">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="pushSaveButton:" destination="vH1-YE-4lp" id="FyW-5q-B1I"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="maxBuyAmountLabel" destination="hb6-KR-NCh" id="zPg-lg-0VN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Lb-4n-FvJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="I8H-ZX-RhM" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="6735" y="1766"/>
         </scene>
         <!--設定-->
         <scene sceneID="NkH-SE-2vE">

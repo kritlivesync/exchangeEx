@@ -76,7 +76,7 @@ class UserAccountSettingView : SettingView, ValueActionSettingDelegate, Variable
     }
     
     // VariableSettingCellDelegate
-    func touchesEnded(name: String, value: String) {
+    func touchesEnded(id: Int, name: String, value: String) {
         self.delegate?.changePassword()
     }
     

@@ -47,7 +47,7 @@ class ZaifSettingView : SettingView, VariableSettingCellDelegate {
     }
     
     // VariableSettingCellDelegate
-    func touchesEnded(name: String, value: String) {
+    func touchesEnded(id: Int, name: String, value: String) {
         self.delegate?.changeApiKeys()
     }
     
