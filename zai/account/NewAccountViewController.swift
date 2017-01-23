@@ -67,21 +67,23 @@ class NewAccountViewController: UIViewController, UITextFieldDelegate {
         let secretKey = self.zaifSecretKeyText.text!
         let zaifApi = ZaifApi(apiKey: apiKey, secretKey: secretKey)
         zaifApi.validateApi() { err in
-            if err == nil {
-                let repository = AccountRepository.getInstance()
-                guard let account = repository.create(userId, password: password) else {
+            DispatchQueue.main.async {
+                if err == nil {
+                    let repository = AccountRepository.getInstance()
+                    guard let account = repository.create(userId, password: password) else {
+                        return
+                    }
+                    guard repository.createZaifExchange(account: account, apiKey: apiKey, secretKey: secretKey) else {
+                        repository.delete(account)
+                        return
+                    }
+                    let config = getAppConfig()
+                    config.previousUserId = userId
+                    _ = config.save()
+                    self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self)
+                } else {
                     return
                 }
-                guard repository.createZaifExchange(account: account, apiKey: apiKey, secretKey: secretKey) else {
-                    repository.delete(account)
-                    return
-                }
-                let config = getAppConfig()
-                config.previousUserId = userId
-                _ = config.save()
-                self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self)
-            } else {
-                return
             }
         }
     }

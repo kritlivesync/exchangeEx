@@ -28,7 +28,7 @@ class ChangeBuyAmountLimitViewController : UIViewController, UITextFieldDelegate
     // UITextFieldDelegate
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        return allowBtcAmountInput(existingInput: textField.text!, addedString: string)
+        return BtcAmountValidator.allowBtcAmountInput(existingInput: textField.text!, addedString: string, replaceRange: range)
     }
     
     @IBAction func pushSaveButton(_ sender: Any) {

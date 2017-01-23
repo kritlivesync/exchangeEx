@@ -29,21 +29,37 @@ class ValidatablePositionEditor : PositionEditor, UITextFieldDelegate {
     // UITextFieldDelegate
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        if !allowBtcAmountInput(existingInput: textField.text!, addedString: string) {
+        let nsstring = textField.text! as NSString
+        let newInput = nsstring.replacingCharacters(in: range, with: string)
+        
+        if textField.tag == 0 {
+            if !BtcPriceValidator.allowBtcPriceInput(existingInput: textField.text!, addedString: string, replaceRange: range) {
+                return false
+            }
+        } else if textField.tag == 1 {
+            if !BtcAmountValidator.allowBtcAmountInput(existingInput: textField.text!, addedString: string, replaceRange: range) {
+                return false
+            }
+        } else {
             return false
         }
-        
+
         // all field are filled by valid value? if no, disable ok button.
         self.controller.actions.last?.isEnabled = true
         
-        let nsstring = textField.text! as NSString
-        let newInput = nsstring.replacingCharacters(in: range, with: string)
         var newValue = 0.0
-        if let value = Double(newInput as String) {
-            newValue = value
+        if let val = Double(newInput as String) {
+            newValue = val
         }
-        if newValue <= 0.0 {
-            self.controller.actions.last?.isEnabled = false
+        
+        if textField.tag == 0 {
+            if !BtcPriceValidator.validateRange(price: Int(newValue)) {
+                self.controller.actions.last?.isEnabled = false
+            }
+        } else {
+            if !BtcAmountValidator.validateRange(amount: newValue) {
+                self.controller.actions.last?.isEnabled = false
+            }
         }
         
         let textFields = self.controller.textFields
@@ -53,8 +69,14 @@ class ValidatablePositionEditor : PositionEditor, UITextFieldDelegate {
                     self.controller.actions.last?.isEnabled = false
                 }
                 if let value = Double(field.text!) {
-                    if value <= 0.0 {
-                        self.controller.actions.last?.isEnabled = false
+                    if field.tag == 0 {
+                        if !BtcPriceValidator.validateRange(price: Int(value)) {
+                            self.controller.actions.last?.isEnabled = false
+                        }
+                    } else {
+                        if !BtcAmountValidator.validateRange(amount: value) {
+                            self.controller.actions.last?.isEnabled = false
+                        }
                     }
                 }
             }
@@ -84,7 +106,7 @@ class PositionCreateViewController : ValidatablePositionEditor {
         self.controller.addTextField { (textField) -> Void in
             self.priceTextField = textField
             textField.tag = 0
-            textField.placeholder = "価格"
+            textField.placeholder = "価格" + "(" + BtcPriceValidator.lowerLimit.description + " - " + BtcPriceValidator.upperLimit.description + ")"
             textField.keyboardType = .numberPad
             textField.delegate = self
         }
@@ -94,7 +116,7 @@ class PositionCreateViewController : ValidatablePositionEditor {
         self.controller.addTextField { (textField) -> Void in
             self.amountextField = textField
             textField.tag = 1
-            textField.placeholder = "数量"
+            textField.placeholder = "数量" + "(" + self.trader.exchange.api.orderUnit(currencyPair: ApiCurrencyPair(rawValue: self.trader.exchange.currencyPair)!).description + " - " + BtcAmountValidator.upperLimit.description + ")"
             textField.keyboardType = .decimalPad
             textField.delegate = self
         }
