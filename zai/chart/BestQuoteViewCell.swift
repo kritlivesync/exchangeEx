@@ -11,7 +11,7 @@ import UIKit
 
 
 protocol BestQuoteViewCellDelegate {
-    func pushedTakerButton(quote: Quote)
+    func pushedTakerButton(quote: Quote, cell: BestQuoteViewCell)
 }
 
 
@@ -31,6 +31,7 @@ class BestQuoteViewCell : UITableViewCell {
         self.selectionStyle = UITableViewCellSelectionStyle.none
         
         guard let q = quote else {
+            self.quoteTypeLabel.text = "-"
             self.priceLabel.text = "-"
             self.amountLabel.text = "-"
             return
@@ -53,7 +54,7 @@ class BestQuoteViewCell : UITableViewCell {
     }
     
     fileprivate func take(_ : UITableViewRowAction, _ : IndexPath) {
-        self.delegate?.pushedTakerButton(quote: self.quote!)
+        self.delegate?.pushedTakerButton(quote: self.quote!, cell: self)
     }
     
     var takerButtonAction: UITableViewRowAction?
@@ -63,4 +64,5 @@ class BestQuoteViewCell : UITableViewCell {
     @IBOutlet weak var quoteTypeLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
+    @IBOutlet weak var activeIndicator: UIActivityIndicatorView!
 }

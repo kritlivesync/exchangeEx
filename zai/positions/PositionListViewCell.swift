@@ -93,6 +93,12 @@ class PositionListViewCell : UITableViewCell {
         } else {
             self.backgroundColor = UIColor.white
         }
+        
+        if p.isUnwinding {
+            self.activeIndicator.startAnimating()
+        } else {
+            self.activeIndicator.stopAnimating()
+        }
     }
     
     func updateProfit(btcJpyPrice: Int) {
@@ -120,6 +126,8 @@ class PositionListViewCell : UITableViewCell {
     @IBOutlet weak var balanceLabel: UILabel!
     @IBOutlet weak var profitLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var activeIndicator: UIActivityIndicatorView!
+    
     var deleteAction: UITableViewRowAction?
     var editingAction: UITableViewRowAction?
     var unwind100Action: UITableViewRowAction?

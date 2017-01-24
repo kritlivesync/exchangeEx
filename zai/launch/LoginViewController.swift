@@ -32,41 +32,36 @@ class LoginViewController: UIViewController, UINavigationBarDelegate, UITextFiel
         self.userIdText.delegate = self
         self.passwordText.delegate = self
     }
-
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        if identifier == self.newAccountSegue {
-            return true
+    
+    @IBAction func pushLoginButton(_ sender: Any) {
+        if self.activeIndicator.isAnimating {
+            return
         }
+        self.activeIndicator.startAnimating()
         
         let userId = self.userIdText.text!
         let password = self.passwordText.text!
         
-        var waiting = true
-        var goNext = false
-        
         let app = UIApplication.shared.delegate as! AppDelegate
-
+        
         login(userId: userId, password: password) { (err, account) in
-            if let _ = err {
-                goNext = false
-            } else {
-                app.account = account
-                goNext = true
+            DispatchQueue.main.async {
+                if let _ = err {
+                    self.activeIndicator.stopAnimating()
+                } else {
+                    app.account = account
+                    let config = getAppConfig()
+                    config.previousUserId = userId
+                    _ = config.save()
+                    self.activeIndicator.stopAnimating()
+                    self.performSegue(withIdentifier: self.mainViewSegue, sender: nil)
+                }
             }
-            waiting = false
         }
-        
-        while waiting {
-            usleep(20)
-        }
-        
-        if goNext {
-            let config = getAppConfig()
-            config.previousUserId = userId
-            _ = config.save()
-        }
-
-        return goNext
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        return self.activeIndicator.isAnimating == false
     }
     
     // UIBarPositioningDelegate
@@ -102,6 +97,8 @@ class LoginViewController: UIViewController, UINavigationBarDelegate, UITextFiel
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var newAccountButton: UIButton!
     @IBOutlet weak var navigationBar: UINavigationBar!
+    
+    @IBOutlet weak var activeIndicator: UIActivityIndicatorView!
 
     fileprivate let newAccountLabelTag = 0
     fileprivate let newAccountSegue = "newAccountSegue"

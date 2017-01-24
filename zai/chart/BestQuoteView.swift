@@ -11,8 +11,8 @@ import UIKit
 
 
 protocol BestQuoteViewDelegate {
-    func orderSell(quote: Quote)
-    func orderBuy(quote: Quote)
+    func orderSell(quote: Quote, callback: @escaping () -> Void)
+    func orderBuy(quote: Quote, callback: @escaping () -> Void)
 }
 
 
@@ -98,11 +98,23 @@ class BestQuoteView : NSObject, UITableViewDelegate, UITableViewDataSource, Best
     }
     
     // BestQuoteViewCellDelegate
-    func pushedTakerButton(quote: Quote) {
+    func pushedTakerButton(quote: Quote, cell: BestQuoteViewCell) {
+        if cell.activeIndicator.isAnimating {
+            return
+        }
+        cell.activeIndicator.startAnimating()
         if quote.type == Quote.QuoteType.ASK {
-            self.delegate?.orderBuy(quote: quote)
+            self.delegate?.orderBuy(quote: quote) {
+                DispatchQueue.main.async {
+                    cell.activeIndicator.stopAnimating()
+                }
+            }
         } else if quote.type == Quote.QuoteType.BID {
-            self.delegate?.orderSell(quote: quote)
+            self.delegate?.orderSell(quote: quote) {
+                DispatchQueue.main.async {
+                    cell.activeIndicator.stopAnimating()
+                }
+            }
         }
     }
     

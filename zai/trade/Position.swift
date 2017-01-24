@@ -23,6 +23,10 @@ internal protocol PositionProtocol {
     var profit: Double { get }
     var type: String { get }
     var timestamp: Int64 { get }
+    
+    var isOpen: Bool { get }
+    var isClosed: Bool { get }
+    var isUnwinding: Bool { get }
 }
 
 protocol PositionDelegate {
@@ -69,6 +73,10 @@ enum PositionState: Int {
         return self == .OPEN
     }
     
+    var isOpening: Bool {
+        return self == .OPENING
+    }
+    
     var isClosed: Bool {
         return self == .CLOSED
     }
@@ -79,6 +87,10 @@ enum PositionState: Int {
     
     var isDelete: Bool {
         return self == .DELETED
+    }
+    
+    var isUnwinding: Bool {
+        return self == .UNWINDING
     }
 }
 
@@ -180,6 +192,18 @@ public class Position: NSManagedObject, PositionProtocol, PromisedOrderDelegate 
             self.activeOrder = newValue
             Database.getDb().saveContext()
         }
+    }
+    
+    var isOpen: Bool {
+        return PositionState(rawValue: self.status.intValue)!.isOpen
+    }
+    
+    var isClosed: Bool {
+        return PositionState(rawValue: self.status.intValue)!.isClosed
+    }
+    
+    var isUnwinding: Bool {
+        return PositionState(rawValue: self.status.intValue)!.isUnwinding
     }
     
     // OrderDelegate

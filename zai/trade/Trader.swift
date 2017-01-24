@@ -99,19 +99,26 @@ open class Trader: NSManagedObject, FundDelegate {
     }
     
     func cancelOrder(id: String, cb: @escaping (ZaiError?) -> Void) {
+        var targetOrder: Order? = nil
         for position in self.positions {
-        let pos = position as! Position
+            let pos = position as! Position
             if let order = pos.order {
                 if order.orderId == id {
-                    order.cancel() { err in
-                        if err == nil {
-                            OrderRepository.getInstance().delete(order)
-                        }
-                    }
+                    targetOrder = order
+                    break
                 }
             }
         }
-        cb(ZaiError(errorType: .INVALID_ORDER))
+        guard let order = targetOrder else {
+            cb(ZaiError(errorType: .INVALID_ORDER))
+            return
+        }
+        order.cancel() { err in
+            if err == nil {
+                OrderRepository.getInstance().delete(order)
+            }
+            cb(err)
+        }
     }
     
     func deletePosition(id: String) -> Bool {
@@ -184,7 +191,7 @@ open class Trader: NSManagedObject, FundDelegate {
         for position in self.positions {
             let p = position as! Position
             let status = PositionState(rawValue: p.status.intValue)!
-            if status.isDelete == false {
+            if status.isDelete == false && status.isOpening == false {
                 positions.append(p)
             }
         }

@@ -110,9 +110,9 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
         }*/
     }
     
-    func orderBuy(quote: Quote, bestBid: Quote, bestAsk: Quote) {
-        let amt = min(quote.amount, 1.0)
-        self.trader!.createLongPosition(.BTC_JPY, price: quote.price, amount: amt) { (err, position) in
+    func orderBuy(quote: Quote, bestBid: Quote, bestAsk: Quote, callback: @escaping () -> Void) {
+        self.trader!.createLongPosition(.BTC_JPY, price: quote.price, amount: quote.amount) { (err, position) in
+            callback()
             if let e = err {
                 print(e.message)
             } else {
@@ -121,28 +121,32 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
         }
     }
     
-    func orderSell(quote: Quote, bestBid: Quote, bestAsk: Quote) {
+    func orderSell(quote: Quote, bestBid: Quote, bestAsk: Quote, callback: @escaping () -> Void) {
         switch getAppConfig().unwindingRule {
         case .mostBenefit:
             self.trader.unwindMaxProfitPosition(price: quote.price, amount: quote.amount, marketPrice: bestBid.price) { (err, position) in
+                callback()
                 if err != nil {
                     position?.delegate = self
                 }
             }
         case .mostLoss:
             self.trader.unwindMaxLossPosition(price: quote.price, amount: quote.amount, marketPrice: bestBid.price) { (err, position) in
+                callback()
                 if err != nil {
                     position?.delegate = self
                 }
             }
         case .mostRecent:
             self.trader.unwindMostRecentPosition(price: quote.price, amount: quote.amount) { (err, position) in
+                callback()
                 if err != nil {
                     position?.delegate = self
                 }
             }
         case .mostOld:
             self.trader.unwindMostOldPosition(price: quote.price, amount: quote.amount) { (err, position) in
+                callback()
                 if err != nil {
                     position?.delegate = self
                 }

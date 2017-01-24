@@ -107,10 +107,16 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, B
     }
     
     func pushedEditButton(cell: PositionListViewCell, position: Position) {
+        if cell.activeIndicator.isAnimating {
+            return
+        }
         self.delegate?.editPosition(position: position)
     }
     
     func pushedUnwindButton(cell: PositionListViewCell, position: Position, rate: Double) {
+        if cell.activeIndicator.isAnimating {
+            return
+        }
         if let index = self.view.indexPath(for: cell) {
             self.view.reloadRows(at: [index], with: UITableViewRowAnimation.right)
         }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 
 func getNow() -> String {
@@ -42,4 +43,13 @@ func formatHms(timestamp: Int64) -> String {
     let formatter = DateFormatter()
     formatter.dateFormat = "HH:mm:ss"
     return formatter.string(from: date)
+}
+
+func createActiveIndicator(center: CGPoint) -> UIActivityIndicatorView {
+    let activeIndicator = UIActivityIndicatorView()
+    activeIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+    activeIndicator.center = center
+    activeIndicator.hidesWhenStopped = true
+    activeIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+    return activeIndicator
 }

@@ -12,8 +12,8 @@ import UIKit
 
 
 protocol BoardViewCellDelegate {
-    func pushedMakerButton(quote: Quote)
-    func pushedTakerButton(quote: Quote)
+    func pushedMakerButton(quote: Quote, cell: BoardViewCell)
+    func pushedTakerButton(quote: Quote, cell: BoardViewCell)
 }
 
 
@@ -48,7 +48,7 @@ class BoardViewCell : UITableViewCell {
             self.priceLabel.textColor = color
             self.amountBar.backgroundColor = color
             self.takerButtonAction = UITableViewRowAction(style: .normal, title: "買う") { (_, _) in
-                self.delegate?.pushedTakerButton(quote: self.quote!)
+                self.delegate?.pushedTakerButton(quote: self.quote!, cell: self)
             }
             self.takerButtonAction?.backgroundColor = Color.takerButtonColor
         } else if quote.type == Quote.QuoteType.BID {
@@ -56,7 +56,7 @@ class BoardViewCell : UITableViewCell {
             self.priceLabel.textColor = color
             self.amountBar.backgroundColor = color
             self.takerButtonAction = UITableViewRowAction(style: .normal, title: "売る") { (_, _) in
-                self.delegate?.pushedTakerButton(quote: self.quote!)
+                self.delegate?.pushedTakerButton(quote: self.quote!, cell: self)
             }
             self.takerButtonAction?.backgroundColor = Color.takerButtonColor
         }
@@ -67,7 +67,7 @@ class BoardViewCell : UITableViewCell {
         self.quote = quote
         
         self.makerButtonAction = UITableViewRowAction(style: .normal, title: "メイク") { (_, _) in
-            self.delegate?.pushedMakerButton(quote: self.quote!)
+            self.delegate?.pushedMakerButton(quote: self.quote!, cell: self)
         }
         self.makerButtonAction?.backgroundColor = Color.makerButtonColor
     }
@@ -76,6 +76,7 @@ class BoardViewCell : UITableViewCell {
     @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var amountBar: UILabel!
     @IBOutlet weak var amountBarConstraint: NSLayoutConstraint!
+    @IBOutlet weak var activeIndicator: UIActivityIndicatorView!
     var quote: Quote?
     var delegate: BoardViewCellDelegate?
     var takerButtonAction: UITableViewRowAction?

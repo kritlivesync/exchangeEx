@@ -189,7 +189,7 @@ class LongPosition: Position {
         case PositionState.UNWINDING.rawValue:
             let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .UNWIND_LONG_POSITION, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: price, amount: amount, positionId: self.id)
             self.addLog(log)
-            if self.balance < 0.0001 {
+            if self.balance < self.trader!.exchange.api.orderUnit(currencyPair: self.currencyPair) {
                 self.close()
                 self.delegate?.closedPosition(position: self)
             } else {
@@ -218,14 +218,13 @@ class LongPosition: Position {
         case PositionState.OPENING.rawValue:
             let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .CANCEL, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: price, amount: Double(order.orderAmount), positionId: self.id)
             self.addLog(log)
-            if self.balance < 0.0001 {
-                self.close()
-                self.delegate?.closedPosition(position: self)
+            if self.balance < self.trader!.exchange.api.orderUnit(currencyPair: self.currencyPair) {
+                self.delete()
             } else {
                 self.open()
             }
         case PositionState.UNWINDING.rawValue:
-            if self.balance < 0.0001 {
+            if self.balance < self.trader!.exchange.api.orderUnit(currencyPair: self.currencyPair) {
                 self.close()
                 self.delegate?.closedPosition(position: self)
             } else {

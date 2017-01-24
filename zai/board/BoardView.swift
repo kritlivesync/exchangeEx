@@ -13,8 +13,8 @@ import ZaifSwift
 
 
 protocol BoardViewDelegate {
-    func orderSell(quote: Quote, bestBid: Quote, bestAsk: Quote)
-    func orderBuy(quote: Quote, bestBid: Quote, bestAsk: Quote)
+    func orderSell(quote: Quote, bestBid: Quote, bestAsk: Quote, callback: @escaping () -> Void)
+    func orderBuy(quote: Quote, bestBid: Quote, bestAsk: Quote, callback: @escaping () -> Void)
 }
 
 
@@ -106,7 +106,10 @@ class BoardView : NSObject, UITableViewDelegate, UITableViewDataSource, BoardVie
     }
     
     // BoardViewCellDelegate
-    func pushedMakerButton(quote: Quote) {
+    func pushedMakerButton(quote: Quote, cell: BoardViewCell) {
+        if cell.activeIndicator.isAnimating {
+            return
+        }
         guard let board = self.board else {
             return
         }
@@ -116,14 +119,26 @@ class BoardView : NSObject, UITableViewDelegate, UITableViewDataSource, BoardVie
         guard let bestAsk = board.getBestAsk() else {
             return
         }
+        cell.activeIndicator.startAnimating()
         if quote.type == Quote.QuoteType.ASK {
-            self.delegate?.orderSell(quote: quote, bestBid: bestBid, bestAsk: bestAsk)
+            self.delegate?.orderSell(quote: quote, bestBid: bestBid, bestAsk: bestAsk) {
+                DispatchQueue.main.async {
+                    cell.activeIndicator.stopAnimating()
+                }
+            }
         } else if quote.type == Quote.QuoteType.BID {
-            self.delegate?.orderBuy(quote: quote, bestBid: bestBid, bestAsk: bestAsk)
+            self.delegate?.orderBuy(quote: quote, bestBid: bestBid, bestAsk: bestAsk) {
+                DispatchQueue.main.async {
+                    cell.activeIndicator.stopAnimating()
+                }
+            }
         }
     }
     
-    func pushedTakerButton(quote: Quote) {
+    func pushedTakerButton(quote: Quote, cell: BoardViewCell) {
+        if cell.activeIndicator.isAnimating {
+            return
+        }
         guard let board = self.board else {
             return
         }
@@ -133,10 +148,19 @@ class BoardView : NSObject, UITableViewDelegate, UITableViewDataSource, BoardVie
         guard let bestAsk = board.getBestAsk() else {
             return
         }
+        cell.activeIndicator.startAnimating()
         if quote.type == Quote.QuoteType.ASK {
-            self.delegate?.orderBuy(quote: quote, bestBid: bestBid, bestAsk: bestAsk)
+            self.delegate?.orderBuy(quote: quote, bestBid: bestBid, bestAsk: bestAsk) {
+                DispatchQueue.main.async {
+                    cell.activeIndicator.stopAnimating()
+                }
+            }
         } else if quote.type == Quote.QuoteType.BID {
-            self.delegate?.orderSell(quote: quote, bestBid: bestBid, bestAsk: bestAsk)
+            self.delegate?.orderSell(quote: quote, bestBid: bestBid, bestAsk: bestAsk) {
+                DispatchQueue.main.async {
+                    cell.activeIndicator.stopAnimating()
+                }
+            }
         }
     }
     
