@@ -91,6 +91,14 @@ class AssetsView : NSObject, UITableViewDelegate, UITableViewDataSource, ZaifAss
         }
         return self.sectionViews[section].getCell(tableView: tableView, indexPath: indexPath)
     }
+    
+    public func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        let section = indexPath.section
+        guard section < self.sectionViews.count else {
+            return false
+        }
+        return self.sectionViews[section].shouldHighlightRowAt(row: indexPath.row)
+    }
 
     
     internal func reloadData() {

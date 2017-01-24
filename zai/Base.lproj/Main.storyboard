@@ -691,7 +691,7 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="2016/12/12 21:11:11" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7fZ-7G-b6L">
                                                     <rect key="frame" x="8" y="0.0" width="152" height="70"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -707,8 +707,12 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="zVm-xr-0aN">
+                                                    <rect key="frame" x="394" y="25.333333333333336" width="20" height="20.000000000000007"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="zVm-xr-0aN" secondAttribute="trailing" id="3gu-Zl-1hh"/>
                                                 <constraint firstItem="Rxz-Dg-omS" firstAttribute="top" secondItem="SBc-wd-2LL" secondAttribute="top" id="9Bc-kb-STI"/>
                                                 <constraint firstItem="7fZ-7G-b6L" firstAttribute="top" secondItem="SBc-wd-2LL" secondAttribute="top" id="CLC-ZY-4ej"/>
                                                 <constraint firstItem="7fZ-7G-b6L" firstAttribute="leading" secondItem="SBc-wd-2LL" secondAttribute="leading" constant="5" id="LtP-4b-eSu"/>
@@ -720,10 +724,12 @@
                                                 <constraint firstAttribute="bottom" secondItem="Rxz-Dg-omS" secondAttribute="bottom" id="kul-Ak-IJV"/>
                                                 <constraint firstItem="zix-ia-TZ4" firstAttribute="width" secondItem="SBc-wd-2LL" secondAttribute="width" multiplier="0.33" id="nKy-Sa-nzU"/>
                                                 <constraint firstAttribute="bottom" secondItem="zix-ia-TZ4" secondAttribute="bottom" id="pTA-H1-JEl"/>
+                                                <constraint firstItem="zVm-xr-0aN" firstAttribute="centerY" secondItem="zix-ia-TZ4" secondAttribute="centerY" id="voE-F6-Rsi"/>
                                                 <constraint firstItem="zix-ia-TZ4" firstAttribute="top" secondItem="SBc-wd-2LL" secondAttribute="top" id="zh9-vu-Xyc"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="activeIndicator" destination="zVm-xr-0aN" id="bKc-hv-pON"/>
                                             <outlet property="orderAmountLabel" destination="zix-ia-TZ4" id="mw4-qw-FUR"/>
                                             <outlet property="orderPriceLabel" destination="Rxz-Dg-omS" id="coW-L5-u8I"/>
                                             <outlet property="orderTimeLabel" destination="7fZ-7G-b6L" id="MMd-Bq-N09"/>
@@ -1413,7 +1419,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="ベストアスク" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PgT-uu-zTV">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="ベストアスク" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PgT-uu-zTV">
                                                     <rect key="frame" x="8" y="6" width="97" height="57"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
@@ -1426,7 +1432,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="4UZ-96-iNW">
-                                                    <rect key="frame" x="394" y="24.333333333333336" width="20" height="20.000000000000007"/>
+                                                    <rect key="frame" x="394" y="25.333333333333336" width="20" height="20.000000000000007"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>
@@ -1438,7 +1444,7 @@
                                                 <constraint firstItem="4UZ-96-iNW" firstAttribute="centerY" secondItem="Oof-cM-qoc" secondAttribute="centerY" id="YAH-Yx-o3z"/>
                                                 <constraint firstItem="PgT-uu-zTV" firstAttribute="top" secondItem="X5v-vV-I3W" secondAttribute="top" id="cPD-mb-5BU"/>
                                                 <constraint firstItem="Oof-cM-qoc" firstAttribute="top" secondItem="X5v-vV-I3W" secondAttribute="top" id="dhg-My-RKc"/>
-                                                <constraint firstItem="PgT-uu-zTV" firstAttribute="leading" secondItem="X5v-vV-I3W" secondAttribute="leading" constant="10" id="fKa-9k-wLc"/>
+                                                <constraint firstItem="PgT-uu-zTV" firstAttribute="leading" secondItem="X5v-vV-I3W" secondAttribute="leading" id="fKa-9k-wLc"/>
                                                 <constraint firstItem="FUq-Ms-xbU" firstAttribute="top" secondItem="X5v-vV-I3W" secondAttribute="top" id="gwS-aP-0eE"/>
                                                 <constraint firstAttribute="trailing" secondItem="4UZ-96-iNW" secondAttribute="trailing" id="hA5-Gv-V9z"/>
                                                 <constraint firstAttribute="bottom" secondItem="PgT-uu-zTV" secondAttribute="bottom" id="lPL-tP-Aho"/>

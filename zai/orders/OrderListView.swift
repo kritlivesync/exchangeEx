@@ -63,12 +63,22 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
         }
     }
     
-    func pushedCancelButton(cell _: UITableViewCell, order: ActiveOrder) {
+    func pushedCancelButton(cell : OrderListViewCell, order: ActiveOrder) {
+        if cell.activeIndicator.isAnimating {
+            return
+        }
+        cell.activeIndicator.startAnimating()
         self.trader.cancelOrder(id: order.id) { err in
             if let e = err {
                 if e.errorType == .INVALID_ORDER {
-                    self.trader.exchange.api.cancelOrder(order: order) { _ in }
+                    self.trader.exchange.api.cancelOrder(order: order) { _ in
+                        cell.activeIndicator.stopAnimating()
+                    }
+                } else {
+                    cell.activeIndicator.stopAnimating()
                 }
+            } else {
+                cell.activeIndicator.stopAnimating()
             }
         }
     }
@@ -88,13 +98,27 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
     
     // ActiveOrderDelegate
     func revievedActiveOrders(activeOrders: [String: ActiveOrder]) {
+        let prevSize = self.orders.count
         self.orders.removeAll()
         for (_, order) in activeOrders {
             self.orders.append(order)
         }
         self.orders = self.orders.sorted{ $0.timestamp < $1.timestamp }
-        DispatchQueue.main.async {
-            self.reloadData()
+        if prevSize != self.orders.count {
+            DispatchQueue.main.async {
+                self.reloadData()
+            }
+        } else {
+            for i in 0 ..< self.orders.count {
+                let index = IndexPath(row: i, section: 0)
+                guard let cell = self.view.cellForRow(at: index) as? OrderListViewCell else {
+                    DispatchQueue.main.async {
+                        self.reloadData()
+                    }
+                    return
+                }
+                cell.setOrder(order: self.orders[i])
+            }
         }
     }
     

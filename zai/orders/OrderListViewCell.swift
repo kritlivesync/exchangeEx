@@ -11,7 +11,7 @@ import UIKit
 
 
 protocol OrderListViewCellDelegate {
-    func pushedCancelButton(cell: UITableViewCell, order: ActiveOrder)
+    func pushedCancelButton(cell: OrderListViewCell, order: ActiveOrder)
 }
 
 
@@ -60,6 +60,8 @@ class OrderListViewCell : UITableViewCell {
     @IBOutlet weak var orderAmountLabel: UILabel!
     @IBOutlet weak var orderPriceLabel: UILabel!
     @IBOutlet weak var orderTimeLabel: UILabel!
+    @IBOutlet weak var activeIndicator: UIActivityIndicatorView!
+    
     var order: ActiveOrder?
     var cancelAction: UITableViewRowAction?
     var delegate: OrderListViewCellDelegate?
