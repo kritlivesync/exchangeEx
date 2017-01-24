@@ -1132,12 +1132,17 @@
                                     </textField>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="UTH-Xx-P3S">
+                                <rect key="frame" x="197" y="151" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="UTH-Xx-P3S" firstAttribute="centerX" secondItem="9T1-BP-odD" secondAttribute="centerX" id="8tF-Sm-QZc"/>
                             <constraint firstItem="9T1-BP-odD" firstAttribute="width" secondItem="oLl-9w-JzX" secondAttribute="width" multiplier="0.9" id="XpU-CN-hcc"/>
                             <constraint firstItem="9T1-BP-odD" firstAttribute="top" secondItem="f5C-7I-wjS" secondAttribute="bottom" constant="50" id="cht-2M-TiB"/>
                             <constraint firstItem="9T1-BP-odD" firstAttribute="centerX" secondItem="oLl-9w-JzX" secondAttribute="centerX" id="gM9-5m-qUa"/>
+                            <constraint firstItem="UTH-Xx-P3S" firstAttribute="top" secondItem="9T1-BP-odD" secondAttribute="bottom" constant="5" id="nru-IO-hkl"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Zaif APIキーの変更" id="Pc2-Ey-KzA">
@@ -1155,6 +1160,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="activeIndicator" destination="UTH-Xx-P3S" id="NGj-86-t4O"/>
                         <outlet property="apiKeyLabel" destination="Yks-MA-4g4" id="AaJ-Bc-LCV"/>
                         <outlet property="secretKeyLabel" destination="1De-wl-uma" id="jMH-vu-Sqj"/>
                     </connections>

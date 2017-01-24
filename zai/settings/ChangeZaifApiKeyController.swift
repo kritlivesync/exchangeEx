@@ -22,35 +22,35 @@ class ChangeZaifApiKeyController : UIViewController {
     }
     
     @IBAction func pushSaveButton(_ sender: Any) {
+        if self.activeIndicator.isAnimating {
+            return
+        }
+        self.activeIndicator.startAnimating()
+        
         let apiKey = self.apiKeyLabel.text!
         let secretKey = self.secretKeyLabel.text!
         let zaifApi = ZaifApi(apiKey: apiKey, secretKey: secretKey)
         
-        var waiting = true
-        var success = false
         zaifApi.validateApi() { err in
-            if err != nil {
-                waiting = false
-                return
+            DispatchQueue.main.async {
+                if err != nil {
+                    self.activeIndicator.stopAnimating()
+                    return
+                }
+                guard let ppw = getAccount()?.ppw else {
+                    self.activeIndicator.stopAnimating()
+                    return
+                }
+                _ = self.zaifExchange.setApiKeys(apiKey: apiKey, secretKey: secretKey, nonceValue: zaifApi.api.nonceValue, cryptKey: ppw)
+                self.activeIndicator.stopAnimating()
+                self.performSegue(withIdentifier: "unwindToSettings", sender: self)
             }
-            guard let ppw = getAccount()?.ppw else {
-                waiting = false
-                return
-            }
-            _ = self.zaifExchange.setApiKeys(apiKey: apiKey, secretKey: secretKey, cryptKey: ppw)
-            success = true
-            waiting = false
-        }
-        while waiting {
-            usleep(20)
-        }
-        
-        if success {
-            self.performSegue(withIdentifier: "unwindToSettings", sender: self)
         }
     }
     
     @IBOutlet weak var apiKeyLabel: UITextField!
     @IBOutlet weak var secretKeyLabel: UITextField!
+    @IBOutlet weak var activeIndicator: UIActivityIndicatorView!
+    
     var zaifExchange: ZaifExchange!
 }

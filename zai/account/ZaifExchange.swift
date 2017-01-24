@@ -65,8 +65,8 @@ public class ZaifExchange: Exchange, ZaiApiDelegate {
         return true
     }
     
-    func setApiKeys(apiKey: String, secretKey: String, cryptKey: String) -> Bool {
-        let nonce = TimeNonce(initialValue: self.nonce.int64Value)
+    func setApiKeys(apiKey: String, secretKey: String, nonceValue: Int64, cryptKey: String) -> Bool {
+        let nonce = TimeNonce(initialValue: nonceValue)
         let api = ZaifApi(apiKey: apiKey, secretKey: secretKey, nonce: nonce)
         api.delegate = self
         self.serviceApi = api
