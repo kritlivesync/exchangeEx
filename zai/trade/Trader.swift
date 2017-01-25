@@ -35,13 +35,16 @@ open class Trader: NSManagedObject, FundDelegate {
         
         let order = OrderRepository.getInstance().createBuyOrder(currencyPair: currencyPair, price: price, amount: amt, api: self.exchange.api)
         order.excute() { (err, orderId) in
-            if let e = err {
-                cb(e, nil)
-            } else {
-                let position = PositionRepository.getInstance().createLongPosition(trader: self)
-                cb(nil, position)
-                position.order = order
-                self.addPosition(position)
+            DispatchQueue.main.async {
+                if let e = err {
+                    OrderRepository.getInstance().delete(order)
+                    cb(e, nil)
+                } else {
+                    let position = PositionRepository.getInstance().createLongPosition(trader: self)
+                    cb(nil, position)
+                    position.order = order
+                    self.addPosition(position)
+                }
             }
         }
     }
@@ -127,7 +130,7 @@ open class Trader: NSManagedObject, FundDelegate {
         }
         if let id = position.order?.orderId {
             let activeOrder = ActiveOrder(id: id, action: "bid", currencyPair: .BTC_JPY, price: 0.0, amount: 0.0, timestamp: 0)
-            self.exchange.api.cancelOrder(order: activeOrder) { _ in }
+            self.exchange.api.cancelOrder(order: activeOrder, retryCount: 2) { _ in }
             position.order?.delegate = nil
         }
         position.delete()

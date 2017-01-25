@@ -64,7 +64,7 @@ public class Order: NSManagedObject, ActiveOrderDelegate {
             return
         }
         
-        self.api?.trade(order: self) { (err, orderId, price) in
+        self.api?.trade(order: self, retryCount: 2) { (err, orderId, price) in
             if let e = err {
                 self.status = NSNumber(value: OrderState.INVALID.rawValue)
                 cb(ZaiError(errorType: .INVALID_ORDER, message: e.message), nil)
@@ -86,7 +86,7 @@ public class Order: NSManagedObject, ActiveOrderDelegate {
             return
         }
         let activeOrder = ActiveOrder(id: self.orderId!, action: self.action, currencyPair: ApiCurrencyPair(rawValue: self.currencyPair)!, price: self.orderPrice!.doubleValue, amount: self.orderAmount.doubleValue, timestamp: self.orderTime!.int64Value)
-        self.api?.cancelOrder(order: activeOrder) { err in
+        self.api?.cancelOrder(order: activeOrder, retryCount: 2) { err in
             if let _ = err {
                 self.status = NSNumber(value: OrderState.INVALID.rawValue)
                 cb(ZaiError(errorType: .INVALID_ORDER))

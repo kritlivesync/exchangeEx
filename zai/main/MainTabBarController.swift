@@ -25,9 +25,6 @@ class MainTabBarController : UITabBarController {
         let chartType = getChartConfig().selectedCandleChart
         chartController.candleChart = CandleChart(currencyPair: currencyPair, interval: chartType, candleCount: 60, api: account.activeExchange.api)
         chartController.candleChart.delegate = chartController
-        
-        // start monitoring active orders to be promised
-        _ = getAccount()?.activeExchange.trader.activeOrders
     }
     
     public func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {

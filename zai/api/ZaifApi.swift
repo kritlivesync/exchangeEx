@@ -67,6 +67,7 @@ class ZaifApi : Api {
     func getPrice(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, Double) -> Void) {
         PublicApi.lastPrice(currencyPair.zaifCurrencyPair) { (err, res) in
             if err != nil {
+                print("getPrice: " + err!.message)
                 callback(ApiError(errorType: err!.errorType.apiError, message: err!.message), 0.0)
             } else {
                 guard let price = res?["last_price"].double else {
@@ -81,6 +82,7 @@ class ZaifApi : Api {
     func getTicker(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, Tick) -> Void) {
         PublicApi.ticker(currencyPair.zaifCurrencyPair) { (err, res) in
             if err != nil {
+                print("getTicker: " + err!.message)
                 callback(ApiError(errorType: err!.errorType.apiError, message: err!.message), Tick())
             } else {
                 guard let last = res?["last"].double else {
@@ -121,6 +123,7 @@ class ZaifApi : Api {
         PublicApi.depth(currencyPair.zaifCurrencyPair) { (err, res) in
             let board = Board()
             if err != nil {
+                print("getBoard: " + err!.message)
                 callback(ApiError(errorType: err!.errorType.apiError, message: err!.message), board)
             } else {
                 guard let asks = res?["asks"].array else {
@@ -149,58 +152,63 @@ class ZaifApi : Api {
     }
     
     func getBalance(currencies: [ApiCurrency], callback: @escaping (ApiError?, [String:Double]) -> Void) {
-        self.api.getInfo2() { (err, res) in
-            var balance = [String:Double]()
-            if err != nil {
-                callback(ApiError(errorType: err!.errorType.apiError, message: err!.message), balance)
-            } else {
-                guard let deposits = res?["return"]["deposit"].dictionary else {
-                    callback(ApiError(errorType: .UNKNOWN_ERROR), balance)
-                    return
-                }
-                for currency in currencies {
-                    if let deposit = deposits[currency.rawValue]?.double {
-                        balance[currency.rawValue] = deposit
+        ZaifApi.queue.async {
+            self.api.getInfo2() { (err, res) in
+                var balance = [String:Double]()
+                if err != nil {
+                    print("getBalance: " + err!.message)
+                    callback(ApiError(errorType: err!.errorType.apiError, message: err!.message), balance)
+                } else {
+                    guard let deposits = res?["return"]["deposit"].dictionary else {
+                        callback(ApiError(errorType: .UNKNOWN_ERROR), balance)
+                        return
                     }
+                    for currency in currencies {
+                        if let deposit = deposits[currency.rawValue]?.double {
+                            balance[currency.rawValue] = deposit
+                        }
+                    }
+                    callback(nil, balance)
                 }
-                callback(nil, balance)
+                self.delegate?.privateApiCalled(apiName: "getBalance")
             }
-            self.delegate?.privateApiCalled(apiName: "getBalance")
         }
     }
     
     func getActiveOrders(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, [String:ActiveOrder]) -> Void) {
-        
-        self.api.activeOrders(currencyPair.zaifCurrencyPair) { (err, res) in
-            var activeOrders = [String:ActiveOrder]()
-            if err != nil {
-                callback(ApiError(errorType: err!.errorType.apiError, message: err!.message), activeOrders)
-                return
+        ZaifApi.queue.async {
+            self.api.activeOrders(currencyPair.zaifCurrencyPair) { (err, res) in
+                var activeOrders = [String:ActiveOrder]()
+                if err != nil {
+                    print("getActiveOrders: " + err!.message)
+                    callback(ApiError(errorType: err!.errorType.apiError, message: err!.message), activeOrders)
+                    return
+                }
+                
+                guard let result = res?["success"].int else {
+                    callback(ApiError(errorType: .UNKNOWN_ERROR), activeOrders)
+                    return
+                }
+                if result != 1 {
+                    callback(ApiError(errorType: .UNKNOWN_ERROR), activeOrders)
+                    return
+                }
+                guard let orders = res?["return"].dictionary else {
+                    callback(ApiError(errorType: .UNKNOWN_ERROR), activeOrders)
+                    return
+                }
+                
+                for (id, order) in orders {
+                    let action = order["action"].stringValue
+                    let price = order["price"].doubleValue
+                    let amount = order["amount"].doubleValue
+                    let timestamp = order["timestamp"].int64Value
+                    let activeOrder = ActiveOrder(id: id, action: action, currencyPair: currencyPair, price: price, amount: amount, timestamp: timestamp)
+                    activeOrders[id] = activeOrder
+                }
+                callback(nil, activeOrders)
+                self.delegate?.privateApiCalled(apiName: "activeOrders")
             }
-            
-            guard let result = res?["success"].int else {
-                callback(ApiError(errorType: .UNKNOWN_ERROR), activeOrders)
-                return
-            }
-            if result != 1 {
-                callback(ApiError(errorType: .UNKNOWN_ERROR), activeOrders)
-                return
-            }
-            guard let orders = res?["return"].dictionary else {
-                callback(ApiError(errorType: .UNKNOWN_ERROR), activeOrders)
-                return
-            }
-            
-            for (id, order) in orders {
-                let action = order["action"].stringValue
-                let price = order["price"].doubleValue
-                let amount = order["amount"].doubleValue
-                let timestamp = order["timestamp"].int64Value
-                let activeOrder = ActiveOrder(id: id, action: action, currencyPair: currencyPair, price: price, amount: amount, timestamp: timestamp)
-                activeOrders[id] = activeOrder
-            }
-            callback(nil, activeOrders)
-            self.delegate?.privateApiCalled(apiName: "activeOrders")
         }
     }
     
@@ -208,6 +216,7 @@ class ZaifApi : Api {
         PublicApi.trades(currencyPair.zaifCurrencyPair) { (err, res) in
             var trades = [Trade]()
             if err != nil {
+                print("getTrades: " + err!.message)
                 callback(ApiError(errorType: err!.errorType.apiError, message: err!.message), trades)
             } else {
                 guard let tradeArray = res?.array else {
@@ -232,70 +241,90 @@ class ZaifApi : Api {
         }
     }
     
-    func trade(order: Order, callback: @escaping (ApiError?, String, Double) -> Void) {
+    func trade(order: Order, retryCount: Int, callback: @escaping (ApiError?, String, Double) -> Void) {
         guard let zaifOrder = order.zaifOrder() else {
             callback(ApiError(errorType: .UNKNOWN_ERROR), "", 0.0)
             return
         }
         
-        self.api.trade(zaifOrder, validate: false) { (err, res) in
-            if err != nil {
-                callback(ApiError(errorType: err!.errorType.apiError, message: err!.message), "", 0.0)
-                return
+        ZaifApi.queue.async {
+            self.api.trade(zaifOrder, validate: false) { (err, res) in
+                if let e = err {
+                    if 0 < retryCount {
+                        print("trade: retry")
+                        self.trade(order: order, retryCount: retryCount - 1, callback: callback)
+                        return
+                    } else {
+                        print("trade: " + e.message)
+                        callback(ApiError(errorType: e.errorType.apiError, message: e.message), "", 0.0)
+                        return
+                    }
+                }
+                guard let result = res?["success"].int else {
+                    callback(ApiError(errorType: .UNKNOWN_ERROR), "", 0.0)
+                    return
+                }
+                if result != 1 {
+                    callback(ApiError(errorType: .UNKNOWN_ERROR), "", 0.0)
+                    return
+                }
+                guard let ordered = res?["return"].dictionary else {
+                    callback(ApiError(errorType: .UNKNOWN_ERROR), "", 0.0)
+                    return
+                }
+                let orderId = ordered["order_id"]!.stringValue
+                let orderedPrice = ordered["order_price"]!.doubleValue
+                
+                callback(nil, orderId, orderedPrice)
+                self.delegate?.privateApiCalled(apiName: "trade")
             }
-            guard let result = res?["success"].int else {
-                callback(ApiError(errorType: .UNKNOWN_ERROR), "", 0.0)
-                return
-            }
-            if result != 1 {
-                callback(ApiError(errorType: .UNKNOWN_ERROR), "", 0.0)
-                return
-            }
-            guard let ordered = res?["return"].dictionary else {
-                callback(ApiError(errorType: .UNKNOWN_ERROR), "", 0.0)
-                return
-            }
-            let orderId = ordered["order_id"]!.stringValue
-            let orderedPrice = ordered["order_price"]!.doubleValue
-            
-            callback(nil, orderId, orderedPrice)
-            self.delegate?.privateApiCalled(apiName: "trade")
         }
     }
     
-    func cancelOrder(order: ActiveOrder, callback: @escaping (_ err: ApiError?) -> Void) {
-        self.api.cancelOrder(Int(order.id)!) { (err, res) in
-            if err != nil {
-                callback(ApiError(errorType: err!.errorType.apiError, message: err!.message))
-                return
+    func cancelOrder(order: ActiveOrder, retryCount: Int, callback: @escaping (_ err: ApiError?) -> Void) {
+        ZaifApi.queue.async {
+            self.api.cancelOrder(Int(order.id)!) { (err, res) in
+                if let e = err {
+                    if 0 < retryCount {
+                        print("cancelOrder: retry")
+                        self.cancelOrder(order: order, retryCount: retryCount - 1, callback: callback)
+                        return
+                    } else {
+                        print("cancelOrder: " + e.message)
+                        callback(ApiError(errorType: e.errorType.apiError, message: e.message))
+                        return
+                    }
+                }
+                guard let result = res?["success"].int else {
+                    callback(ApiError(errorType: .UNKNOWN_ERROR))
+                    return
+                }
+                if result != 1 {
+                    callback(ApiError(errorType: .UNKNOWN_ERROR))
+                    return
+                }
+                callback(nil)
+                self.delegate?.privateApiCalled(apiName: "cancelOrder")
             }
-            guard let result = res?["success"].int else {
-                callback(ApiError(errorType: .UNKNOWN_ERROR))
-                return
-            }
-            if result != 1 {
-                callback(ApiError(errorType: .UNKNOWN_ERROR))
-                return
-            }
-            callback(nil)
-            self.delegate?.privateApiCalled(apiName: "cancelOrder")
         }
     }
     
     func validateApi(callback: @escaping (_ err: ApiError?) -> Void) {
-        self.api.searchValidNonce() { err in
-            if err != nil {
-                self.validatePermission() { err in
-                    if err != nil {
-                        callback(ApiError(errorType: .NO_PERMISSION, message: err!.message))
-                        return
-                    } else {
-                        callback(ApiError(errorType: .NONCE_NOT_INCREMENTED, message: err!.message))
-                        return
+        ZaifApi.queue.async {
+            self.api.searchValidNonce() { err in
+                if err != nil {
+                    self.validatePermission() { err in
+                        if err != nil {
+                            callback(ApiError(errorType: .NO_PERMISSION, message: err!.message))
+                            return
+                        } else {
+                            callback(ApiError(errorType: .NONCE_NOT_INCREMENTED, message: err!.message))
+                            return
+                        }
                     }
+                } else {
+                    self.validatePermission(callback: callback)
                 }
-            } else {
-                self.validatePermission(callback: callback)
             }
         }
     }
@@ -313,37 +342,40 @@ class ZaifApi : Api {
     }
     
     fileprivate func validatePermission(callback: @escaping (_ err: ApiError?) -> Void) {
-        self.api.getInfo2() { (err, res) in
-            if err != nil {
-                callback(ApiError(errorType: err!.errorType.apiError, message: err!.message))
-                return
+        ZaifApi.queue.async {
+            self.api.getInfo2() { (err, res) in
+                if err != nil {
+                    callback(ApiError(errorType: err!.errorType.apiError, message: err!.message))
+                    return
+                }
+                guard let result = res?["success"].int else {
+                    callback(ApiError(errorType: .NO_PERMISSION))
+                    return
+                }
+                if result != 1 {
+                    callback(ApiError(errorType: .NO_PERMISSION))
+                    return
+                }
+                guard let rights = res?["return"]["rights"] else {
+                    callback(ApiError(errorType: .NO_PERMISSION))
+                    return
+                }
+                if rights["info"].intValue != 1 {
+                    callback(ApiError(errorType: .NO_PERMISSION))
+                    return
+                }
+                if rights["trade"].intValue != 1 {
+                    callback(ApiError(errorType: .NO_PERMISSION))
+                    return
+                }
+                callback(nil)
             }
-            guard let result = res?["success"].int else {
-                callback(ApiError(errorType: .NO_PERMISSION))
-                return
-            }
-            if result != 1 {
-                callback(ApiError(errorType: .NO_PERMISSION))
-                return
-            }
-            guard let rights = res?["return"]["rights"] else {
-                callback(ApiError(errorType: .NO_PERMISSION))
-                return
-            }
-            if rights["info"].intValue != 1 {
-                callback(ApiError(errorType: .NO_PERMISSION))
-                return
-            }
-            if rights["trade"].intValue != 1 {
-                callback(ApiError(errorType: .NO_PERMISSION))
-                return
-            }
-            callback(nil)
         }
     }
     
     var rawApi: Any { get { return self.api } }
     
+    static let queue = DispatchQueue(label: "zaifapiqueue")
     let api: PrivateApi
     var delegate: ZaiApiDelegate?
 }

@@ -78,6 +78,20 @@ class TraderRepository {
                         trader.jpyFund = jpy
                     }
                 }
+                
+                // start monitoring active orders to be promised or delete invalid orders
+                let positions = getAccount()!.activeExchange.trader.activePositions
+                for position in positions {
+                    guard let order = position.order else {
+                        continue
+                    }
+                    if order.orderId == nil || !order.isActive {
+                        OrderRepository.getInstance().delete(order)
+                        position.order = nil
+                        position.open()
+                    }
+                }
+                
                 return trader
             }
         } catch {

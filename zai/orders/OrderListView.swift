@@ -71,7 +71,7 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
         self.trader.cancelOrder(id: order.id) { err in
             if let e = err {
                 if e.errorType == .INVALID_ORDER {
-                    self.trader.exchange.api.cancelOrder(order: order) { _ in
+                    self.trader.exchange.api.cancelOrder(order: order, retryCount: 2) { _ in
                         cell.activeIndicator.stopAnimating()
                     }
                 } else {

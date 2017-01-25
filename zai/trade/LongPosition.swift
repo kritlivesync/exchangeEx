@@ -171,8 +171,16 @@ class LongPosition: Position {
         let order = OrderRepository.getInstance().createSellOrder(currencyPair: self.currencyPair, price: price, amount: amt!, api: self.trader!.exchange.api)
         
         order.excute() { (err, _) in
-            cb(err)
-            self.order = order
+            DispatchQueue.main.async {
+                if let e = err {
+                    OrderRepository.getInstance().delete(order)
+                    self.open()
+                    cb(e)
+                } else {
+                    cb(nil)
+                    self.order = order
+                }
+            }
         }
     }
     
