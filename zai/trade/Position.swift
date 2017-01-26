@@ -27,12 +27,14 @@ internal protocol PositionProtocol {
     var isOpen: Bool { get }
     var isClosed: Bool { get }
     var isUnwinding: Bool { get }
+    var isOpening: Bool { get }
+    var isDelete: Bool { get }
 }
 
 protocol PositionDelegate {
-    func opendPosition(position: Position)
-    func unwindPosition(position: Position)
-    func closedPosition(position: Position)
+    func opendPosition(position: Position, promisedOrder: PromisedOrder)
+    func unwindPosition(position: Position, promisedOrder: PromisedOrder)
+    func closedPosition(position: Position, promisedOrder: PromisedOrder?)
 }
 
 enum PositionState: Int {
@@ -206,11 +208,19 @@ public class Position: NSManagedObject, PositionProtocol, PromisedOrderDelegate 
         return PositionState(rawValue: self.status.intValue)!.isUnwinding
     }
     
+    var isOpening: Bool {
+        return PositionState(rawValue: self.status.intValue)!.isOpening
+    }
+    
+    var isDelete: Bool {
+        return PositionState(rawValue: self.status.intValue)!.isDelete
+    }
+    
     // OrderDelegate
-    func orderPromised(order: Order, price: Double, amount: Double) {
+    func orderPromised(order: Order, promisedOrder: PromisedOrder) {
         return
     }
-    func orderPartiallyPromised(order: Order, price: Double, amount: Double) {
+    func orderPartiallyPromised(order: Order, promisedOrder: PromisedOrder) {
         return
     }
     func orderCancelled(order: Order) {

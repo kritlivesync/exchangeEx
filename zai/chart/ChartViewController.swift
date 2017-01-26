@@ -12,7 +12,7 @@ import UIKit
 import Charts
 
 
-class ChartViewController : UIViewController, CandleChartDelegate, PositionDelegate, FundDelegate, BitCoinDelegate, BestQuoteViewDelegate {
+class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate, BitCoinDelegate, BestQuoteViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -118,17 +118,6 @@ class ChartViewController : UIViewController, CandleChartDelegate, PositionDeleg
         chartView.data = CandleChartData(dataSets: dataSets)
     }
     
-    // PositionDelegate
-    func opendPosition(position: Position) {
-        return
-    }
-    func unwindPosition(position: Position) {
-        return
-    }
-    func closedPosition(position: Position) {
-        return
-    }
-    
     // FundDelegate
     func recievedJpyFund(jpy: Int) {
         DispatchQueue.main.async {
@@ -161,8 +150,6 @@ class ChartViewController : UIViewController, CandleChartDelegate, PositionDeleg
             callback()
             if let e = err {
                 print(e.message)
-            } else {
-                position?.delegate = self
             }
         }
     }
@@ -184,9 +171,6 @@ class ChartViewController : UIViewController, CandleChartDelegate, PositionDeleg
             }
             trader.unwindMaxProfitPosition(price: price, amount: amount, marketPrice: bestBid.price) { (err, position) in
                 callback()
-                if err != nil {
-                    position?.delegate = self
-                }
             }
         case .mostLoss:
             guard let bestBid = self.bestQuoteView.getBestBid() else {
@@ -195,23 +179,14 @@ class ChartViewController : UIViewController, CandleChartDelegate, PositionDeleg
             }
             trader.unwindMaxLossPosition(price: price, amount: amount, marketPrice: bestBid.price) { (err, position) in
                 callback()
-                if err != nil {
-                    position?.delegate = self
-                }
             }
         case .mostRecent:
             trader.unwindMostRecentPosition(price: price, amount: amount) { (err, position) in
                 callback()
-                if err != nil {
-                    position?.delegate = self
-                }
             }
         case .mostOld:
             trader.unwindMostOldPosition(price: price, amount: amount) { (err, position) in
                 callback()
-                if err != nil {
-                    position?.delegate = self
-                }
             }
         }
     }

@@ -11,7 +11,7 @@ import Foundation
 import AMScrollingNavbar
 import ZaifSwift
 
-class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardViewDelegate, PositionDelegate {
+class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,44 +79,11 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
         }
     }
     
-    // PositionDelegate
-    func opendPosition(position: Position) {
-        /*
-        DispatchQueue.main.async {
-            self.messageLabel.text = "Promised. Price: " + formatValue(Int(position.price)) + " Amount: " + formatValue(position.balance)
-            self.messageLabel.textColor = UIColor(red: 0.7, green: 0.4, blue: 0.4, alpha: 1.0)
-        }*/
-    }
-    
-    func unwindPosition(position: Position) {
-        /*
-        DispatchQueue.main.async {
-            guard let log = position.lastTrade else {
-                return
-            }
-            self.messageLabel.text = "Promised. Price: " + formatValue(Int(log.price)) + " Amount: " + formatValue(log.amount.doubleValue)
-            self.messageLabel.textColor = UIColor(red: 0.4, green: 0.7, blue: 0.4, alpha: 1.0)
-        }*/
-    }
-    
-    func closedPosition(position: Position) {
-        /*
-        DispatchQueue.main.async {
-            guard let log = position.lastTrade else {
-                return
-            }
-            self.messageLabel.text = "Promised. Price: " + formatValue(Int(log.price)) + " Amount: " + formatValue(log.amount.doubleValue)
-            self.messageLabel.textColor = UIColor(red: 0.4, green: 0.7, blue: 0.4, alpha: 1.0)
-        }*/
-    }
-    
     func orderBuy(quote: Quote, bestBid: Quote, bestAsk: Quote, callback: @escaping () -> Void) {
         self.trader!.createLongPosition(.BTC_JPY, price: quote.price, amount: quote.amount) { (err, position) in
             callback()
             if let e = err {
                 print(e.message)
-            } else {
-                position?.delegate = self
             }
         }
     }
@@ -126,30 +93,18 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
         case .mostBenefit:
             self.trader.unwindMaxProfitPosition(price: quote.price, amount: quote.amount, marketPrice: bestBid.price) { (err, position) in
                 callback()
-                if err != nil {
-                    position?.delegate = self
-                }
             }
         case .mostLoss:
             self.trader.unwindMaxLossPosition(price: quote.price, amount: quote.amount, marketPrice: bestBid.price) { (err, position) in
                 callback()
-                if err != nil {
-                    position?.delegate = self
-                }
             }
         case .mostRecent:
             self.trader.unwindMostRecentPosition(price: quote.price, amount: quote.amount) { (err, position) in
                 callback()
-                if err != nil {
-                    position?.delegate = self
-                }
             }
         case .mostOld:
             self.trader.unwindMostOldPosition(price: quote.price, amount: quote.amount) { (err, position) in
                 callback()
-                if err != nil {
-                    position?.delegate = self
-                }
             }
         }
     }

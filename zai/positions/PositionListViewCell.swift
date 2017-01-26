@@ -93,12 +93,13 @@ class PositionListViewCell : UITableViewCell {
         } else {
             self.backgroundColor = UIColor.white
         }
-        
+        /*
         if p.isUnwinding {
             self.activeIndicator.startAnimating()
         } else {
             self.activeIndicator.stopAnimating()
         }
+        */
     }
     
     func updateProfit(btcJpyPrice: Int) {

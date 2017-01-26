@@ -107,10 +107,10 @@ class ShortPosition: Position {
     }
     
     // OrderDelegate
-    override func orderPromised(order: Order, price: Double, amount: Double) {
+    override func orderPromised(order: Order, promisedOrder: PromisedOrder) {
         return
     }
-    override func orderPartiallyPromised(order: Order, price: Double, amount: Double) {
+    override func orderPartiallyPromised(order: Order, promisedOrder: PromisedOrder) {
         return
     }
     override func orderCancelled(order: Order) {

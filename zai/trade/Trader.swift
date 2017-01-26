@@ -61,7 +61,7 @@ open class Trader: NSManagedObject, FundDelegate {
         if amt < self.exchange.api.orderUnit(currencyPair: position.currencyPair) {
             cb(nil, position)
             position.close()
-            position.delegate?.closedPosition(position: position)
+            position.delegate?.closedPosition(position: position, promisedOrder: nil)
         } else {
             position.unwind(amt, price: price) { err in
                 cb(err, position)
@@ -192,11 +192,7 @@ open class Trader: NSManagedObject, FundDelegate {
     var allPositions: [Position] {
         var positions = [Position]()
         for position in self.positions {
-            let p = position as! Position
-            let status = PositionState(rawValue: p.status.intValue)!
-            if status.isDelete == false && status.isOpening == false {
-                positions.append(p)
-            }
+            positions.append(position as! Position)
         }
         return positions
     }
@@ -319,6 +315,37 @@ open class Trader: NSManagedObject, FundDelegate {
             return 0.0
         } else {
             return cost / totalAmount
+        }
+    }
+    
+    func fixPositionsWithInvalidOrder() {
+        let positions = self.activePositions
+        let orderUnit = self.exchange.api.orderUnit(currencyPair: self.exchange.apiCurrencyPair)
+        for position in positions {
+            guard let order = position.order else {
+                switch position.status.intValue {
+                case PositionState.OPENING.rawValue, PositionState.UNWINDING.rawValue:
+                    // ordering status, but has no valid Order
+                    if position.balance >= orderUnit {
+                        position.open()
+                    } else {
+                        position.delete()
+                    }
+                default: break
+                }
+                continue
+            }
+
+            if order.orderId == nil || !order.isActive {
+                // has invalid order
+                OrderRepository.getInstance().delete(order)
+                position.order = nil
+                if position.balance >= orderUnit {
+                    position.open()
+                } else {
+                    position.delete()
+                }
+            }
         }
     }
     

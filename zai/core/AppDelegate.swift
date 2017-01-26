@@ -17,7 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+    
+        self.notification = PromiseNotification()
+        
         return true
     }
 
@@ -51,6 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let boardConfig = BoardConfig()
     let positionsConfig = PositionsConfig()
     let ordersConfig = OrdersConfig()
+    var notification: PromiseNotification!
     
     var account: Account?
 }
@@ -89,4 +92,5 @@ func getOrdersConfig() -> OrdersConfig {
     let app = UIApplication.shared.delegate as! AppDelegate
     return app.ordersConfig
 }
+
 

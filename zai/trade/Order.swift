@@ -37,14 +37,17 @@ internal enum OrderState : Int {
 }
 
 struct PromisedOrder {
+    let currencyPair: String
+    let action: String
+    let price: Double
     let promisedAmount: Double
     let newlyPromisedAmount: Double
     let timestamp: Int64
 }
 
 protocol PromisedOrderDelegate {
-    func orderPromised(order: Order, price: Double, amount: Double)
-    func orderPartiallyPromised(order: Order, price: Double, amount: Double)
+    func orderPromised(order: Order, promisedOrder: PromisedOrder)
+    func orderPartiallyPromised(order: Order, promisedOrder: PromisedOrder)
     func orderCancelled(order: Order)
 }
 
@@ -103,13 +106,12 @@ public class Order: NSManagedObject, ActiveOrderDelegate {
             return
         }
         if let activeOrder = activeOrders[self.orderId!] {
-            let promisedOrder = self.extractPromisedOrder(order: activeOrder)
-            if promisedOrder == nil {
+            guard let promisedOrder = self.extractPromisedOrder(order: activeOrder) else {
                 return
             }
-            self.promisedAmount = NSNumber(value: promisedOrder!.promisedAmount)
-            self.promisedTime = NSNumber(value: promisedOrder!.timestamp)
-            self.delegate?.orderPartiallyPromised(order: self, price: self.orderPrice!.doubleValue, amount: promisedOrder!.newlyPromisedAmount)
+            self.promisedAmount = NSNumber(value: promisedOrder.promisedAmount)
+            self.promisedTime = NSNumber(value: promisedOrder.timestamp)
+            self.delegate?.orderPartiallyPromised(order: self, promisedOrder: promisedOrder)
         } else {
             if self.isActive == false { // safety
                 return
@@ -125,7 +127,8 @@ public class Order: NSManagedObject, ActiveOrderDelegate {
                 newlyPromisedAmount = self.orderAmount.doubleValue - amount.doubleValue
             }
             self.promisedAmount = NSNumber(value: self.orderAmount.doubleValue)
-            self.delegate?.orderPromised(order: self, price: self.promisedPrice!.doubleValue, amount: newlyPromisedAmount)
+            let promisedOrder = PromisedOrder(currencyPair: self.currencyPair, action: self.action, price: self.promisedPrice!.doubleValue, promisedAmount: self.promisedAmount!.doubleValue, newlyPromisedAmount: newlyPromisedAmount, timestamp: Int64(Date().timeIntervalSince1970))
+            self.delegate?.orderPromised(order: self, promisedOrder: promisedOrder)
         }
     }
     
@@ -142,7 +145,7 @@ public class Order: NSManagedObject, ActiveOrderDelegate {
         if newlyPromisedAmount < orderUnit {
             return nil
         }
-        return PromisedOrder(promisedAmount: promisedAmount, newlyPromisedAmount: newlyPromisedAmount, timestamp: order.timestamp)
+        return PromisedOrder(currencyPair: order.currencyPair.rawValue, action: order.action, price: order.price, promisedAmount: promisedAmount, newlyPromisedAmount: newlyPromisedAmount, timestamp: order.timestamp)
     }
     
     internal var isPromised: Bool {

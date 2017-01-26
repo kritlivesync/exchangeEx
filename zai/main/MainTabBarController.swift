@@ -25,6 +25,12 @@ class MainTabBarController : UITabBarController {
         let chartType = getChartConfig().selectedCandleChart
         chartController.candleChart = CandleChart(currencyPair: currencyPair, interval: chartType, candleCount: 60, api: account.activeExchange.api)
         chartController.candleChart.delegate = chartController
+        
+        let trader = account.activeExchange.trader
+        trader.fixPositionsWithInvalidOrder()
+        for position in trader.allPositions {
+            position.delegate = (UIApplication.shared.delegate as! AppDelegate).notification
+        }
     }
     
     public func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {

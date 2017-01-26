@@ -32,6 +32,8 @@ class PositionRepository {
         newPosition.id = (id == nil) ? UUID().uuidString : id!
         newPosition.trader = trader
         newPosition.status = NSNumber(value: PositionState.OPENING.rawValue)
+        
+        newPosition.delegate = (UIApplication.shared.delegate as! AppDelegate).notification
 
         db.saveContext()
         return newPosition
@@ -51,6 +53,8 @@ class PositionRepository {
         
         newPosition.id = UUID().uuidString
         newPosition.trader = trader
+        
+        newPosition.delegate = (UIApplication.shared.delegate as! AppDelegate).notification
         
         let log = TradeLogRepository.getInstance().create(.OPEN_SHORT_POSITION, traderName: trader.name, account: trader.exchange.account, order: order, positionId: newPosition.id)
         newPosition.addLog(log)

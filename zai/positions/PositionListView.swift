@@ -21,7 +21,7 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, B
     
     init(view: UITableView, trader: Trader) {
         self.trader = trader
-        self.positions = trader.allPositions
+        self.positions = [Position]()
         self.view = view
         self.view.tableFooterView = UIView()
         self.view.contentInset = UIEdgeInsetsMake(-1.0, 0.0, 0.0, 0.0);
@@ -30,6 +30,7 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, B
         self.bitcoin = BitCoin(api: api)
         
         super.init()
+        self.updatePositionList()
         self.view.delegate = self
         self.view.dataSource = self
         self.startWatch()
@@ -99,7 +100,7 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, B
     // PositionListViewCellDelegate
     func pushedDeleteButton(cell: PositionListViewCell, position: Position) {
         if self.trader.deletePosition(id: position.id) {
-            self.positions = self.trader.allPositions
+            self.updatePositionList()
             if let index = self.view.indexPath(for: cell) {
                 self.view.deleteRows(at: [index], with: UITableViewRowAnimation.fade)
             }
@@ -117,6 +118,8 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, B
         if cell.activeIndicator.isAnimating {
             return
         }
+        cell.activeIndicator.startAnimating()
+        
         if let index = self.view.indexPath(for: cell) {
             self.view.reloadRows(at: [index], with: UITableViewRowAnimation.right)
         }
@@ -128,19 +131,29 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, B
                     position.open()
                 }
                 cell.setPosition(position, btcJpyPrice: self.btcPrice)
+                cell.activeIndicator.stopAnimating()
             }
         }
     }
     
     func addPosition(position: Position) {
-        self.positions = self.trader.allPositions
+        self.updatePositionList()
         let row = self.view.numberOfRows(inSection: 0)
         let index = IndexPath(row: row, section: 0)
         self.view.insertRows(at: [index], with: UITableViewRowAnimation.bottom)
     }
     
+    func updatePositionList() {
+        self.positions.removeAll()
+        for pos in self.trader.allPositions {
+            if !pos.isDelete && !pos.isOpening {
+                self.positions.append(pos)
+            }
+        }
+    }
+    
     internal func reloadData() {
-        self.positions = trader.allPositions
+        self.updatePositionList()
         self.view.reloadData()
     }
     
