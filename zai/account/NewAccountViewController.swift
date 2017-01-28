@@ -55,24 +55,24 @@ class NewAccountViewController: UIViewController, UITextFieldDelegate {
         let userId = self.userIdText.text!
         if userId == "" {
             self.activeIndicator.stopAnimating()
-            self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: "ユーザーIDとパスワードは必須です。"))
+            self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: Resource.requiredUserIdAndPassword))
             return
         }
         let password = self.passwordText.text!
         if password == "" {
             self.activeIndicator.stopAnimating()
-            self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: "ユーザーIDとパスワードは必須です。"))
+            self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: Resource.requiredUserIdAndPassword))
             return
         }
         if let _ = AccountRepository.getInstance().findByUserId(userId) {
             self.activeIndicator.stopAnimating()
-            self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: "このユーザーIDは既に使われています。別のIDを入力してください。"))
+            self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: Resource.userIdAlreadyUsed))
             return
         }
         let passwordAgain = self.passwordAgainText.text!
         if password != passwordAgain {
             self.activeIndicator.stopAnimating()
-            self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: "パスワードが一致しません。再入力してください。"))
+            self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: Resource.passwordAgainNotMatch))
             return
         }
         
@@ -81,17 +81,19 @@ class NewAccountViewController: UIViewController, UITextFieldDelegate {
         let zaifApi = ZaifApi(apiKey: apiKey, secretKey: secretKey)
         zaifApi.validateApi() { err in
             DispatchQueue.main.async {
+                let resource = ZaifResource()
                 if err == nil {
                     let repository = AccountRepository.getInstance()
                     guard let account = repository.create(userId, password: password) else {
-                        self.showError(error: ZaiError(errorType: .UNKNOWN_ERROR, message: "アカウント生成に失敗しました。"))
+                        self.showError(error: ZaiError(errorType: .UNKNOWN_ERROR, message: Resource.accountCreationFailed))
                         return
                     }
-                    guard repository.createZaifExchange(account: account, apiKey: apiKey, secretKey: secretKey) else {
+                    guard let exchange = repository.createZaifExchange(account: account, apiKey: apiKey, secretKey: secretKey, nonce: zaifApi.api.nonceValue) else {
                         repository.delete(account)
-                        self.showError(error: ZaiError(errorType: .UNKNOWN_ERROR, message: "アカウント生成に失敗しました。"))
+                        self.showError(error: ZaiError(errorType: .UNKNOWN_ERROR, message: Resource.accountCreationFailed))
                         return
                     }
+                    
                     let config = getGlobalConfig()
                     config.previousUserId = userId
                     _ = config.save()
@@ -105,11 +107,11 @@ class NewAccountViewController: UIViewController, UITextFieldDelegate {
                     
                     switch err!.errorType {
                     case ApiErrorType.NO_PERMISSION:
-                        self.showError(error: ZaiError(errorType: .INVALID_API_KEYS_NO_PERMISSION, message: "Zaif APIキーに権限がありません。以下の権限を持ったAPIキーを使用してください。\ninfo\ntrade"))
+                        self.showError(error: ZaiError(errorType: .INVALID_API_KEYS_NO_PERMISSION, message: resource.apiKeyNoPermission))
                     case ApiErrorType.NONCE_NOT_INCREMENTED:
-                        self.showError(error: ZaiError(errorType: ZaiErrorType.NONCE_NOT_INCREMENTED, message: "Zaif APIキーのnonce値の設定に失敗しました。しばらく時間を置くか、別のAPIキーを使用してください。"))
+                        self.showError(error: ZaiError(errorType: ZaiErrorType.NONCE_NOT_INCREMENTED, message: resource.apiKeyNonceNotIncremented))
                     default:
-                        self.showError(error: ZaiError(errorType: .INVALID_API_KEYS, message: "不正なZaif APIキーです。"))
+                        self.showError(error: ZaiError(errorType: .INVALID_API_KEYS, message: resource.invalidApiKey))
                     }
                 }
             }

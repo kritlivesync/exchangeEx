@@ -10,6 +10,11 @@ import Foundation
 import UIKit
 
 
+protocol OrderListViewDelegate {
+    func error(error: ZaiError)
+}
+
+
 class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, ActiveOrderDelegate, OrderListViewCellDelegate {
     
     init(view: UITableView, trader: Trader) {
@@ -69,16 +74,11 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
         }
         cell.activeIndicator.startAnimating()
         self.trader.cancelOrder(id: order.id) { err in
-            if let e = err {
-                if e.errorType == .INVALID_ORDER {
-                    self.trader.exchange.api.cancelOrder(order: order, retryCount: 2) { _ in
-                        cell.activeIndicator.stopAnimating()
-                    }
-                } else {
-                    cell.activeIndicator.stopAnimating()
-                }
-            } else {
+            DispatchQueue.main.async {
                 cell.activeIndicator.stopAnimating()
+                if let e = err {
+                    self.delegate?.error(error: e)
+                }
             }
         }
     }
@@ -147,4 +147,5 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
     
     var trader: Trader! = nil
     var orderMonitor: ActiveOrderMonitor?
+    var delegate: OrderListViewDelegate?
 }

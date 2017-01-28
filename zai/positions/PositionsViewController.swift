@@ -108,6 +108,11 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
         self.present(editPositionController.controller, animated: true, completion: nil)
     }
     
+    func error(error: ZaiError) {
+        let errorView = createErrorModal(title: error.errorType.toString(), message: error.message)
+        self.present(errorView, animated: false, completion: nil)
+    }
+    
     @IBAction func pushSettingsButton(_ sender: Any) {
         let storyboard: UIStoryboard = self.storyboard!
         let settings = storyboard.instantiateViewController(withIdentifier: "settingsViewController") as! UINavigationController

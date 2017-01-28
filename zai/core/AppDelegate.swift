@@ -50,6 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var notification: PromiseNotification!
     let globalConfig = GlobalConfig()
     var account: Account?
+    var resource = Resource()
 }
 
 func getGlobalConfig() -> GlobalConfig {
@@ -60,6 +61,20 @@ func getGlobalConfig() -> GlobalConfig {
 func getAccount() -> Account? {
     let app = UIApplication.shared.delegate as! AppDelegate
     return app.account
+}
+
+func createResource(exchangeName: String) -> Resource {
+    switch exchangeName {
+    case "Zaif":
+        return ZaifResource()
+    default:
+        return Resource()
+    }
+}
+
+func getResource() -> Resource {
+    let app = UIApplication.shared.delegate as! AppDelegate
+    return app.resource
 }
 
 func getAppConfig() -> AppConfig {

@@ -27,6 +27,10 @@ fileprivate extension ZSErrorType {
         switch self {
         case ZSErrorType.INFO_API_NO_PERMISSION:
             return ApiErrorType.NO_PERMISSION
+        case ZSErrorType.TRADE_API_NO_PERMISSION:
+            return ApiErrorType.NO_PERMISSION
+        case ZSErrorType.CONNECTION_ERROR:
+            return ApiErrorType.CONNECTION_ERROR
         case ZSErrorType.NONCE_NOT_INCREMENTED:
             return ApiErrorType.NONCE_NOT_INCREMENTED
         default:

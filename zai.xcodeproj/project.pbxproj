@@ -90,6 +90,7 @@
 		B85E8E601D6F541800C029C8 /* TraderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E5F1D6F541800C029C8 /* TraderViewCell.swift */; };
 		B88CF6EE1E3C8258008A6189 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88CF6ED1E3C8258008A6189 /* Config.swift */; };
 		B88CF6F01E3C8542008A6189 /* ConfigRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88CF6EF1E3C8542008A6189 /* ConfigRepository.swift */; };
+		B88CF6F21E3CA0E9008A6189 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88CF6F11E3CA0E9008A6189 /* Resource.swift */; };
 		B89379411E26822C00F693A3 /* UserAccountSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89379401E26822C00F693A3 /* UserAccountSettingView.swift */; };
 		B89D5C851E29C66F004FF743 /* ZaifSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89D5C841E29C66F004FF743 /* ZaifSettingView.swift */; };
 		B8B8457D1D66041D00535638 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B8457B1D66041D00535638 /* Main.storyboard */; settings = {ASSET_TAGS = (4, ); }; };
@@ -233,6 +234,7 @@
 		B85E8E5F1D6F541800C029C8 /* TraderViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderViewCell.swift; path = main/TraderViewCell.swift; sourceTree = "<group>"; };
 		B88CF6ED1E3C8258008A6189 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Config.swift; path = core/Config.swift; sourceTree = "<group>"; };
 		B88CF6EF1E3C8542008A6189 /* ConfigRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigRepository.swift; path = config/ConfigRepository.swift; sourceTree = "<group>"; };
+		B88CF6F11E3CA0E9008A6189 /* Resource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Resource.swift; path = core/Resource.swift; sourceTree = "<group>"; };
 		B89379401E26822C00F693A3 /* UserAccountSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserAccountSettingView.swift; path = settings/UserAccountSettingView.swift; sourceTree = "<group>"; };
 		B89D5C841E29C66F004FF743 /* ZaifSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZaifSettingView.swift; path = settings/ZaifSettingView.swift; sourceTree = "<group>"; };
 		B8B845741D66041D00535638 /* zai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = zai.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -504,6 +506,7 @@
 				B843CFE91E12C5C300CC6656 /* Color.swift */,
 				B84114031E1A8B0E000EB0F8 /* Crypt.swift */,
 				B835D40F1E34EF5000F9C4EB /* Validation.swift */,
+				B88CF6F11E3CA0E9008A6189 /* Resource.swift */,
 			);
 			name = core;
 			sourceTree = "<group>";
@@ -901,6 +904,7 @@
 				B8DB8ED61E3C517F0051C7EC /* PositionsConfig.swift in Sources */,
 				B85E8E5E1D6F477900C029C8 /* TraderView.swift in Sources */,
 				B84113E01E141C6F000EB0F8 /* Trader.swift in Sources */,
+				B88CF6F21E3CA0E9008A6189 /* Resource.swift in Sources */,
 				B8F1B22A1DC5AFDF001A120E /* Utils.swift in Sources */,
 				B8E9E2D01E1B867F003B298F /* Exchange+CoreDataProperties.swift in Sources */,
 				B84113EF1E18071E000EB0F8 /* Login.swift in Sources */,

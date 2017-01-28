@@ -2,7 +2,7 @@
 //  Account+CoreDataProperties.swift
 //  
 //
-//  Created by 渡部郷太 on 1/28/17.
+//  Created by 渡部郷太 on 1/29/17.
 //
 //
 
@@ -22,13 +22,13 @@ extension Account {
     @NSManaged public var password: String
     @NSManaged public var salt: String
     @NSManaged public var userId: String
-    @NSManaged public var exchanges: NSSet
     @NSManaged public var appConfig: AppConfig
     @NSManaged public var assetsConfig: AssetsConfig
-    @NSManaged public var chartConfig: ChartConfig
     @NSManaged public var boardConfig: BoardConfig
-    @NSManaged public var positionsConfig: PositionsConfig
+    @NSManaged public var chartConfig: ChartConfig
+    @NSManaged public var exchanges: NSSet
     @NSManaged public var ordersConfig: OrdersConfig
+    @NSManaged public var positionsConfig: PositionsConfig
 
 }
 

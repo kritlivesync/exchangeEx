@@ -24,14 +24,17 @@ public class ZaifExchange: Exchange, ZaiApiDelegate {
     override func validateApiKey(_ cb: @escaping (ZaiError?) -> Void) {
         self.serviceApi?.validateApi() { err in
             if err != nil {
+                let resource = createResource(exchangeName: self.name)
                 _ = self.saveApiKey(cryptKey: self.account.ppw!) // save nonce
                 switch err!.errorType {
                 case ApiErrorType.NO_PERMISSION:
-                    cb(ZaiError(errorType: .INVALID_API_KEYS_NO_PERMISSION, message: "Zaif APIキーに権限がありません。以下の権限を持ったAPIキーを使用してください。\ninfo\ntrade"))
+                    cb(ZaiError(errorType: .INVALID_API_KEYS_NO_PERMISSION, message: resource.apiKeyNoPermission))
                 case ApiErrorType.NONCE_NOT_INCREMENTED:
-                    cb(ZaiError(errorType: ZaiErrorType.NONCE_NOT_INCREMENTED, message: "Zaif APIキーのnonce値の設定に失敗しました。しばらく時間を置くか、別のAPIキーを使用してください。"))
+                    cb(ZaiError(errorType: ZaiErrorType.NONCE_NOT_INCREMENTED, message: resource.apiKeyNonceNotIncremented))
+                case ApiErrorType.CONNECTION_ERROR:
+                    cb(ZaiError(errorType: ZaiErrorType.CONNECTION_ERROR, message: Resource.networkConnectionError))
                 default:
-                    cb(ZaiError(errorType: .INVALID_API_KEYS, message: err!.message))
+                    cb(ZaiError(errorType: .INVALID_API_KEYS, message: Resource.unknownError))
                 }
             } else {
                 cb(nil)

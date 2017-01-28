@@ -13,7 +13,7 @@ import ZaifSwift
 
 func login(userId: String, password: String, callback: @escaping (_ err: ZaiError?, _ account: Account?) -> Void) {
     guard let account = AccountRepository.getInstance().findByUserIdAndPassword(userId, password: password) else {
-        callback(ZaiError(errorType: .LOGIN_ERROR, message: "ユーザーIDまたはパスワードが違います。"), nil)
+        callback(ZaiError(errorType: .LOGIN_ERROR, message: Resource.invalidUserIdOrPassword), nil)
         return
     }
     
@@ -29,6 +29,7 @@ func loggout() {
     account.loggout()
     let app = UIApplication.shared.delegate as! AppDelegate
     app.account = nil
+    app.resource = createResource(exchangeName: "")
 }
 
 

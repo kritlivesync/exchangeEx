@@ -64,4 +64,16 @@ open class GlobalConfig : Config {
         }
     }
     
+    var language: Language {
+        get {
+            if let val = Config.configDict.value(forKey: "language") {
+                return Language(rawValue: val as! Int)!
+            }
+            return Language.japanese
+        }
+        set {
+            Config.configDict.setValue(newValue.rawValue, forKey: "language")
+        }
+    }
+    
 }

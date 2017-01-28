@@ -14,6 +14,7 @@ import ZaifSwift
 
 protocol PositionListViewDelegate {
     func editPosition(position: Position)
+    func error(error: ZaiError)
 }
 
 
@@ -128,8 +129,9 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, B
         amount = max(amount, self.trader.exchange.api.orderUnit(currencyPair: position.currencyPair))
         self.trader.exchange.api.getTicker(currencyPair: position.currencyPair) { (err, tick) in
             self.trader.unwindPosition(id: position.id, price: tick.bid, amount: amount) { (err, _) in
-                if err != nil {
+                if let e = err {
                     position.open()
+                    self.delegate?.error(error: e)
                 }
                 cell.setPosition(position, btcJpyPrice: self.btcPrice)
                 cell.activeIndicator.stopAnimating()

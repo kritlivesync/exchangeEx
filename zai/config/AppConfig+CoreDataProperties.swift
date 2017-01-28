@@ -2,7 +2,7 @@
 //  AppConfig+CoreDataProperties.swift
 //  
 //
-//  Created by 渡部郷太 on 1/28/17.
+//  Created by 渡部郷太 on 1/29/17.
 //
 //
 
@@ -19,6 +19,7 @@ extension AppConfig {
     @NSManaged public var buyAmountLimitBtc: NSNumber
     @NSManaged public var footerUpdateInterval: NSNumber
     @NSManaged public var unwindingRule: NSNumber
+    @NSManaged public var language: NSNumber
     @NSManaged public var account: Account
 
 }

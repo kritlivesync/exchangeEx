@@ -30,6 +30,7 @@ class ConfigRepository {
         appConfig.buyAmountLimitBtc = 1.0
         appConfig.footerUpdateInterval = UpdateInterval.tenSeconds.rawValue as NSNumber
         appConfig.unwindingRule = UnwindingRule.mostBenefit.rawValue as NSNumber
+        appConfig.languageType = getGlobalConfig().language
         account.appConfig = appConfig
         
         let assetsConfig = NSEntityDescription.insertNewObject(forEntityName: "AssetsConfig", into: db.managedObjectContext) as! AssetsConfig

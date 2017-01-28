@@ -92,6 +92,8 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
             callback()
             if let e = err {
                 print(e.message)
+                let errorView = createErrorModal(title: e.errorType.toString(), message: e.message)
+                self.present(errorView, animated: false, completion: nil)
             }
         }
     }
@@ -101,18 +103,34 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
         case .mostBenefit:
             self.trader.unwindMaxProfitPosition(price: quote.price, amount: quote.amount, marketPrice: bestBid.price) { (err, position) in
                 callback()
+                if let e = err {
+                    let errorView = createErrorModal(title: e.errorType.toString(), message: e.message)
+                    self.present(errorView, animated: false, completion: nil)
+                }
             }
         case .mostLoss:
             self.trader.unwindMaxLossPosition(price: quote.price, amount: quote.amount, marketPrice: bestBid.price) { (err, position) in
                 callback()
+                if let e = err {
+                    let errorView = createErrorModal(title: e.errorType.toString(), message: e.message)
+                    self.present(errorView, animated: false, completion: nil)
+                }
             }
         case .mostRecent:
             self.trader.unwindMostRecentPosition(price: quote.price, amount: quote.amount) { (err, position) in
                 callback()
+                if let e = err {
+                    let errorView = createErrorModal(title: e.errorType.toString(), message: e.message)
+                    self.present(errorView, animated: false, completion: nil)
+                }
             }
         case .mostOld:
             self.trader.unwindMostOldPosition(price: quote.price, amount: quote.amount) { (err, position) in
                 callback()
+                if let e = err {
+                    let errorView = createErrorModal(title: e.errorType.toString(), message: e.message)
+                    self.present(errorView, animated: false, completion: nil)
+                }
             }
         }
     }

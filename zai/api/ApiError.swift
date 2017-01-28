@@ -12,6 +12,7 @@ import Foundation
 public enum ApiErrorType : Error {
     case NO_PERMISSION
     case NONCE_NOT_INCREMENTED
+    case CONNECTION_ERROR
     case UNKNOWN_ERROR
 }
 

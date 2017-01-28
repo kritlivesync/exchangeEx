@@ -86,6 +86,11 @@ enum UnwindingRule : Int {
 }
 
 
+enum Language : Int {
+    case japanese
+    case english
+}
+
 
 public class AppConfig: NSManagedObject {
     
@@ -114,6 +119,16 @@ public class AppConfig: NSManagedObject {
         }
         set {
             self.unwindingRule = newValue.rawValue as NSNumber
+            Database.getDb().saveContext()
+        }
+    }
+    
+    var languageType: Language {
+        get {
+            return Language(rawValue: self.language.intValue)!
+        }
+        set {
+            self.language = newValue.rawValue as NSNumber
             Database.getDb().saveContext()
         }
     }

@@ -18,6 +18,7 @@
     <entity name="AppConfig" representedClassName=".AppConfig" syncable="YES">
         <attribute name="buyAmountLimitBtc" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="footerUpdateInterval" attributeType="Integer 32" defaultValueString="3" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="language" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="unwindingRule" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="appConfig" inverseEntity="Account" syncable="YES"/>
     </entity>
@@ -106,7 +107,7 @@
     </entity>
     <elements>
         <element name="Account" positionX="-36" positionY="90" width="128" height="240"/>
-        <element name="AppConfig" positionX="-36" positionY="144" width="128" height="105"/>
+        <element name="AppConfig" positionX="-36" positionY="144" width="128" height="120"/>
         <element name="AssetsConfig" positionX="-27" positionY="153" width="128" height="75"/>
         <element name="BoardConfig" positionX="0" positionY="180" width="128" height="75"/>
         <element name="BuyOrder" positionX="-27" positionY="117" width="128" height="45"/>

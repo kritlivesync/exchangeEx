@@ -100,14 +100,14 @@ class AccountRepository {
         }
     }
     
-    func createZaifExchange(account: Account, apiKey: String, secretKey: String) -> Bool {
+    func createZaifExchange(account: Account, apiKey: String, secretKey: String, nonce: Int64) -> ZaifExchange? {
         let db = Database.getDb()
         
         guard let encryptedApiKey = Crypt.encrypt(key: account.ppw!, src: apiKey) else {
-            return false
+            return nil
         }
         guard let encryptedSecret = Crypt.encrypt(key: account.ppw!, src: secretKey) else {
-            return false
+            return nil
         }
         
         let exchange = NSEntityDescription.insertNewObject(forEntityName: AccountRepository.zaifExchangeModelName, into: db.managedObjectContext) as! ZaifExchange
@@ -115,18 +115,19 @@ class AccountRepository {
         exchange.currencyPair = ApiCurrencyPair.BTC_JPY.rawValue
         exchange.apiKey = NSData(bytes: encryptedApiKey, length: encryptedApiKey.count)
         exchange.secretKey = NSData(bytes: encryptedSecret, length: encryptedSecret.count)
-        let api = ZaifApi(apiKey: apiKey, secretKey: secretKey)
+        exchange.nonce = NSNumber(value: nonce)
+        let api = ZaifApi(apiKey: apiKey, secretKey: secretKey, nonce: TimeNonce(initialValue: nonce))
         api.delegate = exchange
         exchange.serviceApi = api
         guard let trader = TraderRepository.getInstance().create("trader", exchange: exchange) else {
-            return false
+            return nil
         }
         exchange.trader = trader
         account.addExchange(exchange: exchange)
         
         db.saveContext()
         
-        return true
+        return exchange
     }
     
     lazy var accountDescription: NSEntityDescription = {

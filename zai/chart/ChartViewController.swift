@@ -158,9 +158,13 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
         }
         
         trader.createLongPosition(.BTC_JPY, price: price, amount: amount) { (err, position) in
-            callback()
-            if let e = err {
-                print(e.message)
+            DispatchQueue.main.async {
+                callback()
+                if let e = err {
+                    print(e.message)
+                    let errorView = createErrorModal(title: e.errorType.toString(), message: e.message)
+                    self.present(errorView, animated: false, completion: nil)
+                }
             }
         }
     }
@@ -182,6 +186,10 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
             }
             trader.unwindMaxProfitPosition(price: price, amount: amount, marketPrice: bestBid.price) { (err, position) in
                 callback()
+                if let e = err {
+                    let errorView = createErrorModal(title: e.errorType.toString(), message: e.message)
+                    self.present(errorView, animated: false, completion: nil)
+                }
             }
         case .mostLoss:
             guard let bestBid = self.bestQuoteView.getBestBid() else {
@@ -190,14 +198,26 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
             }
             trader.unwindMaxLossPosition(price: price, amount: amount, marketPrice: bestBid.price) { (err, position) in
                 callback()
+                if let e = err {
+                    let errorView = createErrorModal(title: e.errorType.toString(), message: e.message)
+                    self.present(errorView, animated: false, completion: nil)
+                }
             }
         case .mostRecent:
             trader.unwindMostRecentPosition(price: price, amount: amount) { (err, position) in
                 callback()
+                if let e = err {
+                    let errorView = createErrorModal(title: e.errorType.toString(), message: e.message)
+                    self.present(errorView, animated: false, completion: nil)
+                }
             }
         case .mostOld:
             trader.unwindMostOldPosition(price: price, amount: amount) { (err, position) in
                 callback()
+                if let e = err {
+                    let errorView = createErrorModal(title: e.errorType.toString(), message: e.message)
+                    self.present(errorView, animated: false, completion: nil)
+                }
             }
         }
     }

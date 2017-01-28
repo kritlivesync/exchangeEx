@@ -46,15 +46,16 @@ class LoginViewController: UIViewController, UINavigationBarDelegate, UITextFiel
         
         login(userId: userId, password: password) { (err, account) in
             DispatchQueue.main.async {
+                app.account = account
                 if let e = err {
                     self.activeIndicator.stopAnimating()
-                    let errorView = createErrorModal(title: e.errorType.toString(), message: e.message)
+                    let errorView = createErrorModal(title: e.errorType.toString(), message: e.message) { action in
+                        if e.errorType == .INVALID_API_KEYS_NO_PERMISSION || e.errorType == .NONCE_NOT_INCREMENTED {
+                            self.performSegue(withIdentifier: self.mainViewSegue, sender: nil)
+                        }
+                    }
                     self.present(errorView, animated: false, completion: nil)
                 } else {
-                    app.account = account
-                    let config = getGlobalConfig()
-                    config.previousUserId = userId
-                    _ = config.save()
                     self.activeIndicator.stopAnimating()
                     self.performSegue(withIdentifier: self.mainViewSegue, sender: nil)
                 }
@@ -62,8 +63,15 @@ class LoginViewController: UIViewController, UINavigationBarDelegate, UITextFiel
         }
     }
     
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        return self.activeIndicator.isAnimating == false
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == self.mainViewSegue {
+            let app = UIApplication.shared.delegate as! AppDelegate
+            let account = getAccount()!
+            app.resource = createResource(exchangeName: account.activeExchange.name)
+            let config = getGlobalConfig()
+            config.previousUserId = account.userId
+            _ = config.save()
+        }
     }
     
     // UIBarPositioningDelegate

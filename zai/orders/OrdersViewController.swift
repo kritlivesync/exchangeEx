@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-class OrdersViewController : UIViewController {
+class OrdersViewController : UIViewController, OrderListViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +25,7 @@ class OrdersViewController : UIViewController {
         
         let account = getAccount()
         self.orderListView = OrderListView(view: self.orderTableView, trader: account!.activeExchange.trader)
+        self.orderListView.delegate = self
         self.orderListView.startWatch()
         self.orderListView.reloadData()
     }
@@ -38,6 +39,12 @@ class OrdersViewController : UIViewController {
         let storyboard: UIStoryboard = self.storyboard!
         let settings = storyboard.instantiateViewController(withIdentifier: "settingsViewController") as! UINavigationController
         self.present(settings, animated: true, completion: nil)
+    }
+    
+    // OrderListViewDelegate
+    func error(error: ZaiError) {
+        let errorView = createErrorModal(title: error.errorType.toString(), message: error.message)
+        self.present(errorView, animated: false, completion: nil)
     }
     
     var account: Account?

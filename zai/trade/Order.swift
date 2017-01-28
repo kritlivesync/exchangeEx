@@ -29,8 +29,6 @@ internal enum OrderState : Int {
                 return true
             case .WAITING, .PROMISED, .CANCELING, .CANCELLED, .INVALID:
                 return false
-            default:
-                return false
             }
         }
     }
@@ -70,7 +68,17 @@ public class Order: NSManagedObject, ActiveOrderDelegate {
         self.api?.trade(order: self, retryCount: 2) { (err, orderId, price) in
             if let e = err {
                 self.status = NSNumber(value: OrderState.INVALID.rawValue)
-                cb(ZaiError(errorType: .INVALID_ORDER, message: e.message), nil)
+                self.activeOrderMonitor?.delegate = nil
+                switch e.errorType {
+                case ApiErrorType.NO_PERMISSION:
+                    cb(ZaiError(errorType: .INVALID_API_KEYS_NO_PERMISSION, message: getResource().apiKeyNoPermission), nil)
+                case ApiErrorType.NONCE_NOT_INCREMENTED:
+                    cb(ZaiError(errorType: .NONCE_NOT_INCREMENTED, message: getResource().apiKeyNonceNotIncremented), nil)
+                case ApiErrorType.CONNECTION_ERROR:
+                    cb(ZaiError(errorType: .CONNECTION_ERROR, message: Resource.networkConnectionError), nil)
+                default:
+                    cb(ZaiError(errorType: .INVALID_ORDER, message: Resource.unknownError), nil)
+                }
             } else {
                 self.orderId = orderId
                 self.orderTime = Int64(Date().timeIntervalSince1970) as NSNumber
@@ -90,9 +98,17 @@ public class Order: NSManagedObject, ActiveOrderDelegate {
         }
         let activeOrder = ActiveOrder(id: self.orderId!, action: self.action, currencyPair: ApiCurrencyPair(rawValue: self.currencyPair)!, price: self.orderPrice!.doubleValue, amount: self.orderAmount.doubleValue, timestamp: self.orderTime!.int64Value)
         self.api?.cancelOrder(order: activeOrder, retryCount: 2) { err in
-            if let _ = err {
-                self.status = NSNumber(value: OrderState.INVALID.rawValue)
-                cb(ZaiError(errorType: .INVALID_ORDER))
+            if let e = err {
+                switch e.errorType {
+                case ApiErrorType.NO_PERMISSION:
+                    cb(ZaiError(errorType: .INVALID_API_KEYS_NO_PERMISSION, message: getResource().apiKeyNoPermission))
+                case ApiErrorType.NONCE_NOT_INCREMENTED:
+                    cb(ZaiError(errorType: .NONCE_NOT_INCREMENTED, message: getResource().apiKeyNonceNotIncremented))
+                case ApiErrorType.CONNECTION_ERROR:
+                    cb(ZaiError(errorType: .CONNECTION_ERROR, message: Resource.networkConnectionError))
+                default:
+                    cb(ZaiError(errorType: .INVALID_ORDER, message: Resource.unknownError))
+                }
             } else {
                 self.status = NSNumber(value: OrderState.CANCELLED.rawValue)
                 self.delegate?.orderCancelled(order: self)
@@ -102,6 +118,10 @@ public class Order: NSManagedObject, ActiveOrderDelegate {
     }
     
     func monitorPromised(activeOrders: [String: ActiveOrder]) {
+        if self.isInvalid {
+            self.activeOrderMonitor?.delegate = nil
+            return
+        }
         if self.orderId == nil {
             return
         }
@@ -149,16 +169,15 @@ public class Order: NSManagedObject, ActiveOrderDelegate {
     }
     
     internal var isPromised: Bool {
-        get {
-            return self.status.intValue == OrderState.PROMISED.rawValue
-        }
+        return self.status.intValue == OrderState.PROMISED.rawValue
     }
     
     internal var isActive: Bool {
-        get {
-            let s = self.status.intValue
-            return OrderState(rawValue: s)!.isActive
-        }
+        return OrderState(rawValue: self.status.intValue)!.isActive
+    }
+    
+    var isInvalid: Bool {
+        return OrderState(rawValue: self.status.intValue)! == .INVALID
     }
     
     // MonitorableDelegate
