@@ -31,17 +31,6 @@ class TraderRepository {
         newTrader.name = name
         newTrader.exchange = exchange
         newTrader.fund = Fund(api: exchange.api)
-        newTrader.fund.delegate = newTrader
-        newTrader.fund.getBtcFund() { (err, btc) in
-            if err == nil {
-                newTrader.btcFund = btc
-            }
-        }
-        newTrader.fund.getJpyFund() { (err, jpy) in
-            if err == nil {
-                newTrader.jpyFund = jpy
-            }
-        }
         
         db.saveContext()
         
@@ -67,17 +56,6 @@ class TraderRepository {
             } else {
                 let trader = traders[0]
                 trader.fund = Fund(api: trader.exchange.api)
-                trader.fund.delegate = trader
-                trader.fund.getBtcFund() { (err, btc) in
-                    if err == nil {
-                        trader.btcFund = btc
-                    }
-                }
-                trader.fund.getJpyFund() { (err, jpy) in
-                    if err == nil {
-                        trader.jpyFund = jpy
-                    }
-                }
                 trader.fixPositionsWithInvalidOrder()
                 
                 return trader

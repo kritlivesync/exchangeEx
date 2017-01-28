@@ -161,6 +161,11 @@ public class Order: NSManagedObject, ActiveOrderDelegate {
         }
     }
     
+    // MonitorableDelegate
+    func getDelegateName() -> String {
+        return "Order"
+    }
+    
     // ActiveOrderDelegate
     func revievedActiveOrders(activeOrders: [String: ActiveOrder]) {
         self.monitorPromised(activeOrders: activeOrders)

@@ -14,12 +14,11 @@ class AssetsViewController: UIViewController {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.barTintColor = Color.keyColor
-    
-        self.assetsView = AssetsView(view: self.assetsTableView)
     }
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.assetsView = AssetsView(view: self.assetsTableView)
         self.assetsView.startWatch()
     }
     

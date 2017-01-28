@@ -25,15 +25,11 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, B
         self.view = view
         self.view.tableFooterView = UIView()
         self.view.contentInset = UIEdgeInsetsMake(-1.0, 0.0, 0.0, 0.0);
-
-        let api = trader.exchange.api
-        self.bitcoin = BitCoin(api: api)
         
         super.init()
         self.updatePositionList()
         self.view.delegate = self
         self.view.dataSource = self
-        self.startWatch()
     }
     
     public func numberOfSections(in tableView: UITableView) -> Int {
@@ -86,6 +82,11 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, B
         } else {
             return actions
         }
+    }
+    
+    // MonitorableDelegate
+    func getDelegateName() -> String {
+        return "PositionListView"
     }
     
     // BitCoinDelegate
@@ -158,7 +159,9 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, B
     }
     
     internal func startWatch() {
-        let interval = getPositionsConfig().autoUpdateInterval
+        let api = self.trader.exchange.api
+        self.bitcoin = BitCoin(api: api)
+        let interval = getPositionsConfig().positionUpdateIntervalType
         self.bitcoin.monitoringInterval = interval
         self.bitcoin.delegate = self
         self.reloadData()
@@ -166,6 +169,7 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, B
     
     internal func stopWatch() {
         self.bitcoin.delegate = nil
+        self.bitcoin = nil
     }
     
     

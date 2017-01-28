@@ -30,7 +30,7 @@ open class Trader: NSManagedObject, FundDelegate {
             let maxAmount = Double(self.jpyFund) / p
             amt = min(maxAmount, amt)
         }
-        let limit = getAppConfig().buyAmountLimitBtc
+        let limit = getAppConfig().buyAmountLimitBtcValue
         amt = min(limit, amt)
         
         let order = OrderRepository.getInstance().createBuyOrder(currencyPair: currencyPair, price: price, amount: amt, api: self.exchange.api)
@@ -347,6 +347,11 @@ open class Trader: NSManagedObject, FundDelegate {
                 }
             }
         }
+    }
+    
+    // MonitorableDelegate
+    func getDelegateName() -> String {
+        return "Trader"
     }
     
     // FundDelegate

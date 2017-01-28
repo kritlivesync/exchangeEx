@@ -2,7 +2,7 @@
 //  Account+CoreDataProperties.swift
 //  
 //
-//  Created by 渡部郷太 on 1/2/17.
+//  Created by 渡部郷太 on 1/28/17.
 //
 //
 
@@ -16,13 +16,19 @@ extension Account {
         return NSFetchRequest<Account>(entityName: "Account");
     }
 
-    @NSManaged public var userId: String
-    @NSManaged public var password: String
-    @NSManaged public var lastLoginDate: NSNumber?
-    @NSManaged public var lastBackgroundDate: NSNumber?
     @NSManaged public var activeExchangeName: String
+    @NSManaged public var lastBackgroundDate: NSNumber
+    @NSManaged public var lastLoginDate: NSNumber
+    @NSManaged public var password: String
     @NSManaged public var salt: String
+    @NSManaged public var userId: String
     @NSManaged public var exchanges: NSSet
+    @NSManaged public var appConfig: AppConfig
+    @NSManaged public var assetsConfig: AssetsConfig
+    @NSManaged public var chartConfig: ChartConfig
+    @NSManaged public var boardConfig: BoardConfig
+    @NSManaged public var positionsConfig: PositionsConfig
+    @NSManaged public var ordersConfig: OrdersConfig
 
 }
 

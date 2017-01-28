@@ -39,9 +39,8 @@ class ChangeBuyAmountLimitViewController : UIViewController, UITextFieldDelegate
             return
         }
         
-        self.config.buyAmountLimitBtc = amount
-        _ = self.config.save()
-        self.delegate?.saved(amount: self.config.buyAmountLimitBtc)
+        self.config.buyAmountLimitBtcValue = amount
+        self.delegate?.saved(amount: amount)
         self.performSegue(withIdentifier: "unwindToSettings", sender: self)
     }
     

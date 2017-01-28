@@ -34,6 +34,7 @@ class PositionListViewCell : UITableViewCell {
             self.amountLabel.text = "-"
             self.balanceLabel.text = "(-)"
             self.profitLabel.text = "-"
+            self.profitPercentLabel.text = "(-)"
             self.statusLabel.text = "-"
             self.deleteAction = nil
             self.unwind100Action = nil
@@ -93,32 +94,33 @@ class PositionListViewCell : UITableViewCell {
         } else {
             self.backgroundColor = UIColor.white
         }
-        /*
-        if p.isUnwinding {
-            self.activeIndicator.startAnimating()
-        } else {
-            self.activeIndicator.stopAnimating()
-        }
-        */
     }
     
     func updateProfit(btcJpyPrice: Int) {
         guard let position = self.position else {
             self.profitLabel.text = "-"
+            self.profitPercentLabel.text = "(-)"
             return
         }
         if btcJpyPrice < 0 {
             self.profitLabel.text = "-"
+            self.profitPercentLabel.text = "(-)"
             return
         }
         
         let profit = Int(position.calculateUnrealizedProfit(marketPrice: Double(btcJpyPrice)))
         let desc = formatValue(profit)
-        self.profitLabel.text = (profit < 0) ? "" + desc : "+" + desc
+        self.profitLabel.text = (profit < 0) ? desc : "+" + desc
+        let profitPercent = round((Double(profit) / position.cost) * 10000.0) / 100.0
+        let descPercent = formatValue(profitPercent, digit: 2)
+        let percent = ((profitPercent < 0) ? descPercent : "+" + descPercent) + "%"
+        self.profitPercentLabel.text = "(\(percent))"
         if profit < 0 {
             self.profitLabel.textColor = Color.askQuoteColor
+            self.profitPercentLabel.textColor = Color.askQuoteColor
         } else {
             self.profitLabel.textColor = Color.bidQuoteColor
+            self.profitPercentLabel.textColor = Color.bidQuoteColor
         }
     }
     
@@ -126,6 +128,7 @@ class PositionListViewCell : UITableViewCell {
     @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var balanceLabel: UILabel!
     @IBOutlet weak var profitLabel: UILabel!
+    @IBOutlet weak var profitPercentLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var activeIndicator: UIActivityIndicatorView!
     

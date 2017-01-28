@@ -19,18 +19,19 @@ class ZaifAssetsView : SectionView, FundDelegate {
     
     init(exchange: ZaifExchange, section: Int, tableView: UITableView) {
         self.exchange = exchange
-        self.fund = Fund(api: exchange.api)
         super.init(section: section, tableView: tableView)
     }
     
     func startWatch() {
+        self.fund = Fund(api: exchange.api)
         let config = getAssetsConfig()
-        self.fund.monitoringInterval = config.autoUpdateInterval
+        self.fund.monitoringInterval = config.assetUpdateIntervalType
         self.fund.delegate = self
     }
     
     func stopWatch() {
         self.fund.delegate = nil
+        self.fund = nil
     }
     
     override func getCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
@@ -87,6 +88,11 @@ class ZaifAssetsView : SectionView, FundDelegate {
         return 3
     }
     
+    // MonitorableDelegate
+    func getDelegateName() -> String {
+        return "ZaifAssetsDelegate"
+    }
+    
     // FundDelegate
     func recievedMarketCapitalization(jpy: Int) {
         self.marketCapitalization = jpy
@@ -125,7 +131,7 @@ class ZaifAssetsView : SectionView, FundDelegate {
     var marketCapitalization: Int?
     var jpyFund: Int?
     var btcFund: Double?
-    let exchange: ZaifExchange
-    let fund: Fund
+    var exchange: ZaifExchange!
+    var fund: Fund!
     var delegate: ZaifAssetsDelegate?
 }

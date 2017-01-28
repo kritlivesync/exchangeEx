@@ -311,20 +311,15 @@ class ZaifApi : Api {
     
     func validateApi(callback: @escaping (_ err: ApiError?) -> Void) {
         ZaifApi.queue.async {
-            self.api.searchValidNonce() { err in
+            self.api.searchValidNonce(count: 60, step: 100) { err in
                 if err != nil {
                     self.validatePermission() { err in
-                        if err != nil {
-                            callback(ApiError(errorType: .NO_PERMISSION, message: err!.message))
-                            return
-                        } else {
-                            callback(ApiError(errorType: .NONCE_NOT_INCREMENTED, message: err!.message))
-                            return
-                        }
+                        callback(ApiError(errorType: err!.errorType, message: err!.message))
                     }
                 } else {
                     self.validatePermission(callback: callback)
                 }
+                self.delegate?.privateApiCalled(apiName: "validateApi")
             }
         }
     }
@@ -369,6 +364,7 @@ class ZaifApi : Api {
                     return
                 }
                 callback(nil)
+                self.delegate?.privateApiCalled(apiName: "validatePermission")
             }
         }
     }

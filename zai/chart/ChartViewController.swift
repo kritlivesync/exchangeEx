@@ -18,10 +18,6 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
         
         self.navigationController?.navigationBar.barTintColor = Color.keyColor
         
-        let api = getAccount()!.activeExchange.api
-        self.fund = Fund(api: api)
-        self.bitcoin = BitCoin(api: api)
-        
         self.bestQuoteView = BestQuoteView(view: bestQuoteTableView)
         self.bestQuoteView.delegate = self
         
@@ -48,18 +44,28 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
     open override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        let api = getAccount()!.activeExchange.api
+        self.fund = Fund(api: api)
+        self.bitcoin = BitCoin(api: api)
+        
         let config = getChartConfig()
-        self.fund.monitoringInterval = config.autoUpdateInterval
+        self.fund.monitoringInterval = getAppConfig().footerUpdateIntervalType
         self.fund.delegate = self
-        self.bitcoin.monitoringInterval = config.autoUpdateInterval
+        self.bitcoin.monitoringInterval = config.chartUpdateIntervalType
         self.bitcoin.delegate = self
-        self.candleChart.monitoringInterval = config.autoUpdateInterval
+        self.candleChart.monitoringInterval = config.chartUpdateIntervalType
+        
+        let trader = getAccount()!.activeExchange.trader
+        trader.fund.delegate = trader
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.fund.delegate = nil
         self.bitcoin.delegate = nil
+        
+        let trader = getAccount()!.activeExchange.trader
+        trader.fund.delegate = nil
     }
     
     // CandleChartDelegate
@@ -118,6 +124,11 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
         chartView.data = CandleChartData(dataSets: dataSets)
     }
     
+    // MonitorableDelegate
+    func getDelegateName() -> String {
+        return "ChartViewController"
+    }
+    
     // FundDelegate
     func recievedJpyFund(jpy: Int) {
         DispatchQueue.main.async {
@@ -163,7 +174,7 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
             return
         }
 
-        switch getAppConfig().unwindingRule {
+        switch getAppConfig().unwindingRuleType {
         case .mostBenefit:
             guard let bestBid = self.bestQuoteView.getBestBid() else {
                 callback()
@@ -204,8 +215,7 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
         self.heilightChartButton(type: type)
         
         let config = getChartConfig()
-        config.selectedCandleChart = type
-        _ = config.save()
+        config.selectedCandleChartType = type
     }
     
     fileprivate func heilightChartButton(type: ChandleChartType) {

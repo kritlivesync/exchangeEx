@@ -25,8 +25,7 @@ class PromiseNotification : NSObject, UNUserNotificationCenterDelegate, Position
     }
     
     public func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Swift.Void) {
-        let center = UNUserNotificationCenter.current()
-        center.removeAllDeliveredNotifications()
+        completionHandler()
     }
     
     public func add(promisedOrder: PromisedOrder, exchange: Exchange) {

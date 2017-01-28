@@ -37,7 +37,7 @@ class ChangeUnwindingRuleViewController : UITableViewController {
             return cell
         }
         cell.textLabel?.text = rule.string
-        if rule == self.config.unwindingRule {
+        if rule == self.config.unwindingRuleType {
             self.selectedRule = rule
             cell.accessoryType = UITableViewCellAccessoryType.checkmark
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
@@ -62,9 +62,7 @@ class ChangeUnwindingRuleViewController : UITableViewController {
     }
     
     @IBAction func pushSaveButton(_ sender: Any) {
-        self.config.unwindingRule = self.selectedRule
-        _ = self.config.save()
-        self.delegate?.saved(rule: self.config.unwindingRule)
+        self.delegate?.saved(rule: self.selectedRule)
         self.performSegue(withIdentifier: "unwindToSettings", sender: self)
     }
     

@@ -43,6 +43,16 @@ open class Account: NSManagedObject {
         return nil
     }
     
+    func loggout() {
+        let exchange = self.activeExchange
+        _ = exchange.saveApiKey(cryptKey: self.ppw!)
+        exchange.trader.fund.delegate = nil
+        
+        for order in exchange.trader.activeOrders {
+            order.activeOrderMonitor?.delegate = nil
+        }
+    }
+    
     func isEqualPassword(password: String) -> Bool {
         if let p = self.ppw {
             return (p == password)

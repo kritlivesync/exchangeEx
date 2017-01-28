@@ -20,6 +20,7 @@ internal protocol PositionProtocol {
     var price: Double { get set }
     var amount: Double { get set }
     var balance: Double { get }
+    var cost: Double { get }
     var profit: Double { get }
     var type: String { get }
     var timestamp: Int64 { get }
@@ -137,6 +138,12 @@ public class Position: NSManagedObject, PositionProtocol, PromisedOrderDelegate 
 
     var balance: Double {
         get { return 0.0 }
+    }
+    
+    var cost: Double {
+        get {
+            return self.price * self.amount
+        }
     }
     
     var profit: Double {

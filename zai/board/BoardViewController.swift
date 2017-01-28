@@ -17,9 +17,6 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.barTintColor = Color.keyColor
-        
-        let account = getAccount()!
-        self.trader = account.activeExchange.trader
 
         self.boardHeaderLabel.backgroundColor = Color.keyColor2
         self.askMomentumBar.backgroundColor = Color.askQuoteColor.withAlphaComponent(0.4)
@@ -29,27 +26,38 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
         self.boardView.delegate = self
         
         self.jpyFundLabel.text = "-"
-        
-        let api = account.activeExchange.api
-        let currencyPair = ApiCurrencyPair(rawValue: account.activeExchange.currencyPair)!
-        self.board = BoardMonitor(currencyPair: currencyPair, api: api)
-        self.fund = Fund(api: api)
     }
     
     open override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let interval = getBoardConfig().autoUpdateInterval
+        let account = getAccount()!
+        let api = account.activeExchange.api
+        let currencyPair = ApiCurrencyPair(rawValue: account.activeExchange.currencyPair)!
+        self.board = BoardMonitor(currencyPair: currencyPair, api: api)
+        self.fund = Fund(api: api)
+        self.trader = account.activeExchange.trader
+        
+        let interval = getBoardConfig().boardUpdateIntervalType
         self.board.updateInterval = interval
         self.board.delegate = self
-        self.fund.monitoringInterval = interval
+        self.fund.monitoringInterval = getAppConfig().footerUpdateIntervalType
         self.fund.delegate = self
+        self.trader.fund.delegate = self.trader
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.board.delegate = nil
+        self.board = nil
         self.fund.delegate = nil
+        self.fund = nil
+        self.trader.fund.delegate = nil
+    }
+    
+    // MonitorableDelegate
+    func getDelegateName() -> String {
+        return "BoardViewController"
     }
     
     // FundDelegate
@@ -89,7 +97,7 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
     }
     
     func orderSell(quote: Quote, bestBid: Quote, bestAsk: Quote, callback: @escaping () -> Void) {
-        switch getAppConfig().unwindingRule {
+        switch getAppConfig().unwindingRuleType {
         case .mostBenefit:
             self.trader.unwindMaxProfitPosition(price: quote.price, amount: quote.amount, marketPrice: bestBid.price) { (err, position) in
                 callback()

@@ -17,7 +17,7 @@ class SettingView : SectionView, ChangeUpdateIntervalDelegate {
         return
     }
     
-    var config: Config { get { return getAppConfig() } }
+    var updateInterval: UpdateInterval { get { return UpdateInterval.fiveSeconds } }
 
 }
 
@@ -128,6 +128,8 @@ class SettingsViewController
     
     // UserAccountSettingDelegate
     func loggedOut(userId: String) {
+        loggout()
+        
         let storyboard: UIStoryboard = self.storyboard!
         let login = storyboard.instantiateViewController(withIdentifier: "loginViewController") as! LoginViewController
         self.present(login, animated: true, completion: nil)
@@ -195,7 +197,7 @@ class SettingsViewController
         case "changeUpdateIntervalSegue":
             let dst = segue.destination as! ChangeUpdateIntervalViewController
             let setting = sender as! SettingView
-            dst.config = setting.config
+            dst.originalInterval = setting.updateInterval
             dst.delegate = setting
         case "changeUnwindingRuleSegue":
             let dst = segue.destination as! ChangeUnwindingRuleViewController

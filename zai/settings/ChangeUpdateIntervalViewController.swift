@@ -35,7 +35,7 @@ class ChangeUpdateIntervalViewController : UITableViewController {
             return cell
         }
         cell.textLabel?.text = interval.string
-        if interval == self.config.autoUpdateInterval {
+        if interval == self.originalInterval {
             self.selectedInterval = interval
             cell.accessoryType = UITableViewCellAccessoryType.checkmark
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
@@ -60,14 +60,12 @@ class ChangeUpdateIntervalViewController : UITableViewController {
     }
     
     @IBAction func pushSaveButton(_ sender: Any) {
-        self.config.autoUpdateInterval = self.selectedInterval
-        _ = self.config.save()
-        self.delegate?.saved(interval: self.config.autoUpdateInterval)
+        self.delegate?.saved(interval: self.selectedInterval)
         self.performSegue(withIdentifier: "unwindToSettings", sender: self)
     }
     
 
-    var config: Config!
+    var originalInterval: UpdateInterval!
     var selectedInterval: UpdateInterval = UpdateInterval.oneSecond
     var delegate: ChangeUpdateIntervalDelegate?
 }

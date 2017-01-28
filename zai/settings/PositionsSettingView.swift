@@ -29,7 +29,7 @@ class PositionsSettingView : SettingView, VariableSettingCellDelegate {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "variableSettingCell", for: indexPath) as! VariableSettingCell
             cell.nameLabel.text = "自動更新間隔"
-            cell.valueLabel.text = self.config.autoUpdateInterval.string
+            cell.valueLabel.text = self._config.positionUpdateIntervalType.string
             cell.delegate = self
             return cell
         default:
@@ -62,6 +62,7 @@ class PositionsSettingView : SettingView, VariableSettingCellDelegate {
     
     // ChangeUpdateIntervalDelegate
     override func saved(interval: UpdateInterval) {
+        self._config.positionUpdateIntervalType = interval
         self.updateAutoUpdateInterval(tableView: self.tableView, interval: interval)
     }
     
@@ -73,8 +74,8 @@ class PositionsSettingView : SettingView, VariableSettingCellDelegate {
         return 1
     }
     
-    override var config: Config {
-        return self._config
+    override var updateInterval: UpdateInterval {
+        return self._config.positionUpdateIntervalType
     }
     
     

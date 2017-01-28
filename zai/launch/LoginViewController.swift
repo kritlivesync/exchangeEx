@@ -26,7 +26,7 @@ class LoginViewController: UIViewController, UINavigationBarDelegate, UITextFiel
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
         self.navigationBar.frame = self.navigationBar.frame.offsetBy(dx: 0.0, dy: statusBarHeight)
         
-        self.userIdText.text = getAppConfig().previousUserId
+        self.userIdText.text = getGlobalConfig().previousUserId
         self.passwordText.text = ""
         
         self.userIdText.delegate = self
@@ -46,11 +46,13 @@ class LoginViewController: UIViewController, UINavigationBarDelegate, UITextFiel
         
         login(userId: userId, password: password) { (err, account) in
             DispatchQueue.main.async {
-                if let _ = err {
+                if let e = err {
                     self.activeIndicator.stopAnimating()
+                    let errorView = createErrorModal(title: e.errorType.toString(), message: e.message)
+                    self.present(errorView, animated: false, completion: nil)
                 } else {
                     app.account = account
-                    let config = getAppConfig()
+                    let config = getGlobalConfig()
                     config.previousUserId = userId
                     _ = config.save()
                     self.activeIndicator.stopAnimating()
@@ -80,11 +82,12 @@ class LoginViewController: UIViewController, UINavigationBarDelegate, UITextFiel
         default: return false
         }
     }
+
     
     @IBAction func unwindToLogin(_ segue: UIStoryboardSegue) {}
     
     @IBAction func unwindWithSave(_ segue:UIStoryboardSegue) {
-        self.userIdText.text = getAppConfig().previousUserId
+        self.userIdText.text = getGlobalConfig().previousUserId
     }
     
     

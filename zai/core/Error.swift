@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 
 public enum ZaiErrorType : Error {
@@ -15,6 +16,8 @@ public enum ZaiErrorType : Error {
     case INVALID_API_KEYS
     case INVALID_API_KEYS_NO_PERMISSION
     case INVALID_ACCOUNT_INFO
+    case LOGIN_ERROR
+    case NONCE_NOT_INCREMENTED
     case ZAIF_CONNECTION_ERROR
     case ORDER_TIMEOUT
     case INVALID_POSITION
@@ -24,6 +27,16 @@ public enum ZaiErrorType : Error {
         switch self {
         case .ORDER_TIMEOUT:
             return "Order timed out"
+        case .INVALID_ACCOUNT_INFO:
+            return ""
+        case .LOGIN_ERROR:
+            return "ログインエラー"
+        case .NONCE_NOT_INCREMENTED:
+            return "nonce値エラー"
+        case .INVALID_API_KEYS:
+            return "APIキーエラー"
+        case .INVALID_API_KEYS_NO_PERMISSION:
+            return "権限エラー"
         default:
             return "Unkonwn error"
         }
@@ -44,4 +57,13 @@ public struct ZaiError {
     
     public let errorType: ZaiErrorType
     public let message: String
+}
+
+
+func createErrorModal(title: String, message: String) -> UIAlertController {
+    let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    let action = UIAlertAction(title: "OK", style: .default, handler: { action in
+    })
+    controller.addAction(action)
+    return controller
 }

@@ -88,7 +88,7 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
     }
     
     internal func startWatch() {
-        self.orderMonitor?.monitoringInterval = getOrdersConfig().autoUpdateInterval
+        self.orderMonitor?.monitoringInterval = getOrdersConfig().orderUpdateIntervalType
         self.orderMonitor?.delegate = self
     }
     
@@ -96,11 +96,17 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
         self.orderMonitor?.delegate = nil
     }
     
+    // MonitorableDelegate
+    func getDelegateName() -> String {
+        return "OrderListView"
+    }
+    
     // ActiveOrderDelegate
     func revievedActiveOrders(activeOrders: [String: ActiveOrder]) {
+        let myOrders = self.filterOrders(activeOrders: activeOrders)
         let prevSize = self.orders.count
         self.orders.removeAll()
-        for (_, order) in activeOrders {
+        for order in myOrders {
             self.orders.append(order)
         }
         self.orders = self.orders.sorted{ $0.timestamp < $1.timestamp }
@@ -120,6 +126,20 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
                 cell.setOrder(order: self.orders[i])
             }
         }
+    }
+    
+    fileprivate func filterOrders(activeOrders: [String: ActiveOrder]) -> [ActiveOrder] {
+        var myOrders = [ActiveOrder]()
+        for order in self.trader.activeOrders {
+            guard let id = order.orderId else {
+                continue
+            }
+            guard let activeOrder = activeOrders[id] else {
+                continue
+            }
+            myOrders.append(activeOrder)
+        }
+        return myOrders
     }
     
     fileprivate var orders: [ActiveOrder]

@@ -24,6 +24,11 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
         self.priceAverage.text = "-"
         self.btcFund.text = "-"
         
+        self.addPositionButton.tintColor = Color.antiKeyColor
+    }
+    
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         let account = getAccount()
         self.trader = account!.activeExchange.trader
         
@@ -31,27 +36,31 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
         self.positionListView.delegate = self
         self.positionFundView = PositionFundView(trader: self.trader)
         
-        self.addPositionButton.tintColor = Color.antiKeyColor
-    }
-    
-    open override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         self.positionListView.startWatch()
         self.positionListView.reloadData()
-        self.positionFundView.monitoringInterval = getPositionsConfig().autoUpdateInterval
+        self.positionFundView.monitoringInterval = getAppConfig().footerUpdateIntervalType
         self.positionFundView.delegate = self
+        
+        self.trader.fund.delegate = self.trader
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.positionListView.stopWatch()
         self.positionFundView.delegate = nil
+        
+        self.trader.fund.delegate = nil
     }
     
     @IBAction func pushAddPositionButton(_ sender: Any) {
         let addPositionController = PositionCreateViewController(trader: self.trader)
         addPositionController.delegate = self
         self.present(addPositionController.controller, animated: true, completion: nil)
+    }
+    
+    // MonitorableDelegate
+    func getDelegateName() -> String {
+        return "PositionsViewController"
     }
     
     // PositionFundViewDelegate

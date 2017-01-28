@@ -29,14 +29,14 @@ class AppSettingView : SettingView, VariableSettingCellDelegate, ChangeUnwinding
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "variableSettingCell", for: indexPath) as! VariableSettingCell
             cell.nameLabel.text = "買注文の上限数量"
-            cell.valueLabel.text = formatValue(self._config.buyAmountLimitBtc) + "BTC"
+            cell.valueLabel.text = formatValue(self._config.buyAmountLimitBtcValue) + "BTC"
             cell.id = 0
             cell.delegate = self
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "variableSettingCell", for: indexPath) as! VariableSettingCell
             cell.nameLabel.text = "ポジション解消ルール"
-            cell.valueLabel.text = self._config.unwindingRule.string
+            cell.valueLabel.text = self._config.unwindingRuleType.string
             cell.id = 1
             cell.delegate = self
             return cell
@@ -60,7 +60,7 @@ class AppSettingView : SettingView, VariableSettingCellDelegate, ChangeUnwinding
         guard let cell = tableView.cellForRow(at: index) as? VariableSettingCell else {
             return
         }
-        cell.valueLabel.text = formatValue(self._config.buyAmountLimitBtc) + "BTC"
+        cell.valueLabel.text = formatValue(self._config.buyAmountLimitBtcValue) + "BTC"
     }
     
     func updateUnwindingRule(tableView: UITableView, rule: UnwindingRule) {
@@ -85,11 +85,13 @@ class AppSettingView : SettingView, VariableSettingCellDelegate, ChangeUnwinding
     
     // ChangeBuyAmountLimitDelegate
     func saved(amount: Double) {
+        self._config.buyAmountLimitBtcValue = amount
         self.updateBuyAmountLimit(tableView: self.tableView, amout: amount)
     }
     
     // ChangeUnwindingRuleDelegate
     func saved(rule: UnwindingRule) {
+        self._config.unwindingRuleType = rule
         self.updateUnwindingRule(tableView: self.tableView, rule: rule)
     }
     
@@ -101,9 +103,6 @@ class AppSettingView : SettingView, VariableSettingCellDelegate, ChangeUnwinding
         return 2
     }
     
-    override var config: Config {
-        return self._config
-    }
     
     let _config: AppConfig
     var delegate: AppSettingViewDelegate?

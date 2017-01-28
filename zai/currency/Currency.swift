@@ -11,7 +11,7 @@ import Foundation
 import ZaifSwift
 
 @objc protocol MonitorableDelegate {
-    
+    @objc optional func getDelegateName() -> String
 }
 
 internal class Monitorable {
@@ -24,6 +24,11 @@ internal class Monitorable {
     
     @objc func addMonitorOperation() {
         DispatchQueue.main.async {
+            var log = "\(getNow()) do monitoring \(self.target) delegate: "
+            if let _ = self.delegate?.getDelegateName {
+                log += (self.delegate?.getDelegateName!())!
+            }
+            print(log)
             self.monitor()
         }
     }
@@ -40,7 +45,12 @@ internal class Monitorable {
             self._monitoringInterval = newValue
             if self.timer != nil {
                 self.timer?.invalidate()
-                print(getNow() + " start monitoring " + self.target + " interval: " + self._monitoringInterval.string)
+                self.timer = nil
+                var log = "\(getNow()) start monitoring \(self.target) interval: \(self._monitoringInterval.string) delegate: "
+                if let _ = self.delegate?.getDelegateName {
+                    log += (self.delegate?.getDelegateName!())!
+                }
+                print(log)
                 self.timer = Timer.scheduledTimer(
                     timeInterval: self._monitoringInterval.double,
                     target: self,
@@ -54,12 +64,20 @@ internal class Monitorable {
     var delegate: MonitorableDelegate? = nil {
         willSet {
             if newValue == nil {
-                print(getNow() + " end monitoring " + self.target)
+                var log = "\(getNow()) end monitoring \(self.target) delegate: "
+                if let _ = self.delegate?.getDelegateName {
+                    log += (self.delegate?.getDelegateName!())!
+                }
+                print(log)
                 self.timer?.invalidate()
                 self.timer = nil
             } else {
                 if self.timer == nil {
-                    print(getNow() + " start monitoring " + self.target + " interval: " + self._monitoringInterval.string)
+                    var log = "\(getNow()) start monitoring \(self.target) interval: \(self._monitoringInterval.string) delegate: "
+                    if let _ = self.delegate?.getDelegateName {
+                        log += (self.delegate?.getDelegateName!())!
+                    }
+                    print(log)
                     self.timer = Timer.scheduledTimer(
                         timeInterval: self._monitoringInterval.double,
                         target: self,

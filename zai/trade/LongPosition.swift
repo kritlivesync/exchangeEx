@@ -186,59 +186,65 @@ class LongPosition: Position {
     
     // OrderDelegate
     override func orderPromised(order: Order, promisedOrder: PromisedOrder) {
-        self.order = nil
-        switch self.status.intValue {
-        case PositionState.OPENING.rawValue:
-            let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .OPEN_LONG_POSITION, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: promisedOrder.price, amount: promisedOrder.newlyPromisedAmount, positionId: self.id)
-
-            self.addLog(log)
-            self.open()
-            self.delegate?.opendPosition(position: self, promisedOrder: promisedOrder)
-        case PositionState.UNWINDING.rawValue:
-            let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .UNWIND_LONG_POSITION, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: promisedOrder.price, amount: promisedOrder.newlyPromisedAmount, positionId: self.id)
-            self.addLog(log)
-            if self.balance < self.trader!.exchange.api.orderUnit(currencyPair: self.currencyPair) {
-                self.close()
-                self.delegate?.closedPosition(position: self, promisedOrder: promisedOrder)
-            } else {
+        DispatchQueue.main.async {
+            self.order = nil
+            switch self.status.intValue {
+            case PositionState.OPENING.rawValue:
+                let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .OPEN_LONG_POSITION, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: promisedOrder.price, amount: promisedOrder.newlyPromisedAmount, positionId: self.id)
+                
+                self.addLog(log)
                 self.open()
-                self.delegate?.unwindPosition(position: self, promisedOrder: promisedOrder)
+                self.delegate?.opendPosition(position: self, promisedOrder: promisedOrder)
+            case PositionState.UNWINDING.rawValue:
+                let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .UNWIND_LONG_POSITION, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: promisedOrder.price, amount: promisedOrder.newlyPromisedAmount, positionId: self.id)
+                self.addLog(log)
+                if self.balance < self.trader!.exchange.api.orderUnit(currencyPair: self.currencyPair) {
+                    self.close()
+                    self.delegate?.closedPosition(position: self, promisedOrder: promisedOrder)
+                } else {
+                    self.open()
+                    self.delegate?.unwindPosition(position: self, promisedOrder: promisedOrder)
+                }
+            default: break
             }
-        default: break
         }
     }
     
     override func orderPartiallyPromised(order: Order, promisedOrder: PromisedOrder) {
-        switch self.status.intValue {
-        case PositionState.OPENING.rawValue:
-            let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .OPEN_LONG_POSITION, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: promisedOrder.price, amount: promisedOrder.newlyPromisedAmount, positionId: self.id)
-            self.addLog(log)
-        case PositionState.UNWINDING.rawValue:
-            let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .UNWIND_LONG_POSITION, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: promisedOrder.price, amount: promisedOrder.newlyPromisedAmount, positionId: self.id)
-            self.addLog(log)
-        default: break
+        DispatchQueue.main.async {
+            switch self.status.intValue {
+            case PositionState.OPENING.rawValue:
+                let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .OPEN_LONG_POSITION, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: promisedOrder.price, amount: promisedOrder.newlyPromisedAmount, positionId: self.id)
+                self.addLog(log)
+            case PositionState.UNWINDING.rawValue:
+                let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .UNWIND_LONG_POSITION, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: promisedOrder.price, amount: promisedOrder.newlyPromisedAmount, positionId: self.id)
+                self.addLog(log)
+            default: break
+            }
         }
     }
     
     override func orderCancelled(order: Order) {
-        self.order = nil
-        switch self.status.intValue {
-        case PositionState.OPENING.rawValue:
-            let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .CANCEL, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: price, amount: Double(order.orderAmount), positionId: self.id)
-            self.addLog(log)
-            if self.balance < self.trader!.exchange.api.orderUnit(currencyPair: self.currencyPair) {
-                self.delete()
-            } else {
-                self.open()
+        DispatchQueue.main.async {
+            self.order = nil
+            switch self.status.intValue {
+            case PositionState.OPENING.rawValue:
+                let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .CANCEL, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: order.orderPrice?.doubleValue, amount: Double(order.orderAmount), positionId: self.id)
+                self.addLog(log)
+                if self.balance < self.trader!.exchange.api.orderUnit(currencyPair: self.currencyPair) {
+                    self.delete()
+                } else {
+                    self.open()
+                }
+            case PositionState.UNWINDING.rawValue:
+                if self.balance < self.trader!.exchange.api.orderUnit(currencyPair: self.currencyPair) {
+                    self.close()
+                    self.delegate?.closedPosition(position: self, promisedOrder: nil)
+                } else {
+                    self.open()
+                }
+            default: break
             }
-        case PositionState.UNWINDING.rawValue:
-            if self.balance < self.trader!.exchange.api.orderUnit(currencyPair: self.currencyPair) {
-                self.close()
-                self.delegate?.closedPosition(position: self, promisedOrder: nil)
-            } else {
-                self.open()
-            }
-        default: break
         }
     }
     

@@ -47,15 +47,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var analyzer: Analyzer? = nil
     var nonce: TimeNonce? = nil
-    let appConfig = AppConfig()
-    let assetsConfig = AssetsConfig()
-    let chartConfig = ChartConfig()
-    let boardConfig = BoardConfig()
-    let positionsConfig = PositionsConfig()
-    let ordersConfig = OrdersConfig()
     var notification: PromiseNotification!
-    
+    let globalConfig = GlobalConfig()
     var account: Account?
+}
+
+func getGlobalConfig() -> GlobalConfig {
+    let app = UIApplication.shared.delegate as! AppDelegate
+    return app.globalConfig
 }
 
 func getAccount() -> Account? {
@@ -64,33 +63,27 @@ func getAccount() -> Account? {
 }
 
 func getAppConfig() -> AppConfig {
-    let app = UIApplication.shared.delegate as! AppDelegate
-    return app.appConfig
+    return getAccount()!.appConfig
 }
 
 func getAssetsConfig() -> AssetsConfig {
-    let app = UIApplication.shared.delegate as! AppDelegate
-    return app.assetsConfig
+    return getAccount()!.assetsConfig
 }
 
 func getChartConfig() -> ChartConfig {
-    let app = UIApplication.shared.delegate as! AppDelegate
-    return app.chartConfig
+    return getAccount()!.chartConfig
 }
 
 func getBoardConfig() -> BoardConfig {
-    let app = UIApplication.shared.delegate as! AppDelegate
-    return app.boardConfig
+    return getAccount()!.boardConfig
 }
 
 func getPositionsConfig() -> PositionsConfig {
-    let app = UIApplication.shared.delegate as! AppDelegate
-    return app.positionsConfig
+    return getAccount()!.positionsConfig
 }
 
 func getOrdersConfig() -> OrdersConfig {
-    let app = UIApplication.shared.delegate as! AppDelegate
-    return app.ordersConfig
+    return getAccount()!.ordersConfig
 }
 
 

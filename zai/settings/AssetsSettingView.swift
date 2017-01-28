@@ -29,7 +29,7 @@ class AssetsSettingView : SettingView, VariableSettingCellDelegate {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "variableSettingCell", for: indexPath) as! VariableSettingCell
             cell.nameLabel.text = "自動更新間隔"
-            cell.valueLabel.text = self.config.autoUpdateInterval.string
+            cell.valueLabel.text = self._config.assetUpdateIntervalType.string
             cell.delegate = self
             return cell
         default:
@@ -62,6 +62,7 @@ class AssetsSettingView : SettingView, VariableSettingCellDelegate {
     
     // ChangeUpdateIntervalDelegate
     override func saved(interval: UpdateInterval) {
+        self._config.assetUpdateIntervalType = interval
         self.updateAutoUpdateInterval(tableView: self.tableView, interval: interval)
     }
     
@@ -73,8 +74,8 @@ class AssetsSettingView : SettingView, VariableSettingCellDelegate {
         return 1
     }
     
-    override var config: Config {
-        return self._config
+    override var updateInterval: UpdateInterval {
+        return self.self._config.assetUpdateIntervalType
     }
     
     

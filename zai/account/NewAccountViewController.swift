@@ -47,19 +47,32 @@ class NewAccountViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func pushSaveButton(_ sender: Any) {
+        if self.activeIndicator.isAnimating {
+            return
+        }
+        self.activeIndicator.startAnimating()
+        
         let userId = self.userIdText.text!
         if userId == "" {
+            self.activeIndicator.stopAnimating()
+            self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: "ユーザーIDとパスワードは必須です。"))
             return
         }
         let password = self.passwordText.text!
         if password == "" {
+            self.activeIndicator.stopAnimating()
+            self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: "ユーザーIDとパスワードは必須です。"))
             return
         }
         if let _ = AccountRepository.getInstance().findByUserId(userId) {
+            self.activeIndicator.stopAnimating()
+            self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: "このユーザーIDは既に使われています。別のIDを入力してください。"))
             return
         }
         let passwordAgain = self.passwordAgainText.text!
         if password != passwordAgain {
+            self.activeIndicator.stopAnimating()
+            self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: "パスワードが一致しません。再入力してください。"))
             return
         }
         
@@ -71,24 +84,44 @@ class NewAccountViewController: UIViewController, UITextFieldDelegate {
                 if err == nil {
                     let repository = AccountRepository.getInstance()
                     guard let account = repository.create(userId, password: password) else {
+                        self.showError(error: ZaiError(errorType: .UNKNOWN_ERROR, message: "アカウント生成に失敗しました。"))
                         return
                     }
                     guard repository.createZaifExchange(account: account, apiKey: apiKey, secretKey: secretKey) else {
                         repository.delete(account)
+                        self.showError(error: ZaiError(errorType: .UNKNOWN_ERROR, message: "アカウント生成に失敗しました。"))
                         return
                     }
-                    let config = getAppConfig()
+                    let config = getGlobalConfig()
                     config.previousUserId = userId
                     _ = config.save()
+                    
+                    self.activeIndicator.stopAnimating()
+                    
                     self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self)
                 } else {
-                    return
+                    
+                    self.activeIndicator.stopAnimating()
+                    
+                    switch err!.errorType {
+                    case ApiErrorType.NO_PERMISSION:
+                        self.showError(error: ZaiError(errorType: .INVALID_API_KEYS_NO_PERMISSION, message: "Zaif APIキーに権限がありません。以下の権限を持ったAPIキーを使用してください。\ninfo\ntrade"))
+                    case ApiErrorType.NONCE_NOT_INCREMENTED:
+                        self.showError(error: ZaiError(errorType: ZaiErrorType.NONCE_NOT_INCREMENTED, message: "Zaif APIキーのnonce値の設定に失敗しました。しばらく時間を置くか、別のAPIキーを使用してください。"))
+                    default:
+                        self.showError(error: ZaiError(errorType: .INVALID_API_KEYS, message: "不正なZaif APIキーです。"))
+                    }
                 }
             }
         }
     }
 
+    fileprivate func showError(error: ZaiError) {
+        let errorView = createErrorModal(title: error.errorType.toString(), message: error.message)
+        self.present(errorView, animated: false, completion: nil)
+    }
 
+    
     @IBOutlet weak var userIdText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
     @IBOutlet weak var passwordAgainText: UITextField!
@@ -100,4 +133,5 @@ class NewAccountViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var navigationBar: UINavigationItem!
 
+    @IBOutlet weak var activeIndicator: UIActivityIndicatorView!
 }

@@ -7,9 +7,35 @@
         <attribute name="password" attributeType="String" syncable="YES"/>
         <attribute name="salt" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userId" attributeType="String" syncable="YES"/>
+        <relationship name="appConfig" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppConfig" inverseName="account" inverseEntity="AppConfig" syncable="YES"/>
+        <relationship name="assetsConfig" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AssetsConfig" inverseName="account" inverseEntity="AssetsConfig" syncable="YES"/>
+        <relationship name="boardConfig" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BoardConfig" inverseName="account" inverseEntity="BoardConfig" syncable="YES"/>
+        <relationship name="chartConfig" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ChartConfig" inverseName="account" inverseEntity="ChartConfig" syncable="YES"/>
         <relationship name="exchanges" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Exchange" inverseName="account" inverseEntity="Exchange" syncable="YES"/>
+        <relationship name="ordersConfig" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OrdersConfig" inverseName="account" inverseEntity="OrdersConfig" syncable="YES"/>
+        <relationship name="positionsConfig" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PositionsConfig" inverseName="account" inverseEntity="PositionsConfig" syncable="YES"/>
+    </entity>
+    <entity name="AppConfig" representedClassName=".AppConfig" syncable="YES">
+        <attribute name="buyAmountLimitBtc" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="footerUpdateInterval" attributeType="Integer 32" defaultValueString="3" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="unwindingRule" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="appConfig" inverseEntity="Account" syncable="YES"/>
+    </entity>
+    <entity name="AssetsConfig" representedClassName=".AssetsConfig" syncable="YES">
+        <attribute name="assetUpdateInterval" attributeType="Integer 32" defaultValueString="4" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="assetsConfig" inverseEntity="Account" syncable="YES"/>
+    </entity>
+    <entity name="BoardConfig" representedClassName=".BoardConfig" syncable="YES">
+        <attribute name="boardUpdateInterval" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="boardConfig" inverseEntity="Account" syncable="YES"/>
     </entity>
     <entity name="BuyOrder" representedClassName=".BuyOrder" parentEntity="Order" syncable="YES"/>
+    <entity name="ChartConfig" representedClassName=".ChartConfig" syncable="YES">
+        <attribute name="chartUpdateInterval" attributeType="Integer 32" defaultValueString="2" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="quoteUpdateInterval" attributeType="Integer 32" defaultValueString="2" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="selectedCandleChart" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="chartConfig" inverseEntity="Account" syncable="YES"/>
+    </entity>
     <entity name="Exchange" representedClassName=".Exchange" isAbstract="YES" syncable="YES">
         <attribute name="currencyPair" attributeType="String" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
@@ -31,12 +57,20 @@
         <attribute name="status" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="position" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Position" inverseName="activeOrder" inverseEntity="Position" syncable="YES"/>
     </entity>
+    <entity name="OrdersConfig" representedClassName=".OrdersConfig" syncable="YES">
+        <attribute name="orderUpdateInterval" attributeType="Integer 32" defaultValueString="2" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="ordersConfig" inverseEntity="Account" syncable="YES"/>
+    </entity>
     <entity name="Position" representedClassName=".Position" isAbstract="YES" syncable="YES">
         <attribute name="id" attributeType="String" syncable="YES"/>
         <attribute name="status" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="activeOrder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Order" inverseName="position" inverseEntity="Order" syncable="YES"/>
         <relationship name="tradeLogs" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="TradeLog" syncable="YES"/>
         <relationship name="trader" maxCount="1" deletionRule="Nullify" destinationEntity="Trader" inverseName="positions" inverseEntity="Trader" syncable="YES"/>
+    </entity>
+    <entity name="PositionsConfig" representedClassName=".PositionsConfig" syncable="YES">
+        <attribute name="positionUpdateInterval" attributeType="Integer 32" defaultValueString="2" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="positionsConfig" inverseEntity="Account" syncable="YES"/>
     </entity>
     <entity name="PriceLog" representedClassName=".PriceLog" syncable="YES">
         <attribute name="currencyPair" attributeType="String" syncable="YES"/>
@@ -71,12 +105,18 @@
         <attribute name="secretKey" attributeType="Binary" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Account" positionX="-36" positionY="90" width="128" height="150"/>
+        <element name="Account" positionX="-36" positionY="90" width="128" height="240"/>
+        <element name="AppConfig" positionX="-36" positionY="144" width="128" height="105"/>
+        <element name="AssetsConfig" positionX="-27" positionY="153" width="128" height="75"/>
+        <element name="BoardConfig" positionX="0" positionY="180" width="128" height="75"/>
         <element name="BuyOrder" positionX="-27" positionY="117" width="128" height="45"/>
+        <element name="ChartConfig" positionX="-18" positionY="162" width="128" height="105"/>
         <element name="Exchange" positionX="-36" positionY="144" width="128" height="105"/>
         <element name="LongPosition" positionX="-36" positionY="90" width="128" height="45"/>
         <element name="Order" positionX="-36" positionY="90" width="128" height="225"/>
+        <element name="OrdersConfig" positionX="-27" positionY="135" width="128" height="75"/>
         <element name="Position" positionX="-54" positionY="81" width="128" height="120"/>
+        <element name="PositionsConfig" positionX="18" positionY="189" width="128" height="75"/>
         <element name="PriceLog" positionX="-36" positionY="90" width="128" height="90"/>
         <element name="SellOrder" positionX="-18" positionY="126" width="128" height="45"/>
         <element name="ShortPosition" positionX="-27" positionY="99" width="128" height="45"/>

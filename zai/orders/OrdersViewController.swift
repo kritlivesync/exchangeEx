@@ -18,14 +18,13 @@ class OrdersViewController : UIViewController {
         self.navigationController?.navigationBar.barTintColor = Color.keyColor
         
         self.ordersHeadersLabel.backgroundColor = Color.keyColor2
-        
-        let account = getAccount()
-        
-        self.orderListView = OrderListView(view: self.orderTableView, trader: account!.activeExchange.trader)
     }
     
     open override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        let account = getAccount()
+        self.orderListView = OrderListView(view: self.orderTableView, trader: account!.activeExchange.trader)
         self.orderListView.startWatch()
         self.orderListView.reloadData()
     }

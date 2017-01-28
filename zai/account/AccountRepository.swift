@@ -35,6 +35,8 @@ class AccountRepository {
         if let _ =  newAccount.setPassword(password: password) {
             return nil
         }
+        
+        _ = ConfigRepository.getInstance().create(account: newAccount)
 
         return newAccount
     }
@@ -79,7 +81,6 @@ class AccountRepository {
                     return nil
                 }
                 ex.trader.fund = Fund(api: ex.api)
-                ex.trader.fund.delegate = ex.trader
             }
             return account
         } else {
