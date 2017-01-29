@@ -23,15 +23,19 @@ class ZaifAssetsView : SectionView, FundDelegate {
     }
     
     func startWatch() {
-        self.fund = Fund(api: exchange.api)
-        let config = getAssetsConfig()
-        self.fund.monitoringInterval = config.assetUpdateIntervalType
-        self.fund.delegate = self
+        if self.fund == nil {
+            self.fund = Fund(api: exchange.api)
+            let config = getAssetsConfig()
+            self.fund.monitoringInterval = config.assetUpdateIntervalType
+            self.fund.delegate = self
+        }
     }
     
     func stopWatch() {
-        self.fund.delegate = nil
-        self.fund = nil
+        if self.fund != nil {
+            self.fund.delegate = nil
+            self.fund = nil
+        }
     }
     
     override func getCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {

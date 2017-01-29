@@ -11,7 +11,7 @@ import Foundation
 import AMScrollingNavbar
 import ZaifSwift
 
-class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardViewDelegate {
+class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardViewDelegate, AppBackgroundDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,30 +28,46 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
         self.jpyFundLabel.text = "-"
     }
     
-    open override func viewDidAppear(_ animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let account = getAccount()!
-        let api = account.activeExchange.api
-        let currencyPair = ApiCurrencyPair(rawValue: account.activeExchange.currencyPair)!
-        self.board = BoardMonitor(currencyPair: currencyPair, api: api)
-        self.fund = Fund(api: api)
-        self.trader = account.activeExchange.trader
-        
-        let interval = getBoardConfig().boardUpdateIntervalType
-        self.board.updateInterval = interval
-        self.board.delegate = self
-        self.fund.monitoringInterval = getAppConfig().footerUpdateIntervalType
-        self.fund.delegate = self
-        self.trader.fund.delegate = self.trader
+        self.start()
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.board.delegate = nil
-        self.board = nil
-        self.fund.delegate = nil
-        self.fund = nil
+        
+        self.stop()
+    }
+    
+    fileprivate func start() {
+        setBackgroundDelegate(delegate: self)
+        let account = getAccount()!
+        let api = account.activeExchange.api
+        let currencyPair = ApiCurrencyPair(rawValue: account.activeExchange.currencyPair)!
+        if self.board == nil {
+            self.board = BoardMonitor(currencyPair: currencyPair, api: api)
+            self.board.updateInterval = getBoardConfig().boardUpdateIntervalType
+            self.board.delegate = self
+        }
+        if self.fund == nil {
+            self.fund = Fund(api: api)
+            self.fund.monitoringInterval = getAppConfig().footerUpdateIntervalType
+            self.fund.delegate = self
+        }
+        self.trader = account.activeExchange.trader
+        self.trader.fund.delegate = self.trader
+    }
+    
+    fileprivate func stop() {
+        if self.board != nil {
+            self.board.delegate = nil
+            self.board = nil
+        }
+        if self.fund != nil {
+            self.fund.delegate = nil
+            self.fund = nil
+        }
     }
     
     // MonitorableDelegate
@@ -132,6 +148,15 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
                 }
             }
         }
+    }
+    
+    // AppBackgroundDelegate
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        self.start()
+    }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        self.stop()
     }
 
     @IBAction func pushSettingsButton(_ sender: Any) {

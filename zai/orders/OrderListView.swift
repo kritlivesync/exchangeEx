@@ -26,7 +26,6 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
         super.init()
         self.view.delegate = self
         self.view.dataSource = self
-        self.orderMonitor = ActiveOrderMonitor(currencyPair: .BTC_JPY, api: self.trader.exchange.api)
     }
     
     public func numberOfSections(in tableView: UITableView) -> Int {
@@ -88,12 +87,18 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
     }
     
     internal func startWatch() {
-        self.orderMonitor?.monitoringInterval = getOrdersConfig().orderUpdateIntervalType
-        self.orderMonitor?.delegate = self
+        if self.orderMonitor == nil {
+            self.orderMonitor = ActiveOrderMonitor(currencyPair: .BTC_JPY, api: self.trader.exchange.api)
+            self.orderMonitor.monitoringInterval = getOrdersConfig().orderUpdateIntervalType
+            self.orderMonitor.delegate = self
+        }
     }
     
     internal func stopWatch() {
-        self.orderMonitor?.delegate = nil
+        if self.orderMonitor != nil {
+            self.orderMonitor.delegate = nil
+            self.orderMonitor = nil
+        }
     }
     
     // MonitorableDelegate
@@ -146,6 +151,6 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
     fileprivate let view: UITableView
     
     var trader: Trader! = nil
-    var orderMonitor: ActiveOrderMonitor?
+    var orderMonitor: ActiveOrderMonitor!
     var delegate: OrderListViewDelegate?
 }

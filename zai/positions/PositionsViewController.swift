@@ -11,7 +11,7 @@ import UIKit
 
 
 
-class PositionsViewController : UIViewController, UITextFieldDelegate, PositionFundViewDelegate, PositionEditDelegate, PositionCreateDelegate, PositionListViewDelegate {
+class PositionsViewController : UIViewController, UITextFieldDelegate, PositionFundViewDelegate, PositionEditDelegate, PositionCreateDelegate, PositionListViewDelegate, AppBackgroundDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,25 +29,45 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let account = getAccount()
-        self.trader = account!.activeExchange.trader
         
-        self.positionListView = PositionListView(view: self.tableView, trader: self.trader)
-        self.positionListView.delegate = self
-        self.positionFundView = PositionFundView(trader: self.trader)
-        
-        self.positionListView.startWatch()
-        self.positionListView.reloadData()
-        self.positionFundView.monitoringInterval = getAppConfig().footerUpdateIntervalType
-        self.positionFundView.delegate = self
-        
-        self.trader.fund.delegate = self.trader
+        self.start()
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.positionListView.stopWatch()
-        self.positionFundView.delegate = nil
+        
+        self.stop()
+    }
+    
+    fileprivate func start() {
+        setBackgroundDelegate(delegate: self)
+        let account = getAccount()
+        self.trader = account!.activeExchange.trader
+        
+        if self.positionListView == nil {
+            self.positionListView = PositionListView(view: self.tableView, trader: self.trader)
+            self.positionListView.delegate = self
+            self.positionListView.startWatch()
+            self.positionListView.reloadData()
+        }
+        if self.positionFundView == nil {
+            self.positionFundView = PositionFundView(trader: self.trader)
+            self.positionFundView.monitoringInterval = getAppConfig().footerUpdateIntervalType
+            self.positionFundView.delegate = self
+        }
+        self.trader.fund.delegate = self.trader
+    }
+    
+    fileprivate func stop() {
+        if self.positionListView != nil {
+            self.positionListView.stopWatch()
+            self.positionListView.delegate = nil
+            self.positionListView = nil
+        }
+        if self.positionFundView != nil {
+            self.positionFundView.delegate = nil
+            self.positionFundView = nil
+        }
     }
     
     @IBAction func pushAddPositionButton(_ sender: Any) {
@@ -109,6 +129,15 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
     func error(error: ZaiError) {
         let errorView = createErrorModal(title: error.errorType.toString(), message: error.message)
         self.present(errorView, animated: false, completion: nil)
+    }
+    
+    // AppBackgroundDelegate
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        self.start()
+    }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        self.stop()
     }
     
     @IBAction func pushSettingsButton(_ sender: Any) {

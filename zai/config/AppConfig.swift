@@ -100,6 +100,7 @@ public class AppConfig: NSManagedObject {
         }
         set {
             self.buyAmountLimitBtc = NSNumber(value: newValue)
+            Database.getDb().saveContext()
         }
     }
 

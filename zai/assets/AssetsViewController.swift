@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AssetsViewController: UIViewController {
+class AssetsViewController: UIViewController, AppBackgroundDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,17 +18,42 @@ class AssetsViewController: UIViewController {
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.assetsView = AssetsView(view: self.assetsTableView)
-        self.assetsView.startWatch()
+        
+        self.start()
+    }
+    
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.stop()
+    }
+    
+    fileprivate func start() {
+        setBackgroundDelegate(delegate: self)
+        if self.assetsView == nil {
+            self.assetsView = AssetsView(view: self.assetsTableView)
+            self.assetsView.startWatch()
+        }
         
         if let trader = getAccount()?.activeExchange.trader {
             trader.fund.delegate = nil
         }
     }
     
-    open override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.assetsView.stopWatch()
+    fileprivate func stop() {
+        if self.assetsView != nil {
+            self.assetsView.stopWatch()
+            self.assetsView = nil
+        }
+    }
+    
+    // AppBackgroundDelegate
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        self.start()
+    }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        self.stop()
     }
     
     @IBAction func pushSettingsButton(_ sender: Any) {

@@ -248,6 +248,9 @@ class CandleChart : Monitorable {
             self.isHeighPrecision = false
         } else {
             self.api.getPrice(currencyPair: self.currencyPair) { (err, price) in
+                if err != nil {
+                    return
+                }
                 let trade = Trade(id: "", price: price, amount: 0.0, currencyPair: self.currencyPair.rawValue, action: "bid", timestamp: Int64(Date().timeIntervalSince1970))
                 let shifted = self.addTrade(trade: trade)
                 DispatchQueue.main.async {

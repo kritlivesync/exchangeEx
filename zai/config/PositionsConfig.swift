@@ -18,6 +18,7 @@ public class PositionsConfig: NSManagedObject {
         }
         set {
             self.positionUpdateInterval = newValue.rawValue as NSNumber
+            Database.getDb().saveContext()
         }
     }
 }

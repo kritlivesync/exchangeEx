@@ -12,7 +12,7 @@ import UIKit
 import Charts
 
 
-class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate, BitCoinDelegate, BestQuoteViewDelegate {
+class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate, BitCoinDelegate, BestQuoteViewDelegate, AppBackgroundDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,28 +41,48 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
         self.candleStickChartView.rightAxis.drawAxisLineEnabled = true
     }
     
-    open override func viewDidAppear(_ animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let api = getAccount()!.activeExchange.api
-        self.fund = Fund(api: api)
-        self.bitcoin = BitCoin(api: api)
-        
-        let config = getChartConfig()
-        self.fund.monitoringInterval = getAppConfig().footerUpdateIntervalType
-        self.fund.delegate = self
-        self.bitcoin.monitoringInterval = config.chartUpdateIntervalType
-        self.bitcoin.delegate = self
-        self.candleChart.monitoringInterval = config.chartUpdateIntervalType
-        
-        let trader = getAccount()!.activeExchange.trader
-        trader.fund.delegate = trader
+        self.start()
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.fund.delegate = nil
-        self.bitcoin.delegate = nil
+        
+        self.stop()
+    }
+    
+    fileprivate func start() {
+        setBackgroundDelegate(delegate: self)
+        let api = getAccount()!.activeExchange.api
+        if self.fund == nil {
+            self.fund = Fund(api: api)
+            self.fund.monitoringInterval = getAppConfig().footerUpdateIntervalType
+            self.fund.delegate = self
+        }
+        
+        let config = getChartConfig()
+        if self.bitcoin == nil {
+            self.bitcoin = BitCoin(api: api)
+            self.bitcoin.monitoringInterval = config.chartUpdateIntervalType
+            self.bitcoin.delegate = self
+        }
+        self.candleChart.monitoringInterval = config.chartUpdateIntervalType
+        let trader = getAccount()!.activeExchange.trader
+        trader.fund.delegate = trader
+    }
+    
+    fileprivate func stop() {
+        if self.fund != nil {
+            self.fund.delegate = nil
+            self.fund = nil
+        }
+        if self.bitcoin != nil {
+            self.bitcoin.delegate = nil
+            self.bitcoin = nil
+        }
+        
     }
     
     // CandleChartDelegate
@@ -217,6 +237,15 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
                 }
             }
         }
+    }
+    
+    // AppBackgroundDelegate
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        self.start()
+    }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        self.stop()
     }
     
     fileprivate func switchChart(type: ChandleChartType, currencyPair: ApiCurrencyPair, api: Api) {

@@ -26,8 +26,8 @@ class NewAccountViewController: UIViewController, UITextFieldDelegate {
         self.navigationItem.backBarButtonItem = backButtonItem
         
         // for degug
-        //self.zaifApiKeyText.text = testKey
-        //self.zaifSecretKeyText.text = testSecret
+        self.zaifApiKeyText.text = testKey
+        self.zaifSecretKeyText.text = testSecret
         
         self.userIdText.delegate = self
         self.passwordText.delegate = self
