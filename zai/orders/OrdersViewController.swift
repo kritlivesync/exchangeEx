@@ -2,8 +2,8 @@
 //  OrdersViewController.swift
 //  zai
 //
-//  Created by 渡部郷太 on 12/24/16.
-//  Copyright © 2016 watanabe kyota. All rights reserved.
+//  Created by Kyota Watanabe on 12/24/16.
+//  Copyright © 2016 Kyota Watanabe. All rights reserved.
 //
 
 import Foundation
@@ -28,6 +28,10 @@ class OrdersViewController : UIViewController, OrderListViewDelegate {
         self.orderListView.delegate = self
         self.orderListView.startWatch()
         self.orderListView.reloadData()
+        
+        if let trader = getAccount()?.activeExchange.trader {
+            trader.fund.delegate = nil
+        }
     }
     
     open override func viewWillDisappear(_ animated: Bool) {

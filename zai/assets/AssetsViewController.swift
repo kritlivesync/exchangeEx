@@ -2,8 +2,8 @@
 //  AssetsViewController.swift
 //  zai
 //
-//  Created by 渡部郷太 on 12/13/16.
-//  Copyright © 2016 watanabe kyota. All rights reserved.
+//  Created by Kyota Watanabe on 12/13/16.
+//  Copyright © 2016 Kyota Watanabe. All rights reserved.
 //
 
 import UIKit
@@ -20,6 +20,10 @@ class AssetsViewController: UIViewController {
         super.viewWillAppear(animated)
         self.assetsView = AssetsView(view: self.assetsTableView)
         self.assetsView.startWatch()
+        
+        if let trader = getAccount()?.activeExchange.trader {
+            trader.fund.delegate = nil
+        }
     }
     
     open override func viewWillDisappear(_ animated: Bool) {

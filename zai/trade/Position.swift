@@ -2,7 +2,7 @@
 //  Position.swift
 //  
 //
-//  Created by 渡部郷太 on 8/23/16.
+//  Created by Kyota Watanabe on 8/23/16.
 //
 //
 

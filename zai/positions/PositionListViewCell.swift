@@ -2,8 +2,8 @@
 //  PositionListViewCell.swift
 //  zai
 //
-//  Created by 渡部郷太 on 9/8/16.
-//  Copyright © 2016 watanabe kyota. All rights reserved.
+//  Created by Kyota Watanabe on 9/8/16.
+//  Copyright © 2016 Kyota Watanabe. All rights reserved.
 //
 
 import Foundation
@@ -109,18 +109,26 @@ class PositionListViewCell : UITableViewCell {
         }
         
         let profit = Int(position.calculateUnrealizedProfit(marketPrice: Double(btcJpyPrice)))
-        let desc = formatValue(profit)
-        self.profitLabel.text = (profit < 0) ? desc : "+" + desc
+        let profitStr = formatValue(profit)
+        self.profitLabel.text = profitStr
+        if profit > 0 {
+            self.profitLabel.text = "+" + profitStr
+        }
         let profitPercent = round((Double(profit) / position.cost) * 10000.0) / 100.0
-        let descPercent = formatValue(profitPercent, digit: 2)
-        let percent = ((profitPercent < 0) ? descPercent : "+" + descPercent) + "%"
-        self.profitPercentLabel.text = "(\(percent))"
+        var percentStr = formatValue(profitPercent, digit: 2)
+        if profit > 0 {
+            percentStr = "+" + percentStr
+        }
+        self.profitPercentLabel.text = "(\(percentStr)%)"
         if profit < 0 {
             self.profitLabel.textColor = Color.askQuoteColor
             self.profitPercentLabel.textColor = Color.askQuoteColor
-        } else {
+        } else if profit > 0{
             self.profitLabel.textColor = Color.bidQuoteColor
             self.profitPercentLabel.textColor = Color.bidQuoteColor
+        } else {
+            self.profitLabel.textColor = UIColor.black
+            self.profitPercentLabel.textColor = UIColor.black
         }
     }
     

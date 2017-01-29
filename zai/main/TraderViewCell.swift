@@ -2,8 +2,8 @@
 //  TraderViewCell.swift
 //  zai
 //
-//  Created by 渡部郷太 on 8/26/16.
-//  Copyright © 2016 watanabe kyota. All rights reserved.
+//  Created by Kyota Watanabe on 8/26/16.
+//  Copyright © 2016 Kyota Watanabe. All rights reserved.
 //
 
 import Foundation

@@ -2,8 +2,8 @@
 //  NewAccountViewController.swift
 //  zai
 //
-//  Created by 渡部郷太 on 8/24/16.
-//  Copyright © 2016 watanabe kyota. All rights reserved.
+//  Created by Kyota Watanabe on 8/24/16.
+//  Copyright © 2016 Kyota Watanabe. All rights reserved.
 //
 
 import Foundation
@@ -26,8 +26,8 @@ class NewAccountViewController: UIViewController, UITextFieldDelegate {
         self.navigationItem.backBarButtonItem = backButtonItem
         
         // for degug
-        self.zaifApiKeyText.text = key_full
-        self.zaifSecretKeyText.text = secret_full
+        //self.zaifApiKeyText.text = testKey
+        //self.zaifSecretKeyText.text = testSecret
         
         self.userIdText.delegate = self
         self.passwordText.delegate = self
@@ -53,15 +53,15 @@ class NewAccountViewController: UIViewController, UITextFieldDelegate {
         self.activeIndicator.startAnimating()
         
         let userId = self.userIdText.text!
-        if userId == "" {
+        if validateUserId(userId: userId) == false {
             self.activeIndicator.stopAnimating()
-            self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: Resource.requiredUserIdAndPassword))
+            self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: Resource.invalidUserIdLength))
             return
         }
         let password = self.passwordText.text!
-        if password == "" {
+        if validatePassword(password: password) == false {
             self.activeIndicator.stopAnimating()
-            self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: Resource.requiredUserIdAndPassword))
+            self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: Resource.invalidPasswordLength))
             return
         }
         if let _ = AccountRepository.getInstance().findByUserId(userId) {
@@ -88,7 +88,7 @@ class NewAccountViewController: UIViewController, UITextFieldDelegate {
                         self.showError(error: ZaiError(errorType: .UNKNOWN_ERROR, message: Resource.accountCreationFailed))
                         return
                     }
-                    guard let exchange = repository.createZaifExchange(account: account, apiKey: apiKey, secretKey: secretKey, nonce: zaifApi.api.nonceValue) else {
+                    guard let _ = repository.createZaifExchange(account: account, apiKey: apiKey, secretKey: secretKey, nonce: zaifApi.api.nonceValue) else {
                         repository.delete(account)
                         self.showError(error: ZaiError(errorType: .UNKNOWN_ERROR, message: Resource.accountCreationFailed))
                         return
@@ -110,6 +110,8 @@ class NewAccountViewController: UIViewController, UITextFieldDelegate {
                         self.showError(error: ZaiError(errorType: .INVALID_API_KEYS_NO_PERMISSION, message: resource.apiKeyNoPermission))
                     case ApiErrorType.NONCE_NOT_INCREMENTED:
                         self.showError(error: ZaiError(errorType: ZaiErrorType.NONCE_NOT_INCREMENTED, message: resource.apiKeyNonceNotIncremented))
+                    case ApiErrorType.CONNECTION_ERROR:
+                        self.showError(error: ZaiError(errorType: ZaiErrorType.CONNECTION_ERROR, message: Resource.networkConnectionError))
                     default:
                         self.showError(error: ZaiError(errorType: .INVALID_API_KEYS, message: resource.invalidApiKey))
                     }

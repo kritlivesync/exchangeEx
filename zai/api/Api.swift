@@ -2,8 +2,8 @@
 //  Api.swift
 //  zai
 //
-//  Created by 渡部郷太 on 1/1/17.
-//  Copyright © 2017 watanabe kyota. All rights reserved.
+//  Created by Kyota Watanabe on 1/1/17.
+//  Copyright © 2017 Kyota Watanabe. All rights reserved.
 //
 
 import Foundation
@@ -32,7 +32,7 @@ protocol Api {
     func getActiveOrders(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, [String:ActiveOrder]) -> Void)
     func getTrades(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, [Trade]) -> Void)
     
-    func trade(order: Order, retryCount: Int, callback: @escaping (_ err: ApiError?, _ orderId: String, _ orderedPrice: Double) -> Void)
+    func trade(order: Order, retryCount: Int, callback: @escaping (_ err: ApiError?, _ orderId: String, _ orderedPrice: Double, _ orderedAmount: Double) -> Void)
     func cancelOrder(order: ActiveOrder, retryCount: Int, callback: @escaping (_ err: ApiError?) -> Void)
     
     func validateApi(callback: @escaping (_ err: ApiError?) -> Void)

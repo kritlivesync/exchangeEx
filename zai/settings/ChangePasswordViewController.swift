@@ -2,8 +2,8 @@
 //  ChangePasswordViewController.swift
 //  zai
 //
-//  Created by 渡部郷太 on 1/15/17.
-//  Copyright © 2017 watanabe kyota. All rights reserved.
+//  Created by Kyota Watanabe on 1/15/17.
+//  Copyright © 2017 Kyota Watanabe. All rights reserved.
 //
 
 import Foundation
@@ -38,24 +38,36 @@ class ChangePasswordViewController : UIViewController, UITextFieldDelegate {
             return
         }
         if !account.isEqualPassword(password: password) {
+            self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: Resource.invalidPassword))
             return
         }
         guard let newPw = self.newPassword.text else {
             return
         }
+        if validatePassword(password: newPw) == false {
+            self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: Resource.invalidPasswordLength))
+            return
+        }
         if password == newPw {
+            self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: Resource.passwordSameAsCurrent))
             return
         }
         guard let pwAgain = self.passwordAgain.text else {
             return
         }
         if newPw != pwAgain {
+            self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: Resource.passwordAgainNotMatch))
             return
         }
         if let _ = account.setPassword(password: newPw) {
             return
         }
         self.performSegue(withIdentifier: "unwindToSettings", sender: self)
+    }
+    
+    fileprivate func showError(error: ZaiError) {
+        let errorView = createErrorModal(message: error.message)
+        self.present(errorView, animated: false, completion: nil)
     }
 
     @IBOutlet weak var currentPassword: UITextField!

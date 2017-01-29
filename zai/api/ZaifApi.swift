@@ -2,8 +2,8 @@
 //  ZaifApi.swift
 //  zai
 //
-//  Created by 渡部郷太 on 1/1/17.
-//  Copyright © 2017 watanabe kyota. All rights reserved.
+//  Created by Kyota Watanabe on 1/1/17.
+//  Copyright © 2017 Kyota Watanabe. All rights reserved.
 //
 
 import Foundation
@@ -245,9 +245,9 @@ class ZaifApi : Api {
         }
     }
     
-    func trade(order: Order, retryCount: Int, callback: @escaping (ApiError?, String, Double) -> Void) {
+    func trade(order: Order, retryCount: Int, callback: @escaping (ApiError?, String, Double, Double) -> Void) {
         guard let zaifOrder = order.zaifOrder() else {
-            callback(ApiError(errorType: .UNKNOWN_ERROR), "", 0.0)
+            callback(ApiError(errorType: .UNKNOWN_ERROR), "", 0.0, 0.0)
             return
         }
         
@@ -260,26 +260,26 @@ class ZaifApi : Api {
                         return
                     } else {
                         print("trade: " + e.message)
-                        callback(ApiError(errorType: e.errorType.apiError, message: e.message), "", 0.0)
+                        callback(ApiError(errorType: e.errorType.apiError, message: e.message), "", 0.0, 0.0)
                         return
                     }
                 }
                 guard let result = res?["success"].int else {
-                    callback(ApiError(errorType: .UNKNOWN_ERROR), "", 0.0)
+                    callback(ApiError(errorType: .UNKNOWN_ERROR), "", 0.0, 0.0)
                     return
                 }
                 if result != 1 {
-                    callback(ApiError(errorType: .UNKNOWN_ERROR), "", 0.0)
+                    callback(ApiError(errorType: .UNKNOWN_ERROR), "", 0.0, 0.0)
                     return
                 }
                 guard let ordered = res?["return"].dictionary else {
-                    callback(ApiError(errorType: .UNKNOWN_ERROR), "", 0.0)
+                    callback(ApiError(errorType: .UNKNOWN_ERROR), "", 0.0, 0.0)
                     return
                 }
                 let orderId = ordered["order_id"]!.stringValue
                 let orderedPrice = ordered["order_price"]!.doubleValue
                 
-                callback(nil, orderId, orderedPrice)
+                callback(nil, orderId, orderedPrice, Double(zaifOrder.amountString)!)
                 self.delegate?.privateApiCalled(apiName: "trade")
             }
         }

@@ -2,8 +2,8 @@
 //  Resource.swift
 //  zai
 //
-//  Created by 渡部郷太 on 1/28/17.
-//  Copyright © 2017 watanabe kyota. All rights reserved.
+//  Created by Kyota Watanabe on 1/28/17.
+//  Copyright © 2017 Kyota Watanabe. All rights reserved.
 //
 
 import Foundation
@@ -13,14 +13,23 @@ class Resource {
     static var invalidUserIdOrPassword: String {
         return "ユーザーIDまたはパスワードが違います。"
     }
-    static var requiredUserIdAndPassword: String {
-        return "ユーザーIDとパスワードは必須です。"
+    static var invalidPassword: String {
+        return "現在のパスワードが違います。"
+    }
+    static var passwordSameAsCurrent: String {
+        return "現在と同じパスワードは設定できません。"
+    }
+    static var invalidUserIdLength: String {
+        return "ユーザーIDは\(minUserIdLength)〜\(maxUserIdLength)文字の範囲で設定してください。"
     }
     static var userIdAlreadyUsed: String {
         return "このユーザーIDは既に使われています。別のIDを入力してください。"
     }
     static var passwordAgainNotMatch: String {
-        return "パスワードが一致しません。再入力してください。"
+        return "再入力パスワードが一致しません。"
+    }
+    static var invalidPasswordLength: String {
+        return "パスワードは\(minPasswordLength)〜\(maxPasswordLength)文字の範囲で設定してください。"
     }
     static var accountCreationFailed: String {
         return "アカウント生成に失敗しました。"
@@ -38,7 +47,7 @@ class Resource {
         return "APIキーのnonce値の設定に失敗しました。しばらく時間を置くか、別のAPIキーを使用してください。"
     }
     var invalidApiKey: String {
-        return "不正なAPIキーです。"
+        return "有効なAPIキーを設定してください。"
     }
     
 }
@@ -52,6 +61,6 @@ class ZaifResource : Resource {
         return "Zaif APIキーのnonce値の設定に失敗しました。しばらく時間を置くか、別のAPIキーを使用してください。"
     }
     override var invalidApiKey: String {
-        return "不正なZaif APIキーです。"
+        return "有効なZaif APIキーを設定してください。"
     }
 }

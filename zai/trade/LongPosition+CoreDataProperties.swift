@@ -2,7 +2,7 @@
 //  LongPosition+CoreDataProperties.swift
 //  
 //
-//  Created by 渡部郷太 on 8/31/16.
+//  Created by Kyota Watanabe on 8/31/16.
 //
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu

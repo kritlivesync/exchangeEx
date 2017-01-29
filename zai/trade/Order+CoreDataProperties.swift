@@ -2,7 +2,7 @@
 //  Order+CoreDataProperties.swift
 //  
 //
-//  Created by 渡部郷太 on 12/25/16.
+//  Created by Kyota Watanabe on 12/25/16.
 //
 //
 

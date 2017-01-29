@@ -2,7 +2,7 @@
 //  BuyOrder+CoreDataClass.swift
 //  
 //
-//  Created by 渡部郷太 on 12/19/16.
+//  Created by Kyota Watanabe on 12/19/16.
 //
 //
 

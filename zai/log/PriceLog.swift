@@ -2,7 +2,7 @@
 //  PriceLog.swift
 //  
 //
-//  Created by 渡部郷太 on 9/19/16.
+//  Created by Kyota Watanabe on 9/19/16.
 //
 //
 

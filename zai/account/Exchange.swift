@@ -2,7 +2,7 @@
 //  ExchangeAccount+CoreDataClass.swift
 //  
 //
-//  Created by 渡部郷太 on 1/1/17.
+//  Created by Kyota Watanabe on 1/1/17.
 //
 //
 

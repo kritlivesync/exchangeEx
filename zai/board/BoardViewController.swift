@@ -2,8 +2,8 @@
 //  MainViewController.swift
 //  zai
 //
-//  Created by 渡部郷太 on 6/25/16.
-//  Copyright © 2016 watanabe kyota. All rights reserved.
+//  Created by Kyota Watanabe on 6/25/16.
+//  Copyright © 2016 Kyota Watanabe. All rights reserved.
 //
 
 import Foundation
@@ -52,7 +52,6 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
         self.board = nil
         self.fund.delegate = nil
         self.fund = nil
-        self.trader.fund.delegate = nil
     }
     
     // MonitorableDelegate

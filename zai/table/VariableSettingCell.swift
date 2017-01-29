@@ -2,8 +2,8 @@
 //  VariableSettingCell.swift
 //  zai
 //
-//  Created by 渡部郷太 on 1/14/17.
-//  Copyright © 2017 watanabe kyota. All rights reserved.
+//  Created by Kyota Watanabe on 1/14/17.
+//  Copyright © 2017 Kyota Watanabe. All rights reserved.
 //
 
 import Foundation

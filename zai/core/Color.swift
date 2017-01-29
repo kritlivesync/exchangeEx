@@ -2,8 +2,8 @@
 //  Color.swift
 //  zai
 //
-//  Created by 渡部郷太 on 12/28/16.
-//  Copyright © 2016 watanabe kyota. All rights reserved.
+//  Created by Kyota Watanabe on 12/28/16.
+//  Copyright © 2016 Kyota Watanabe. All rights reserved.
 //
 
 import Foundation

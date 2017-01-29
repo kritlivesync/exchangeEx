@@ -2,7 +2,7 @@
 //  PriceLog+CoreDataProperties.swift
 //  
 //
-//  Created by 渡部郷太 on 9/19/16.
+//  Created by Kyota Watanabe on 9/19/16.
 //
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu

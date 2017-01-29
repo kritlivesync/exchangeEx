@@ -2,7 +2,7 @@
 //  Order+CoreDataClass.swift
 //  
 //
-//  Created by 渡部郷太 on 12/19/16.
+//  Created by Kyota Watanabe on 12/19/16.
 //
 //
 
@@ -65,7 +65,7 @@ public class Order: NSManagedObject, ActiveOrderDelegate {
             return
         }
         
-        self.api?.trade(order: self, retryCount: 2) { (err, orderId, price) in
+        self.api?.trade(order: self, retryCount: 2) { (err, orderId, price, amount) in
             if let e = err {
                 self.status = NSNumber(value: OrderState.INVALID.rawValue)
                 self.activeOrderMonitor?.delegate = nil
@@ -83,6 +83,7 @@ public class Order: NSManagedObject, ActiveOrderDelegate {
                 self.orderId = orderId
                 self.orderTime = Int64(Date().timeIntervalSince1970) as NSNumber
                 self.orderPrice = price as NSNumber?
+                self.orderAmount = amount as NSNumber
                 self.status = NSNumber(value: OrderState.ORDERING.rawValue)
                 Database.getDb().saveContext()
                 cb(nil, self.orderId!)

@@ -2,8 +2,8 @@
 //  Validation.swift
 //  zai
 //
-//  Created by 渡部郷太 on 1/22/17.
-//  Copyright © 2017 watanabe kyota. All rights reserved.
+//  Created by Kyota Watanabe on 1/22/17.
+//  Copyright © 2017 Kyota Watanabe. All rights reserved.
 //
 
 import Foundation
@@ -100,13 +100,24 @@ func validateBtcAmount(amount: Double) -> Bool {
     return true
 }
 
+let minUserIdLength = 1
+let maxUserIdLength = 24
+func validateUserId(userId: String) -> Bool {
+    return minUserIdLength <= userId.characters.count && userId.characters.count <= maxUserIdLength
+}
+
+let minPasswordLength = 4
+let maxPasswordLength = 18
+func validatePassword(password: String) -> Bool {
+    return minPasswordLength <= password.characters.count && password.characters.count <= maxPasswordLength
+}
 
 func validateUserId(existingInput: String, addedString: String) -> Bool {
-    return existingInput.characters.count + addedString.characters.count <= 24
+    return existingInput.characters.count + addedString.characters.count <= maxUserIdLength
 }
 
 func validatePassword(existingInput: String, addedString: String) -> Bool {
-    return existingInput.characters.count + addedString.characters.count <= 18
+    return existingInput.characters.count + addedString.characters.count <= maxPasswordLength
 }
 
 

@@ -2,8 +2,8 @@
 //  Chart.swift
 //  zai
 //
-//  Created by 渡部郷太 on 1/4/17.
-//  Copyright © 2017 watanabe kyota. All rights reserved.
+//  Created by Kyota Watanabe on 1/4/17.
+//  Copyright © 2017 Kyota Watanabe. All rights reserved.
 //
 
 import Foundation
@@ -63,9 +63,6 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
         super.viewWillDisappear(animated)
         self.fund.delegate = nil
         self.bitcoin.delegate = nil
-        
-        let trader = getAccount()!.activeExchange.trader
-        trader.fund.delegate = nil
     }
     
     // CandleChartDelegate

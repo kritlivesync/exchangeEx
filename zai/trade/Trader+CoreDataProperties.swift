@@ -2,7 +2,7 @@
 //  Trader+CoreDataProperties.swift
 //  
 //
-//  Created by 渡部郷太 on 1/3/17.
+//  Created by Kyota Watanabe on 1/3/17.
 //
 //
 

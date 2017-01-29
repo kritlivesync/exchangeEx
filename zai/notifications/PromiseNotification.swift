@@ -2,8 +2,8 @@
 //  PromiseNotification.swift
 //  zai
 //
-//  Created by 渡部郷太 on 1/26/17.
-//  Copyright © 2017 watanabe kyota. All rights reserved.
+//  Created by Kyota Watanabe on 1/26/17.
+//  Copyright © 2017 Kyota Watanabe. All rights reserved.
 //
 
 import Foundation
@@ -40,7 +40,7 @@ class PromiseNotification : NSObject, UNUserNotificationCenterDelegate, Position
         let exchangeName = "取引所: \(exchange.name)"
         let currencyPair = exchange.displayCurrencyPair
         let price = "価格: \(formatValue(Int(promisedOrder.price)))¥"
-        let amount = "数量: \(promisedOrder.newlyPromisedAmount)Ƀ"
+        let amount = "数量: \(formatValue(promisedOrder.newlyPromisedAmount))Ƀ"
         let sum = "合計金額: \(formatValue(Int(promisedOrder.price * promisedOrder.newlyPromisedAmount)))"
         
         content.subtitle = exchangeName + "(\(currencyPair))"

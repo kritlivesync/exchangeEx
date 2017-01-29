@@ -2,8 +2,8 @@
 //  PositionsViewController.swift
 //  zai
 //
-//  Created by 渡部郷太 on 9/4/16.
-//  Copyright © 2016 watanabe kyota. All rights reserved.
+//  Created by Kyota Watanabe on 9/4/16.
+//  Copyright © 2016 Kyota Watanabe. All rights reserved.
 //
 
 import Foundation
@@ -48,8 +48,6 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
         super.viewWillDisappear(animated)
         self.positionListView.stopWatch()
         self.positionFundView.delegate = nil
-        
-        self.trader.fund.delegate = nil
     }
     
     @IBAction func pushAddPositionButton(_ sender: Any) {
