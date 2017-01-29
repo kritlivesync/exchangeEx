@@ -41,7 +41,7 @@ class PromiseNotification : NSObject, UNUserNotificationCenterDelegate, Position
         let currencyPair = exchange.displayCurrencyPair
         let price = "価格: \(formatValue(Int(promisedOrder.price)))¥"
         let amount = "数量: \(formatValue(promisedOrder.newlyPromisedAmount))Ƀ"
-        let sum = "合計金額: \(formatValue(Int(promisedOrder.price * promisedOrder.newlyPromisedAmount)))"
+        let sum = "合計金額: \(formatValue(Int(promisedOrder.price * promisedOrder.newlyPromisedAmount)))¥"
         
         content.subtitle = exchangeName + "(\(currencyPair))"
         content.body = price + "\n" + amount + "\n" + sum
