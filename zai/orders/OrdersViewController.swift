@@ -42,7 +42,7 @@ class OrdersViewController : UIViewController, OrderListViewDelegate, AppBackgro
             self.orderListView.reloadData()
         }
         if let trader = account?.activeExchange.trader {
-            trader.fund.delegate = nil
+            trader.stopWatch()
         }
     }
     

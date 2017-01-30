@@ -71,7 +71,7 @@ open class Trader: NSManagedObject, FundDelegate {
     
     func unwindMaxProfitPosition(price: Double?, amount: Double, marketPrice: Double, cb: @escaping (ZaiError?, Position?) -> Void) {
         guard let position = self.maxUnrealizedProfitPosition(marketPrice: marketPrice) else {
-            cb(ZaiError(errorType: .INVALID_POSITION), nil)
+            cb(ZaiError(errorType: .NO_POSITION_TO_UNWIND, message: Resource.noPositionsToUnwind), nil)
             return
         }
         self.unwindPosition(id: position.id, price: price, amount: amount, cb: cb)
@@ -79,7 +79,7 @@ open class Trader: NSManagedObject, FundDelegate {
     
     func unwindMaxLossPosition(price: Double?, amount: Double, marketPrice: Double, cb: @escaping (ZaiError?, Position?) -> Void) {
         guard let position = self.maxUnrealizedLossPosition(marketPrice: marketPrice) else {
-            cb(ZaiError(errorType: .INVALID_POSITION), nil)
+            cb(ZaiError(errorType: .NO_POSITION_TO_UNWIND, message: Resource.noPositionsToUnwind), nil)
             return
         }
         self.unwindPosition(id: position.id, price: price, amount: amount, cb: cb)
@@ -87,7 +87,7 @@ open class Trader: NSManagedObject, FundDelegate {
     
     func unwindMostRecentPosition(price: Double?, amount: Double, cb: @escaping (ZaiError?, Position?) -> Void) {
         guard let position = self.mostRecentPosition else {
-            cb(ZaiError(errorType: .INVALID_POSITION), nil)
+            cb(ZaiError(errorType: .NO_POSITION_TO_UNWIND, message: Resource.noPositionsToUnwind), nil)
             return
         }
         self.unwindPosition(id: position.id, price: price, amount: amount, cb: cb)
@@ -95,7 +95,7 @@ open class Trader: NSManagedObject, FundDelegate {
     
     func unwindMostOldPosition(price: Double?, amount: Double, cb: @escaping (ZaiError?, Position?) -> Void) {
         guard let position = self.mostOldPosition else {
-            cb(ZaiError(errorType: .INVALID_POSITION), nil)
+            cb(ZaiError(errorType: .NO_POSITION_TO_UNWIND, message: Resource.noPositionsToUnwind), nil)
             return
         }
         self.unwindPosition(id: position.id, price: price, amount: amount, cb: cb)
@@ -315,6 +315,20 @@ open class Trader: NSManagedObject, FundDelegate {
             return 0.0
         } else {
             return cost / totalAmount
+        }
+    }
+    
+    func startWatch() {
+        self.stopWatch()
+        let api = self.exchange.api
+        self.fund = Fund(api: api)
+        self.fund.delegate = self
+    }
+    
+    func stopWatch() {
+        if self.fund != nil {
+            self.fund.delegate = nil
+            self.fund = nil
         }
     }
     

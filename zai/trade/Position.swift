@@ -49,17 +49,17 @@ enum PositionState: Int {
     func toString() -> String {
         switch self {
         case .OPENING:
-            return "Opening"
+            return "\(LabelResource.positionStateOpening)"
         case .OPEN:
-            return "Open"
+            return "\(LabelResource.positionStateOpen)"
         case .CLOSED:
-            return "Closed"
+            return "\(LabelResource.positionStateClosed)"
         case .UNWINDING:
-            return "Unwinding"
+            return "\(LabelResource.positionStateUnwinding)"
         case .WAITING:
-            return "Waiting"
+            return "\(LabelResource.positionStateWaiting)"
         case .DELETED:
-            return "Deleted"
+            return "\(LabelResource.positionStateDeleted)"
         }
     }
     

@@ -30,6 +30,7 @@ class UserAccountSettingView : SettingView, ValueActionSettingDelegate, Variable
             cell.valueLabel.text = self.account.userId
             cell.actionButton.setTitle("ログアウト", for: UIControlState.normal)
             cell.actionButton.setTitleColor(Color.keyColor, for: UIControlState.normal)
+            cell.actionButton.isEnabled = true
             cell.delegate = self
             return cell
         case 1:
@@ -70,7 +71,8 @@ class UserAccountSettingView : SettingView, ValueActionSettingDelegate, Variable
     }
     
     // ValueActionSettingDelegate
-    func action(actionName: String) {
+    func action(cell: ValueActionSettingCell, actionName: String) {
+        cell.actionButton.isEnabled = false
         let userId = self.account.userId
         self.delegate?.loggedOut(userId: userId)
     }

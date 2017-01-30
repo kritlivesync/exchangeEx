@@ -33,6 +33,8 @@ fileprivate extension ZSErrorType {
             return ApiErrorType.CONNECTION_ERROR
         case ZSErrorType.NONCE_NOT_INCREMENTED:
             return ApiErrorType.NONCE_NOT_INCREMENTED
+        case ZSErrorType.INVALID_API_KEY:
+            return ApiErrorType.INVALID_API_KEY
         default:
             return ApiErrorType.UNKNOWN_ERROR
         }

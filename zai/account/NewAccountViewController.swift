@@ -75,41 +75,29 @@ class NewAccountViewController: UIViewController, UITextFieldDelegate {
             self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: Resource.passwordAgainNotMatch))
             return
         }
-        
+
         let apiKey = self.zaifApiKeyText.text!
         let secretKey = self.zaifSecretKeyText.text!
         let zaifApi = ZaifApi(apiKey: apiKey, secretKey: secretKey)
         zaifApi.validateApi() { err in
             DispatchQueue.main.async {
+                self.activeIndicator.stopAnimating()
+                
+                self.zaifApiNonce = zaifApi.api.nonceValue
                 let resource = ZaifResource()
-                if err == nil {
-                    let repository = AccountRepository.getInstance()
-                    guard let account = repository.create(userId, password: password) else {
-                        self.showError(error: ZaiError(errorType: .UNKNOWN_ERROR, message: Resource.accountCreationFailed))
-                        return
-                    }
-                    guard let _ = repository.createZaifExchange(account: account, apiKey: apiKey, secretKey: secretKey, nonce: zaifApi.api.nonceValue) else {
-                        repository.delete(account)
-                        self.showError(error: ZaiError(errorType: .UNKNOWN_ERROR, message: Resource.accountCreationFailed))
-                        return
-                    }
-                    
-                    let config = getGlobalConfig()
-                    config.previousUserId = userId
-                    _ = config.save()
-                    
-                    self.activeIndicator.stopAnimating()
-                    
+                if err == nil {          
                     self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self)
                 } else {
-                    
-                    self.activeIndicator.stopAnimating()
-                    
                     switch err!.errorType {
                     case ApiErrorType.NO_PERMISSION:
-                        self.showError(error: ZaiError(errorType: .INVALID_API_KEYS_NO_PERMISSION, message: resource.apiKeyNoPermission))
+                        self.showWarning(error: ZaiError(errorType: .INVALID_API_KEYS_NO_PERMISSION, message: resource.apiKeyNoPermission)) { action in
+                                self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self) }
                     case ApiErrorType.NONCE_NOT_INCREMENTED:
-                        self.showError(error: ZaiError(errorType: ZaiErrorType.NONCE_NOT_INCREMENTED, message: resource.apiKeyNonceNotIncremented))
+                        self.showWarning(error: ZaiError(errorType: ZaiErrorType.NONCE_NOT_INCREMENTED, message: resource.apiKeyNonceNotIncremented)) { action in
+                                self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self) }
+                    case ApiErrorType.INVALID_API_KEY:
+                        self.showWarning(error: ZaiError(errorType: ZaiErrorType.INVALID_API_KEYS, message: resource.invalidApiKey)) { action in
+                                self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self) }
                     case ApiErrorType.CONNECTION_ERROR:
                         self.showError(error: ZaiError(errorType: ZaiErrorType.CONNECTION_ERROR, message: Resource.networkConnectionError))
                     default:
@@ -119,12 +107,40 @@ class NewAccountViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let userId = self.userIdText.text!
+        let password = self.passwordText.text!
+        
+        let repository = AccountRepository.getInstance()
+        guard let account = repository.create(userId, password: password) else {
+            self.showError(error: ZaiError(errorType: .UNKNOWN_ERROR, message: Resource.accountCreationFailed))
+            return
+        }
+        let apiKey = self.zaifApiKeyText.text!
+        let secretKey = self.zaifSecretKeyText.text!
+        guard let _ = repository.createZaifExchange(account: account, apiKey: apiKey, secretKey: secretKey, nonce: self.zaifApiNonce) else {
+            repository.delete(account)
+            self.showError(error: ZaiError(errorType: .UNKNOWN_ERROR, message: Resource.accountCreationFailed))
+            return
+        }
+        
+        let config = getGlobalConfig()
+        config.previousUserId = userId
+        _ = config.save()
+    }
 
     fileprivate func showError(error: ZaiError) {
         let errorView = createErrorModal(title: error.errorType.toString(), message: error.message)
         self.present(errorView, animated: false, completion: nil)
     }
+    
+    fileprivate func showWarning(error: ZaiError, handler: @escaping ((UIAlertAction) -> Void)) {
+        let wariningView = createWarningModal(title: error.errorType.toString(), message: error.message, continueLabel: LabelResource.ignoreApiError, handler: handler)
+        self.present(wariningView, animated: false, completion: nil)
+    }
 
+    var zaifApiNonce: Int64 = 0
     
     @IBOutlet weak var userIdText: UITextField!
     @IBOutlet weak var passwordText: UITextField!

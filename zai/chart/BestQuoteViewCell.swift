@@ -43,12 +43,12 @@ class BestQuoteViewCell : UITableViewCell {
         self.amountLabel.text = formatValue(q.amount)
         switch q.type {
         case .ASK:
-            self.quoteTypeLabel.text = "最安\n売注文"
-            self.takerButtonAction = UITableViewRowAction(style: .normal, title: "買う", handler: self.take)
+            self.quoteTypeLabel.text = "\(LabelResource.bestAsk)"
+            self.takerButtonAction = UITableViewRowAction(style: .normal, title: "\(LabelResource.buy)", handler: self.take)
             self.takerButtonAction!.backgroundColor = Color.keyColor
         case .BID:
-            self.quoteTypeLabel.text = "最高\n買注文"
-            self.takerButtonAction = UITableViewRowAction(style: .normal, title: "売る", handler: self.take)
+            self.quoteTypeLabel.text = "\(LabelResource.bestBid)"
+            self.takerButtonAction = UITableViewRowAction(style: .normal, title: "\(LabelResource.sell)", handler: self.take)
             self.takerButtonAction!.backgroundColor = Color.antiKeyColor2
         }
     }

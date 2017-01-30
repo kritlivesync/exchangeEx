@@ -36,7 +36,7 @@ class AssetsViewController: UIViewController, AppBackgroundDelegate {
         }
         
         if let trader = getAccount()?.activeExchange.trader {
-            trader.fund.delegate = nil
+            trader.stopWatch()
         }
     }
     

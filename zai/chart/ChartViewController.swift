@@ -18,6 +18,8 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
         
         self.navigationController?.navigationBar.barTintColor = Color.keyColor
         
+        self.fundLabel.text = "-"
+        
         self.bestQuoteView = BestQuoteView(view: bestQuoteTableView)
         self.bestQuoteView.delegate = self
         
@@ -70,7 +72,7 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
         }
         self.candleChart.monitoringInterval = config.chartUpdateIntervalType
         let trader = getAccount()!.activeExchange.trader
-        trader.fund.delegate = trader
+        trader.startWatch()
     }
     
     fileprivate func stop() {
@@ -204,7 +206,7 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
             trader.unwindMaxProfitPosition(price: price, amount: amount, marketPrice: bestBid.price) { (err, position) in
                 callback()
                 if let e = err {
-                    let errorView = createErrorModal(title: e.errorType.toString(), message: e.message)
+                    let errorView = createErrorModal(message: e.message)
                     self.present(errorView, animated: false, completion: nil)
                 }
             }
@@ -216,7 +218,7 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
             trader.unwindMaxLossPosition(price: price, amount: amount, marketPrice: bestBid.price) { (err, position) in
                 callback()
                 if let e = err {
-                    let errorView = createErrorModal(title: e.errorType.toString(), message: e.message)
+                    let errorView = createErrorModal(message: e.message)
                     self.present(errorView, animated: false, completion: nil)
                 }
             }
@@ -224,7 +226,7 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
             trader.unwindMostRecentPosition(price: price, amount: amount) { (err, position) in
                 callback()
                 if let e = err {
-                    let errorView = createErrorModal(title: e.errorType.toString(), message: e.message)
+                    let errorView = createErrorModal(message: e.message)
                     self.present(errorView, animated: false, completion: nil)
                 }
             }
@@ -232,7 +234,7 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
             trader.unwindMostOldPosition(price: price, amount: amount) { (err, position) in
                 callback()
                 if let e = err {
-                    let errorView = createErrorModal(title: e.errorType.toString(), message: e.message)
+                    let errorView = createErrorModal(message: e.message)
                     self.present(errorView, animated: false, completion: nil)
                 }
             }

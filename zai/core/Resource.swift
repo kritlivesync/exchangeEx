@@ -49,7 +49,57 @@ class Resource {
     var invalidApiKey: String {
         return "有効なAPIキーを設定してください。"
     }
-    
+    var invalidApiKeyRestricted: String {
+        return "残高表示や取引機能が制限されます。設定画面で有効なAPIキーを設定してください。"
+    }
+    static var noPositionsToUnwind: String {
+        return "解消できるポジションがありません。"
+    }
+}
+
+class LabelResource {
+    static var positionStateOpen: String {
+        return "オープン"
+    }
+    static var positionStateClosed: String {
+        return "クローズ"
+    }
+    static var positionStateUnwinding: String {
+        return "解消中"
+    }
+    static var positionStateOpening: String {
+        return "作成中"
+    }
+    static var positionStateWaiting: String {
+        return "待機中"
+    }
+    static var positionStateDeleted: String {
+        return "削除済み"
+    }
+    static var delete: String {
+        return "削除"
+    }
+    static var unwind: String {
+        return "解消"
+    }
+    static var buy: String {
+        return "買う"
+    }
+    static var sell: String {
+        return "売る"
+    }
+    static var make: String {
+        return "メイク"
+    }
+    static var bestBid: String {
+        return "最高\n買注文"
+    }
+    static var bestAsk: String {
+        return "最安\n売注文"
+    }
+    static var ignoreApiError: String {
+        return "後で設定する"
+    }
 }
 
 class ZaifResource : Resource {

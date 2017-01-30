@@ -100,7 +100,7 @@ class AccountRepository {
         }
     }
     
-    func createZaifExchange(account: Account, apiKey: String, secretKey: String, nonce: Int64) -> ZaifExchange? {
+    func createZaifExchange(account: Account, apiKey: String, secretKey: String, nonce: Int64=0) -> ZaifExchange? {
         let db = Database.getDb()
         
         guard let encryptedApiKey = Crypt.encrypt(key: account.ppw!, src: apiKey) else {

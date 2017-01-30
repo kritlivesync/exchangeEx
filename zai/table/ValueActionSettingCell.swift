@@ -11,14 +11,14 @@ import UIKit
 
 
 protocol ValueActionSettingDelegate {
-    func action(actionName: String)
+    func action(cell: ValueActionSettingCell, actionName: String)
 }
 
 
 class ValueActionSettingCell : UITableViewCell {
     
     @IBAction func pushActionButton(_ sender: Any) {
-        self.delegate?.action(actionName: self.actionButton.titleLabel!.text!)
+        self.delegate?.action(cell: self, actionName: self.actionButton.titleLabel!.text!)
     }
     
     @IBOutlet weak var valueLabel: UILabel!

@@ -55,7 +55,7 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
             self.positionFundView.monitoringInterval = getAppConfig().footerUpdateIntervalType
             self.positionFundView.delegate = self
         }
-        self.trader.fund.delegate = self.trader
+        self.trader.startWatch()
     }
     
     fileprivate func stop() {

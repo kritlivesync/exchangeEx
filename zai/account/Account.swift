@@ -46,7 +46,7 @@ open class Account: NSManagedObject {
     func loggout() {
         let exchange = self.activeExchange
         _ = exchange.saveApiKey(cryptKey: self.ppw!)
-        exchange.trader.fund.delegate = nil
+        exchange.trader.stopWatch()
         
         for order in exchange.trader.activeOrders {
             order.activeOrderMonitor?.delegate = nil

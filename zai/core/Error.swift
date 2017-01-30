@@ -25,6 +25,7 @@ public enum ZaiErrorType : Error {
     case CONNECTION_ERROR
     case ZAIF_CONNECTION_ERROR
     case INVALID_POSITION
+    case NO_POSITION_TO_UNWIND
     case UNKNOWN_ERROR
     
     func toString() -> String {
@@ -34,7 +35,7 @@ public enum ZaiErrorType : Error {
         case .INVALID_ORDER:
             return "注文エラー"
         case .INVALID_API_KEYS:
-            return "APIキーエラー"
+            return "無効なAPIキー"
         case .INVALID_API_KEYS_NO_PERMISSION:
             return "権限エラー"
         case .INVALID_ACCOUNT_INFO:
@@ -72,5 +73,14 @@ func createErrorModal(title: String="", message: String, handler: ((UIAlertActio
     let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
     let action = UIAlertAction(title: "OK", style: .default, handler: handler)
     controller.addAction(action)
+    return controller
+}
+
+func createWarningModal(title: String="", message: String, continueLabel: String, handler: ((UIAlertAction) -> Void)?=nil) -> UIAlertController {
+    let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    let action = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+    controller.addAction(action)
+    let continueAction = UIAlertAction(title: continueLabel, style: .default, handler: handler)
+    controller.addAction(continueAction)
     return controller
 }

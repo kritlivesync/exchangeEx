@@ -31,6 +31,8 @@ public class ZaifExchange: Exchange, ZaiApiDelegate {
                     cb(ZaiError(errorType: .INVALID_API_KEYS_NO_PERMISSION, message: resource.apiKeyNoPermission))
                 case ApiErrorType.NONCE_NOT_INCREMENTED:
                     cb(ZaiError(errorType: ZaiErrorType.NONCE_NOT_INCREMENTED, message: resource.apiKeyNonceNotIncremented))
+                case ApiErrorType.INVALID_API_KEY:
+                    cb(ZaiError(errorType: ZaiErrorType.INVALID_API_KEYS, message: resource.invalidApiKeyRestricted))
                 case ApiErrorType.CONNECTION_ERROR:
                     cb(ZaiError(errorType: ZaiErrorType.CONNECTION_ERROR, message: Resource.networkConnectionError))
                 default:

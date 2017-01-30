@@ -56,7 +56,7 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
             self.fund.delegate = self
         }
         self.trader = account.activeExchange.trader
-        self.trader.fund.delegate = self.trader
+        self.trader.startWatch()
     }
     
     fileprivate func stop() {
@@ -119,7 +119,7 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
             self.trader.unwindMaxProfitPosition(price: quote.price, amount: quote.amount, marketPrice: bestBid.price) { (err, position) in
                 callback()
                 if let e = err {
-                    let errorView = createErrorModal(title: e.errorType.toString(), message: e.message)
+                    let errorView = createErrorModal(message: e.message)
                     self.present(errorView, animated: false, completion: nil)
                 }
             }
@@ -127,7 +127,7 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
             self.trader.unwindMaxLossPosition(price: quote.price, amount: quote.amount, marketPrice: bestBid.price) { (err, position) in
                 callback()
                 if let e = err {
-                    let errorView = createErrorModal(title: e.errorType.toString(), message: e.message)
+                    let errorView = createErrorModal(message: e.message)
                     self.present(errorView, animated: false, completion: nil)
                 }
             }
@@ -135,7 +135,7 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
             self.trader.unwindMostRecentPosition(price: quote.price, amount: quote.amount) { (err, position) in
                 callback()
                 if let e = err {
-                    let errorView = createErrorModal(title: e.errorType.toString(), message: e.message)
+                    let errorView = createErrorModal(message: e.message)
                     self.present(errorView, animated: false, completion: nil)
                 }
             }
@@ -143,7 +143,7 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
             self.trader.unwindMostOldPosition(price: quote.price, amount: quote.amount) { (err, position) in
                 callback()
                 if let e = err {
-                    let errorView = createErrorModal(title: e.errorType.toString(), message: e.message)
+                    let errorView = createErrorModal(message: e.message)
                     self.present(errorView, animated: false, completion: nil)
                 }
             }

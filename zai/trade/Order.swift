@@ -74,6 +74,8 @@ public class Order: NSManagedObject, ActiveOrderDelegate {
                     cb(ZaiError(errorType: .INVALID_API_KEYS_NO_PERMISSION, message: getResource().apiKeyNoPermission), nil)
                 case ApiErrorType.NONCE_NOT_INCREMENTED:
                     cb(ZaiError(errorType: .NONCE_NOT_INCREMENTED, message: getResource().apiKeyNonceNotIncremented), nil)
+                case ApiErrorType.INVALID_API_KEY:
+                    cb(ZaiError(errorType: .INVALID_API_KEYS, message: getResource().invalidApiKeyRestricted), nil)
                 case ApiErrorType.CONNECTION_ERROR:
                     cb(ZaiError(errorType: .CONNECTION_ERROR, message: Resource.networkConnectionError), nil)
                 default:

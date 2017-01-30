@@ -59,7 +59,7 @@ class PositionListViewCell : UITableViewCell {
         self.unwind20Action = nil
         self.editingAction = nil
         if status.isDelete == false {
-            self.deleteAction = UITableViewRowAction(style: .default, title: "Delete") { (_, _) in
+            self.deleteAction = UITableViewRowAction(style: .default, title: "\(LabelResource.delete)") { (_, _) in
                 self.delegate?.pushedDeleteButton(cell: self, position: self.position!)
             }
             self.deleteAction?.backgroundColor = UIColor.red
@@ -75,15 +75,15 @@ class PositionListViewCell : UITableViewCell {
          */
         
         if status.isOpen {
-            self.unwind100Action = UITableViewRowAction(style: .normal, title: "Unwind\n(100%)") { (_, _) in
+            self.unwind100Action = UITableViewRowAction(style: .normal, title: "\(LabelResource.unwind)\n(100%)") { (_, _) in
                 self.delegate?.pushedUnwindButton(cell: self, position: self.position!, rate: 1.0)
             }
             self.unwind100Action?.backgroundColor = Color.unwind100Color
-            self.unwind50Action = UITableViewRowAction(style: .normal, title: "Unwind\n(50%)") { (_, _) in
+            self.unwind50Action = UITableViewRowAction(style: .normal, title: "\(LabelResource.unwind)\n(50%)") { (_, _) in
                 self.delegate?.pushedUnwindButton(cell: self, position: self.position!, rate: 0.5)
             }
             self.unwind50Action?.backgroundColor = Color.unwind50Color
-            self.unwind20Action = UITableViewRowAction(style: .normal, title: "Unwind\n(20%)") { (_, _) in
+            self.unwind20Action = UITableViewRowAction(style: .normal, title: "\(LabelResource.unwind)\n(20%)") { (_, _) in
                 self.delegate?.pushedUnwindButton(cell: self, position: self.position!, rate: 0.2)
             }
             self.unwind20Action?.backgroundColor = Color.unwind20Color

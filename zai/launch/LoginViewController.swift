@@ -50,7 +50,9 @@ class LoginViewController: UIViewController, UINavigationBarDelegate, UITextFiel
                 if let e = err {
                     self.activeIndicator.stopAnimating()
                     let errorView = createErrorModal(title: e.errorType.toString(), message: e.message) { action in
-                        if e.errorType == .INVALID_API_KEYS_NO_PERMISSION || e.errorType == .NONCE_NOT_INCREMENTED {
+                        if e.errorType == .INVALID_API_KEYS_NO_PERMISSION ||
+                           e.errorType == .NONCE_NOT_INCREMENTED ||
+                           e.errorType == .INVALID_API_KEYS {
                             self.performSegue(withIdentifier: self.mainViewSegue, sender: nil)
                         }
                     }
