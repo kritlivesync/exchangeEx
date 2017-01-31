@@ -76,7 +76,7 @@
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </textAttributes>
                                 <items>
-                                    <navigationItem title="ログイン" id="2br-hF-rOm"/>
+                                    <navigationItem title="exchangeEx" id="2br-hF-rOm"/>
                                 </items>
                             </navigationBar>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="TeX-jU-PD4">
@@ -719,7 +719,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="zVm-xr-0aN">
-                                                    <rect key="frame" x="394" y="25.333333333333336" width="20" height="20.000000000000007"/>
+                                                    <rect key="frame" x="394" y="24.666666666666664" width="20" height="19.999999999999993"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>
@@ -1455,7 +1455,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="4UZ-96-iNW">
-                                                    <rect key="frame" x="394" y="25.333333333333336" width="20" height="20.000000000000007"/>
+                                                    <rect key="frame" x="394" y="25.666666666666664" width="20" height="19.999999999999993"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>

@@ -8,6 +8,8 @@
 
 import UIKit
 
+import Firebase
+
 
 
 protocol AppBackgroundDelegate {
@@ -25,6 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     
         self.notification = PromiseNotification()
+        
+        FIRApp.configure()
+        GADMobileAds.configure(withApplicationID: getGlobalConfig().appId)
         
         return true
     }
@@ -82,6 +87,21 @@ func createResource(exchangeName: String) -> Resource {
     default:
         return Resource()
     }
+}
+
+func createAdView(parent: UIViewController) -> GADBannerView {
+    let admob = GADBannerView(adSize:kGADAdSizeBanner)
+    var posY = parent.view.frame.size.height - admob.frame.height
+    if let nabbar =  parent.navigationController?.navigationBar {
+        posY -= nabbar.frame.size.height
+    }
+    if let tabar = parent.tabBarController?.tabBar {
+        posY -= tabar.frame.size.height
+    }
+    admob.frame.origin = CGPoint(x: 0, y: posY)
+    admob.frame.size = CGSize(width: parent.view.frame.width, height: admob.frame.height)
+    admob.adUnitID = getGlobalConfig().unitId
+    return admob
 }
 
 func getResource() -> Resource {

@@ -8,12 +8,20 @@
 
 import UIKit
 
+import GoogleMobileAds
+
+
 class AssetsViewController: UIViewController, AppBackgroundDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.barTintColor = Color.keyColor
+        
+        let admob = createAdView(parent: self)
+        admob.rootViewController = self
+        admob.load(GADRequest())
+        self.view.addSubview(admob)
     }
     
     open override func viewWillAppear(_ animated: Bool) {

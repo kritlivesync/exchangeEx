@@ -76,4 +76,15 @@ open class GlobalConfig : Config {
         }
     }
     
+    var appId: String {
+        return "ca-app-pub-3081058918090419~5573566486"
+    }
+    
+    var unitId: String {
+        return "ca-app-pub-3081058918090419/3957232483"
+    }
+    
+    var testUnitId: String {
+        return "ca-app-pub-3940256099942544/2934735716"
+    }
 }

@@ -6,3 +6,4 @@ zai/Config.plist
 zai/core/Keys.swift
 zai/core/Crypt.swift
 zai/analytics/Feature.swift
+zai/GoogleService-Info.plist

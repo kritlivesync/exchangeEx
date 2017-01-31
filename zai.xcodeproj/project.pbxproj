@@ -98,6 +98,7 @@
 		B8B845821D66041D00535638 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B845801D66041D00535638 /* LaunchScreen.storyboard */; };
 		B8B8458D1D66041D00535638 /* zaiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B8458C1D66041D00535638 /* zaiTests.swift */; };
 		B8B845981D66041D00535638 /* zaiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845971D66041D00535638 /* zaiUITests.swift */; };
+		B8C704711E40DC6D00659C9F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8C704701E40DC6D00659C9F /* GoogleService-Info.plist */; };
 		B8C7DEE51E2B263D00E666F0 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C7DEE41E2B263D00E666F0 /* ChangePasswordViewController.swift */; };
 		B8C7DEEB1E2B620C00E666F0 /* ChangeZaifApiKeyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C7DEEA1E2B620C00E666F0 /* ChangeZaifApiKeyController.swift */; };
 		B8C7DEED1E2D026300E666F0 /* AppSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C7DEEC1E2D026300E666F0 /* AppSettingView.swift */; };
@@ -248,6 +249,7 @@
 		B8B845931D66041D00535638 /* zaiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = zaiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8B845971D66041D00535638 /* zaiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = zaiUITests.swift; sourceTree = "<group>"; };
 		B8B845991D66041D00535638 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B8C704701E40DC6D00659C9F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B8C7DEE41E2B263D00E666F0 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChangePasswordViewController.swift; path = settings/ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		B8C7DEEA1E2B620C00E666F0 /* ChangeZaifApiKeyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChangeZaifApiKeyController.swift; path = settings/ChangeZaifApiKeyController.swift; sourceTree = "<group>"; };
 		B8C7DEEC1E2D026300E666F0 /* AppSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppSettingView.swift; path = settings/AppSettingView.swift; sourceTree = "<group>"; };
@@ -545,6 +547,7 @@
 		B8B845761D66041D00535638 /* zai */ = {
 			isa = PBXGroup;
 			children = (
+				B8C704701E40DC6D00659C9F /* GoogleService-Info.plist */,
 				B85E8E261D6F3AA200C029C8 /* account */,
 				B8002D6C1D8D10DA0079AB9B /* analytics */,
 				B84113FB1E18A88B000EB0F8 /* api */,
@@ -715,7 +718,7 @@
 				TargetAttributes = {
 					B8B845731D66041D00535638 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = N5PQP73B36;
+						DevelopmentTeam = CNEXNH4Z26;
 						LastSwiftMigration = 0800;
 					};
 					B8B845871D66041D00535638 = {
@@ -763,6 +766,7 @@
 				B8B845821D66041D00535638 /* LaunchScreen.storyboard in Resources */,
 				B8B8457F1D66041D00535638 /* Assets.xcassets in Resources */,
 				B8B8457D1D66041D00535638 /* Main.storyboard in Resources */,
+				B8C704711E40DC6D00659C9F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1093,6 +1097,7 @@
 			baseConfigurationReference = 47AE790BD03FD1B5B46D105B /* Pods-zai.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = CNEXNH4Z26;
 				INFOPLIST_FILE = zai/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1108,6 +1113,7 @@
 			baseConfigurationReference = 2B79EE9EF789B6523DE18096 /* Pods-zai.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = CNEXNH4Z26;
 				INFOPLIST_FILE = zai/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -8,7 +8,6 @@
 
 import Foundation
 
-import AMScrollingNavbar
 import ZaifSwift
 
 class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardViewDelegate, AppBackgroundDelegate {
