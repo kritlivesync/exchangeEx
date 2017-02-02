@@ -25,6 +25,8 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
         self.btcFund.text = "-"
         
         self.addPositionButton.tintColor = Color.antiKeyColor
+        
+        self.positionListView = PositionListView(view: self.tableView)
     }
     
     open override func viewWillAppear(_ animated: Bool) {
@@ -44,12 +46,10 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
         let account = getAccount()
         self.trader = account!.activeExchange.trader
         
-        if self.positionListView == nil {
-            self.positionListView = PositionListView(view: self.tableView, trader: self.trader)
-            self.positionListView.delegate = self
-            self.positionListView.startWatch()
-            self.positionListView.reloadData()
-        }
+        self.positionListView.delegate = self
+        self.positionListView.startWatch(trader: self.trader)
+        self.positionListView.reloadData()
+        
         if self.positionFundView == nil {
             self.positionFundView = PositionFundView(trader: self.trader)
             self.positionFundView.monitoringInterval = getAppConfig().footerUpdateIntervalType
@@ -59,11 +59,9 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
     }
     
     fileprivate func stop() {
-        if self.positionListView != nil {
-            self.positionListView.stopWatch()
-            self.positionListView.delegate = nil
-            self.positionListView = nil
-        }
+        self.positionListView.stopWatch()
+        self.positionListView.delegate = nil
+        
         if self.positionFundView != nil {
             self.positionFundView.delegate = nil
             self.positionFundView = nil

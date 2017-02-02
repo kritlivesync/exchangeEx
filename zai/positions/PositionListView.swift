@@ -20,15 +20,13 @@ protocol PositionListViewDelegate {
 
 class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, BitCoinDelegate, PositionListViewCellDelegate {
     
-    init(view: UITableView, trader: Trader) {
-        self.trader = trader
+    init(view: UITableView) {
         self.positions = [Position]()
         self.view = view
         self.view.tableFooterView = UIView()
         self.view.contentInset = UIEdgeInsetsMake(-1.0, 0.0, 0.0, 0.0);
         
         super.init()
-        self.updatePositionList()
         self.view.delegate = self
         self.view.dataSource = self
     }
@@ -101,7 +99,10 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, B
     
     // PositionListViewCellDelegate
     func pushedDeleteButton(cell: PositionListViewCell, position: Position) {
-        if self.trader.deletePosition(id: position.id) {
+        guard let trader = self.trader else {
+            return
+        }
+        if trader.deletePosition(id: position.id) {
             self.updatePositionList()
             if let index = self.view.indexPath(for: cell) {
                 self.view.deleteRows(at: [index], with: UITableViewRowAnimation.fade)
@@ -117,6 +118,9 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, B
     }
     
     func pushedUnwindButton(cell: PositionListViewCell, position: Position, rate: Double) {
+        guard let trader = self.trader else {
+            return
+        }
         if cell.activeIndicator.isAnimating {
             return
         }
@@ -126,9 +130,9 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, B
             self.view.reloadRows(at: [index], with: UITableViewRowAnimation.right)
         }
         var amount = position.balance * rate
-        amount = max(amount, self.trader.exchange.api.orderUnit(currencyPair: position.currencyPair))
-        self.trader.exchange.api.getTicker(currencyPair: position.currencyPair) { (err, tick) in
-            self.trader.unwindPosition(id: position.id, price: tick.bid, amount: amount) { (err, _) in
+        amount = max(amount, trader.exchange.api.orderUnit(currencyPair: position.currencyPair))
+        trader.exchange.api.getTicker(currencyPair: position.currencyPair) { (err, tick) in
+            trader.unwindPosition(id: position.id, price: tick.bid, amount: amount) { (err, _) in
                 if let e = err {
                     position.open()
                     self.delegate?.error(error: e)
@@ -147,8 +151,11 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, B
     }
     
     func updatePositionList() {
+        guard let trader = self.trader else {
+            return
+        }
         self.positions.removeAll()
-        for pos in self.trader.allPositions {
+        for pos in trader.allPositions {
             if !pos.isDelete && !pos.isOpening {
                 self.positions.append(pos)
             }
@@ -160,7 +167,8 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, B
         self.view.reloadData()
     }
     
-    internal func startWatch() {
+    internal func startWatch(trader: Trader) {
+        self.trader = trader
         let api = self.trader.exchange.api
         self.bitcoin = BitCoin(api: api)
         let interval = getPositionsConfig().positionUpdateIntervalType

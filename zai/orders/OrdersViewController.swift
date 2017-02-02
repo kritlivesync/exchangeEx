@@ -18,6 +18,8 @@ class OrdersViewController : UIViewController, OrderListViewDelegate, AppBackgro
         self.navigationController?.navigationBar.barTintColor = Color.keyColor
         
         self.ordersHeadersLabel.backgroundColor = Color.keyColor2
+        
+        self.orderListView = OrderListView(view: self.orderTableView)
     }
     
     open override func viewWillAppear(_ animated: Bool) {
@@ -34,24 +36,18 @@ class OrdersViewController : UIViewController, OrderListViewDelegate, AppBackgro
     
     fileprivate func start() {
         setBackgroundDelegate(delegate: self)
-        let account = getAccount()
-        if self.orderListView == nil {
-            self.orderListView = OrderListView(view: self.orderTableView, trader: account!.activeExchange.trader)
-            self.orderListView.delegate = self
-            self.orderListView.startWatch()
-            self.orderListView.reloadData()
-        }
-        if let trader = account?.activeExchange.trader {
-            trader.stopWatch()
-        }
+        let account = getAccount()!
+        let trader = account.activeExchange.trader
+        self.orderListView.delegate = self
+        self.orderListView.startWatch(trader: trader)
+        self.orderListView.reloadData()
+        
+        trader.stopWatch()
     }
     
     fileprivate func stop() {
-        if self.orderListView != nil {
-            self.orderListView.stopWatch()
-            self.orderListView.delegate = nil
-            self.orderListView = nil
-        }
+        self.orderListView.stopWatch()
+        self.orderListView.delegate = nil
     }
     
     @IBAction func pushSettingsButton(_ sender: Any) {

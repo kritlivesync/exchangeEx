@@ -17,8 +17,7 @@ protocol OrderListViewDelegate {
 
 class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, ActiveOrderDelegate, OrderListViewCellDelegate {
     
-    init(view: UITableView, trader: Trader) {
-        self.trader = trader
+    init(view: UITableView) {
         self.orders = [ActiveOrder]()
         self.view = view
         self.view.tableFooterView = UIView()
@@ -68,11 +67,14 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
     }
     
     func pushedCancelButton(cell : OrderListViewCell, order: ActiveOrder) {
+        guard let trader = self.trader else {
+            return
+        }
         if cell.activeIndicator.isAnimating {
             return
         }
         cell.activeIndicator.startAnimating()
-        self.trader.cancelOrder(id: order.id) { err in
+        trader.cancelOrder(id: order.id) { err in
             DispatchQueue.main.async {
                 cell.activeIndicator.stopAnimating()
                 if let e = err {
@@ -86,7 +88,8 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
         self.view.reloadData()
     }
     
-    internal func startWatch() {
+    internal func startWatch(trader: Trader) {
+        self.trader = trader
         if self.orderMonitor == nil {
             self.orderMonitor = ActiveOrderMonitor(currencyPair: .BTC_JPY, api: self.trader.exchange.api)
             self.orderMonitor.monitoringInterval = getOrdersConfig().orderUpdateIntervalType
@@ -134,8 +137,11 @@ class OrderListView : NSObject, UITableViewDelegate, UITableViewDataSource, Acti
     }
     
     fileprivate func filterOrders(activeOrders: [String: ActiveOrder]) -> [ActiveOrder] {
+        guard let trader = self.trader else {
+            return [ActiveOrder]()
+        }
         var myOrders = [ActiveOrder]()
-        for order in self.trader.activeOrders {
+        for order in trader.activeOrders {
             guard let id = order.orderId else {
                 continue
             }

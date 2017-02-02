@@ -22,6 +22,8 @@ class AssetsViewController: UIViewController, AppBackgroundDelegate {
         admob.rootViewController = self
         admob.load(GADRequest())
         self.view.addSubview(admob)
+        
+        self.assetsView = AssetsView(view: self.assetsTableView)
     }
     
     open override func viewWillAppear(_ animated: Bool) {
@@ -38,10 +40,7 @@ class AssetsViewController: UIViewController, AppBackgroundDelegate {
     
     fileprivate func start() {
         setBackgroundDelegate(delegate: self)
-        if self.assetsView == nil {
-            self.assetsView = AssetsView(view: self.assetsTableView)
-            self.assetsView.startWatch()
-        }
+        self.assetsView.startWatch()
         
         if let trader = getAccount()?.activeExchange.trader {
             trader.stopWatch()
@@ -49,10 +48,7 @@ class AssetsViewController: UIViewController, AppBackgroundDelegate {
     }
     
     fileprivate func stop() {
-        if self.assetsView != nil {
-            self.assetsView.stopWatch()
-            self.assetsView = nil
-        }
+        self.assetsView.stopWatch()
     }
     
     // AppBackgroundDelegate
