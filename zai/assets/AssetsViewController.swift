@@ -17,6 +17,12 @@ class AssetsViewController: UIViewController, AppBackgroundDelegate {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.barTintColor = Color.keyColor
+        if let image = self.tabBarController?.tabBar.items?[0].selectedImage {
+            self.tabBarController?.tabBar.items?[0].selectedImage = image.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        }
+        if let image = self.tabBarController?.tabBar.items?[0].image {
+            self.tabBarController?.tabBar.items?[0].image = image.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        }
         
         let admob = createAdView(parent: self)
         admob.rootViewController = self

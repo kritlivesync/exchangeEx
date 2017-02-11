@@ -15,7 +15,7 @@ class PromiseNotification : NSObject, UNUserNotificationCenterDelegate, Position
     override init() {
         super.init()
         let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.alert], completionHandler: { (granted, error) in
+        center.requestAuthorization(options: [.alert, .sound], completionHandler: { (granted, error) in
         })
         center.delegate = self
     }
@@ -45,6 +45,7 @@ class PromiseNotification : NSObject, UNUserNotificationCenterDelegate, Position
         
         content.subtitle = exchangeName + "(\(currencyPair))"
         content.body = price + "\n" + amount + "\n" + sum
+        content.sound = UNNotificationSound.default()
 
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.1, repeats: false)
         let request = UNNotificationRequest(identifier: "promised",
