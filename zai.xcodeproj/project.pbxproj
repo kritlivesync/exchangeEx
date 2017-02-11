@@ -97,7 +97,6 @@
 		B8B29A7E1E4A10B600ED3F64 /* board.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B8B29A7A1E4A10B600ED3F64 /* board.PNG */; };
 		B8B29A7F1E4A10B600ED3F64 /* config.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B8B29A7B1E4A10B600ED3F64 /* config.PNG */; };
 		B8B29A801E4A10B600ED3F64 /* positions.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B8B29A7C1E4A10B600ED3F64 /* positions.PNG */; };
-		B8B29A831E4A117300ED3F64 /* assets.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B8B29A821E4A117300ED3F64 /* assets.PNG */; };
 		B8B8457D1D66041D00535638 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B8457B1D66041D00535638 /* Main.storyboard */; settings = {ASSET_TAGS = (4, ); }; };
 		B8B8457F1D66041D00535638 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8B8457E1D66041D00535638 /* Assets.xcassets */; };
 		B8B845821D66041D00535638 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B845801D66041D00535638 /* LaunchScreen.storyboard */; };
@@ -247,7 +246,6 @@
 		B8B29A7A1E4A10B600ED3F64 /* board.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = board.PNG; path = icons/board.PNG; sourceTree = "<group>"; };
 		B8B29A7B1E4A10B600ED3F64 /* config.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = config.PNG; path = icons/config.PNG; sourceTree = "<group>"; };
 		B8B29A7C1E4A10B600ED3F64 /* positions.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = positions.PNG; path = icons/positions.PNG; sourceTree = "<group>"; };
-		B8B29A821E4A117300ED3F64 /* assets.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = assets.PNG; path = icons/assets.PNG; sourceTree = "<group>"; };
 		B8B845741D66041D00535638 /* zai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = zai.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8B8457C1D66041D00535638 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B8B8457E1D66041D00535638 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -535,7 +533,6 @@
 		B8B29A811E4A115500ED3F64 /* icons */ = {
 			isa = PBXGroup;
 			children = (
-				B8B29A821E4A117300ED3F64 /* assets.PNG */,
 				B8B29A791E4A10B600ED3F64 /* chart.PNG */,
 				B8B29A7A1E4A10B600ED3F64 /* board.PNG */,
 				B8B29A7B1E4A10B600ED3F64 /* config.PNG */,
@@ -784,7 +781,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B83F72941E3236C40077B566 /* ReadOnlySettingCell.xib in Resources */,
-				B8B29A831E4A117300ED3F64 /* assets.PNG in Resources */,
 				B8B29A7E1E4A10B600ED3F64 /* board.PNG in Resources */,
 				B83F72961E3236C40077B566 /* ValueActionSettingCell.xib in Resources */,
 				B8B29A7F1E4A10B600ED3F64 /* config.PNG in Resources */,
