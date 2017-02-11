@@ -1,0 +1,5 @@
+nguage: objective-c
+osx_image: xcode8.2
+xcode_workspace: zai.xcworkspace
+xcode_scheme: zai
+xcode_sdk: iphonesimulator
