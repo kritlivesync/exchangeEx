@@ -1,4 +1,4 @@
-nguage: objective-c
+language: objective-c
 osx_image: xcode8.2
 xcode_workspace: zai.xcworkspace
 xcode_scheme: zai
