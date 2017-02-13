@@ -100,6 +100,24 @@ class LabelResource {
     static var ignoreApiError: String {
         return "後で設定する"
     }
+    static var userIdPlacecholder: String {
+        return "ユーザーID"
+    }
+    static var passwordPlaceholder: String {
+        return "パスワード"
+    }
+    static var passwordAgainPlaceholder: String {
+        return "パスワード確認"
+    }
+    static var apiKeyPlaceholder: String {
+        return "APIキー"
+    }
+    static var secretKeyPlaceholder: String {
+        return "シークレットキー"
+    }
+    static var zaifApiKeySection: String {
+        return "Zaif取引APIキー"
+    }
 }
 
 class ZaifResource : Resource {

@@ -719,7 +719,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="zVm-xr-0aN">
-                                                    <rect key="frame" x="394" y="25.333333333333336" width="20" height="20.000000000000007"/>
+                                                    <rect key="frame" x="394" y="24.666666666666664" width="20" height="19.999999999999993"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>
@@ -830,81 +830,23 @@
                         <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="8XU-L3-g6n">
-                                <rect key="frame" x="21" y="108" width="373" height="142"/>
-                                <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="ユーザーID" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6an-3B-fnB">
-                                        <rect key="frame" x="0.0" y="0.0" width="373" height="44"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="6ZS-71-e28"/>
-                                        </constraints>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="パスワード" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AzN-d6-IkF">
-                                        <rect key="frame" x="0.0" y="49" width="373" height="44"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="NZ0-HO-WZH"/>
-                                        </constraints>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="alphabet" secureTextEntry="YES"/>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="パスワード確認" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0FP-bP-yze">
-                                        <rect key="frame" x="0.0" y="98" width="373" height="44"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="XQT-13-1Cq"/>
-                                        </constraints>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="alphabet" secureTextEntry="YES"/>
-                                    </textField>
-                                </subviews>
-                            </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" distribution="equalCentering" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="oDc-3P-oLz">
-                                <rect key="frame" x="22" y="298" width="372" height="130"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Zaif APIキー" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Njs-s3-137">
-                                        <rect key="frame" x="0.0" y="0.0" width="372" height="20.333333333333314"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="APIキー" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V8e-0W-lZS">
-                                        <rect key="frame" x="0.0" y="37.333333333333314" width="372" height="44"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="HVk-jw-aXS"/>
-                                        </constraints>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="シークレットキー" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mAY-HA-Q30">
-                                        <rect key="frame" x="0.0" y="86.333333333333314" width="372" height="44"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="rUI-I7-QIG"/>
-                                        </constraints>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                </subviews>
-                            </stackView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="14F-oV-Sck">
-                                <rect key="frame" x="198" y="80" width="20" height="20"/>
+                                <rect key="frame" x="0.0" y="326" width="414" height="20"/>
                             </activityIndicatorView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ep3-zv-rZ9">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="620"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="8XU-L3-g6n" firstAttribute="top" secondItem="14F-oV-Sck" secondAttribute="bottom" constant="5" id="FOc-bq-4Cr"/>
-                            <constraint firstItem="14F-oV-Sck" firstAttribute="centerX" secondItem="6an-3B-fnB" secondAttribute="centerX" id="NoR-E8-Agh"/>
-                            <constraint firstItem="8XU-L3-g6n" firstAttribute="width" secondItem="Imt-wS-mX0" secondAttribute="width" multiplier="0.9" id="Pqr-Fa-4lZ"/>
-                            <constraint firstItem="8XU-L3-g6n" firstAttribute="top" secondItem="v2p-R3-ULi" secondAttribute="bottom" constant="50" id="WuE-Bg-TvE"/>
-                            <constraint firstItem="oDc-3P-oLz" firstAttribute="centerX" secondItem="8XU-L3-g6n" secondAttribute="centerX" id="Zlr-ce-Bw9"/>
-                            <constraint firstItem="oDc-3P-oLz" firstAttribute="top" secondItem="8XU-L3-g6n" secondAttribute="bottom" constant="50" id="crc-y9-5fn"/>
-                            <constraint firstItem="oDc-3P-oLz" firstAttribute="width" secondItem="Imt-wS-mX0" secondAttribute="width" multiplier="0.9" id="ja2-to-JGb"/>
-                            <constraint firstItem="8XU-L3-g6n" firstAttribute="centerX" secondItem="Imt-wS-mX0" secondAttribute="centerX" id="xVz-10-sta"/>
+                            <constraint firstItem="14F-oV-Sck" firstAttribute="centerY" secondItem="Ep3-zv-rZ9" secondAttribute="centerY" id="6J6-Wc-eAB"/>
+                            <constraint firstItem="Ep3-zv-rZ9" firstAttribute="leading" secondItem="Imt-wS-mX0" secondAttribute="leading" id="7xU-YA-G0Z"/>
+                            <constraint firstItem="Ep3-zv-rZ9" firstAttribute="top" secondItem="v2p-R3-ULi" secondAttribute="bottom" id="dyz-NP-8lj"/>
+                            <constraint firstItem="14F-oV-Sck" firstAttribute="centerX" secondItem="Ep3-zv-rZ9" secondAttribute="centerX" id="haI-xo-o3E"/>
+                            <constraint firstAttribute="trailing" secondItem="Ep3-zv-rZ9" secondAttribute="trailing" id="obE-2s-DQq"/>
+                            <constraint firstItem="4Jn-5a-hVD" firstAttribute="top" secondItem="Ep3-zv-rZ9" secondAttribute="bottom" id="xmV-x9-YSc"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -927,19 +869,15 @@
                         <outlet property="activeIndicator" destination="14F-oV-Sck" id="tct-SJ-018"/>
                         <outlet property="cancelButton" destination="p3G-cu-rt5" id="DNn-5I-ofe"/>
                         <outlet property="navigationBar" destination="Xmb-fe-ymZ" id="5oF-90-f9R"/>
-                        <outlet property="passwordAgainText" destination="0FP-bP-yze" id="3LR-pt-pYW"/>
-                        <outlet property="passwordText" destination="AzN-d6-IkF" id="AeL-69-UQF"/>
                         <outlet property="saveButton" destination="6Cx-xY-Xfu" id="7yw-ZE-bcw"/>
-                        <outlet property="userIdText" destination="6an-3B-fnB" id="m9w-7u-mSz"/>
-                        <outlet property="zaifApiKeyText" destination="V8e-0W-lZS" id="STK-3I-5KV"/>
-                        <outlet property="zaifSecretKeyText" destination="mAY-HA-Q30" id="ivm-F9-lVL"/>
+                        <outlet property="tableView" destination="Ep3-zv-rZ9" id="moD-Mo-Ulj"/>
                         <segue destination="iKS-7S-egT" kind="unwind" identifier="unwindWithSaveSegue" unwindAction="unwindWithSave:" id="GEV-MZ-91X"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XxA-rf-MPR" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="iKS-7S-egT" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="164" y="1632"/>
+            <point key="canvasLocation" x="163.768115942029" y="1631.2500000000002"/>
         </scene>
         <!--資産-->
         <scene sceneID="rQ0-8X-NQT">
@@ -1455,7 +1393,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="4UZ-96-iNW">
-                                                    <rect key="frame" x="394" y="25.666666666666664" width="20" height="19.999999999999993"/>
+                                                    <rect key="frame" x="394" y="25" width="20" height="20"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>

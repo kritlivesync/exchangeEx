@@ -4,11 +4,12 @@
  use_frameworks!
 
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '10.0'
+platform :ios, '10.2'
 use_frameworks!
 
 target 'zai' do
   pod 'ZaifSwift', '0.1.1'
+  pod 'bFSwift', '0.0.1'
   pod 'Socket.IO-Client-Swift', '~> 8.1.1'
   pod 'Charts'
   pod 'Firebase/Core'

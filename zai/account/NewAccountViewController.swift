@@ -12,12 +12,17 @@ import UIKit
 import ZaifSwift
 
 
-class NewAccountViewController: UIViewController, UITextFieldDelegate {
+class NewAccountViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.barTintColor = Color.keyColor
+        
+        self.tableView.tableFooterView = UIView()
+        self.tableView.register(UINib(nibName: "TextSettingCell", bundle: nil), forCellReuseIdentifier: "textSettingCell")
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         
         self.saveButton.tintColor = Color.antiKeyColor
         self.cancelButton.tintColor = Color.antiKeyColor
@@ -25,25 +30,68 @@ class NewAccountViewController: UIViewController, UITextFieldDelegate {
         backButtonItem.tintColor = Color.antiKeyColor
         self.navigationItem.backBarButtonItem = backButtonItem
         
-        // for degug
-        self.zaifApiKeyText.text = testKey
-        self.zaifSecretKeyText.text = testSecret
+        self.newAccountView = NewAccountView(section: 0, tableView: self.tableView)
+        self.newZaifAccountView = NewZaifAccountView(section: 1, tableView: self.tableView)
         
-        self.userIdText.delegate = self
-        self.passwordText.delegate = self
-        self.passwordAgainText.delegate = self
+        self.sectionViews.append(self.newAccountView)
+        self.sectionViews.append(self.newZaifAccountView)
+        
+        self.tableView.reloadData()
+    }
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        return self.sectionViews.count
     }
     
-    // UITextFieldDelegate
-    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        switch textField.tag {
-        case 0:
-            return validateUserId(existingInput: textField.text!, addedString: string)
-        case 1, 2:
-            return validatePassword(existingInput: textField.text!, addedString: string)
-        default: return false
+    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 0.0
+        } else {
+            return 28.0
         }
+    }
+    
+    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let label = UILabel(frame: CGRect(x: 15.0, y: 0.0, width: 300.0, height: 28.0))
+        label.textColor = UIColor.gray
+        label.font = label.font.withSize(17.0)
+        label.text = self.sectionViews[section].sectionName
+        
+        let view = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 100.0, height: 28.0))
+        view.backgroundColor = UIColor.groupTableViewBackground
+        view.addSubview(label)
+        return view
+    }
+    
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard section < self.sectionViews.count else {
+            return 0
+        }
+        return self.sectionViews[section].rowCount
+    }
+    
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let section = indexPath.section
+        guard section < self.sectionViews.count else {
+            return 0.0
+        }
+        let height = self.sectionViews[indexPath.section].getRowHeight(row: indexPath.row)
+        return CGFloat(height)
+    }
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let section = indexPath.section
+        guard section < self.sectionViews.count else {
+            return UITableViewCell()
+        }
+        return self.sectionViews[section].getCell(tableView: tableView, indexPath: indexPath)
+    }
+    
+    public func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        let section = indexPath.section
+        guard section < self.sectionViews.count else {
+            return false
+        }
+        return self.sectionViews[section].shouldHighlightRowAt(row: indexPath.row)
     }
     
     @IBAction func pushSaveButton(_ sender: Any) {
@@ -52,73 +100,35 @@ class NewAccountViewController: UIViewController, UITextFieldDelegate {
         }
         self.activeIndicator.startAnimating()
         
-        let userId = self.userIdText.text!
-        if validateUserId(userId: userId) == false {
+        if let err = self.newAccountView.validate() {
             self.activeIndicator.stopAnimating()
-            self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: Resource.invalidUserIdLength))
-            return
-        }
-        let password = self.passwordText.text!
-        if validatePassword(password: password) == false {
-            self.activeIndicator.stopAnimating()
-            self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: Resource.invalidPasswordLength))
-            return
-        }
-        if let _ = AccountRepository.getInstance().findByUserId(userId) {
-            self.activeIndicator.stopAnimating()
-            self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: Resource.userIdAlreadyUsed))
-            return
-        }
-        let passwordAgain = self.passwordAgainText.text!
-        if password != passwordAgain {
-            self.activeIndicator.stopAnimating()
-            self.showError(error: ZaiError(errorType: .INVALID_ACCOUNT_INFO, message: Resource.passwordAgainNotMatch))
+            self.showError(error: err)
             return
         }
 
-        let apiKey = self.zaifApiKeyText.text!
-        let secretKey = self.zaifSecretKeyText.text!
-        let zaifApi = ZaifApi(apiKey: apiKey, secretKey: secretKey)
-        zaifApi.validateApi() { err in
-            DispatchQueue.main.async {
-                self.activeIndicator.stopAnimating()
-                
-                self.zaifApiNonce = zaifApi.api.nonceValue
-                let resource = ZaifResource()
-                if err == nil {          
+        self.newZaifAccountView.validate() { (err, nonce) in
+            self.zaifApiNonce = nonce
+            if err != nil {
+                self.showWarning(error: err!) { _ in
                     self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self)
-                } else {
-                    switch err!.errorType {
-                    case ApiErrorType.NO_PERMISSION:
-                        self.showWarning(error: ZaiError(errorType: .INVALID_API_KEYS_NO_PERMISSION, message: resource.apiKeyNoPermission)) { action in
-                                self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self) }
-                    case ApiErrorType.NONCE_NOT_INCREMENTED:
-                        self.showWarning(error: ZaiError(errorType: ZaiErrorType.NONCE_NOT_INCREMENTED, message: resource.apiKeyNonceNotIncremented)) { action in
-                                self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self) }
-                    case ApiErrorType.INVALID_API_KEY:
-                        self.showWarning(error: ZaiError(errorType: ZaiErrorType.INVALID_API_KEYS, message: resource.invalidApiKey)) { action in
-                                self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self) }
-                    case ApiErrorType.CONNECTION_ERROR:
-                        self.showError(error: ZaiError(errorType: ZaiErrorType.CONNECTION_ERROR, message: Resource.networkConnectionError))
-                    default:
-                        self.showError(error: ZaiError(errorType: .INVALID_API_KEYS, message: resource.invalidApiKey))
-                    }
                 }
+            } else {
+                self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self)
             }
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let userId = self.userIdText.text!
-        let password = self.passwordText.text!
+        let userId = self.newAccountView.getUserId()
+        let password = self.newAccountView.getPassword()
         
         let repository = AccountRepository.getInstance()
         guard let account = repository.create(userId, password: password) else {
             self.showError(error: ZaiError(errorType: .UNKNOWN_ERROR, message: Resource.accountCreationFailed))
             return
         }
-        let apiKey = self.zaifApiKeyText.text!
-        let secretKey = self.zaifSecretKeyText.text!
+        let apiKey = self.newZaifAccountView.getApiKey()
+        let secretKey = self.newZaifAccountView.getSecretKey()
         guard let _ = repository.createZaifExchange(account: account, apiKey: apiKey, secretKey: secretKey, nonce: self.zaifApiNonce) else {
             repository.delete(account)
             self.showError(error: ZaiError(errorType: .UNKNOWN_ERROR, message: Resource.accountCreationFailed))
@@ -137,18 +147,17 @@ class NewAccountViewController: UIViewController, UITextFieldDelegate {
     
     fileprivate func showWarning(error: ZaiError, handler: @escaping ((UIAlertAction) -> Void)) {
         let wariningView = createWarningModal(title: error.errorType.toString(), message: error.message, continueLabel: LabelResource.ignoreApiError, handler: handler)
-        self.present(wariningView, animated: false, completion: nil)
+        DispatchQueue.main.async {
+            self.present(wariningView, animated: false, completion: nil)
+        }
     }
 
     var zaifApiNonce: Int64 = 0
-    
-    @IBOutlet weak var userIdText: UITextField!
-    @IBOutlet weak var passwordText: UITextField!
-    @IBOutlet weak var passwordAgainText: UITextField!
-    
-    @IBOutlet weak var zaifApiKeyText: UITextField!
-    @IBOutlet weak var zaifSecretKeyText: UITextField!
-    
+    fileprivate var newAccountView: NewAccountView!
+    fileprivate var newZaifAccountView: NewZaifAccountView!
+    fileprivate var sectionViews: [SectionView] = []
+
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var navigationBar: UINavigationItem!
