@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="15G1004" minimumToolsVersion="Xcode 7.0" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="15G1217" minimumToolsVersion="Xcode 7.0" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Account" representedClassName=".Account" syncable="YES">
         <attribute name="activeExchangeName" attributeType="String" syncable="YES"/>
         <attribute name="lastBackgroundDate" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
@@ -25,6 +25,10 @@
     <entity name="AssetsConfig" representedClassName=".AssetsConfig" syncable="YES">
         <attribute name="assetUpdateInterval" attributeType="Integer 32" defaultValueString="4" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="assetsConfig" inverseEntity="Account" syncable="YES"/>
+    </entity>
+    <entity name="BitFlyerExchange" representedClassName=".BitFlyerExchange" parentEntity="Exchange" syncable="YES">
+        <attribute name="apiKey" attributeType="Binary" syncable="YES"/>
+        <attribute name="secretKey" attributeType="Binary" syncable="YES"/>
     </entity>
     <entity name="BoardConfig" representedClassName=".BoardConfig" syncable="YES">
         <attribute name="boardUpdateInterval" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
@@ -124,5 +128,6 @@
         <element name="TradeLog" positionX="-63" positionY="-18" width="128" height="225"/>
         <element name="Trader" positionX="-18" positionY="117" width="128" height="105"/>
         <element name="ZaifExchange" positionX="-45" positionY="135" width="128" height="90"/>
+        <element name="BitFlyerExchange" positionX="-27" positionY="135" width="128" height="75"/>
     </elements>
 </model>

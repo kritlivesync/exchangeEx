@@ -125,7 +125,7 @@ class ZaifApi : Api {
         }
     }
     
-    func getBoard(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, Board) -> Void) {
+    func getBoard(currencyPair: ApiCurrencyPair, maxSize: Int, callback: @escaping (ApiError?, Board) -> Void) {
         PublicApi.depth(currencyPair.zaifCurrencyPair) { (err, res) in
             let board = Board()
             if err != nil {
@@ -152,6 +152,10 @@ class ZaifApi : Api {
                         board.addBid(price: quote[0].doubleValue, amount: quote[1].doubleValue)
                     }
                 }
+                
+                board.sort()
+                board.trunc(size: maxSize)
+                
                 callback(nil, board)
             }
         }

@@ -118,6 +118,9 @@ class LabelResource {
     static var zaifApiKeySection: String {
         return "Zaif取引APIキー"
     }
+    static var biyFlyerApiKeySection: String {
+        return "bitFlyer Lightning APIキー"
+    }
 }
 
 class ZaifResource : Resource {
@@ -130,5 +133,15 @@ class ZaifResource : Resource {
     }
     override var invalidApiKey: String {
         return "有効なZaif APIキーを設定してください。"
+    }
+}
+
+class bitFlyerResource : Resource {
+    override var apiKeyNoPermission: String {
+        return "bitFlyer APIキーに権限がありません。以下の権限を持ったAPIキーを使用してください。\n資産\nトレード"
+    }
+
+    override var invalidApiKey: String {
+        return "有効なbitFlyer APIキーを設定してください。"
     }
 }

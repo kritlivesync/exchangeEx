@@ -41,7 +41,7 @@ internal class BitCoin : Monitorable {
     func getBestAskQuote(_ currency: ApiCurrency, cb: @escaping (ZaiError?, Quote?) -> Void) {
         switch currency {
         case ApiCurrency.JPY:
-            self.api.getBoard(currencyPair: ApiCurrencyPair.BTC_JPY) { (err, board) in
+            self.api.getBoard(currencyPair: ApiCurrencyPair.BTC_JPY, maxSize: 1) { (err, board) in
                 if err != nil {
                     cb(ZaiError(errorType: .ZAIF_API_ERROR, message: err!.message), nil)
                 } else {
@@ -60,7 +60,7 @@ internal class BitCoin : Monitorable {
     func getBestBidQuote(_ currency: ApiCurrency, cb: @escaping (ZaiError?, Quote?) -> Void) {
         switch currency {
         case ApiCurrency.JPY:
-            self.api.getBoard(currencyPair: ApiCurrencyPair.BTC_JPY) { (err, board) in
+            self.api.getBoard(currencyPair: ApiCurrencyPair.BTC_JPY, maxSize: 1) { (err, board) in
                 if err != nil {
                     cb(ZaiError(errorType: .ZAIF_API_ERROR, message: err!.message), nil)
                 } else {
@@ -88,7 +88,7 @@ internal class BitCoin : Monitorable {
             }
         }
         if delegate?.recievedBestJpyBid != nil || delegate?.recievedBestJpyAsk != nil {
-            self.api.getBoard(currencyPair: ApiCurrencyPair.BTC_JPY) { (err, board) in
+            self.api.getBoard(currencyPair: ApiCurrencyPair.BTC_JPY, maxSize: 1) { (err, board) in
                 if err == nil {
                     if let bestBid = board.getBestBid() {
                         DispatchQueue.main.async {

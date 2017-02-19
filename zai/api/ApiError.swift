@@ -14,12 +14,13 @@ public enum ApiErrorType : Error {
     case NONCE_NOT_INCREMENTED
     case INVALID_API_KEY
     case CONNECTION_ERROR
+    case EXCHANGE_DOWN
     case UNKNOWN_ERROR
 }
 
 
 public struct ApiError {
-    public init(errorType: ApiErrorType, message: String="") {
+    public init(errorType: ApiErrorType = .UNKNOWN_ERROR, message: String="") {
         self.errorType = errorType
         self.message = message
     }

@@ -31,11 +31,13 @@ class NewAccountViewController: UIViewController, UITableViewDelegate, UITableVi
         self.navigationItem.backBarButtonItem = backButtonItem
         
         self.newAccountView = NewAccountView(section: 0, tableView: self.tableView)
-        self.newZaifAccountView = NewZaifAccountView(section: 1, tableView: self.tableView)
+        self.newBitFlyerAccountView = NewBitFlyerAccount(section: 1, tableView: self.tableView)
+        self.newZaifAccountView = NewZaifAccountView(section: 2, tableView: self.tableView)
         
         self.sectionViews.append(self.newAccountView)
+        self.sectionViews.append(self.newBitFlyerAccountView)
         self.sectionViews.append(self.newZaifAccountView)
-        
+
         self.tableView.reloadData()
     }
     public func numberOfSections(in tableView: UITableView) -> Int {
@@ -105,15 +107,37 @@ class NewAccountViewController: UIViewController, UITableViewDelegate, UITableVi
             self.showError(error: err)
             return
         }
-
-        self.newZaifAccountView.validate() { (err, nonce) in
-            self.zaifApiNonce = nonce
+        
+        self.newBitFlyerAccountView.validate() { err in
+            self.activeIndicator.stopAnimating()
             if err != nil {
                 self.showWarning(error: err!) { _ in
-                    self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self)
+                    self.activeIndicator.startAnimating()
+                    self.newZaifAccountView.validate() { (err, nonce) in
+                        self.zaifApiNonce = nonce
+                        self.activeIndicator.stopAnimating()
+                        if err != nil {
+                            self.showWarning(error: err!) { _ in
+                                self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self)
+                            }
+                        } else {
+                            self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self)
+                        }
+                    }
                 }
             } else {
-                self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self)
+                self.activeIndicator.startAnimating()
+                self.newZaifAccountView.validate() { (err, nonce) in
+                    self.zaifApiNonce = nonce
+                    self.activeIndicator.stopAnimating()
+                    if err != nil {
+                        self.showWarning(error: err!) { _ in
+                            self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self)
+                        }
+                    } else {
+                        self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self)
+                    }
+                }
             }
         }
     }
@@ -127,9 +151,18 @@ class NewAccountViewController: UIViewController, UITableViewDelegate, UITableVi
             self.showError(error: ZaiError(errorType: .UNKNOWN_ERROR, message: Resource.accountCreationFailed))
             return
         }
-        let apiKey = self.newZaifAccountView.getApiKey()
-        let secretKey = self.newZaifAccountView.getSecretKey()
-        guard let _ = repository.createZaifExchange(account: account, apiKey: apiKey, secretKey: secretKey, nonce: self.zaifApiNonce) else {
+        
+        let bitFLyerApiKey = self.newBitFlyerAccountView.getApiKey()
+        let bitFlyerSecretKey = self.newBitFlyerAccountView.getSecretKey()
+        guard let _ = repository.createBitFlyerExchange(account: account, apiKey: bitFLyerApiKey, secretKey: bitFlyerSecretKey) else {
+            repository.delete(account)
+            self.showError(error: ZaiError(errorType: .UNKNOWN_ERROR, message: Resource.accountCreationFailed))
+            return
+        }
+        
+        let zaifApiKey = self.newZaifAccountView.getApiKey()
+        let zaifSecretKey = self.newZaifAccountView.getSecretKey()
+        guard let _ = repository.createZaifExchange(account: account, apiKey: zaifApiKey, secretKey: zaifSecretKey, nonce: self.zaifApiNonce) else {
             repository.delete(account)
             self.showError(error: ZaiError(errorType: .UNKNOWN_ERROR, message: Resource.accountCreationFailed))
             return
@@ -155,6 +188,7 @@ class NewAccountViewController: UIViewController, UITableViewDelegate, UITableVi
     var zaifApiNonce: Int64 = 0
     fileprivate var newAccountView: NewAccountView!
     fileprivate var newZaifAccountView: NewZaifAccountView!
+    fileprivate var newBitFlyerAccountView: NewBitFlyerAccount!
     fileprivate var sectionViews: [SectionView] = []
 
     @IBOutlet weak var tableView: UITableView!

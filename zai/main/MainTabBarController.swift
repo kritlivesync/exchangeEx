@@ -22,8 +22,10 @@ class MainTabBarController : UITabBarController {
         let account = getAccount()!
         
         let currencyPair = ApiCurrencyPair(rawValue: account.activeExchange.currencyPair)!
-        let chartType = getChartConfig().selectedCandleChartType
+        let chartConfig = getChartConfig()
+        let chartType = chartConfig.selectedCandleChartType
         chartController.candleChart = CandleChart(currencyPair: currencyPair, interval: chartType, candleCount: 60, api: account.activeExchange.api)
+        chartController.candleChart.monitoringInterval = chartConfig.chartUpdateIntervalType
         chartController.candleChart.delegate = chartController
         
         let trader = account.activeExchange.trader

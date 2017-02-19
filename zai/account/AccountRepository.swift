@@ -100,6 +100,34 @@ class AccountRepository {
         }
     }
     
+    func createBitFlyerExchange(account: Account, apiKey: String, secretKey: String) -> BitFlyerExchange? {
+        let db = Database.getDb()
+        
+        guard let encryptedApiKey = Crypt.encrypt(key: account.ppw!, src: apiKey) else {
+            return nil
+        }
+        guard let encryptedSecret = Crypt.encrypt(key: account.ppw!, src: secretKey) else {
+            return nil
+        }
+        
+        let exchange = NSEntityDescription.insertNewObject(forEntityName: AccountRepository.bitFlyerExchangeModelName, into: db.managedObjectContext) as! BitFlyerExchange
+        exchange.name = "bitFlyer"
+        exchange.currencyPair = ApiCurrencyPair.BTC_JPY.rawValue
+        exchange.apiKey = NSData(bytes: encryptedApiKey, length: encryptedApiKey.count)
+        exchange.secretKey = NSData(bytes: encryptedSecret, length: encryptedSecret.count)
+        let api = bitFlyerApi(apiKey: apiKey, secretKey: secretKey)
+        exchange.serviceApi = api
+        guard let trader = TraderRepository.getInstance().create("trader", exchange: exchange) else {
+            return nil
+        }
+        exchange.trader = trader
+        account.addExchange(exchange: exchange)
+        
+        db.saveContext()
+        
+        return exchange
+    }
+    
     func createZaifExchange(account: Account, apiKey: String, secretKey: String, nonce: Int64=0) -> ZaifExchange? {
         let db = Database.getDb()
         
@@ -141,4 +169,5 @@ class AccountRepository {
     fileprivate static var inst: AccountRepository? = nil
     fileprivate static let accountModelName = "Account"
     fileprivate static let zaifExchangeModelName = "ZaifExchange"
+    fileprivate static let bitFlyerExchangeModelName = "BitFlyerExchange"
 }

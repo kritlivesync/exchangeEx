@@ -40,10 +40,19 @@ class Board {
         self.bids = []
     }
     
+    func sort() {
+        self.asks = self.asks.sorted{ $1.price < $0.price }
+        self.bids = self.bids.sorted{ $1.price < $0.price }
+    }
+    
+    func trunc(size: Int) {
+        self.asks = Array<Quote>(self.asks.suffix(size))
+        self.bids = Array<Quote>(self.bids.prefix(size))
+    }
+    
     func addAsk(price: Double, amount: Double) {
         let quote = Quote(price: price, amount: amount, type: .ASK)
         self.asks.append(quote)
-        self.asks = self.asks.sorted{ $1.price < $0.price }
     }
     
     func getAsk(index: Int) -> Quote? {
@@ -69,7 +78,6 @@ class Board {
     func addBid(price: Double, amount: Double) {
         let quote = Quote(price: price, amount: amount, type: .BID)
         self.bids.append(quote)
-        self.bids = self.bids.sorted{ $1.price < $0.price }
     }
     
     func getBid(index: Int) -> Quote? {
@@ -168,7 +176,7 @@ class MonitorableBoard : Monitorable {
     
     override func monitor() {
         let delegate = self.delegate as? BoardDelegate
-        api.getBoard(currencyPair: self.currencyPair) { (err, board) in
+        api.getBoard(currencyPair: self.currencyPair, maxSize: 50) { (err, board) in
             DispatchQueue.main.async {
                 delegate?.recievedBoard(err: nil, board: board)
             }

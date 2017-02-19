@@ -88,19 +88,25 @@
 		B85E8E4E1D6F3E5E00C029C8 /* TradeLogRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E4B1D6F3E5E00C029C8 /* TradeLogRepository.swift */; };
 		B85E8E5E1D6F477900C029C8 /* TraderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E5D1D6F477900C029C8 /* TraderView.swift */; };
 		B85E8E601D6F541800C029C8 /* TraderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E5F1D6F541800C029C8 /* TraderViewCell.swift */; };
+		B87C6B991E59BE0D005A00E9 /* board.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B87C6B931E59BE0D005A00E9 /* board.PNG */; };
+		B87C6B9A1E59BE0D005A00E9 /* chart.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B87C6B941E59BE0D005A00E9 /* chart.PNG */; };
+		B87C6B9B1E59BE0D005A00E9 /* orders.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B87C6B951E59BE0D005A00E9 /* orders.PNG */; };
+		B87C6B9C1E59BE0D005A00E9 /* positions.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B87C6B961E59BE0D005A00E9 /* positions.PNG */; };
+		B87C6B9D1E59BE0D005A00E9 /* settings.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B87C6B971E59BE0D005A00E9 /* settings.PNG */; };
+		B87C6BA01E59C199005A00E9 /* assets@3x.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B87C6B9F1E59C199005A00E9 /* assets@3x.PNG */; };
 		B88CF6EE1E3C8258008A6189 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88CF6ED1E3C8258008A6189 /* Config.swift */; };
 		B88CF6F01E3C8542008A6189 /* ConfigRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88CF6EF1E3C8542008A6189 /* ConfigRepository.swift */; };
 		B88CF6F21E3CA0E9008A6189 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88CF6F11E3CA0E9008A6189 /* Resource.swift */; };
 		B89379411E26822C00F693A3 /* UserAccountSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89379401E26822C00F693A3 /* UserAccountSettingView.swift */; };
 		B89D5C851E29C66F004FF743 /* ZaifSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89D5C841E29C66F004FF743 /* ZaifSettingView.swift */; };
-		B8B29A7D1E4A10B600ED3F64 /* chart.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B8B29A791E4A10B600ED3F64 /* chart.PNG */; };
-		B8B29A7E1E4A10B600ED3F64 /* board.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B8B29A7A1E4A10B600ED3F64 /* board.PNG */; };
-		B8B29A7F1E4A10B600ED3F64 /* config.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B8B29A7B1E4A10B600ED3F64 /* config.PNG */; };
-		B8B29A801E4A10B600ED3F64 /* positions.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B8B29A7C1E4A10B600ED3F64 /* positions.PNG */; };
 		B8B29AFA1E50062200ED3F64 /* TextSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8B29AF91E50062200ED3F64 /* TextSettingCell.xib */; };
 		B8B29AFC1E5006CF00ED3F64 /* TextSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B29AFB1E5006CF00ED3F64 /* TextSettingCell.swift */; };
 		B8B29AFE1E50075500ED3F64 /* NewAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B29AFD1E50075500ED3F64 /* NewAccountView.swift */; };
 		B8B29B001E507AA500ED3F64 /* NewZaifAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B29AFF1E507AA500ED3F64 /* NewZaifAccountView.swift */; };
+		B8B29B021E52067600ED3F64 /* bitFlyerApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B29B011E52067600ED3F64 /* bitFlyerApi.swift */; };
+		B8B29B071E55FEC600ED3F64 /* BitFlyerExchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B29B051E55FEC600ED3F64 /* BitFlyerExchange.swift */; };
+		B8B29B081E55FEC600ED3F64 /* BitFlyerExchange+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B29B061E55FEC600ED3F64 /* BitFlyerExchange+CoreDataProperties.swift */; };
+		B8B29B0A1E56041E00ED3F64 /* NewBitFlyerAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B29B091E56041E00ED3F64 /* NewBitFlyerAccount.swift */; };
 		B8B8457D1D66041D00535638 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B8457B1D66041D00535638 /* Main.storyboard */; settings = {ASSET_TAGS = (4, ); }; };
 		B8B8457F1D66041D00535638 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8B8457E1D66041D00535638 /* Assets.xcassets */; };
 		B8B845821D66041D00535638 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B845801D66041D00535638 /* LaunchScreen.storyboard */; };
@@ -241,19 +247,25 @@
 		B85E8E4B1D6F3E5E00C029C8 /* TradeLogRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TradeLogRepository.swift; path = log/TradeLogRepository.swift; sourceTree = "<group>"; };
 		B85E8E5D1D6F477900C029C8 /* TraderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderView.swift; path = main/TraderView.swift; sourceTree = "<group>"; };
 		B85E8E5F1D6F541800C029C8 /* TraderViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderViewCell.swift; path = main/TraderViewCell.swift; sourceTree = "<group>"; };
+		B87C6B931E59BE0D005A00E9 /* board.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = board.PNG; path = icons/board.PNG; sourceTree = "<group>"; };
+		B87C6B941E59BE0D005A00E9 /* chart.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = chart.PNG; path = icons/chart.PNG; sourceTree = "<group>"; };
+		B87C6B951E59BE0D005A00E9 /* orders.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = orders.PNG; path = icons/orders.PNG; sourceTree = "<group>"; };
+		B87C6B961E59BE0D005A00E9 /* positions.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = positions.PNG; path = icons/positions.PNG; sourceTree = "<group>"; };
+		B87C6B971E59BE0D005A00E9 /* settings.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settings.PNG; path = icons/settings.PNG; sourceTree = "<group>"; };
+		B87C6B9F1E59C199005A00E9 /* assets@3x.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "assets@3x.PNG"; path = "icons/assets@3x.PNG"; sourceTree = "<group>"; };
 		B88CF6ED1E3C8258008A6189 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Config.swift; path = core/Config.swift; sourceTree = "<group>"; };
 		B88CF6EF1E3C8542008A6189 /* ConfigRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigRepository.swift; path = config/ConfigRepository.swift; sourceTree = "<group>"; };
 		B88CF6F11E3CA0E9008A6189 /* Resource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Resource.swift; path = core/Resource.swift; sourceTree = "<group>"; };
 		B89379401E26822C00F693A3 /* UserAccountSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserAccountSettingView.swift; path = settings/UserAccountSettingView.swift; sourceTree = "<group>"; };
 		B89D5C841E29C66F004FF743 /* ZaifSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZaifSettingView.swift; path = settings/ZaifSettingView.swift; sourceTree = "<group>"; };
-		B8B29A791E4A10B600ED3F64 /* chart.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = chart.PNG; path = icons/chart.PNG; sourceTree = "<group>"; };
-		B8B29A7A1E4A10B600ED3F64 /* board.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = board.PNG; path = icons/board.PNG; sourceTree = "<group>"; };
-		B8B29A7B1E4A10B600ED3F64 /* config.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = config.PNG; path = icons/config.PNG; sourceTree = "<group>"; };
-		B8B29A7C1E4A10B600ED3F64 /* positions.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = positions.PNG; path = icons/positions.PNG; sourceTree = "<group>"; };
 		B8B29AF91E50062200ED3F64 /* TextSettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TextSettingCell.xib; path = table/TextSettingCell.xib; sourceTree = "<group>"; };
 		B8B29AFB1E5006CF00ED3F64 /* TextSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextSettingCell.swift; path = table/TextSettingCell.swift; sourceTree = "<group>"; };
 		B8B29AFD1E50075500ED3F64 /* NewAccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewAccountView.swift; path = account/NewAccountView.swift; sourceTree = "<group>"; };
 		B8B29AFF1E507AA500ED3F64 /* NewZaifAccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewZaifAccountView.swift; path = account/NewZaifAccountView.swift; sourceTree = "<group>"; };
+		B8B29B011E52067600ED3F64 /* bitFlyerApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = bitFlyerApi.swift; path = api/bitFlyerApi.swift; sourceTree = "<group>"; };
+		B8B29B051E55FEC600ED3F64 /* BitFlyerExchange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BitFlyerExchange.swift; path = account/BitFlyerExchange.swift; sourceTree = "<group>"; };
+		B8B29B061E55FEC600ED3F64 /* BitFlyerExchange+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "BitFlyerExchange+CoreDataProperties.swift"; path = "account/BitFlyerExchange+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		B8B29B091E56041E00ED3F64 /* NewBitFlyerAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewBitFlyerAccount.swift; path = account/NewBitFlyerAccount.swift; sourceTree = "<group>"; };
 		B8B845741D66041D00535638 /* zai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = zai.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8B8457C1D66041D00535638 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B8B8457E1D66041D00535638 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -404,6 +416,7 @@
 				B84113FC1E18A954000EB0F8 /* Api.swift */,
 				B84113FE1E18A9FA000EB0F8 /* ApiError.swift */,
 				B84114001E18E293000EB0F8 /* ZaifApi.swift */,
+				B8B29B011E52067600ED3F64 /* bitFlyerApi.swift */,
 			);
 			name = api;
 			sourceTree = "<group>";
@@ -491,17 +504,20 @@
 		B85E8E261D6F3AA200C029C8 /* account */ = {
 			isa = PBXGroup;
 			children = (
+				B8B29B051E55FEC600ED3F64 /* BitFlyerExchange.swift */,
+				B8B29B061E55FEC600ED3F64 /* BitFlyerExchange+CoreDataProperties.swift */,
 				B8E9E2CD1E1B867F003B298F /* ZaifExchange+CoreDataProperties.swift */,
 				B8E9E2CE1E1B867F003B298F /* Exchange+CoreDataProperties.swift */,
 				B84113F71E181744000EB0F8 /* Exchange.swift */,
 				B85E8E3F1D6F3E4D00C029C8 /* Account.swift */,
 				B84113F21E1809DD000EB0F8 /* ZaifExchange.swift */,
-				B85E8E401D6F3E4D00C029C8 /* Account+CoreDataProperties.swift */,
 				B85E8E411D6F3E4D00C029C8 /* AccountRepository.swift */,
 				B85E8E421D6F3E4D00C029C8 /* Fund.swift */,
 				B85E8E431D6F3E4D00C029C8 /* NewAccountViewController.swift */,
+				B85E8E401D6F3E4D00C029C8 /* Account+CoreDataProperties.swift */,
 				B8B29AFD1E50075500ED3F64 /* NewAccountView.swift */,
 				B8B29AFF1E507AA500ED3F64 /* NewZaifAccountView.swift */,
+				B8B29B091E56041E00ED3F64 /* NewBitFlyerAccount.swift */,
 			);
 			name = account;
 			sourceTree = "<group>";
@@ -542,13 +558,22 @@
 			name = currency;
 			sourceTree = "<group>";
 		};
+		B87C6B9E1E59C184005A00E9 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				B87C6B9F1E59C199005A00E9 /* assets@3x.PNG */,
+			);
+			name = "Support Files";
+			sourceTree = "<group>";
+		};
 		B8B29A811E4A115500ED3F64 /* icons */ = {
 			isa = PBXGroup;
 			children = (
-				B8B29A791E4A10B600ED3F64 /* chart.PNG */,
-				B8B29A7A1E4A10B600ED3F64 /* board.PNG */,
-				B8B29A7B1E4A10B600ED3F64 /* config.PNG */,
-				B8B29A7C1E4A10B600ED3F64 /* positions.PNG */,
+				B87C6B931E59BE0D005A00E9 /* board.PNG */,
+				B87C6B941E59BE0D005A00E9 /* chart.PNG */,
+				B87C6B951E59BE0D005A00E9 /* orders.PNG */,
+				B87C6B961E59BE0D005A00E9 /* positions.PNG */,
+				B87C6B971E59BE0D005A00E9 /* settings.PNG */,
 			);
 			name = icons;
 			sourceTree = "<group>";
@@ -578,6 +603,7 @@
 		B8B845761D66041D00535638 /* zai */ = {
 			isa = PBXGroup;
 			children = (
+				B87C6B9E1E59C184005A00E9 /* Support Files */,
 				B8B29A811E4A115500ED3F64 /* icons */,
 				B8C704701E40DC6D00659C9F /* GoogleService-Info.plist */,
 				B85E8E261D6F3AA200C029C8 /* account */,
@@ -793,17 +819,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				B83F72941E3236C40077B566 /* ReadOnlySettingCell.xib in Resources */,
-				B8B29A7E1E4A10B600ED3F64 /* board.PNG in Resources */,
 				B83F72961E3236C40077B566 /* ValueActionSettingCell.xib in Resources */,
-				B8B29A7F1E4A10B600ED3F64 /* config.PNG in Resources */,
-				B8B29A7D1E4A10B600ED3F64 /* chart.PNG in Resources */,
 				B83F72981E3236C40077B566 /* VariableSettingCell.xib in Resources */,
 				B8B845821D66041D00535638 /* LaunchScreen.storyboard in Resources */,
+				B87C6BA01E59C199005A00E9 /* assets@3x.PNG in Resources */,
+				B87C6B9B1E59BE0D005A00E9 /* orders.PNG in Resources */,
 				B8B29AFA1E50062200ED3F64 /* TextSettingCell.xib in Resources */,
+				B87C6B9A1E59BE0D005A00E9 /* chart.PNG in Resources */,
 				B8B8457F1D66041D00535638 /* Assets.xcassets in Resources */,
+				B87C6B991E59BE0D005A00E9 /* board.PNG in Resources */,
 				B8B8457D1D66041D00535638 /* Main.storyboard in Resources */,
 				B8C704711E40DC6D00659C9F /* GoogleService-Info.plist in Resources */,
-				B8B29A801E4A10B600ED3F64 /* positions.PNG in Resources */,
+				B87C6B9C1E59BE0D005A00E9 /* positions.PNG in Resources */,
+				B87C6B9D1E59BE0D005A00E9 /* settings.PNG in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -890,7 +918,10 @@
 				B843CFE61E0E870E00CC6656 /* OrderListView.swift in Sources */,
 				B85E8E4C1D6F3E5E00C029C8 /* TradeLog.swift in Sources */,
 				B88CF6F01E3C8542008A6189 /* ConfigRepository.swift in Sources */,
+				B8B29B071E55FEC600ED3F64 /* BitFlyerExchange.swift in Sources */,
 				B80920371DFD8817005667D4 /* PositionFundView.swift in Sources */,
+				B8B29B021E52067600ED3F64 /* bitFlyerApi.swift in Sources */,
+				B8B29B0A1E56041E00ED3F64 /* NewBitFlyerAccount.swift in Sources */,
 				B835D4101E34EF5000F9C4EB /* Validation.swift in Sources */,
 				B827CD141D7C523700E9847B /* PositionListView.swift in Sources */,
 				B8B29AFC1E5006CF00ED3F64 /* TextSettingCell.swift in Sources */,
@@ -965,6 +996,7 @@
 				B84113D41E141C6F000EB0F8 /* LongPosition.swift in Sources */,
 				B89D5C851E29C66F004FF743 /* ZaifSettingView.swift in Sources */,
 				B8DB8ED41E3C517F0051C7EC /* AppConfig.swift in Sources */,
+				B8B29B081E55FEC600ED3F64 /* BitFlyerExchange+CoreDataProperties.swift in Sources */,
 				B835D40E1E34DB3800F9C4EB /* ChangeBuyAmountLimitViewController.swift in Sources */,
 				B8B29AFE1E50075500ED3F64 /* NewAccountView.swift in Sources */,
 				B83F72831E2F9F230077B566 /* PositionsSettingView.swift in Sources */,

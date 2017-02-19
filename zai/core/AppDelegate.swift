@@ -84,6 +84,8 @@ func createResource(exchangeName: String) -> Resource {
     switch exchangeName {
     case "Zaif":
         return ZaifResource()
+    case "bitFlyer":
+        return bitFlyerResource()
     default:
         return Resource()
     }

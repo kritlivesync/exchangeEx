@@ -1,15 +1,16 @@
 //
-//  NewZaifAccountView.swift
+//  NewBitFlyerAccount.swift
 //  zai
 //
-//  Created by 渡部郷太 on 2/12/17.
+//  Created by 渡部郷太 on 2/17/17.
 //  Copyright © 2017 watanabe kyota. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
 
-class NewZaifAccountView : SectionView {
+class NewBitFlyerAccount : SectionView {
     
     override init(section: Int, tableView: UITableView) {
         super.init(section: section, tableView: tableView)
@@ -23,16 +24,16 @@ class NewZaifAccountView : SectionView {
             cell.textField.placeholder = LabelResource.apiKeyPlaceholder
             
             // for debug
-            cell.textField.text = testKey
-
+            cell.textField.text = testbFKey
+            
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "textSettingCell", for: indexPath) as! TextSettingCell
             cell.textField.placeholder = LabelResource.secretKeyPlaceholder
             
-            // for dubug
-            cell.textField.text = testSecret
-
+            // for debug
+            cell.textField.text = testbFSecret
+            
             return cell
         default:
             return UITableViewCell()
@@ -44,36 +45,35 @@ class NewZaifAccountView : SectionView {
     }
     
     override var sectionName: String {
-        return LabelResource.zaifApiKeySection
+        return LabelResource.biyFlyerApiKeySection
     }
     
     override var rowCount: Int {
         return 2
     }
     
-    func validate(callback: @escaping (ZaiError?, Int64) -> Void) {
+    func validate(callback: @escaping (ZaiError?) -> Void) {
         let apiKey = self.getApiKey()
         let secretKey = self.getSecretKey()
-        let zaifApi = ZaifApi(apiKey: apiKey, secretKey: secretKey)
-        zaifApi.validateApi() { err in
-            let nonce = zaifApi.api.nonceValue
+        let api = bitFlyerApi(apiKey: apiKey, secretKey: secretKey)
+        api.validateApi() { err in
             if err == nil {
-                callback(nil, nonce)
+                callback(nil)
                 return
             }
-            let resource = ZaifResource()
+            let resource = bitFlyerResource()
             
             switch err!.errorType {
             case ApiErrorType.NO_PERMISSION:
-                callback(ZaiError(errorType: .INVALID_API_KEYS_NO_PERMISSION, message: resource.apiKeyNoPermission), nonce)
+                callback(ZaiError(errorType: .INVALID_API_KEYS_NO_PERMISSION, message: resource.apiKeyNoPermission))
             case ApiErrorType.NONCE_NOT_INCREMENTED:
-                callback(ZaiError(errorType: ZaiErrorType.NONCE_NOT_INCREMENTED, message: resource.apiKeyNonceNotIncremented), nonce)
+                callback(ZaiError(errorType: ZaiErrorType.NONCE_NOT_INCREMENTED, message: resource.apiKeyNonceNotIncremented))
             case ApiErrorType.INVALID_API_KEY:
-                callback(ZaiError(errorType: ZaiErrorType.INVALID_API_KEYS, message: resource.invalidApiKey), nonce)
+                callback(ZaiError(errorType: ZaiErrorType.INVALID_API_KEYS, message: resource.invalidApiKey))
             case ApiErrorType.CONNECTION_ERROR:
-                callback(ZaiError(errorType: ZaiErrorType.CONNECTION_ERROR, message: Resource.networkConnectionError), nonce)
+                callback(ZaiError(errorType: ZaiErrorType.CONNECTION_ERROR, message: Resource.networkConnectionError))
             default:
-                callback(ZaiError(errorType: .INVALID_API_KEYS, message: resource.invalidApiKey), nonce)
+                callback(ZaiError(errorType: .INVALID_API_KEYS, message: resource.invalidApiKey))
             }
         }
     }
