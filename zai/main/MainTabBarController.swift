@@ -17,6 +17,19 @@ class MainTabBarController : UITabBarController {
 
         UITabBar.appearance().tintColor = Color.tabBarItemColor
         
+        self.tabBar.items![0].image = self.tabBar.items![0].image?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        self.tabBar.items![0].selectedImage = self.tabBar.items![0].selectedImage?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        self.tabBar.items![1].image = self.tabBar.items![1
+            ].image?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        self.tabBar.items![1].selectedImage = self.tabBar.items![1
+            ].selectedImage?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        self.tabBar.items![2].image = self.tabBar.items![2].image?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        self.tabBar.items![2].selectedImage = self.tabBar.items![2].selectedImage?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        self.tabBar.items![3].image = self.tabBar.items![3].image?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        self.tabBar.items![3].selectedImage = self.tabBar.items![3].selectedImage?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        self.tabBar.items![4].image = self.tabBar.items![4].image?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        self.tabBar.items![4].selectedImage = self.tabBar.items![4].selectedImage?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        
         let chartNavi = self.viewControllers![1] as! UINavigationController
         let chartController = chartNavi.viewControllers[0] as! ChartViewController
         let account = getAccount()!

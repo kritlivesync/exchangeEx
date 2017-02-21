@@ -13,9 +13,10 @@ import UIKit
 protocol UserAccountSettingDelegate {
     func loggedOut(userId: String)
     func changePassword()
+    func changeExchange(setting: UserAccountSettingView)
 }
 
-class UserAccountSettingView : SettingView, ValueActionSettingDelegate, VariableSettingCellDelegate {
+class UserAccountSettingView : SettingView, ValueActionSettingDelegate, VariableSettingCellDelegate, ChangeExchangeDelegate {
     
     init(account: Account, section: Int, tableView: UITableView) {
         self.account = account
@@ -37,12 +38,15 @@ class UserAccountSettingView : SettingView, ValueActionSettingDelegate, Variable
             let cell = tableView.dequeueReusableCell(withIdentifier: "variableSettingCell", for: indexPath) as! VariableSettingCell
             cell.nameLabel.text = "パスワード"
             cell.valueLabel.text = "*****"
+            cell.id = 0
             cell.delegate = self
             return cell
         case 2:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "readOnlySettingCell", for: indexPath) as! ReadOnlySettingCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "variableSettingCell", for: indexPath) as! VariableSettingCell
             cell.nameLabel.text = "現在の取引所"
             cell.valueLabel.text = self.account.activeExchange.name
+            cell.id = 1
+            cell.delegate = self
             return cell
         case 3:
             let cell = tableView.dequeueReusableCell(withIdentifier: "readOnlySettingCell", for: indexPath) as! ReadOnlySettingCell
@@ -79,7 +83,19 @@ class UserAccountSettingView : SettingView, ValueActionSettingDelegate, Variable
     
     // VariableSettingCellDelegate
     func touchesEnded(id: Int, name: String, value: String) {
-        self.delegate?.changePassword()
+        switch id {
+        case 0: self.delegate?.changePassword()
+        case 1: self.delegate?.changeExchange(setting: self)
+        default: break
+        }
+    }
+    
+    // ChangeExchangeDelegate
+    func saved(exchange: String) {
+        guard let cell = self.tableView.cellForRow(at: IndexPath(row: 2, section: self.section))  as? VariableSettingCell else {
+            return
+        }
+        cell.valueLabel.text = exchange
     }
     
     override var sectionName: String {

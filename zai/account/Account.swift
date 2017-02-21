@@ -85,6 +85,14 @@ open class Account: NSManagedObject {
         return ret
     }
     
+    func setActiveExchange(exchangeName: String) {
+        guard let _ = self.getExchange(exchangeName: exchangeName) else {
+            return
+        }
+        self.activeExchangeName = exchangeName
+        Database.getDb().saveContext()
+    }
+    
     var activeExchange: Exchange {
         return self.getExchange(exchangeName: self.activeExchangeName)!
     }

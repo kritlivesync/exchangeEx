@@ -62,4 +62,15 @@ public class BitFlyerExchange: Exchange {
         */
         return true
     }
+    
+    override var handlingCurrencyPairs: [ApiCurrencyPair] {
+        return [.BTC_JPY]
+    }
+    
+    override var displayCurrencyPair: String {
+        switch self.currencyPair {
+        case "btc_jpy": return "BTC/JPY"
+        default: return ""
+        }
+    }
 }

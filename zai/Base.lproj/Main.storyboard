@@ -38,6 +38,7 @@
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="ユーザーID" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Prh-6x-Vee">
                                         <rect key="frame" x="0.0" y="0.0" width="373" height="44"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="wWf-CX-dIk"/>
                                         </constraints>
@@ -139,7 +140,7 @@
         <scene sceneID="KPy-Mr-Obp">
             <objects>
                 <navigationController title="Board" id="D73-4q-6m4" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Board" id="lJm-MY-x60"/>
+                    <tabBarItem key="tabBarItem" title="Board" image="board.PNG" selectedImage="board.PNG" id="lJm-MY-x60"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="5EV-Xt-8Xh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -367,7 +368,7 @@
         <scene sceneID="XdM-Vw-mAb">
             <objects>
                 <navigationController id="40o-st-Iff" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Positions" id="d6s-eL-a9I"/>
+                    <tabBarItem key="tabBarItem" title="Positions" image="positions.PNG" selectedImage="positions.PNG" id="d6s-eL-a9I"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Qua-sX-Ewj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -659,7 +660,7 @@
         <scene sceneID="APf-0y-AWy">
             <objects>
                 <navigationController id="LUx-ZZ-VQ2" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Orders" id="rPu-90-Uqk"/>
+                    <tabBarItem key="tabBarItem" title="Orders" image="orders.PNG" selectedImage="orders.PNG" id="rPu-90-Uqk"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="oxW-Sf-BDn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -945,6 +946,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="93.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="aL0-yL-edr" kind="show" identifier="changeExchangeSegue" id="dz7-7Y-4Sp"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -973,6 +977,49 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="paJ-7q-rJu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5630" y="-1326"/>
+        </scene>
+        <!--取引所の変更-->
+        <scene sceneID="hC1-nP-84G">
+            <objects>
+                <tableViewController id="aL0-yL-edr" customClass="ChangeExchangeViewController" customModule="zai" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="e8z-un-t7L">
+                        <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="k0x-Ys-oZh">
+                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k0x-Ys-oZh" id="VwY-GO-g25">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="aL0-yL-edr" id="2Jq-cM-deO"/>
+                            <outlet property="delegate" destination="aL0-yL-edr" id="sO7-6T-163"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="取引所の変更" id="V2S-2e-gBn">
+                        <barButtonItem key="leftBarButtonItem" title="キャンセル" id="E7z-tq-ZSD">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <segue destination="k4R-bn-Ygj" kind="unwind" identifier="unwindToSettings" unwindAction="unwindToSettings:" id="DT6-mb-Ca8"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="保存" id="5OW-eb-Pf8">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="pushSaveButton:" destination="aL0-yL-edr" id="IYB-ny-aPJ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EB7-I1-N3O" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="k4R-bn-Ygj" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="6750" y="-1261"/>
         </scene>
         <!--パスワードの変更-->
         <scene sceneID="Aqi-cU-kva">
@@ -1050,7 +1097,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QOX-iP-nRc" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="ulu-SU-yxD" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="6736" y="-1326"/>
+            <point key="canvasLocation" x="6761" y="-1938"/>
         </scene>
         <!--Zaif APIキーの変更-->
         <scene sceneID="W1V-Ea-znc">
@@ -1306,7 +1353,7 @@
         <scene sceneID="S0R-r4-BJX">
             <objects>
                 <navigationController id="Xsj-jr-WUv" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Chart" id="2W2-iF-Dem"/>
+                    <tabBarItem key="tabBarItem" title="Chart" image="chart.PNG" selectedImage="chart.PNG" id="2W2-iF-Dem"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="WmK-hd-BBB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1393,7 +1440,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="4UZ-96-iNW">
-                                                    <rect key="frame" x="394" y="25" width="20" height="20"/>
+                                                    <rect key="frame" x="394" y="25.666666666666664" width="20" height="19.999999999999993"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>
@@ -1546,7 +1593,7 @@
             <objects>
                 <navigationController id="tKA-1E-9pH" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Assets" image="assets.PNG" selectedImage="assets.PNG" id="l7C-XK-GcM"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="n8Z-Xa-aUr">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="n8Z-Xa-aUr">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.18039215689999999" green="0.49019607840000001" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1565,5 +1612,9 @@
     </scenes>
     <resources>
         <image name="assets.PNG" width="25" height="25"/>
+        <image name="board.PNG" width="25" height="25"/>
+        <image name="chart.PNG" width="25" height="25"/>
+        <image name="orders.PNG" width="25" height="25"/>
+        <image name="positions.PNG" width="25" height="25"/>
     </resources>
 </document>

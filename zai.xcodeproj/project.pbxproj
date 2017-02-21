@@ -17,6 +17,7 @@
 		B827CD121D7C4FDD00E9847B /* PositionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827CD111D7C4FDD00E9847B /* PositionsViewController.swift */; };
 		B827CD141D7C523700E9847B /* PositionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827CD131D7C523700E9847B /* PositionListView.swift */; };
 		B827CD161D806DF900E9847B /* PositionListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827CD151D806DF900E9847B /* PositionListViewCell.swift */; };
+		B831091C1E5CA915002D10B5 /* ChangeExchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B831091B1E5CA915002D10B5 /* ChangeExchangeViewController.swift */; };
 		B835D40E1E34DB3800F9C4EB /* ChangeBuyAmountLimitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835D40D1E34DB3800F9C4EB /* ChangeBuyAmountLimitViewController.swift */; };
 		B835D4101E34EF5000F9C4EB /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835D40F1E34EF5000F9C4EB /* Validation.swift */; };
 		B83F727F1E2F9B590077B566 /* ChartSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83F727E1E2F9B590077B566 /* ChartSettingView.swift */; };
@@ -73,6 +74,11 @@
 		B8521A741DF84DE80025B60E /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A731DF84DE80025B60E /* BoardView.swift */; };
 		B8521A761DF8542F0025B60E /* BoardViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A751DF8542F0025B60E /* BoardViewCell.swift */; };
 		B8521A781DFC681A0025B60E /* Ema.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A771DFC681A0025B60E /* Ema.swift */; };
+		B85A8FB91E5B4F610097904C /* board@3x.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B85A8FB41E5B4F610097904C /* board@3x.PNG */; };
+		B85A8FBA1E5B4F610097904C /* chart@3x.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B85A8FB51E5B4F610097904C /* chart@3x.PNG */; };
+		B85A8FBB1E5B4F610097904C /* orders@3x.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B85A8FB61E5B4F610097904C /* orders@3x.PNG */; };
+		B85A8FBC1E5B4F610097904C /* positions@3x.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B85A8FB71E5B4F610097904C /* positions@3x.PNG */; };
+		B85A8FBD1E5B4F610097904C /* settings@3x.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B85A8FB81E5B4F610097904C /* settings@3x.PNG */; };
 		B85E8E301D6F3DFB00C029C8 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E2F1D6F3DFB00C029C8 /* Currency.swift */; };
 		B85E8E361D6F3E2100C029C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E311D6F3E2100C029C8 /* AppDelegate.swift */; };
 		B85E8E381D6F3E2100C029C8 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E331D6F3E2100C029C8 /* Database.swift */; };
@@ -88,11 +94,6 @@
 		B85E8E4E1D6F3E5E00C029C8 /* TradeLogRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E4B1D6F3E5E00C029C8 /* TradeLogRepository.swift */; };
 		B85E8E5E1D6F477900C029C8 /* TraderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E5D1D6F477900C029C8 /* TraderView.swift */; };
 		B85E8E601D6F541800C029C8 /* TraderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E5F1D6F541800C029C8 /* TraderViewCell.swift */; };
-		B87C6B991E59BE0D005A00E9 /* board.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B87C6B931E59BE0D005A00E9 /* board.PNG */; };
-		B87C6B9A1E59BE0D005A00E9 /* chart.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B87C6B941E59BE0D005A00E9 /* chart.PNG */; };
-		B87C6B9B1E59BE0D005A00E9 /* orders.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B87C6B951E59BE0D005A00E9 /* orders.PNG */; };
-		B87C6B9C1E59BE0D005A00E9 /* positions.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B87C6B961E59BE0D005A00E9 /* positions.PNG */; };
-		B87C6B9D1E59BE0D005A00E9 /* settings.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B87C6B971E59BE0D005A00E9 /* settings.PNG */; };
 		B87C6BA01E59C199005A00E9 /* assets@3x.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B87C6B9F1E59C199005A00E9 /* assets@3x.PNG */; };
 		B88CF6EE1E3C8258008A6189 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88CF6ED1E3C8258008A6189 /* Config.swift */; };
 		B88CF6F01E3C8542008A6189 /* ConfigRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88CF6EF1E3C8542008A6189 /* ConfigRepository.swift */; };
@@ -176,6 +177,7 @@
 		B827CD111D7C4FDD00E9847B /* PositionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PositionsViewController.swift; path = positions/PositionsViewController.swift; sourceTree = "<group>"; };
 		B827CD131D7C523700E9847B /* PositionListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PositionListView.swift; path = positions/PositionListView.swift; sourceTree = "<group>"; };
 		B827CD151D806DF900E9847B /* PositionListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PositionListViewCell.swift; path = positions/PositionListViewCell.swift; sourceTree = "<group>"; };
+		B831091B1E5CA915002D10B5 /* ChangeExchangeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChangeExchangeViewController.swift; path = settings/ChangeExchangeViewController.swift; sourceTree = "<group>"; };
 		B835D40D1E34DB3800F9C4EB /* ChangeBuyAmountLimitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChangeBuyAmountLimitViewController.swift; path = settings/ChangeBuyAmountLimitViewController.swift; sourceTree = "<group>"; };
 		B835D40F1E34EF5000F9C4EB /* Validation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Validation.swift; path = core/Validation.swift; sourceTree = "<group>"; };
 		B83F727E1E2F9B590077B566 /* ChartSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChartSettingView.swift; path = settings/ChartSettingView.swift; sourceTree = "<group>"; };
@@ -232,6 +234,11 @@
 		B8521A731DF84DE80025B60E /* BoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardView.swift; path = board/BoardView.swift; sourceTree = "<group>"; };
 		B8521A751DF8542F0025B60E /* BoardViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardViewCell.swift; path = board/BoardViewCell.swift; sourceTree = "<group>"; };
 		B8521A771DFC681A0025B60E /* Ema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Ema.swift; path = analytics/Ema.swift; sourceTree = "<group>"; };
+		B85A8FB41E5B4F610097904C /* board@3x.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "board@3x.PNG"; path = "icons/board@3x.PNG"; sourceTree = "<group>"; };
+		B85A8FB51E5B4F610097904C /* chart@3x.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chart@3x.PNG"; path = "icons/chart@3x.PNG"; sourceTree = "<group>"; };
+		B85A8FB61E5B4F610097904C /* orders@3x.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "orders@3x.PNG"; path = "icons/orders@3x.PNG"; sourceTree = "<group>"; };
+		B85A8FB71E5B4F610097904C /* positions@3x.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "positions@3x.PNG"; path = "icons/positions@3x.PNG"; sourceTree = "<group>"; };
+		B85A8FB81E5B4F610097904C /* settings@3x.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings@3x.PNG"; path = "icons/settings@3x.PNG"; sourceTree = "<group>"; };
 		B85E8E2F1D6F3DFB00C029C8 /* Currency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Currency.swift; path = currency/Currency.swift; sourceTree = "<group>"; };
 		B85E8E311D6F3E2100C029C8 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = core/AppDelegate.swift; sourceTree = "<group>"; };
 		B85E8E331D6F3E2100C029C8 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Database.swift; path = core/Database.swift; sourceTree = "<group>"; };
@@ -247,11 +254,6 @@
 		B85E8E4B1D6F3E5E00C029C8 /* TradeLogRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TradeLogRepository.swift; path = log/TradeLogRepository.swift; sourceTree = "<group>"; };
 		B85E8E5D1D6F477900C029C8 /* TraderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderView.swift; path = main/TraderView.swift; sourceTree = "<group>"; };
 		B85E8E5F1D6F541800C029C8 /* TraderViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderViewCell.swift; path = main/TraderViewCell.swift; sourceTree = "<group>"; };
-		B87C6B931E59BE0D005A00E9 /* board.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = board.PNG; path = icons/board.PNG; sourceTree = "<group>"; };
-		B87C6B941E59BE0D005A00E9 /* chart.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = chart.PNG; path = icons/chart.PNG; sourceTree = "<group>"; };
-		B87C6B951E59BE0D005A00E9 /* orders.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = orders.PNG; path = icons/orders.PNG; sourceTree = "<group>"; };
-		B87C6B961E59BE0D005A00E9 /* positions.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = positions.PNG; path = icons/positions.PNG; sourceTree = "<group>"; };
-		B87C6B971E59BE0D005A00E9 /* settings.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settings.PNG; path = icons/settings.PNG; sourceTree = "<group>"; };
 		B87C6B9F1E59C199005A00E9 /* assets@3x.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "assets@3x.PNG"; path = "icons/assets@3x.PNG"; sourceTree = "<group>"; };
 		B88CF6ED1E3C8258008A6189 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Config.swift; path = core/Config.swift; sourceTree = "<group>"; };
 		B88CF6EF1E3C8542008A6189 /* ConfigRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigRepository.swift; path = config/ConfigRepository.swift; sourceTree = "<group>"; };
@@ -440,6 +442,7 @@
 				B8C7DEE41E2B263D00E666F0 /* ChangePasswordViewController.swift */,
 				B8C7DEEE1E2D15FD00E666F0 /* ChangeUpdateIntervalViewController.swift */,
 				B83F729B1E345D5F0077B566 /* ChangeUnwindingRuleViewController.swift */,
+				B831091B1E5CA915002D10B5 /* ChangeExchangeViewController.swift */,
 				B8C7DEEA1E2B620C00E666F0 /* ChangeZaifApiKeyController.swift */,
 				B83F727E1E2F9B590077B566 /* ChartSettingView.swift */,
 				B83F72841E2FA24B0077B566 /* OrdersSettingView.swift */,
@@ -561,6 +564,11 @@
 		B87C6B9E1E59C184005A00E9 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
+				B85A8FB41E5B4F610097904C /* board@3x.PNG */,
+				B85A8FB51E5B4F610097904C /* chart@3x.PNG */,
+				B85A8FB61E5B4F610097904C /* orders@3x.PNG */,
+				B85A8FB71E5B4F610097904C /* positions@3x.PNG */,
+				B85A8FB81E5B4F610097904C /* settings@3x.PNG */,
 				B87C6B9F1E59C199005A00E9 /* assets@3x.PNG */,
 			);
 			name = "Support Files";
@@ -569,11 +577,6 @@
 		B8B29A811E4A115500ED3F64 /* icons */ = {
 			isa = PBXGroup;
 			children = (
-				B87C6B931E59BE0D005A00E9 /* board.PNG */,
-				B87C6B941E59BE0D005A00E9 /* chart.PNG */,
-				B87C6B951E59BE0D005A00E9 /* orders.PNG */,
-				B87C6B961E59BE0D005A00E9 /* positions.PNG */,
-				B87C6B971E59BE0D005A00E9 /* settings.PNG */,
 			);
 			name = icons;
 			sourceTree = "<group>";
@@ -822,16 +825,16 @@
 				B83F72961E3236C40077B566 /* ValueActionSettingCell.xib in Resources */,
 				B83F72981E3236C40077B566 /* VariableSettingCell.xib in Resources */,
 				B8B845821D66041D00535638 /* LaunchScreen.storyboard in Resources */,
+				B85A8FBC1E5B4F610097904C /* positions@3x.PNG in Resources */,
 				B87C6BA01E59C199005A00E9 /* assets@3x.PNG in Resources */,
-				B87C6B9B1E59BE0D005A00E9 /* orders.PNG in Resources */,
+				B85A8FB91E5B4F610097904C /* board@3x.PNG in Resources */,
 				B8B29AFA1E50062200ED3F64 /* TextSettingCell.xib in Resources */,
-				B87C6B9A1E59BE0D005A00E9 /* chart.PNG in Resources */,
+				B85A8FBD1E5B4F610097904C /* settings@3x.PNG in Resources */,
 				B8B8457F1D66041D00535638 /* Assets.xcassets in Resources */,
-				B87C6B991E59BE0D005A00E9 /* board.PNG in Resources */,
 				B8B8457D1D66041D00535638 /* Main.storyboard in Resources */,
+				B85A8FBB1E5B4F610097904C /* orders@3x.PNG in Resources */,
+				B85A8FBA1E5B4F610097904C /* chart@3x.PNG in Resources */,
 				B8C704711E40DC6D00659C9F /* GoogleService-Info.plist in Resources */,
-				B87C6B9C1E59BE0D005A00E9 /* positions.PNG in Resources */,
-				B87C6B9D1E59BE0D005A00E9 /* settings.PNG in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -923,6 +926,7 @@
 				B8B29B021E52067600ED3F64 /* bitFlyerApi.swift in Sources */,
 				B8B29B0A1E56041E00ED3F64 /* NewBitFlyerAccount.swift in Sources */,
 				B835D4101E34EF5000F9C4EB /* Validation.swift in Sources */,
+				B831091C1E5CA915002D10B5 /* ChangeExchangeViewController.swift in Sources */,
 				B827CD141D7C523700E9847B /* PositionListView.swift in Sources */,
 				B8B29AFC1E5006CF00ED3F64 /* TextSettingCell.swift in Sources */,
 				B83F72871E3232B30077B566 /* AssetsView.swift in Sources */,

@@ -139,6 +139,10 @@ class SettingsViewController
         self.performSegue(withIdentifier: "changePasswordSegue", sender: nil)
     }
     
+    func changeExchange(setting: UserAccountSettingView) {
+        self.performSegue(withIdentifier: "changeExchangeSegue", sender: setting)
+    }
+    
     // ZaifSettingViewDelegate
     func changeApiKeys() {
         self.performSegue(withIdentifier: "changeZaifApiKeysSegue", sender: nil)
@@ -206,6 +210,10 @@ class SettingsViewController
         case "changeBuyAmountLimitSegue":
             let dst = segue.destination as! ChangeBuyAmountLimitViewController
             let setting = sender as! AppSettingView
+            dst.delegate = setting
+        case "changeExchangeSegue":
+            let dst = segue.destination as! ChangeExchangeViewController
+            let setting = sender as! UserAccountSettingView
             dst.delegate = setting
         default: break
         }
