@@ -17,7 +17,22 @@
 		B827CD121D7C4FDD00E9847B /* PositionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827CD111D7C4FDD00E9847B /* PositionsViewController.swift */; };
 		B827CD141D7C523700E9847B /* PositionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827CD131D7C523700E9847B /* PositionListView.swift */; };
 		B827CD161D806DF900E9847B /* PositionListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827CD151D806DF900E9847B /* PositionListViewCell.swift */; };
+		B82825261E5F5D34005808DB /* images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B82825251E5F5D34005808DB /* images.xcassets */; };
+		B82825281E608E21005808DB /* BitFlyerSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82825271E608E21005808DB /* BitFlyerSettingView.swift */; };
+		B828252A1E609001005808DB /* ChangeBitFlyerApiKeyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82825291E609001005808DB /* ChangeBitFlyerApiKeyController.swift */; };
 		B831091C1E5CA915002D10B5 /* ChangeExchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B831091B1E5CA915002D10B5 /* ChangeExchangeViewController.swift */; };
+		B831095B1E5F4B02002D10B5 /* assets_off@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B83109511E5F4B02002D10B5 /* assets_off@3x.png */; };
+		B831095C1E5F4B02002D10B5 /* board_off@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B83109521E5F4B02002D10B5 /* board_off@3x.png */; };
+		B831095D1E5F4B02002D10B5 /* board_on@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B83109531E5F4B02002D10B5 /* board_on@3x.png */; };
+		B831095E1E5F4B02002D10B5 /* chart_off@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B83109541E5F4B02002D10B5 /* chart_off@3x.png */; };
+		B831095F1E5F4B02002D10B5 /* chart_on@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B83109551E5F4B02002D10B5 /* chart_on@3x.png */; };
+		B83109601E5F4B02002D10B5 /* orders_off@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B83109561E5F4B02002D10B5 /* orders_off@3x.png */; };
+		B83109611E5F4B02002D10B5 /* orders_on@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B83109571E5F4B02002D10B5 /* orders_on@3x.png */; };
+		B83109621E5F4B02002D10B5 /* positions_off@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B83109581E5F4B02002D10B5 /* positions_off@3x.png */; };
+		B83109631E5F4B02002D10B5 /* positions_on@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B83109591E5F4B02002D10B5 /* positions_on@3x.png */; };
+		B83109651E5F4B35002D10B5 /* assets_on@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B83109641E5F4B35002D10B5 /* assets_on@3x.png */; };
+		B831096A1E5F5942002D10B5 /* app@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B83109681E5F5942002D10B5 /* app@2x.png */; };
+		B831096B1E5F5942002D10B5 /* app@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B83109691E5F5942002D10B5 /* app@3x.png */; };
 		B835D40E1E34DB3800F9C4EB /* ChangeBuyAmountLimitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835D40D1E34DB3800F9C4EB /* ChangeBuyAmountLimitViewController.swift */; };
 		B835D4101E34EF5000F9C4EB /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835D40F1E34EF5000F9C4EB /* Validation.swift */; };
 		B83F727F1E2F9B590077B566 /* ChartSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83F727E1E2F9B590077B566 /* ChartSettingView.swift */; };
@@ -74,11 +89,6 @@
 		B8521A741DF84DE80025B60E /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A731DF84DE80025B60E /* BoardView.swift */; };
 		B8521A761DF8542F0025B60E /* BoardViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A751DF8542F0025B60E /* BoardViewCell.swift */; };
 		B8521A781DFC681A0025B60E /* Ema.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8521A771DFC681A0025B60E /* Ema.swift */; };
-		B85A8FB91E5B4F610097904C /* board@3x.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B85A8FB41E5B4F610097904C /* board@3x.PNG */; };
-		B85A8FBA1E5B4F610097904C /* chart@3x.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B85A8FB51E5B4F610097904C /* chart@3x.PNG */; };
-		B85A8FBB1E5B4F610097904C /* orders@3x.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B85A8FB61E5B4F610097904C /* orders@3x.PNG */; };
-		B85A8FBC1E5B4F610097904C /* positions@3x.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B85A8FB71E5B4F610097904C /* positions@3x.PNG */; };
-		B85A8FBD1E5B4F610097904C /* settings@3x.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B85A8FB81E5B4F610097904C /* settings@3x.PNG */; };
 		B85E8E301D6F3DFB00C029C8 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E2F1D6F3DFB00C029C8 /* Currency.swift */; };
 		B85E8E361D6F3E2100C029C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E311D6F3E2100C029C8 /* AppDelegate.swift */; };
 		B85E8E381D6F3E2100C029C8 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E331D6F3E2100C029C8 /* Database.swift */; };
@@ -94,7 +104,6 @@
 		B85E8E4E1D6F3E5E00C029C8 /* TradeLogRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E4B1D6F3E5E00C029C8 /* TradeLogRepository.swift */; };
 		B85E8E5E1D6F477900C029C8 /* TraderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E5D1D6F477900C029C8 /* TraderView.swift */; };
 		B85E8E601D6F541800C029C8 /* TraderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E5F1D6F541800C029C8 /* TraderViewCell.swift */; };
-		B87C6BA01E59C199005A00E9 /* assets@3x.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B87C6B9F1E59C199005A00E9 /* assets@3x.PNG */; };
 		B88CF6EE1E3C8258008A6189 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88CF6ED1E3C8258008A6189 /* Config.swift */; };
 		B88CF6F01E3C8542008A6189 /* ConfigRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88CF6EF1E3C8542008A6189 /* ConfigRepository.swift */; };
 		B88CF6F21E3CA0E9008A6189 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88CF6F11E3CA0E9008A6189 /* Resource.swift */; };
@@ -109,7 +118,6 @@
 		B8B29B081E55FEC600ED3F64 /* BitFlyerExchange+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B29B061E55FEC600ED3F64 /* BitFlyerExchange+CoreDataProperties.swift */; };
 		B8B29B0A1E56041E00ED3F64 /* NewBitFlyerAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B29B091E56041E00ED3F64 /* NewBitFlyerAccount.swift */; };
 		B8B8457D1D66041D00535638 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B8457B1D66041D00535638 /* Main.storyboard */; settings = {ASSET_TAGS = (4, ); }; };
-		B8B8457F1D66041D00535638 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8B8457E1D66041D00535638 /* Assets.xcassets */; };
 		B8B845821D66041D00535638 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8B845801D66041D00535638 /* LaunchScreen.storyboard */; };
 		B8B8458D1D66041D00535638 /* zaiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B8458C1D66041D00535638 /* zaiTests.swift */; };
 		B8B845981D66041D00535638 /* zaiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B845971D66041D00535638 /* zaiUITests.swift */; };
@@ -177,7 +185,22 @@
 		B827CD111D7C4FDD00E9847B /* PositionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PositionsViewController.swift; path = positions/PositionsViewController.swift; sourceTree = "<group>"; };
 		B827CD131D7C523700E9847B /* PositionListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PositionListView.swift; path = positions/PositionListView.swift; sourceTree = "<group>"; };
 		B827CD151D806DF900E9847B /* PositionListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PositionListViewCell.swift; path = positions/PositionListViewCell.swift; sourceTree = "<group>"; };
+		B82825251E5F5D34005808DB /* images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = images.xcassets; sourceTree = "<group>"; };
+		B82825271E608E21005808DB /* BitFlyerSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BitFlyerSettingView.swift; path = settings/BitFlyerSettingView.swift; sourceTree = "<group>"; };
+		B82825291E609001005808DB /* ChangeBitFlyerApiKeyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChangeBitFlyerApiKeyController.swift; path = settings/ChangeBitFlyerApiKeyController.swift; sourceTree = "<group>"; };
 		B831091B1E5CA915002D10B5 /* ChangeExchangeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChangeExchangeViewController.swift; path = settings/ChangeExchangeViewController.swift; sourceTree = "<group>"; };
+		B83109511E5F4B02002D10B5 /* assets_off@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "assets_off@3x.png"; path = "icons/tabbaricon@3x/assets_off@3x.png"; sourceTree = "<group>"; };
+		B83109521E5F4B02002D10B5 /* board_off@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "board_off@3x.png"; path = "icons/tabbaricon@3x/board_off@3x.png"; sourceTree = "<group>"; };
+		B83109531E5F4B02002D10B5 /* board_on@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "board_on@3x.png"; path = "icons/tabbaricon@3x/board_on@3x.png"; sourceTree = "<group>"; };
+		B83109541E5F4B02002D10B5 /* chart_off@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chart_off@3x.png"; path = "icons/tabbaricon@3x/chart_off@3x.png"; sourceTree = "<group>"; };
+		B83109551E5F4B02002D10B5 /* chart_on@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chart_on@3x.png"; path = "icons/tabbaricon@3x/chart_on@3x.png"; sourceTree = "<group>"; };
+		B83109561E5F4B02002D10B5 /* orders_off@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "orders_off@3x.png"; path = "icons/tabbaricon@3x/orders_off@3x.png"; sourceTree = "<group>"; };
+		B83109571E5F4B02002D10B5 /* orders_on@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "orders_on@3x.png"; path = "icons/tabbaricon@3x/orders_on@3x.png"; sourceTree = "<group>"; };
+		B83109581E5F4B02002D10B5 /* positions_off@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "positions_off@3x.png"; path = "icons/tabbaricon@3x/positions_off@3x.png"; sourceTree = "<group>"; };
+		B83109591E5F4B02002D10B5 /* positions_on@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "positions_on@3x.png"; path = "icons/tabbaricon@3x/positions_on@3x.png"; sourceTree = "<group>"; };
+		B83109641E5F4B35002D10B5 /* assets_on@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "assets_on@3x.png"; path = "icons/tabbaricon@3x/assets_on@3x.png"; sourceTree = "<group>"; };
+		B83109681E5F5942002D10B5 /* app@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "app@2x.png"; path = "icons/appicon/app@2x.png"; sourceTree = "<group>"; };
+		B83109691E5F5942002D10B5 /* app@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "app@3x.png"; path = "icons/appicon/app@3x.png"; sourceTree = "<group>"; };
 		B835D40D1E34DB3800F9C4EB /* ChangeBuyAmountLimitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChangeBuyAmountLimitViewController.swift; path = settings/ChangeBuyAmountLimitViewController.swift; sourceTree = "<group>"; };
 		B835D40F1E34EF5000F9C4EB /* Validation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Validation.swift; path = core/Validation.swift; sourceTree = "<group>"; };
 		B83F727E1E2F9B590077B566 /* ChartSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChartSettingView.swift; path = settings/ChartSettingView.swift; sourceTree = "<group>"; };
@@ -234,11 +257,6 @@
 		B8521A731DF84DE80025B60E /* BoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardView.swift; path = board/BoardView.swift; sourceTree = "<group>"; };
 		B8521A751DF8542F0025B60E /* BoardViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardViewCell.swift; path = board/BoardViewCell.swift; sourceTree = "<group>"; };
 		B8521A771DFC681A0025B60E /* Ema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Ema.swift; path = analytics/Ema.swift; sourceTree = "<group>"; };
-		B85A8FB41E5B4F610097904C /* board@3x.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "board@3x.PNG"; path = "icons/board@3x.PNG"; sourceTree = "<group>"; };
-		B85A8FB51E5B4F610097904C /* chart@3x.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chart@3x.PNG"; path = "icons/chart@3x.PNG"; sourceTree = "<group>"; };
-		B85A8FB61E5B4F610097904C /* orders@3x.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "orders@3x.PNG"; path = "icons/orders@3x.PNG"; sourceTree = "<group>"; };
-		B85A8FB71E5B4F610097904C /* positions@3x.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "positions@3x.PNG"; path = "icons/positions@3x.PNG"; sourceTree = "<group>"; };
-		B85A8FB81E5B4F610097904C /* settings@3x.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings@3x.PNG"; path = "icons/settings@3x.PNG"; sourceTree = "<group>"; };
 		B85E8E2F1D6F3DFB00C029C8 /* Currency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Currency.swift; path = currency/Currency.swift; sourceTree = "<group>"; };
 		B85E8E311D6F3E2100C029C8 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = core/AppDelegate.swift; sourceTree = "<group>"; };
 		B85E8E331D6F3E2100C029C8 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Database.swift; path = core/Database.swift; sourceTree = "<group>"; };
@@ -254,7 +272,6 @@
 		B85E8E4B1D6F3E5E00C029C8 /* TradeLogRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TradeLogRepository.swift; path = log/TradeLogRepository.swift; sourceTree = "<group>"; };
 		B85E8E5D1D6F477900C029C8 /* TraderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderView.swift; path = main/TraderView.swift; sourceTree = "<group>"; };
 		B85E8E5F1D6F541800C029C8 /* TraderViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderViewCell.swift; path = main/TraderViewCell.swift; sourceTree = "<group>"; };
-		B87C6B9F1E59C199005A00E9 /* assets@3x.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "assets@3x.PNG"; path = "icons/assets@3x.PNG"; sourceTree = "<group>"; };
 		B88CF6ED1E3C8258008A6189 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Config.swift; path = core/Config.swift; sourceTree = "<group>"; };
 		B88CF6EF1E3C8542008A6189 /* ConfigRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigRepository.swift; path = config/ConfigRepository.swift; sourceTree = "<group>"; };
 		B88CF6F11E3CA0E9008A6189 /* Resource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Resource.swift; path = core/Resource.swift; sourceTree = "<group>"; };
@@ -270,7 +287,6 @@
 		B8B29B091E56041E00ED3F64 /* NewBitFlyerAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewBitFlyerAccount.swift; path = account/NewBitFlyerAccount.swift; sourceTree = "<group>"; };
 		B8B845741D66041D00535638 /* zai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = zai.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8B8457C1D66041D00535638 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		B8B8457E1D66041D00535638 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B8B845811D66041D00535638 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B8B845831D66041D00535638 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B8B845881D66041D00535638 /* zaiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = zaiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -386,10 +402,28 @@
 			name = positions;
 			sourceTree = "<group>";
 		};
+		B831094F1E5F4AE9002D10B5 /* Support FIles */ = {
+			isa = PBXGroup;
+			children = (
+				B83109681E5F5942002D10B5 /* app@2x.png */,
+				B83109691E5F5942002D10B5 /* app@3x.png */,
+				B83109641E5F4B35002D10B5 /* assets_on@3x.png */,
+				B83109511E5F4B02002D10B5 /* assets_off@3x.png */,
+				B83109521E5F4B02002D10B5 /* board_off@3x.png */,
+				B83109531E5F4B02002D10B5 /* board_on@3x.png */,
+				B83109541E5F4B02002D10B5 /* chart_off@3x.png */,
+				B83109551E5F4B02002D10B5 /* chart_on@3x.png */,
+				B83109561E5F4B02002D10B5 /* orders_off@3x.png */,
+				B83109571E5F4B02002D10B5 /* orders_on@3x.png */,
+				B83109581E5F4B02002D10B5 /* positions_off@3x.png */,
+				B83109591E5F4B02002D10B5 /* positions_on@3x.png */,
+			);
+			name = "Support FIles";
+			sourceTree = "<group>";
+		};
 		B83F728A1E32362E0077B566 /* table */ = {
 			isa = PBXGroup;
 			children = (
-				B83F728D1E3236C40077B566 /* ReadOnlySettingCell.swift */,
 				B83F728E1E3236C40077B566 /* ReadOnlySettingCell.xib */,
 				B83F728F1E3236C40077B566 /* ValueActionSettingCell.swift */,
 				B83F72901E3236C40077B566 /* ValueActionSettingCell.xib */,
@@ -398,6 +432,7 @@
 				B83F728B1E32364E0077B566 /* SectionView.swift */,
 				B8B29AF91E50062200ED3F64 /* TextSettingCell.xib */,
 				B8B29AFB1E5006CF00ED3F64 /* TextSettingCell.swift */,
+				B83F728D1E3236C40077B566 /* ReadOnlySettingCell.swift */,
 			);
 			name = table;
 			sourceTree = "<group>";
@@ -444,6 +479,7 @@
 				B83F729B1E345D5F0077B566 /* ChangeUnwindingRuleViewController.swift */,
 				B831091B1E5CA915002D10B5 /* ChangeExchangeViewController.swift */,
 				B8C7DEEA1E2B620C00E666F0 /* ChangeZaifApiKeyController.swift */,
+				B82825291E609001005808DB /* ChangeBitFlyerApiKeyController.swift */,
 				B83F727E1E2F9B590077B566 /* ChartSettingView.swift */,
 				B83F72841E2FA24B0077B566 /* OrdersSettingView.swift */,
 				B83F72821E2F9F230077B566 /* PositionsSettingView.swift */,
@@ -451,6 +487,7 @@
 				B89379401E26822C00F693A3 /* UserAccountSettingView.swift */,
 				B89D5C841E29C66F004FF743 /* ZaifSettingView.swift */,
 				B835D40D1E34DB3800F9C4EB /* ChangeBuyAmountLimitViewController.swift */,
+				B82825271E608E21005808DB /* BitFlyerSettingView.swift */,
 			);
 			name = settings;
 			sourceTree = "<group>";
@@ -561,26 +598,6 @@
 			name = currency;
 			sourceTree = "<group>";
 		};
-		B87C6B9E1E59C184005A00E9 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				B85A8FB41E5B4F610097904C /* board@3x.PNG */,
-				B85A8FB51E5B4F610097904C /* chart@3x.PNG */,
-				B85A8FB61E5B4F610097904C /* orders@3x.PNG */,
-				B85A8FB71E5B4F610097904C /* positions@3x.PNG */,
-				B85A8FB81E5B4F610097904C /* settings@3x.PNG */,
-				B87C6B9F1E59C199005A00E9 /* assets@3x.PNG */,
-			);
-			name = "Support Files";
-			sourceTree = "<group>";
-		};
-		B8B29A811E4A115500ED3F64 /* icons */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = icons;
-			sourceTree = "<group>";
-		};
 		B8B8456B1D66041D00535638 = {
 			isa = PBXGroup;
 			children = (
@@ -606,14 +623,13 @@
 		B8B845761D66041D00535638 /* zai */ = {
 			isa = PBXGroup;
 			children = (
-				B87C6B9E1E59C184005A00E9 /* Support Files */,
-				B8B29A811E4A115500ED3F64 /* icons */,
+				B82825251E5F5D34005808DB /* images.xcassets */,
+				B831094F1E5F4AE9002D10B5 /* Support FIles */,
 				B8C704701E40DC6D00659C9F /* GoogleService-Info.plist */,
 				B85E8E261D6F3AA200C029C8 /* account */,
 				B8002D6C1D8D10DA0079AB9B /* analytics */,
 				B84113FB1E18A88B000EB0F8 /* api */,
 				B81AF6411DFF04F300D4F706 /* assets */,
-				B8B8457E1D66041D00535638 /* Assets.xcassets */,
 				B8521A701DF843EB0025B60E /* board */,
 				B8E9E2D11E1D182B003B298F /* chart */,
 				B8DB8EBF1E3C46080051C7EC /* config */,
@@ -825,16 +841,22 @@
 				B83F72961E3236C40077B566 /* ValueActionSettingCell.xib in Resources */,
 				B83F72981E3236C40077B566 /* VariableSettingCell.xib in Resources */,
 				B8B845821D66041D00535638 /* LaunchScreen.storyboard in Resources */,
-				B85A8FBC1E5B4F610097904C /* positions@3x.PNG in Resources */,
-				B87C6BA01E59C199005A00E9 /* assets@3x.PNG in Resources */,
-				B85A8FB91E5B4F610097904C /* board@3x.PNG in Resources */,
 				B8B29AFA1E50062200ED3F64 /* TextSettingCell.xib in Resources */,
-				B85A8FBD1E5B4F610097904C /* settings@3x.PNG in Resources */,
-				B8B8457F1D66041D00535638 /* Assets.xcassets in Resources */,
+				B831096A1E5F5942002D10B5 /* app@2x.png in Resources */,
+				B831095B1E5F4B02002D10B5 /* assets_off@3x.png in Resources */,
 				B8B8457D1D66041D00535638 /* Main.storyboard in Resources */,
-				B85A8FBB1E5B4F610097904C /* orders@3x.PNG in Resources */,
-				B85A8FBA1E5B4F610097904C /* chart@3x.PNG in Resources */,
+				B83109611E5F4B02002D10B5 /* orders_on@3x.png in Resources */,
+				B82825261E5F5D34005808DB /* images.xcassets in Resources */,
+				B831095D1E5F4B02002D10B5 /* board_on@3x.png in Resources */,
+				B831095C1E5F4B02002D10B5 /* board_off@3x.png in Resources */,
+				B83109601E5F4B02002D10B5 /* orders_off@3x.png in Resources */,
+				B831096B1E5F5942002D10B5 /* app@3x.png in Resources */,
 				B8C704711E40DC6D00659C9F /* GoogleService-Info.plist in Resources */,
+				B831095E1E5F4B02002D10B5 /* chart_off@3x.png in Resources */,
+				B831095F1E5F4B02002D10B5 /* chart_on@3x.png in Resources */,
+				B83109621E5F4B02002D10B5 /* positions_off@3x.png in Resources */,
+				B83109631E5F4B02002D10B5 /* positions_on@3x.png in Resources */,
+				B83109651E5F4B35002D10B5 /* assets_on@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -971,6 +993,7 @@
 				B85E8E441D6F3E4D00C029C8 /* Account.swift in Sources */,
 				B84113D81E141C6F000EB0F8 /* OrderRepository.swift in Sources */,
 				B80920311DFD03E8005667D4 /* MainTabBarController.swift in Sources */,
+				B82825281E608E21005808DB /* BitFlyerSettingView.swift in Sources */,
 				B8F38B3F1D8FD2AB00731696 /* PriceLog+CoreDataProperties.swift in Sources */,
 				B8002D701D8D1C480079AB9B /* ZaifWatch.swift in Sources */,
 				B81AF6451DFF059600D4F706 /* BoardViewController.swift in Sources */,
@@ -1011,6 +1034,7 @@
 				B8521A721DF844380025B60E /* Board.swift in Sources */,
 				B80920351DFD4555005667D4 /* BitCoin.swift in Sources */,
 				B8F38B401D8FD2AB00731696 /* PriceLog.swift in Sources */,
+				B828252A1E609001005808DB /* ChangeBitFlyerApiKeyController.swift in Sources */,
 				B85E8E4E1D6F3E5E00C029C8 /* TradeLogRepository.swift in Sources */,
 				B84113FF1E18A9FA000EB0F8 /* ApiError.swift in Sources */,
 				B8C7DEEF1E2D15FD00E666F0 /* ChangeUpdateIntervalViewController.swift in Sources */,

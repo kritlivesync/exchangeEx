@@ -9,6 +9,8 @@
 import Foundation
 import CoreData
 
+import bFSwift
+
 
 public class BitFlyerExchange: Exchange {
 
@@ -47,7 +49,6 @@ public class BitFlyerExchange: Exchange {
     }
     
     override func saveApiKey(cryptKey: String) -> Bool {
-        /*
         let rawApi = self.serviceApi?.rawApi as! PrivateApi
         guard let encryptedApiKey = Crypt.encrypt(key: cryptKey, src: rawApi.apiKey) else {
             return false
@@ -57,9 +58,17 @@ public class BitFlyerExchange: Exchange {
         }
         self.apiKey = NSData(bytes: encryptedApiKey, length: encryptedApiKey.count)
         self.secretKey = NSData(bytes: encryptedSecret, length: encryptedSecret.count)
-        self.nonce = (self.serviceApi?.rawApi as! PrivateApi).nonceValue as NSNumber
         Database.getDb().saveContext()
-        */
+        return true
+    }
+    
+    func setApiKeys(apiKey: String, secretKey: String, cryptKey: String) -> Bool {
+        let api = bitFlyerApi(apiKey: apiKey, secretKey: secretKey)
+        self.serviceApi = api
+        
+        if !self.saveApiKey(cryptKey: cryptKey) {
+            return false
+        }
         return true
     }
     

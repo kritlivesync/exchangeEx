@@ -25,6 +25,7 @@ class SettingsViewController
     : UITableViewController
     , UserAccountSettingDelegate
     , ZaifSettingViewDelegate
+    , BitFlyerSettingViewDelegate
     , AppSettingViewDelegate
     , AssetsSettingViewDelegate
     , ChartSettingViewDelegate
@@ -52,6 +53,11 @@ class SettingsViewController
             self.zaifSetting = ZaifSettingView(zaifExchange: zaif as! ZaifExchange, section: self.settings.count, tableView: self.tableView)
             self.zaifSetting?.delegate = self
             self.settings.append(self.zaifSetting!)
+        }
+        if let bitFlyer = account.getExchange(exchangeName: "bitFlyer") {
+            self.bitFlyerSetting = BitFlyerSettingView(exchange: bitFlyer as! BitFlyerExchange, section: self.settings.count, tableView: self.tableView)
+            self.bitFlyerSetting?.delegate = self
+            self.settings.append(self.bitFlyerSetting!)
         }
         
         self.appSetting = AppSettingView(section: self.settings.count, tableView: self.tableView)
@@ -144,8 +150,13 @@ class SettingsViewController
     }
     
     // ZaifSettingViewDelegate
-    func changeApiKeys() {
+    func changeApiKeys(setting: ZaifSettingView) {
         self.performSegue(withIdentifier: "changeZaifApiKeysSegue", sender: nil)
+    }
+    
+    // BitFlyerSettingViewDelegate
+    func changeApiKeys(setting: BitFlyerSettingView) {
+        self.performSegue(withIdentifier: "changeBitFlyerApiKeysSegue", sender: nil)
     }
     
     // AppSettingViewDelegate
@@ -198,6 +209,9 @@ class SettingsViewController
         case "changeZaifApiKeysSegue":
             let dst = segue.destination as! ChangeZaifApiKeyController
             dst.zaifExchange = self.zaifSetting?.zaifExchange
+        case "changeBitFlyerApiKeysSegue":
+            let dst = segue.destination as! ChangeBitFlyerApiKeyController
+            dst.exchange = self.bitFlyerSetting?.exchange
         case "changeUpdateIntervalSegue":
             let dst = segue.destination as! ChangeUpdateIntervalViewController
             let setting = sender as! SettingView
@@ -221,6 +235,7 @@ class SettingsViewController
     
     var userSetting: UserAccountSettingView?
     var zaifSetting: ZaifSettingView?
+    var bitFlyerSetting: BitFlyerSettingView?
     var appSetting: AppSettingView?
     var assetsSetting: AssetsSettingView?
     var chartSetting: ChartSettingView?

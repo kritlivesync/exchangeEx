@@ -140,7 +140,7 @@
         <scene sceneID="KPy-Mr-Obp">
             <objects>
                 <navigationController title="Board" id="D73-4q-6m4" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Board" image="board.PNG" selectedImage="board.PNG" id="lJm-MY-x60"/>
+                    <tabBarItem key="tabBarItem" title="Board" image="board_off.png" selectedImage="board_on.png" id="lJm-MY-x60"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="5EV-Xt-8Xh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -368,7 +368,7 @@
         <scene sceneID="XdM-Vw-mAb">
             <objects>
                 <navigationController id="40o-st-Iff" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Positions" image="positions.PNG" selectedImage="positions.PNG" id="d6s-eL-a9I"/>
+                    <tabBarItem key="tabBarItem" title="Positions" image="positions_off.png" selectedImage="positions_on.png" id="d6s-eL-a9I"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Qua-sX-Ewj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -660,7 +660,7 @@
         <scene sceneID="APf-0y-AWy">
             <objects>
                 <navigationController id="LUx-ZZ-VQ2" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Orders" image="orders.PNG" selectedImage="orders.PNG" id="rPu-90-Uqk"/>
+                    <tabBarItem key="tabBarItem" title="Orders" image="orders_off.png" selectedImage="orders_on.png" id="rPu-90-Uqk"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="oxW-Sf-BDn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -720,7 +720,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="zVm-xr-0aN">
-                                                    <rect key="frame" x="394" y="25.333333333333336" width="20" height="20.000000000000007"/>
+                                                    <rect key="frame" x="394" y="24.666666666666664" width="20" height="19.999999999999993"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>
@@ -938,6 +938,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="99.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="j1E-M6-3mk" kind="show" identifier="changeBitFlyerApiKeysSegue" id="XkD-UP-6aO"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="94" id="TPt-7e-dLH">
                                 <rect key="frame" x="0.0" y="128" width="414" height="94"/>
@@ -991,7 +994,7 @@
                                 <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k0x-Ys-oZh" id="VwY-GO-g25">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -1099,10 +1102,10 @@
             </objects>
             <point key="canvasLocation" x="6761" y="-1938"/>
         </scene>
-        <!--Zaif APIキーの変更-->
+        <!--Zaif APIキーの登録-->
         <scene sceneID="W1V-Ea-znc">
             <objects>
-                <viewController title="Zaif APIキーの変更" id="oQX-rA-4mB" customClass="ChangeZaifApiKeyController" customModule="zai" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Zaif APIキーの登録" id="oQX-rA-4mB" customClass="ChangeZaifApiKeyController" customModule="zai" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="f5C-7I-wjS"/>
                         <viewControllerLayoutGuide type="bottom" id="B1D-Jo-fha"/>
@@ -1147,7 +1150,7 @@
                             <constraint firstItem="UTH-Xx-P3S" firstAttribute="top" secondItem="9T1-BP-odD" secondAttribute="bottom" constant="5" id="nru-IO-hkl"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Zaif APIキーの変更" id="Pc2-Ey-KzA">
+                    <navigationItem key="navigationItem" title="Zaif APIキーの登録" id="Pc2-Ey-KzA">
                         <barButtonItem key="leftBarButtonItem" title="キャンセル" id="TG5-pl-HKl">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -1171,6 +1174,78 @@
                 <exit id="47z-Eg-dux" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="6734.7826086956529" y="-567.39130434782612"/>
+        </scene>
+        <!--bitFlyer APIキーの登録l-->
+        <scene sceneID="f7P-De-tbz">
+            <objects>
+                <viewController title="bitFlyer APIキーの登録l" id="j1E-M6-3mk" customClass="ChangeBitFlyerApiKeyController" customModule="zai" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="QA3-6J-jWY"/>
+                        <viewControllerLayoutGuide type="bottom" id="4iH-dF-Wti"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="N9T-1R-FsK">
+                        <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="I52-kW-T0M">
+                                <rect key="frame" x="20" y="50" width="373" height="93"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="APIキー" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qpS-zU-Mec">
+                                        <rect key="frame" x="0.0" y="0.0" width="373" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="Dde-tj-Vva"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="シークレットキー" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7CF-IP-ezG">
+                                        <rect key="frame" x="0.0" y="49" width="373" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="2Fr-Ao-kGs"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Y7l-DH-gfL">
+                                <rect key="frame" x="197" y="151" width="20" height="20"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="I52-kW-T0M" firstAttribute="top" secondItem="QA3-6J-jWY" secondAttribute="bottom" constant="50" id="5lP-Pq-kFa"/>
+                            <constraint firstItem="Y7l-DH-gfL" firstAttribute="top" secondItem="I52-kW-T0M" secondAttribute="bottom" constant="5" id="bWS-c9-hvy"/>
+                            <constraint firstItem="Y7l-DH-gfL" firstAttribute="centerX" secondItem="I52-kW-T0M" secondAttribute="centerX" id="hF1-8A-GEX"/>
+                            <constraint firstItem="I52-kW-T0M" firstAttribute="width" secondItem="N9T-1R-FsK" secondAttribute="width" multiplier="0.9" id="yAu-G1-gW9"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="bitFlyer APIキーの登録" id="3jZ-9g-n9K">
+                        <barButtonItem key="leftBarButtonItem" title="キャンセル" id="8Zf-OL-YeE">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <segue destination="thY-ws-WDu" kind="unwind" identifier="unwindToSettings" unwindAction="unwindToSettings:" id="wJs-En-QQb"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="保存" id="fmx-hW-OHi">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="pushSaveButton:" destination="j1E-M6-3mk" id="lqq-dE-84U"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="activeIndicator" destination="Y7l-DH-gfL" id="6Dl-78-heb"/>
+                        <outlet property="apiKeyText" destination="qpS-zU-Mec" id="fQT-ni-Veh"/>
+                        <outlet property="secretKeyText" destination="7CF-IP-ezG" id="VdG-bH-Hul"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="O6a-9K-q6G" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="thY-ws-WDu" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="7455" y="-567"/>
         </scene>
         <!--自動更新間隔-->
         <scene sceneID="i1O-f0-5DD">
@@ -1353,7 +1428,7 @@
         <scene sceneID="S0R-r4-BJX">
             <objects>
                 <navigationController id="Xsj-jr-WUv" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Chart" image="chart.PNG" selectedImage="chart.PNG" id="2W2-iF-Dem"/>
+                    <tabBarItem key="tabBarItem" title="Chart" image="chart_off.png" selectedImage="chart_on.png" id="2W2-iF-Dem"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="WmK-hd-BBB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1440,7 +1515,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="4UZ-96-iNW">
-                                                    <rect key="frame" x="394" y="25.666666666666664" width="20" height="19.999999999999993"/>
+                                                    <rect key="frame" x="394" y="25" width="20" height="20"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>
@@ -1592,7 +1667,7 @@
         <scene sceneID="4HG-E2-lie">
             <objects>
                 <navigationController id="tKA-1E-9pH" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Assets" image="assets.PNG" selectedImage="assets.PNG" id="l7C-XK-GcM"/>
+                    <tabBarItem key="tabBarItem" title="Assets" image="assets_off.png" selectedImage="assets_on.png" id="l7C-XK-GcM"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="n8Z-Xa-aUr">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1611,10 +1686,15 @@
         </scene>
     </scenes>
     <resources>
-        <image name="assets.PNG" width="25" height="25"/>
-        <image name="board.PNG" width="25" height="25"/>
-        <image name="chart.PNG" width="25" height="25"/>
-        <image name="orders.PNG" width="25" height="25"/>
-        <image name="positions.PNG" width="25" height="25"/>
+        <image name="assets_off.png" width="30" height="30"/>
+        <image name="assets_on.png" width="30" height="30"/>
+        <image name="board_off.png" width="30" height="30"/>
+        <image name="board_on.png" width="30" height="30"/>
+        <image name="chart_off.png" width="30" height="30"/>
+        <image name="chart_on.png" width="30" height="30"/>
+        <image name="orders_off.png" width="30" height="30"/>
+        <image name="orders_on.png" width="30" height="30"/>
+        <image name="positions_off.png" width="30" height="30"/>
+        <image name="positions_on.png" width="30" height="30"/>
     </resources>
 </document>

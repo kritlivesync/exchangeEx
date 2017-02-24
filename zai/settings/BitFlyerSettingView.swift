@@ -1,24 +1,24 @@
 //
-//  ZaifSettingView.swift
+//  BitFlyerSettingView.swift
 //  zai
 //
-//  Created by Kyota Watanabe on 1/14/17.
-//  Copyright © 2017 Kyota Watanabe. All rights reserved.
+//  Created by 渡部郷太 on 2/25/17.
+//  Copyright © 2017 watanabe kyota. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
 
-protocol ZaifSettingViewDelegate {
-    func changeApiKeys(setting: ZaifSettingView)
+protocol BitFlyerSettingViewDelegate {
+    func changeApiKeys(setting: BitFlyerSettingView)
 }
 
 
-class ZaifSettingView : SettingView, VariableSettingCellDelegate {
+class BitFlyerSettingView : SettingView, VariableSettingCellDelegate {
     
-    init(zaifExchange: ZaifExchange, section: Int, tableView: UITableView) {
-        self.zaifExchange = zaifExchange
+    init(exchange: BitFlyerExchange, section: Int, tableView: UITableView) {
+        self.exchange = exchange
         super.init(section: section, tableView: tableView)
     }
     
@@ -52,13 +52,13 @@ class ZaifSettingView : SettingView, VariableSettingCellDelegate {
     }
     
     override var sectionName: String {
-        return self.zaifExchange.name
+        return self.exchange.name
     }
     
     override var rowCount: Int {
         return 1
     }
     
-    let zaifExchange: ZaifExchange
-    var delegate: ZaifSettingViewDelegate?
+    let exchange: BitFlyerExchange
+    var delegate: BitFlyerSettingViewDelegate?
 }
