@@ -16,11 +16,33 @@ public typealias ApiCallback = ((_ err: ApiError?, _ res: JSON?) -> Void)
 
 public enum ApiCurrencyPair : String {
     case BTC_JPY = "btc_jpy"
+    
+    var principal: ApiCurrency {
+        switch self {
+        case .BTC_JPY:
+            return ApiCurrency.BTC
+        }
+    }
+    var settlement: ApiCurrency {
+        switch self {
+        case .BTC_JPY:
+            return ApiCurrency.JPY
+        }
+    }
 }
 
 public enum ApiCurrency : String {
     case BTC = "btc"
     case JPY = "jpy"
+    
+    var label: String {
+        switch self {
+        case .BTC:
+            return "Ƀ"
+        case .JPY:
+            return "¥"
+        }
+    }
 }
 
 

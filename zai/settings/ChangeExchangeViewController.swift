@@ -69,9 +69,9 @@ class ChangeExchangeViewController : UITableViewController {
     }
     
     @IBAction func pushSaveButton(_ sender: Any) {
-        getAccount()!.setActiveExchange(exchangeName: self.selectedExchange)
-        self.delegate?.saved(exchange: self.selectedExchange)
-        self.performSegue(withIdentifier: "unwindToSettings", sender: self)
+        let account = getAccount()!
+        account.setActiveExchange(exchangeName: self.selectedExchange)
+        account.activeExchange.validateApiKey() { _ in }
     }
 
     var exchanges: [String]!

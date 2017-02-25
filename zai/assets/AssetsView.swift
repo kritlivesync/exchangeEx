@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-class AssetsView : NSObject, UITableViewDelegate, UITableViewDataSource, ZaifAssetsDelegate {
+class AssetsView : NSObject, UITableViewDelegate, UITableViewDataSource, ExchangeAssetsDelegate {
     
     init(view: UITableView) {
         self.view = view
@@ -29,8 +29,13 @@ class AssetsView : NSObject, UITableViewDelegate, UITableViewDataSource, ZaifAss
         self.sectionViews.append(self.summaryView!)
         
         let account = getAccount()!
+        if let bitFlyer = account.getExchange(exchangeName: "bitFlyer") {
+            self.bitFlyerAssets = ExchangeAssetsView(exchange: bitFlyer, section: self.sectionViews.count, tableView: self.view)
+            self.bitFlyerAssets?.delegate = self
+            self.sectionViews.append(self.bitFlyerAssets!)
+        }
         if let zaif = account.getExchange(exchangeName: "Zaif") {
-            self.zaifAssets = ZaifAssetsView(exchange: zaif as! ZaifExchange, section: self.sectionViews.count, tableView: self.view)
+            self.zaifAssets = ExchangeAssetsView(exchange: zaif, section: self.sectionViews.count, tableView: self.view)
             self.zaifAssets?.delegate = self
             self.sectionViews.append(self.zaifAssets!)
         }
@@ -38,10 +43,12 @@ class AssetsView : NSObject, UITableViewDelegate, UITableViewDataSource, ZaifAss
 
     func startWatch() {
         self.zaifAssets?.startWatch()
+        self.bitFlyerAssets?.startWatch()
     }
     
     func stopWatch() {
         self.zaifAssets?.stopWatch()
+        self.bitFlyerAssets?.stopWatch()
     }
     
     public func numberOfSections(in tableView: UITableView) -> Int {
@@ -105,13 +112,21 @@ class AssetsView : NSObject, UITableViewDelegate, UITableViewDataSource, ZaifAss
         self.view.reloadData()
     }
     
-    // ZaifAssetsDelegate
+    // ExchangeAssetsDelegate
     func updatedMarketCaptaliation(jpy: Int) {
-        self.summaryView?.updateMarketCapitalization(value: jpy)
+        var sum = 0
+        if let jpy = self.zaifAssets?.marketCapitalization {
+            sum += jpy
+        }
+        if let jpy = self.bitFlyerAssets?.marketCapitalization {
+            sum += jpy
+        }
+        self.summaryView?.updateMarketCapitalization(value: sum)
     }
     
     fileprivate let view: UITableView
     fileprivate var summaryView: AssetsSummaryView?
-    fileprivate var zaifAssets: ZaifAssetsView?
+    fileprivate var zaifAssets: ExchangeAssetsView?
+    fileprivate var bitFlyerAssets: ExchangeAssetsView?
     fileprivate var sectionViews: [SectionView]
 }

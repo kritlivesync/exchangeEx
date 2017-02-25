@@ -48,7 +48,7 @@
 		B83F72961E3236C40077B566 /* ValueActionSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B83F72901E3236C40077B566 /* ValueActionSettingCell.xib */; };
 		B83F72971E3236C40077B566 /* VariableSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83F72911E3236C40077B566 /* VariableSettingCell.swift */; };
 		B83F72981E3236C40077B566 /* VariableSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B83F72921E3236C40077B566 /* VariableSettingCell.xib */; };
-		B83F729A1E3243670077B566 /* ZaifAssetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83F72991E3243670077B566 /* ZaifAssetsView.swift */; };
+		B83F729A1E3243670077B566 /* ExchangeAssetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83F72991E3243670077B566 /* ExchangeAssetsView.swift */; };
 		B83F729C1E345D5F0077B566 /* ChangeUnwindingRuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83F729B1E345D5F0077B566 /* ChangeUnwindingRuleViewController.swift */; };
 		B84113D11E141C6F000EB0F8 /* ActiveOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84113BF1E141C6F000EB0F8 /* ActiveOrder.swift */; };
 		B84113D21E141C6F000EB0F8 /* BuyOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84113C01E141C6F000EB0F8 /* BuyOrder.swift */; };
@@ -104,6 +104,7 @@
 		B85E8E4E1D6F3E5E00C029C8 /* TradeLogRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E4B1D6F3E5E00C029C8 /* TradeLogRepository.swift */; };
 		B85E8E5E1D6F477900C029C8 /* TraderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E5D1D6F477900C029C8 /* TraderView.swift */; };
 		B85E8E601D6F541800C029C8 /* TraderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E5F1D6F541800C029C8 /* TraderViewCell.swift */; };
+		B862419F1E61695400A6D99C /* BitFlyerAssetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862419E1E61695400A6D99C /* BitFlyerAssetsView.swift */; };
 		B88CF6EE1E3C8258008A6189 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88CF6ED1E3C8258008A6189 /* Config.swift */; };
 		B88CF6F01E3C8542008A6189 /* ConfigRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88CF6EF1E3C8542008A6189 /* ConfigRepository.swift */; };
 		B88CF6F21E3CA0E9008A6189 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88CF6F11E3CA0E9008A6189 /* Resource.swift */; };
@@ -216,7 +217,7 @@
 		B83F72901E3236C40077B566 /* ValueActionSettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ValueActionSettingCell.xib; path = table/ValueActionSettingCell.xib; sourceTree = "<group>"; };
 		B83F72911E3236C40077B566 /* VariableSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VariableSettingCell.swift; path = table/VariableSettingCell.swift; sourceTree = "<group>"; };
 		B83F72921E3236C40077B566 /* VariableSettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VariableSettingCell.xib; path = table/VariableSettingCell.xib; sourceTree = "<group>"; };
-		B83F72991E3243670077B566 /* ZaifAssetsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZaifAssetsView.swift; path = assets/ZaifAssetsView.swift; sourceTree = "<group>"; };
+		B83F72991E3243670077B566 /* ExchangeAssetsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExchangeAssetsView.swift; path = assets/ExchangeAssetsView.swift; sourceTree = "<group>"; };
 		B83F729B1E345D5F0077B566 /* ChangeUnwindingRuleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChangeUnwindingRuleViewController.swift; path = settings/ChangeUnwindingRuleViewController.swift; sourceTree = "<group>"; };
 		B84113BF1E141C6F000EB0F8 /* ActiveOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActiveOrder.swift; path = trade/ActiveOrder.swift; sourceTree = "<group>"; };
 		B84113C01E141C6F000EB0F8 /* BuyOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuyOrder.swift; path = trade/BuyOrder.swift; sourceTree = "<group>"; };
@@ -272,6 +273,7 @@
 		B85E8E4B1D6F3E5E00C029C8 /* TradeLogRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TradeLogRepository.swift; path = log/TradeLogRepository.swift; sourceTree = "<group>"; };
 		B85E8E5D1D6F477900C029C8 /* TraderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderView.swift; path = main/TraderView.swift; sourceTree = "<group>"; };
 		B85E8E5F1D6F541800C029C8 /* TraderViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderViewCell.swift; path = main/TraderViewCell.swift; sourceTree = "<group>"; };
+		B862419E1E61695400A6D99C /* BitFlyerAssetsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BitFlyerAssetsView.swift; path = assets/BitFlyerAssetsView.swift; sourceTree = "<group>"; };
 		B88CF6ED1E3C8258008A6189 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Config.swift; path = core/Config.swift; sourceTree = "<group>"; };
 		B88CF6EF1E3C8542008A6189 /* ConfigRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigRepository.swift; path = config/ConfigRepository.swift; sourceTree = "<group>"; };
 		B88CF6F11E3CA0E9008A6189 /* Resource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Resource.swift; path = core/Resource.swift; sourceTree = "<group>"; };
@@ -385,7 +387,8 @@
 				B81AF6421DFF054600D4F706 /* AssetsViewController.swift */,
 				B83F72861E3232B30077B566 /* AssetsView.swift */,
 				B83F72881E3235670077B566 /* AssetsSummaryView.swift */,
-				B83F72991E3243670077B566 /* ZaifAssetsView.swift */,
+				B83F72991E3243670077B566 /* ExchangeAssetsView.swift */,
+				B862419E1E61695400A6D99C /* BitFlyerAssetsView.swift */,
 			);
 			name = assets;
 			sourceTree = "<group>";
@@ -947,6 +950,7 @@
 				B80920371DFD8817005667D4 /* PositionFundView.swift in Sources */,
 				B8B29B021E52067600ED3F64 /* bitFlyerApi.swift in Sources */,
 				B8B29B0A1E56041E00ED3F64 /* NewBitFlyerAccount.swift in Sources */,
+				B862419F1E61695400A6D99C /* BitFlyerAssetsView.swift in Sources */,
 				B835D4101E34EF5000F9C4EB /* Validation.swift in Sources */,
 				B831091C1E5CA915002D10B5 /* ChangeExchangeViewController.swift in Sources */,
 				B827CD141D7C523700E9847B /* PositionListView.swift in Sources */,
@@ -983,7 +987,7 @@
 				B88CF6EE1E3C8258008A6189 /* Config.swift in Sources */,
 				B84113DC1E141C6F000EB0F8 /* SellOrder.swift in Sources */,
 				B85E8E301D6F3DFB00C029C8 /* Currency.swift in Sources */,
-				B83F729A1E3243670077B566 /* ZaifAssetsView.swift in Sources */,
+				B83F729A1E3243670077B566 /* ExchangeAssetsView.swift in Sources */,
 				B8E9E2D71E1E9146003B298F /* ValueFormatter.swift in Sources */,
 				B8B29B001E507AA500ED3F64 /* NewZaifAccountView.swift in Sources */,
 				B84113D91E141C6F000EB0F8 /* Position.swift in Sources */,

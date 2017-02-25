@@ -20,6 +20,13 @@ func login(userId: String, password: String, callback: @escaping (_ err: ZaiErro
     account.activeExchange.validateApiKey() { err in
         callback(err, account)
     }
+    
+    for ex in account.exchanges {
+        let exchange = ex as! Exchange
+        if exchange.name != account.activeExchangeName {
+            exchange.validateApiKey() { _ in }
+        }
+    }
 }
 
 func loggout() {

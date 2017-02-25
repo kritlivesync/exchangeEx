@@ -8,6 +8,9 @@
 
 import Foundation
 
+import ZaifSwift
+import bFSwift
+
 
 class Resource {
     static var invalidUserIdOrPassword: String {
@@ -51,6 +54,9 @@ class Resource {
     }
     var invalidApiKeyRestricted: String {
         return "残高表示や取引機能が制限されます。設定画面で有効なAPIキーを設定してください。"
+    }
+    static func insufficientBalance(minAmount: Double, currency: ApiCurrency) -> String {
+        return "最低\(minAmount)\(currency.label)分の残高が必要です。"
     }
     static var noPositionsToUnwind: String {
         return "解消できるポジションがありません。"
@@ -134,6 +140,7 @@ class ZaifResource : Resource {
     override var invalidApiKey: String {
         return "有効なZaif APIキーを設定してください。"
     }
+
 }
 
 class bitFlyerResource : Resource {

@@ -13,6 +13,7 @@ public enum ApiErrorType : Error {
     case NO_PERMISSION
     case NONCE_NOT_INCREMENTED
     case INVALID_API_KEY
+    case INVALID_ORDER_AMOUNT
     case CONNECTION_ERROR
     case EXCHANGE_DOWN
     case UNKNOWN_ERROR

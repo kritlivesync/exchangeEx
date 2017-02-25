@@ -14,6 +14,7 @@ public enum ZaiErrorType : Error {
     case ZAIF_API_ERROR
     case ORDER_TIMEOUT
     case INVALID_ORDER
+    case INVALID_ORDER_AMOUNT
     case INVALID_API_KEYS
     case INVALID_API_KEYS_NO_PERMISSION
     case INVALID_ACCOUNT_INFO
@@ -34,6 +35,8 @@ public enum ZaiErrorType : Error {
             return "Order timed out"
         case .INVALID_ORDER:
             return "注文エラー"
+        case .INVALID_ORDER_AMOUNT:
+            return "残高不足"
         case .INVALID_API_KEYS:
             return "無効なAPIキー"
         case .INVALID_API_KEYS_NO_PERMISSION:

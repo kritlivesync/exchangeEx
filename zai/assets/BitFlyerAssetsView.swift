@@ -1,23 +1,23 @@
 //
-//  ZaifAssetsView.swift
+//  BitFlyerAssetsView.swift
 //  zai
 //
-//  Created by Kyota Watanabe on 1/20/17.
-//  Copyright © 2017 Kyota Watanabe. All rights reserved.
+//  Created by 渡部郷太 on 2/25/17.
+//  Copyright © 2017 watanabe kyota. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
 
-protocol ZaifAssetsDelegate {
+protocol BitFlyerAssetsDelegate {
     func updatedMarketCaptaliation(jpy: Int)
 }
 
 
-class ZaifAssetsView : SectionView, FundDelegate {
+class BitFlyerAssetsView : SectionView, FundDelegate {
     
-    init(exchange: ZaifExchange, section: Int, tableView: UITableView) {
+    init(exchange: BitFlyerExchange, section: Int, tableView: UITableView) {
         self.exchange = exchange
         super.init(section: section, tableView: tableView)
     }
@@ -85,7 +85,7 @@ class ZaifAssetsView : SectionView, FundDelegate {
     }
     
     override var sectionName: String {
-        return "Zaif"
+        return self.exchange.name
     }
     
     override var rowCount: Int {
@@ -135,7 +135,7 @@ class ZaifAssetsView : SectionView, FundDelegate {
     var marketCapitalization: Int?
     var jpyFund: Int?
     var btcFund: Double?
-    var exchange: ZaifExchange!
+    var exchange: BitFlyerExchange!
     var fund: Fund!
-    var delegate: ZaifAssetsDelegate?
+    var delegate: BitFlyerAssetsDelegate?
 }

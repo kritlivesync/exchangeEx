@@ -720,7 +720,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="zVm-xr-0aN">
-                                                    <rect key="frame" x="394" y="24.666666666666664" width="20" height="19.999999999999993"/>
+                                                    <rect key="frame" x="394" y="25.333333333333336" width="20" height="20.000000000000007"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>
@@ -1515,7 +1515,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="4UZ-96-iNW">
-                                                    <rect key="frame" x="394" y="25" width="20" height="20"/>
+                                                    <rect key="frame" x="394" y="25.333333333333336" width="20" height="20.000000000000007"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>

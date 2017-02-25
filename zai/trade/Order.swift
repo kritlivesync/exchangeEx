@@ -78,6 +78,10 @@ public class Order: NSManagedObject, ActiveOrderDelegate {
                     cb(ZaiError(errorType: .INVALID_API_KEYS, message: getResource().invalidApiKeyRestricted), nil)
                 case ApiErrorType.CONNECTION_ERROR:
                     cb(ZaiError(errorType: .CONNECTION_ERROR, message: Resource.networkConnectionError), nil)
+                case ApiErrorType.INVALID_ORDER_AMOUNT:
+                    let pair = ApiCurrencyPair(rawValue: self.currencyPair)!
+                    let orderUnit = self.api!.orderUnit(currencyPair: pair)
+                    cb(ZaiError(errorType: .INVALID_ORDER_AMOUNT, message: Resource.insufficientBalance(minAmount: orderUnit, currency: pair.principal)), nil)
                 default:
                     cb(ZaiError(errorType: .INVALID_ORDER, message: Resource.unknownError), nil)
                 }

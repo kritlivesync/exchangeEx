@@ -229,7 +229,13 @@ class LongPosition: Position {
             self.order = nil
             switch self.status.intValue {
             case PositionState.OPENING.rawValue:
-                let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .CANCEL, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: order.orderPrice?.doubleValue, amount: Double(order.orderAmount), positionId: self.id)
+                guard let orderId = order.orderId else {
+                    return
+                }
+                guard let trader = self.trader else {
+                    return
+                }
+                let log = TradeLogRepository.getInstance().create(userId: trader.exchange.account.userId, action: .CANCEL, traderName: trader.name, orderAction: order.action, orderId: orderId, currencyPair: order.currencyPair, price: order.orderPrice?.doubleValue, amount: Double(order.orderAmount), positionId: self.id)
                 self.addLog(log)
                 if self.balance < self.trader!.exchange.api.orderUnit(currencyPair: self.currencyPair) {
                     self.delete()
@@ -237,7 +243,10 @@ class LongPosition: Position {
                     self.open()
                 }
             case PositionState.UNWINDING.rawValue:
-                if self.balance < self.trader!.exchange.api.orderUnit(currencyPair: self.currencyPair) {
+                guard let trader = self.trader else {
+                    return
+                }
+                if self.balance < trader.exchange.api.orderUnit(currencyPair: self.currencyPair) {
                     self.close()
                     self.delegate?.closedPosition(position: self, promisedOrder: nil)
                 } else {

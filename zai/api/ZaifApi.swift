@@ -257,6 +257,11 @@ class ZaifApi : Api {
             return
         }
         
+        if zaifOrder.amount < zaifOrder.currencyPair.orderUnit {
+            callback(ApiError(errorType: .INVALID_ORDER_AMOUNT), "", 0.0, 0.0)
+            return
+        }
+        
         ZaifApi.queue.async {
             self.api.trade(zaifOrder, validate: false) { (err, res) in
                 if let e = err {

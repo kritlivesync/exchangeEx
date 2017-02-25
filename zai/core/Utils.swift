@@ -45,3 +45,15 @@ func formatHms(timestamp: Int64) -> String {
     return formatter.string(from: date)
 }
 
+func timestamp(date: String = "") -> Int64 {
+    if date == "" {
+        return Int64(Double(Date().timeIntervalSince1970) * 1000.0)
+    }
+    let formatter = DateFormatter()
+    formatter.timeZone = TimeZone(identifier: "GMT")
+    formatter.calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+    let nsdate = formatter.date(from: date) as NSDate?
+    return Int64(nsdate!.timeIntervalSince1970)
+}
+
