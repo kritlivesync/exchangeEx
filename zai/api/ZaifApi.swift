@@ -319,6 +319,45 @@ class ZaifApi : Api {
         }
     }
     
+    func createBoardStream(currencyPair: ApiCurrencyPair, maxSize: Int, onOpen: @escaping (ApiError?) -> Void, onClose: @escaping (ApiError?) -> Void, onError: @escaping (ApiError?) -> Void, onData: @escaping (ApiError?, Board) -> Void) -> StreamApi {
+        
+        let stream = ZaifStreamApi(currencyPair: currencyPair, onOpen: onOpen, onClose: onClose, onError: onError) { (err, data) in
+            let board = Board()
+            if err != nil {
+                print("getBoard: " + err!.message)
+                onData(ApiError(errorType: err!.errorType, message: err!.message), board)
+            } else {
+                guard let asks = data?["asks"].array else {
+                    onData(ApiError(errorType: .UNKNOWN_ERROR), board)
+                    return
+                }
+                guard let bids = data?["bids"].array else {
+                    onData(ApiError(errorType: .UNKNOWN_ERROR), board)
+                    return
+                }
+                
+                for ask in asks {
+                    if let quote = ask.array {
+                        board.addAsk(price: quote[0].doubleValue, amount: quote[1].doubleValue)
+                    }
+                }
+                
+                for bid in bids {
+                    if let quote = bid.array {
+                        board.addBid(price: quote[0].doubleValue, amount: quote[1].doubleValue)
+                    }
+                }
+                
+                board.sort()
+                board.trunc(size: maxSize)
+                
+                onData(nil, board)
+            }
+        }
+        
+        return stream
+    }
+    
     func validateApi(callback: @escaping (_ err: ApiError?) -> Void) {
         ZaifApi.queue.async {
             self.api.searchValidNonce(count: 60, step: 100) { err in
@@ -384,4 +423,70 @@ class ZaifApi : Api {
     static let queue = DispatchQueue(label: "zaifapiqueue")
     let api: PrivateApi
     var delegate: ZaiApiDelegate?
+}
+
+
+class ZaifStreamApi : StreamApi {
+    init(currencyPair: ApiCurrencyPair, onOpen: @escaping (ApiError?) -> Void, onClose: @escaping (ApiError?) -> Void, onError: @escaping (ApiError?) -> Void, onData: @escaping (ApiError?, JSON?) -> Void) {
+        
+        self.onOpenCallback = onOpen
+        self.onCloseCallback = onClose
+        self.onErrorCallback = onError
+        self.stream = nil
+        
+        self.stream = StreamingApi.stream(currencyPair.zaifCurrencyPair, openCallback: self.onOpen)
+        
+        self.stream.onClose(callback: self.onClose)
+        
+        self.stream.onError(callback: self.onError)
+        
+        self.stream.onData() { (_ err: ZSError?, _ res: JSON?) in
+            if let e = err {
+                onData(ApiError(errorType: (e.errorType.apiError)), nil)
+            } else {
+                onData(nil, res)
+            }
+        }
+    }
+    
+    func open() {
+        self.stream.open(callback: self.onOpen)
+    }
+    
+    func close() {
+        self.stream.close(callback: self.onClose)
+    }
+    
+    var rawStream: Any {
+        return self.stream
+    }
+    
+    fileprivate func onOpen(_ err: ZSError?, _ res: JSON?) {
+        if let e = err {
+            self.onOpenCallback(ApiError(errorType: (e.errorType.apiError)))
+        } else {
+            self.onOpenCallback(ApiError())
+        }
+    }
+    
+    fileprivate func onClose(_ err: ZSError?, _ res: JSON?) {
+        if let e = err {
+            self.onCloseCallback(ApiError(errorType: (e.errorType.apiError)))
+        } else {
+            self.onCloseCallback(ApiError())
+        }
+    }
+    
+    fileprivate func onError(_ err: ZSError?, _ res: JSON?) {
+        if let e = err {
+            self.onErrorCallback(ApiError(errorType: (e.errorType.apiError)))
+        } else {
+            self.onErrorCallback(ApiError())
+        }
+    }
+    
+    var stream: ZaifSwift.Stream!
+    let onOpenCallback: (ApiError?) -> Void
+    let onCloseCallback: (ApiError?) -> Void
+    let onErrorCallback: (ApiError?) -> Void
 }

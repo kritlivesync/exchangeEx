@@ -35,6 +35,15 @@ protocol Api {
     func trade(order: Order, retryCount: Int, callback: @escaping (_ err: ApiError?, _ orderId: String, _ orderedPrice: Double, _ orderedAmount: Double) -> Void)
     func cancelOrder(order: ActiveOrder, retryCount: Int, callback: @escaping (_ err: ApiError?) -> Void)
     
+    func createBoardStream(
+        currencyPair: ApiCurrencyPair,
+        maxSize: Int,
+        onOpen: @escaping (ApiError?) -> Void,
+        onClose: @escaping (ApiError?) -> Void,
+        onError: @escaping (ApiError?) -> Void,
+        onData: @escaping (ApiError?, Board) -> Void
+    ) -> StreamApi
+    
     func validateApi(callback: @escaping (_ err: ApiError?) -> Void)
     
     func currencyPairs() -> [ApiCurrencyPair]
@@ -45,6 +54,9 @@ protocol Api {
 }
 
 
-protocol Stream {
+protocol StreamApi {
+    func open()
+    func close()
     
+    var rawStream: Any { get }
 }

@@ -153,6 +153,11 @@ class bitFlyerApi : Api {
         callback(ApiError())
     }
     
+    func createBoardStream(currencyPair: ApiCurrencyPair, maxSize: Int, onOpen: @escaping (ApiError?) -> Void, onClose: @escaping (ApiError?) -> Void, onError: @escaping (ApiError?) -> Void, onData: @escaping (ApiError?, Board) -> Void) -> StreamApi {
+        
+        return BitFlyerStreamApi()
+    }
+    
     func validateApi(callback: @escaping (_ err: ApiError?) -> Void) {
         bitFlyerApi.queue.async {
             let permissions = [
@@ -193,4 +198,19 @@ class bitFlyerApi : Api {
     
     static let queue = DispatchQueue(label: "bitflyerapiqueue")
     let api: bFSwift.PrivateApi
+}
+
+
+class BitFlyerStreamApi : StreamApi {
+    func open() {
+        
+    }
+    
+    func close() {
+        
+    }
+    
+    var rawStream: Any {
+        return 1
+    }
 }

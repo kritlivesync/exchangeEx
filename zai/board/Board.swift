@@ -198,49 +198,38 @@ class StreamingBoard {
     var delegate: BoardDelegate? = nil {
         willSet {
             if newValue != nil {
-                self.stream = StreamingApi.stream(.BTC_JPY, openCallback: self.onOpen)
-                self.stream!.onError(callback: self.onError)
-                self.stream!.onData(callback: self.onData)
+                self.streamApi = self.api.createBoardStream(currencyPair: self.currencyPair, maxSize: 50, onOpen: self.onOpen, onClose: self.onClose, onError: self.onError, onData: self.onData)
+
             } else {
-                if let s = self.stream {
-                    print(getNow() + " closed btc_jpy streaming")
-                    s.close()
+                if let stream = self.streamApi {
+                    stream.close()
                 }
             }
         }
     }
     
-    fileprivate func onOpen(_ err: ZSError?, _ res: JSON?) {
+    fileprivate func onOpen(err: ApiError?) -> Void {
         print(getNow() + " opened btc_jpy streaming")
     }
     
-    fileprivate func onError(_ err: ZSError?, _ res: JSON?) {
+    fileprivate func onClose(err: ApiError?) {
+        print(getNow() + " closed btc_jpy streaming")
+    }
+    
+    fileprivate func onError(err: ApiError?) {
         print(getNow() +  "error in streaming")
         self.delegate?.recievedBoard(err: .ZAIF_CONNECTION_ERROR, board: nil)
     }
     
-    fileprivate func onData(_ err: ZSError?, _ res: JSON?) {
+    fileprivate func onData(_ err: ApiError?, board: Board) {
         if let e = err {
             print(e.message)
             return
         }
-        
-        let board = Board()
-        let asks = res!["asks"].arrayValue
-        for ask in asks {
-            let a = ask.arrayValue
-            board.addAsk(price: a[0].doubleValue, amount: a[1].doubleValue)
-        }
-        
-        let bids = res!["bids"].arrayValue
-        for bid in bids {
-            let b = bid.arrayValue
-            board.addBid(price: b[0].doubleValue, amount: b[1].doubleValue)
-        }
         self.delegate?.recievedBoard(err: nil, board: board)
     }
     
-    var stream: ZaifSwift.Stream? = nil
+    var streamApi: StreamApi?
     let api: Api
     let currencyPair: ApiCurrencyPair
 }
