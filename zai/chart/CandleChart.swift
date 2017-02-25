@@ -268,3 +268,60 @@ class CandleChart : Monitorable {
     var isHeighPrecision = true
     var lastTradeId = String()
 }
+
+
+class CandleChartContainer {
+    init(exchanges: [Exchange], currencyPair: ApiCurrencyPair, interval: ChandleChartType, candleCount: Int) {
+        self.activeChart = ""
+        self.charts = [String:CandleChart]()
+        for exchange in exchanges {
+            let chart = CandleChart(currencyPair: currencyPair, interval: interval, candleCount: candleCount, api: exchange.api)
+            self.charts[exchange.name] = chart
+        }
+    }
+    
+    func activateChart(chartName: String, interval: UpdateInterval, delegate: CandleChartDelegate) {
+        for (name, chart) in self.charts {
+            if name == chartName {
+                chart.monitoringInterval = interval
+                chart.delegate = delegate
+            } else {
+                chart.delegate = nil
+            }
+        }
+        self.activeChart = chartName
+    }
+    
+    func deactivateCharts() {
+        for (_, chart) in self.charts {
+            chart.delegate = nil
+        }
+    }
+    
+    func switchChartIntervalType(type: ChandleChartType) {
+        guard let chart = self.getChart(chartName: self.activeChart) else {
+            return
+        }
+        
+        if type == chart.interval {
+            return
+        }
+        
+        let delegate = chart.delegate
+        chart.delegate = nil
+        
+        let newChart = CandleChart(currencyPair: chart.currencyPair, interval: type, candleCount: chart.candleCount, api: chart.api)
+        newChart.copyTrades(chart: chart)
+        newChart.delegate = delegate
+        
+        self.charts[self.activeChart] = newChart
+    }
+    
+    func getChart(chartName: String) -> CandleChart? {
+        return self.charts[chartName]
+    }
+    
+    var charts: [String:CandleChart]
+    var activeChart: String
+}
+

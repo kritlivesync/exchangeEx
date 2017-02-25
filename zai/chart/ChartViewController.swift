@@ -24,7 +24,7 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
         self.bestQuoteView.delegate = self
         
         self.chartSelectorView.backgroundColor = Color.keyColor2
-        self.heilightChartButton(type: self.candleChart.interval)
+        self.heilightChartButton(type: getChartConfig().selectedCandleChartType)
         
         self.candleStickChartView.legend.enabled = false
         self.candleStickChartView.chartDescription?.enabled = false
@@ -57,7 +57,8 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
     
     fileprivate func start() {
         setBackgroundDelegate(delegate: self)
-        let api = getAccount()!.activeExchange.api
+        let account = getAccount()!
+        let api = account.activeExchange.api
         if self.fund == nil {
             self.fund = Fund(api: api)
             self.fund.monitoringInterval = getAppConfig().footerUpdateIntervalType
@@ -70,8 +71,14 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
             self.bitcoin.monitoringInterval = config.chartUpdateIntervalType
             self.bitcoin.delegate = self
         }
-        self.candleChart.monitoringInterval = config.chartUpdateIntervalType
-        let trader = getAccount()!.activeExchange.trader
+
+        self.chartContainer.activateChart(chartName: account.activeExchangeName, interval: config.chartUpdateIntervalType, delegate: self)
+        self.chartContainer.switchChartIntervalType(type: config.selectedCandleChartType)
+        if let activeChart = self.chartContainer.getChart(chartName: account.activeExchangeName) {
+            self.recievedChart(chart: activeChart, shifted: false)
+        }
+        
+        let trader = account.activeExchange.trader
         trader.startWatch()
     }
     
@@ -250,22 +257,6 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
         self.stop()
     }
     
-    fileprivate func switchChart(type: ChandleChartType, currencyPair: ApiCurrencyPair, api: Api) {
-        if type == self.candleChart.interval {
-            return
-        }
-        let prevChart = self.candleChart
-        prevChart?.delegate = nil
-        self.candleChart = CandleChart(currencyPair: currencyPair, interval: type, candleCount: 60, api: api)
-        self.candleChart.copyTrades(chart: prevChart!)
-        self.candleChart.delegate = self
-        
-        self.heilightChartButton(type: type)
-        
-        let config = getChartConfig()
-        config.selectedCandleChartType = type
-    }
-    
     fileprivate func heilightChartButton(type: ChandleChartType) {
         self.oneMinuteButton.setTitleColor(UIColor.white, for: UIControlState.normal)
         self.oneMinuteButton.isEnabled = true
@@ -292,27 +283,35 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
     }
     
     @IBAction func pushOneMinuteChart(_ sender: Any) {
-        let currencyPair = self.candleChart.currencyPair
-        let api = getAccount()!.activeExchange.api
-        self.switchChart(type: .oneMinute, currencyPair: currencyPair, api: api)
+        let type = ChandleChartType.oneMinute
+        self.chartContainer.switchChartIntervalType(type: type)
+        self.heilightChartButton(type: type)
+        let config = getChartConfig()
+        config.selectedCandleChartType = type
     }
     
     @IBAction func pushFiveMinutesChart(_ sender: Any) {
-        let currencyPair = self.candleChart.currencyPair
-        let api = getAccount()!.activeExchange.api
-        self.switchChart(type: .fiveMinutes, currencyPair: currencyPair, api: api)
+        let type = ChandleChartType.fiveMinutes
+        self.chartContainer.switchChartIntervalType(type: type)
+        self.heilightChartButton(type: type)
+        let config = getChartConfig()
+        config.selectedCandleChartType = type
     }
     
     @IBAction func pushFifteenMinutesChart(_ sender: Any) {
-        let currencyPair = self.candleChart.currencyPair
-        let api = getAccount()!.activeExchange.api
-        self.switchChart(type: .fifteenMinutes, currencyPair: currencyPair, api: api)
+        let type = ChandleChartType.fifteenMinutes
+        self.chartContainer.switchChartIntervalType(type: type)
+        self.heilightChartButton(type: type)
+        let config = getChartConfig()
+        config.selectedCandleChartType = type
     }
     
     @IBAction func pushThirtyMinutesChart(_ sender: Any) {
-        let currencyPair = self.candleChart.currencyPair
-        let api = getAccount()!.activeExchange.api
-        self.switchChart(type: .thirtyMinutes, currencyPair: currencyPair, api: api)
+        let type = ChandleChartType.thirtyMinutes
+        self.chartContainer.switchChartIntervalType(type: type)
+        self.heilightChartButton(type: type)
+        let config = getChartConfig()
+        config.selectedCandleChartType = type
     }
     
     @IBAction func pushSettingsButton(_ sender: Any) {
@@ -324,7 +323,7 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
     
     fileprivate var fund: Fund!
     fileprivate var bitcoin: BitCoin!
-    var candleChart: CandleChart!
+    var chartContainer: CandleChartContainer!
     var bestQuoteView: BestQuoteView!
 
     @IBOutlet weak var chartSelectorView: UIView!
