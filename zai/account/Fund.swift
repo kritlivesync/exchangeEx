@@ -11,8 +11,8 @@ import Foundation
 
 @objc protocol FundDelegate : MonitorableDelegate {
     @objc optional func recievedMarketCapitalization(jpy: Int)
-    @objc optional func recievedJpyFund(jpy: Int)
-    @objc optional func recievedBtcFund(btc: Double)
+    @objc optional func recievedJpyFund(jpy: Int, available: Int)
+    @objc optional func recievedBtcFund(btc: Double, available: Double)
 }
 
 
@@ -23,12 +23,12 @@ internal class Fund : Monitorable {
     }
  
     func getMarketCapitalization(_ cb: @escaping ((ZaiError?, Int) -> Void)) {
-        self.api.getBalance(currencies: [.BTC, .JPY]) { (err, balances) in
+        self.api.getBalance(currencies: [.JPY, .BTC]) { (err, balances) in
             if err != nil {
                 cb(ZaiError(errorType: .ZAIF_API_ERROR, message: err!.message), 0)
             } else {
-                var total = balances[ApiCurrency.JPY.rawValue]!
-                let btc = balances[ApiCurrency.BTC.rawValue]!
+                var total = balances[0].amount
+                let btc = balances[1].amount
                 let bitcoin = BitCoin(api: self.api)
                 bitcoin.getPriceFor(.JPY) { (err, price) in
                     if err != nil {
@@ -50,7 +50,7 @@ internal class Fund : Monitorable {
                 return
             }
             
-            let jpyFund = balance[ApiCurrency.JPY.rawValue]!
+            let jpyFund = balance[0].available
             if let p = price {
                 let amount = jpyFund * rate / p
                 cb(nil, amount, p)
@@ -75,20 +75,20 @@ internal class Fund : Monitorable {
                 cb(ZaiError(errorType: .ZAIF_API_ERROR, message: err!.message), 0)
                 return
             } else {
-                let jpyFund = balance[ApiCurrency.JPY.rawValue]!
+                let jpyFund = balance[0].amount
                 cb(nil, Int(jpyFund))
             }
         }
     }
     
-    func getBtcFund(_ cb: @escaping ((ZaiError?, Double) -> Void)) {
-        self.api.getBalance(currencies: [.BTC]) { (err, balance) in
+    func getBtcFund(_ cb: @escaping ((ZaiError?, Balance) -> Void)) {
+        self.api.getBalance(currencies: [.BTC]) { (err, balances) in
             if err != nil {
-                cb(ZaiError(errorType: .ZAIF_API_ERROR, message: err!.message), 0.0)
+                let balance = Balance(currency: ApiCurrency.BTC, amount: 0.0, available: 0.0)
+                cb(ZaiError(errorType: .ZAIF_API_ERROR, message: err!.message), balance)
                 return
             } else {
-                let btcFund = balance[ApiCurrency.BTC.rawValue]!
-                cb(nil, btcFund)
+                cb(nil, balances[0])
             }
         }
     }
@@ -96,22 +96,22 @@ internal class Fund : Monitorable {
     override func monitor() {
         let delegate = self.delegate as? FundDelegate
         if delegate?.recievedMarketCapitalization != nil || delegate?.recievedJpyFund != nil || delegate?.recievedBtcFund != nil {
-            self.api.getBalance(currencies: [.BTC, .JPY]) { (err, balances) in
+            self.api.getBalance(currencies: [.JPY, .BTC]) { (err, balances) in
                 if err == nil {
-                    let jpy = balances[ApiCurrency.JPY.rawValue]!
-                    let btc = balances[ApiCurrency.BTC.rawValue]!
+                    let jpy = balances[0]
+                    let btc = balances[1]
                     DispatchQueue.main.async {
-                        delegate?.recievedJpyFund?(jpy: Int(jpy))
+                        delegate?.recievedJpyFund?(jpy: Int(jpy.amount), available: Int(jpy.available))
                     }
                     DispatchQueue.main.async {
-                        delegate?.recievedBtcFund?(btc: btc)
+                        delegate?.recievedBtcFund?(btc: btc.amount, available: btc.available)
                     }
                     
                     let bitcoin = BitCoin(api: self.api)
                     bitcoin.getPriceFor(.JPY) { (err, price) in
                         if err == nil {
                             DispatchQueue.main.async {
-                                let total = jpy + (btc * price)
+                                let total = jpy.amount + (btc.amount * price)
                                 delegate?.recievedMarketCapitalization?(jpy: Int(total))
                             }
                         }

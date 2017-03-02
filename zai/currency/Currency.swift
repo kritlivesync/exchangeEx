@@ -16,10 +16,12 @@ import ZaifSwift
 
 internal class Monitorable {
     
-    init(target: String) {
+    init(target: String, addOperation: Bool=true) {
         self.target = target
         self.queue = DispatchQueue.global()
-        self.addMonitorOperation()
+        if addOperation {
+            self.addMonitorOperation()
+        }
     }
     
     @objc func addMonitorOperation() {

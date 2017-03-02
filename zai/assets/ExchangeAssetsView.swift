@@ -110,7 +110,7 @@ class ExchangeAssetsView : SectionView, FundDelegate {
         self.delegate?.updatedMarketCaptaliation(jpy: jpy)
     }
     
-    func recievedJpyFund(jpy: Int) {
+    func recievedJpyFund(jpy: Int, available: Int) {
         self.jpyFund = jpy
         let index = IndexPath(row: 1, section: self.section)
         guard let cell = tableView.cellForRow(at: index) as? ReadOnlySettingCell else {
@@ -121,7 +121,7 @@ class ExchangeAssetsView : SectionView, FundDelegate {
         }
     }
     
-    func recievedBtcFund(btc: Double) {
+    func recievedBtcFund(btc: Double, available: Double) {
         self.btcFund = btc
         let index = IndexPath(row: 2, section: self.section)
         guard let cell = tableView.cellForRow(at: index) as? ReadOnlySettingCell else {

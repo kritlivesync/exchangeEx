@@ -35,6 +35,8 @@ fileprivate extension ZSErrorType {
             return ApiErrorType.NONCE_NOT_INCREMENTED
         case ZSErrorType.INVALID_API_KEY:
             return ApiErrorType.INVALID_API_KEY
+        case ZSErrorType.INSUFFICIENT_FUNDS:
+            return ApiErrorType.INSUFFICIENT_FUNDS
         default:
             return ApiErrorType.UNKNOWN_ERROR
         }
@@ -161,24 +163,25 @@ class ZaifApi : Api {
         }
     }
     
-    func getBalance(currencies: [ApiCurrency], callback: @escaping (ApiError?, [String:Double]) -> Void) {
+    func getBalance(currencies: [ApiCurrency], callback: @escaping (ApiError?, [Balance]) -> Void) {
         ZaifApi.queue.async {
             self.api.getInfo2() { (err, res) in
-                var balance = [String:Double]()
+                var balances = [Balance]()
                 if err != nil {
                     print("getBalance: " + err!.message)
-                    callback(ApiError(errorType: err!.errorType.apiError, message: err!.message), balance)
+                    callback(ApiError(errorType: err!.errorType.apiError, message: err!.message), balances)
                 } else {
                     guard let deposits = res?["return"]["deposit"].dictionary else {
-                        callback(ApiError(errorType: .UNKNOWN_ERROR), balance)
+                        callback(ApiError(errorType: .UNKNOWN_ERROR), balances)
                         return
                     }
                     for currency in currencies {
                         if let deposit = deposits[currency.rawValue]?.double {
-                            balance[currency.rawValue] = deposit
+                            let balance = Balance(currency: currency, amount: deposit, available: deposit)
+                            balances.append(balance)
                         }
                     }
-                    callback(nil, balance)
+                    callback(nil, balances)
                 }
                 self.delegate?.privateApiCalled(apiName: "getBalance")
             }
@@ -324,6 +327,41 @@ class ZaifApi : Api {
         }
     }
     
+    func isPromised(order: Order, callback: @escaping (_ err: ApiError?, _ proisedOrder: PromisedOrder?) -> Void) {
+        if order.isInvalid {
+            callback(ApiError(errorType: .INVALID_ORDER), nil)
+            return
+        }
+        if order.orderId == nil {
+            callback(ApiError(errorType: .ORDER_NOT_ACTIVE), nil)
+            return
+        }
+        
+        self.getActiveOrders(currencyPair: ApiCurrencyPair(rawValue: order.currencyPair)!) { (err, activeOrders) in
+            if err != nil {
+                callback(err, nil)
+                return
+            }
+            if let activeOrder = activeOrders[order.orderId!] {
+                guard let promisedOrder = self.extractPartiallyPromisedOrder(activeOrder: activeOrder, order: order) else {
+                    return
+                }
+                callback(nil, promisedOrder)
+            } else {
+                if order.isActive == false { // safety
+                    callback(ApiError(errorType: .ORDER_NOT_ACTIVE), nil)
+                    return
+                }
+                var newlyPromisedAmount = order.orderAmount.doubleValue
+                if let amount = order.promisedAmount {
+                    newlyPromisedAmount = order.orderAmount.doubleValue - amount.doubleValue
+                }
+                let promisedOrder = PromisedOrder(orderId: order.orderId!, currencyPair: order.currencyPair, action: order.action, price: order.orderPrice!.doubleValue, promisedAmount: order.orderAmount.doubleValue, newlyPromisedAmount: newlyPromisedAmount, timestamp: Int64(Date().timeIntervalSince1970), isPartially: false)
+                callback(nil, promisedOrder)
+            }
+        }
+    }
+    
     func createBoardStream(currencyPair: ApiCurrencyPair, maxSize: Int, onOpen: @escaping (ApiError?) -> Void, onClose: @escaping (ApiError?) -> Void, onError: @escaping (ApiError?) -> Void, onData: @escaping (ApiError?, Board) -> Void) -> StreamApi {
         
         let stream = ZaifStreamApi(currencyPair: currencyPair, onOpen: onOpen, onClose: onClose, onError: onError) { (err, data) in
@@ -388,6 +426,31 @@ class ZaifApi : Api {
     
     func orderUnit(currencyPair: ApiCurrencyPair) -> Double {
         return currencyPair.zaifCurrencyPair.orderUnit
+    }
+    
+    func decimalDigit(currencyPair: ApiCurrencyPair) -> Int {
+        switch currencyPair {
+        case .BTC_JPY:
+            return 4
+        default:
+            return 0
+        }
+    }
+    
+    fileprivate func extractPartiallyPromisedOrder(activeOrder: ActiveOrder, order: Order) -> PromisedOrder? {
+        if activeOrder.timestamp <= order.promisedTime!.int64Value {
+            return nil
+        }
+        let promisedAmount = order.orderAmount.doubleValue - activeOrder.amount
+        let orderUnit = self.orderUnit(currencyPair: ApiCurrencyPair(rawValue: order.currencyPair)!)
+        if promisedAmount < orderUnit {
+            return nil
+        }
+        let newlyPromisedAmount = promisedAmount - order.promisedAmount!.doubleValue
+        if newlyPromisedAmount < orderUnit {
+            return nil
+        }
+        return PromisedOrder(orderId: activeOrder.id, currencyPair: activeOrder.currencyPair.rawValue, action: activeOrder.action, price: activeOrder.price, promisedAmount: promisedAmount, newlyPromisedAmount: newlyPromisedAmount, timestamp: activeOrder.timestamp, isPartially: true)
     }
     
     fileprivate func validatePermission(callback: @escaping (_ err: ApiError?) -> Void) {

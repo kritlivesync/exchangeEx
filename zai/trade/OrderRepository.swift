@@ -86,9 +86,7 @@ class OrderRepository {
                 return nil
             } else {
                 let order = orders[0]
-                let cp = ApiCurrencyPair(rawValue: order.currencyPair)!
-                order.activeOrderMonitor = ActiveOrderMonitor(currencyPair: cp, api: api)
-                order.activeOrderMonitor?.delegate = order
+                order.startWatchingPromise()
                 order.api = api
                 return order
             }
@@ -109,8 +107,6 @@ class OrderRepository {
         order.orderPrice = price as NSNumber?
         order.orderAmount = (amount as NSNumber?)!
         order.currencyPair = currencyPair.rawValue
-        order.activeOrderMonitor = ActiveOrderMonitor(currencyPair: currencyPair, api: api)
-        order.activeOrderMonitor?.delegate = order
     }
     
     fileprivate init() {

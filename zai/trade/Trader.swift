@@ -56,7 +56,7 @@ open class Trader: NSManagedObject, FundDelegate {
         }
         
         let balance = position.balance
-        let btcFundAmount = self.btcFund
+        let btcFundAmount = self.btcAvailable
         let amt = min(min(balance, amount), btcFundAmount)
         if amt < self.exchange.api.orderUnit(currencyPair: position.currencyPair) {
             cb(nil, position)
@@ -369,8 +369,8 @@ open class Trader: NSManagedObject, FundDelegate {
     }
     
     // FundDelegate
-    func recievedBtcFund(btc: Double) {
-        self.btcFund = btc
+    func recievedBtcFund(btc: Double, available: Double) {
+        self.btcAvailable = available
     }
     
     func recievedJpyFund(jpy: Int) {
@@ -388,6 +388,6 @@ open class Trader: NSManagedObject, FundDelegate {
     }
     
     var fund: Fund! = nil
-    var btcFund: Double = 0.0
+    var btcAvailable: Double = 0.0
     var jpyFund: Int = 0
 }

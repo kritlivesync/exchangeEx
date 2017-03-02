@@ -31,6 +31,16 @@ fileprivate extension ApiCurrency {
             return "BTC"
         }
     }
+    static func fromBfCurrency(currency: String) -> ApiCurrency? {
+        switch currency {
+        case "JPY":
+            return .JPY
+        case "BTC":
+            return .BTC
+        default:
+            return nil
+        }
+    }
 }
 
 fileprivate extension Side {
@@ -74,6 +84,10 @@ fileprivate extension BFErrorCode {
             return ApiErrorType.CONNECTION_ERROR
         case BFErrorCode.invalidOrderSize:
             return ApiErrorType.INVALID_ORDER_AMOUNT
+        case BFErrorCode.insufficientFunds:
+            return ApiErrorType.INSUFFICIENT_FUNDS
+        case BFErrorCode.orderNotFound:
+            return ApiErrorType.ORDER_NOT_FOUND
         //case ZSErrorType.NONCE_NOT_INCREMENTED:
         //    return ApiErrorType.NONCE_NOT_INCREMENTED
         //case ZSErrorType.INVALID_API_KEY:
@@ -175,28 +189,32 @@ class bitFlyerApi : Api {
         }
     }
     
-    func getBalance(currencies: [ApiCurrency], callback: @escaping (ApiError?, [String:Double]) -> Void) {
+    func getBalance(currencies: [ApiCurrency], callback: @escaping (ApiError?, [Balance]) -> Void) {
         bitFlyerApi.queue.async {
             self.api.getBalance() { (err, res) in
-                var balance = [String:Double]()
+                var balances = [Balance]()
                 if err != nil {
                     print("getBalance: " + err!.message)
-                    callback(ApiError(errorType: err!.errorCode.apiError, message: err!.message), balance)
+                    callback(ApiError(errorType: err!.errorCode.apiError, message: err!.message), balances)
                 } else {
-                    var deposits = [String:Double]()
+                    var deposits = [Balance]()
                     for balance in res!.arrayValue {
                         let cur = balance["currency_code"].stringValue
                         let amount = balance["amount"].doubleValue
-                        deposits[cur] = amount
+                        let available = balance["available"].doubleValue
+                        if let currency = ApiCurrency.fromBfCurrency(currency: cur) {
+                            deposits.append(Balance(currency: currency, amount: amount, available: available))
+                        }
                     }
                     
                     for currency in currencies {
-                        balance[currency.rawValue] = 0.0
-                        if let amount = deposits[currency.bFCurrency] {
-                            balance[currency.rawValue] = amount
+                        for deposit in deposits {
+                            if deposit.currency == currency {
+                                balances.append(deposit)
+                            }
                         }
                     }
-                    callback(nil, balance)
+                    callback(nil, balances)
                 }
             }
         }
@@ -218,11 +236,11 @@ class bitFlyerApi : Api {
                 }
                 
                 for order in orders {
-                    let id = order["child_order_id"].stringValue
+                    let id = order["child_order_acceptance_id"].stringValue
                     let action = Side(rawValue: order["side"].stringValue)!.action
                     let price = order["price"].doubleValue
                     let amount = order["size"].doubleValue - order["executed_size"].doubleValue
-                    let activeOrder = ActiveOrder(id: id, action: action, currencyPair: currencyPair, price: price, amount: amount, timestamp: timestamp())
+                    let activeOrder = ActiveOrder(id: id, action: action, currencyPair: currencyPair, price: price, amount: amount, timestamp: timestamp(date: order["child_order_date"].stringValue))
                     activeOrders[id] = activeOrder
                 }
                 callback(nil, activeOrders)
@@ -296,7 +314,61 @@ class bitFlyerApi : Api {
     }
     
     func cancelOrder(order: ActiveOrder, retryCount: Int, callback: @escaping (_ err: ApiError?) -> Void) {
-        callback(ApiError())
+        ZaifApi.queue.async {
+            self.api.cancelChildOrder(productCode: order.currencyPair.bFCurrencyPair, childOrderAcceptanceId: order.id) { (err, res) in
+                if let e = err {
+                    if 0 < retryCount {
+                        print("cancelOrder: retry")
+                        self.cancelOrder(order: order, retryCount: retryCount - 1, callback: callback)
+                        return
+                    } else {
+                        print("cancelOrder: " + e.message)
+                        callback(ApiError(errorType: e.errorCode.apiError, message: e.message))
+                        return
+                    }
+                }
+                callback(nil)
+            }
+        }
+    }
+    
+    func isPromised(order: Order, callback: @escaping (_ err: ApiError?, _ proisedOrder: PromisedOrder?) -> Void) {
+        if order.isInvalid {
+            callback(ApiError(errorType: .INVALID_ORDER), nil)
+            return
+        }
+        if order.orderId == nil {
+            callback(ApiError(errorType: .ORDER_NOT_ACTIVE), nil)
+            return
+        }
+        let currencyPair = ApiCurrencyPair(rawValue: order.currencyPair)!
+        self.api.getChildOrders(productCode: currencyPair.bFCurrencyPair, childOrderState: ChildOrderState.completed) { (err, res) in
+            if err != nil {
+                print("getActiveOrders: " + err!.message)
+                callback(ApiError(errorType: err!.errorCode.apiError, message: err!.message), nil)
+                return
+            }
+            
+            guard let orders = res?.array else {
+                callback(ApiError(errorType: .UNKNOWN_ERROR), nil)
+                return
+            }
+            
+            for completedOrder in orders {
+                let id = completedOrder["child_order_acceptance_id"].stringValue
+                if id != order.orderId {
+                    continue
+                }
+                print(completedOrder)
+                let price = completedOrder["price"].doubleValue
+                let amount = completedOrder["size"].doubleValue
+                
+                let promisedOrder = PromisedOrder(orderId: order.orderId!, currencyPair: order.currencyPair, action: order.action, price: price, promisedAmount: order.promisedAmount!.doubleValue, newlyPromisedAmount: amount, timestamp: Int64(Date().timeIntervalSince1970), isPartially: false)
+                callback(nil, promisedOrder)
+                return
+            }
+            callback(nil, nil)
+        }
     }
     
     func createBoardStream(currencyPair: ApiCurrencyPair, maxSize: Int, onOpen: @escaping (ApiError?) -> Void, onClose: @escaping (ApiError?) -> Void, onError: @escaping (ApiError?) -> Void, onData: @escaping (ApiError?, Board) -> Void) -> StreamApi {
@@ -336,6 +408,15 @@ class bitFlyerApi : Api {
     
     func orderUnit(currencyPair: ApiCurrencyPair) -> Double {
         return currencyPair.bFCurrencyPair.orderUnit
+    }
+    
+    func decimalDigit(currencyPair: ApiCurrencyPair) -> Int {
+        switch currencyPair {
+        case .BTC_JPY:
+            return 3
+        default:
+            return 0
+        }
     }
     
     var rawApi: Any {

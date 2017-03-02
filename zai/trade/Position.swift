@@ -178,9 +178,9 @@ public class Position: NSManagedObject, PositionProtocol, PromisedOrderDelegate 
                 return nil
             }
             order.delegate = self
-            if order.activeOrderMonitor == nil {
-                order.activeOrderMonitor = ActiveOrderMonitor(currencyPair: ApiCurrencyPair(rawValue: order.currencyPair)!, api: self.trader!.exchange.api)
-                order.activeOrderMonitor?.delegate = order
+            if order.promiseMonitor == nil {
+                order.api = self.trader?.exchange.api
+                order.startWatchingPromise()
             }
             order.api = self.trader!.exchange.api
             return order
@@ -188,14 +188,13 @@ public class Position: NSManagedObject, PositionProtocol, PromisedOrderDelegate 
         set {
             if let newOrder = newValue {
                 newOrder.delegate = self
-                if newOrder.activeOrderMonitor == nil {
-                    newOrder.activeOrderMonitor = ActiveOrderMonitor(currencyPair: ApiCurrencyPair(rawValue: newOrder.currencyPair)!, api: self.trader!.exchange.api)
-                    newOrder.activeOrderMonitor?.delegate = newOrder
+                if newOrder.promiseMonitor == nil {
+                    newOrder.startWatchingPromise()
                 }
             } else {
                 if let order = self.activeOrder {
                     order.delegate = nil
-                    order.activeOrderMonitor?.delegate = nil
+                    order.stopWatchingPromise()
                 }
             }
             self.activeOrder = newValue

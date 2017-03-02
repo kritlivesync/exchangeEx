@@ -29,7 +29,7 @@ class PositionFundView : Monitorable {
             fund.getBtcFund() { (err, btc) in
                 if err == nil {
                     DispatchQueue.main.async {
-                        delegate?.recievedBtcFund(btc: formatValue(btc))
+                        delegate?.recievedBtcFund(btc: formatValue(btc.available))
                     }
                 }
             }

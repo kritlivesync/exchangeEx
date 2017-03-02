@@ -45,17 +45,24 @@ public enum ApiCurrency : String {
     }
 }
 
+public struct Balance {
+    let currency: ApiCurrency
+    let amount: Double
+    let available: Double
+}
+
 
 protocol Api {
     func getPrice(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, Double) -> Void)
     func getTicker(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, Tick) -> Void)
     func getBoard(currencyPair: ApiCurrencyPair, maxSize: Int, callback: @escaping (ApiError?, Board) -> Void)
-    func getBalance(currencies: [ApiCurrency], callback: @escaping (ApiError?, [String:Double]) -> Void)
+    func getBalance(currencies: [ApiCurrency], callback: @escaping (ApiError?, [Balance]) -> Void)
     func getActiveOrders(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, [String:ActiveOrder]) -> Void)
     func getTrades(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, [Trade]) -> Void)
     
     func trade(order: Order, retryCount: Int, callback: @escaping (_ err: ApiError?, _ orderId: String, _ orderedPrice: Double, _ orderedAmount: Double) -> Void)
     func cancelOrder(order: ActiveOrder, retryCount: Int, callback: @escaping (_ err: ApiError?) -> Void)
+    func isPromised(order: Order, callback: @escaping (_ err: ApiError?, _ proisedOrder: PromisedOrder?) -> Void)
     
     func createBoardStream(
         currencyPair: ApiCurrencyPair,
@@ -71,6 +78,7 @@ protocol Api {
     func currencyPairs() -> [ApiCurrencyPair]
     func currencies() -> [ApiCurrency]
     func orderUnit(currencyPair: ApiCurrencyPair) -> Double
+    func decimalDigit(currencyPair: ApiCurrencyPair) -> Int
     
     var rawApi: Any { get }
 }

@@ -49,7 +49,7 @@ open class Account: NSManagedObject {
         exchange.trader.stopWatch()
         
         for order in exchange.trader.activeOrders {
-            order.activeOrderMonitor?.delegate = nil
+            order.stopWatchingPromise()
         }
     }
     

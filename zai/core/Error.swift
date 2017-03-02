@@ -18,6 +18,7 @@ public enum ZaiErrorType : Error {
     case INVALID_API_KEYS
     case INVALID_API_KEYS_NO_PERMISSION
     case INVALID_ACCOUNT_INFO
+    case INSUFFICIENT_FUNDS
     case invalidUserId
     case invalidPassword
     case passwordCryptError
@@ -36,7 +37,9 @@ public enum ZaiErrorType : Error {
         case .INVALID_ORDER:
             return "注文エラー"
         case .INVALID_ORDER_AMOUNT:
-            return "残高不足"
+            return ""
+        case .INSUFFICIENT_FUNDS:
+            return ""
         case .INVALID_API_KEYS:
             return "無効なAPIキー"
         case .INVALID_API_KEYS_NO_PERMISSION:

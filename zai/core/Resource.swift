@@ -55,9 +55,13 @@ class Resource {
     var invalidApiKeyRestricted: String {
         return "残高表示や取引機能が制限されます。設定画面で有効なAPIキーを設定してください。"
     }
-    static func insufficientBalance(minAmount: Double, currency: ApiCurrency) -> String {
-        return "最低\(minAmount)\(currency.label)分の残高が必要です。"
+    static func insufficientAmount(minAmount: Double, currency: ApiCurrency) -> String {
+        return "\(minAmount)\(currency.label)以上の数量で注文してください。"
     }
+    static var insufficientFunds: String {
+        return "残高が足りません。"
+    }
+
     static var noPositionsToUnwind: String {
         return "解消できるポジションがありません。"
     }
