@@ -103,8 +103,10 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, B
             return
         }
         if trader.deletePosition(id: position.id) {
-            self.updatePositionList()
+            //self.view.beginUpdates()
+            //self.updatePositionList()
             if let index = self.view.indexPath(for: cell) {
+                self.positions.remove(at: index.row)
                 self.view.deleteRows(at: [index], with: UITableViewRowAnimation.fade)
             }
         }
@@ -144,7 +146,7 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, B
     }
     
     func addPosition(position: Position) {
-        self.updatePositionList()
+        self.positions.append(position)
         let row = self.view.numberOfRows(inSection: 0)
         let index = IndexPath(row: row, section: 0)
         self.view.insertRows(at: [index], with: UITableViewRowAnimation.bottom)

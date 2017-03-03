@@ -373,8 +373,8 @@ open class Trader: NSManagedObject, FundDelegate {
         self.btcAvailable = available
     }
     
-    func recievedJpyFund(jpy: Int) {
-        self.jpyFund = jpy
+    func recievedJpyFund(jpy: Int, available: Int) {
+        self.jpyFund = available
     }
     
     fileprivate func getPosition(id: String) -> Position? {

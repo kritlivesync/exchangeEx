@@ -74,9 +74,9 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
     }
     
     // FundDelegate
-    func recievedJpyFund(jpy: Int) {
+    func recievedJpyFund(jpy: Int, available: Int) {
         DispatchQueue.main.async {
-            self.jpyFundLabel.text = formatValue(jpy)
+            self.jpyFundLabel.text = formatValue(available)
         }
     }
     

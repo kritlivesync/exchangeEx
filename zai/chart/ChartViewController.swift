@@ -156,9 +156,9 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
     }
     
     // FundDelegate
-    func recievedJpyFund(jpy: Int) {
+    func recievedJpyFund(jpy: Int, available: Int) {
         DispatchQueue.main.async {
-            self.fundLabel.text = formatValue(jpy)
+            self.fundLabel.text = formatValue(available)
         }
     }
     
