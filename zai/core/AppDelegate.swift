@@ -59,6 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     var notification: PromiseNotification!
+    var candleCharts: CandleChartContainer!
     let globalConfig = GlobalConfig()
     var account: Account?
     var resource = Resource()
@@ -73,6 +74,10 @@ func setBackgroundDelegate(delegate: AppBackgroundDelegate) {
 func getGlobalConfig() -> GlobalConfig {
     let app = UIApplication.shared.delegate as! AppDelegate
     return app.globalConfig
+}
+
+func getApp() -> AppDelegate {
+    return UIApplication.shared.delegate as! AppDelegate
 }
 
 func getAccount() -> Account? {

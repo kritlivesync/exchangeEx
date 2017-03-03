@@ -89,6 +89,13 @@ open class Account: NSManagedObject {
         guard let _ = self.getExchange(exchangeName: exchangeName) else {
             return
         }
+        if exchangeName == self.activeExchangeName {
+            return
+        }
+        
+        // stop monitoring trader assets
+        self.activeExchange.trader.stopWatch()
+        
         self.activeExchangeName = exchangeName
         Database.getDb().saveContext()
     }

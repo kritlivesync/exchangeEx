@@ -26,11 +26,15 @@ class LoginViewController: UIViewController, UINavigationBarDelegate, UITextFiel
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
         self.navigationBar.frame = self.navigationBar.frame.offsetBy(dx: 0.0, dy: statusBarHeight)
         
-        self.userIdText.text = getGlobalConfig().previousUserId
-        self.passwordText.text = ""
-        
         self.userIdText.delegate = self
         self.passwordText.delegate = self
+    }
+    
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.userIdText.text = getGlobalConfig().previousUserId
+        self.passwordText.text = ""
     }
     
     @IBAction func pushLoginButton(_ sender: Any) {

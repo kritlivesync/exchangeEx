@@ -34,15 +34,7 @@ class MainTabBarController : UITabBarController {
         let chartController = chartNavi.viewControllers[0] as! ChartViewController
         let account = getAccount()!
         
-        let currencyPair = ApiCurrencyPair(rawValue: account.activeExchange.currencyPair)!
-        let chartConfig = getChartConfig()
-        let chartType = chartConfig.selectedCandleChartType
-        var exchanges = [Exchange]()
-        for exchange in account.exchanges {
-            exchanges.append(exchange as! Exchange)
-        }
-        chartController.chartContainer = CandleChartContainer(exchanges: exchanges, currencyPair: currencyPair, interval: chartType, candleCount: 60)
-        chartController.chartContainer.activateChart(chartName: account.activeExchangeName, interval: chartConfig.chartUpdateIntervalType, delegate: chartController)
+        chartController.chartContainer = getApp().candleCharts
         
         let trader = account.activeExchange.trader
         trader.fixPositionsWithInvalidOrder()

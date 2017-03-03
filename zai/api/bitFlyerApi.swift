@@ -342,7 +342,7 @@ class bitFlyerApi : Api {
             return
         }
         let currencyPair = ApiCurrencyPair(rawValue: order.currencyPair)!
-        self.api.getChildOrders(productCode: currencyPair.bFCurrencyPair, childOrderState: ChildOrderState.completed) { (err, res) in
+        self.api.getChildOrders(productCode: currencyPair.bFCurrencyPair, childOrderState: ChildOrderState.completed, count: 10) { (err, res) in
             if err != nil {
                 print("getActiveOrders: " + err!.message)
                 callback(ApiError(errorType: err!.errorCode.apiError, message: err!.message), nil)
