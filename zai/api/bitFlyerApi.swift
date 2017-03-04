@@ -10,6 +10,7 @@ import Foundation
 
 import SwiftyJSON
 import bFSwift
+import PubNub
 
 
 fileprivate extension ApiCurrencyPair {
@@ -160,29 +161,10 @@ class bitFlyerApi : Api {
                 print("getBoard: " + err!.message)
                 callback(ApiError(errorType: err!.errorCode.apiError, message: err!.message), board)
             } else {
-                guard let asks = res?["asks"].array else {
-                    callback(ApiError(errorType: .UNKNOWN_ERROR), board)
+                guard let board = self.makeBoard(data: res!, maxSize: maxSize) else {
+                    callback(ApiError(errorType: .UNKNOWN_ERROR), Board())
                     return
                 }
-                guard let bids = res?["bids"].array else {
-                    callback(ApiError(errorType: .UNKNOWN_ERROR), board)
-                    return
-                }
-                
-                for ask in asks {
-                    if let quote = ask.dictionary {
-                        board.addAsk(price: quote["price"]!.doubleValue, amount: quote["size"]!.doubleValue)
-                    }
-                }
-                
-                for bid in bids {
-                    if let quote = bid.dictionary {
-                        board.addBid(price: quote["price"]!.doubleValue, amount: quote["size"]!.doubleValue)
-                    }
-                }
-                
-                board.sort()
-                board.trunc(size: maxSize)
                 
                 callback(nil, board)
             }
@@ -373,7 +355,42 @@ class bitFlyerApi : Api {
     
     func createBoardStream(currencyPair: ApiCurrencyPair, maxSize: Int, onOpen: @escaping (ApiError?) -> Void, onClose: @escaping (ApiError?) -> Void, onError: @escaping (ApiError?) -> Void, onData: @escaping (ApiError?, Board) -> Void) -> StreamApi {
         
-        return BitFlyerStreamApi()
+        var masterBoard: Board?
+        var isBoardReady = false
+        let channel = "lightning_board_BTC_JPY"
+        let stream = BitFlyerStreamApi(channel: channel, currencyPair: currencyPair, onOpen: onOpen, onClose: onClose, onError: onError) { (err, data) in
+            
+            if masterBoard == nil {
+                masterBoard = Board()
+                self.getBoard(currencyPair: currencyPair, maxSize: maxSize) { (err, board) in
+                    DispatchQueue.main.async {
+                        masterBoard!.update(diff: board)
+                        masterBoard!.trunc(size: maxSize)
+                        isBoardReady = true
+                    }
+                }
+            }
+
+            if let e = err {
+                onError(e)
+            } else {
+                guard let partialBoard = self.makeBoard(data: data!, maxSize: maxSize) else {
+                    onError(ApiError())
+                    return
+                }
+                DispatchQueue.main.async {
+                    masterBoard!.update(diff: partialBoard)
+                    masterBoard!.trunc(size: maxSize)
+                    if isBoardReady {
+                        let board = Board()
+                        board.update(diff: masterBoard!)
+                        onData(nil, board)
+                    }
+                }
+            }
+        }
+        
+        return stream
     }
     
     func validateApi(callback: @escaping (_ err: ApiError?) -> Void) {
@@ -414,8 +431,6 @@ class bitFlyerApi : Api {
         switch currencyPair {
         case .BTC_JPY:
             return 3
-        default:
-            return 0
         }
     }
     
@@ -423,12 +438,80 @@ class bitFlyerApi : Api {
         return self.api
     }
     
+    fileprivate func makeBoard(data: JSON, maxSize: Int) -> Board? {
+        guard let asks = data["asks"].array else {
+            return nil
+        }
+        guard let bids = data["bids"].array else {
+            return nil
+        }
+        
+        let board = Board()
+        for ask in asks {
+            if let quote = ask.dictionary {
+                board.addAsk(price: quote["price"]!.doubleValue, amount: quote["size"]!.doubleValue)
+            }
+        }
+        
+        for bid in bids {
+            if let quote = bid.dictionary {
+                board.addBid(price: quote["price"]!.doubleValue, amount: quote["size"]!.doubleValue)
+            }
+        }
+        
+        board.sort()
+        board.trunc(size: maxSize)
+        return board
+    }
+    
     static let queue = DispatchQueue(label: "bitflyerapiqueue")
     let api: bFSwift.PrivateApi
 }
 
 
-class BitFlyerStreamApi : StreamApi {
+class BitFlyerStreamApi : NSObject, StreamApi, PNObjectEventListener {
+    
+    init(channel: String, currencyPair: ApiCurrencyPair, onOpen: @escaping (ApiError?) -> Void, onClose: @escaping (ApiError?) -> Void, onError: @escaping (ApiError?) -> Void, onData: @escaping (ApiError?, JSON?) -> Void) {
+        
+        self.channel = channel
+        
+        self.onOpenCallback = onOpen
+        self.onCloseCallback = onClose
+        self.onErrorCallback = onError
+        self.onDataCallback = onData
+        
+        let configuration = PNConfiguration(publishKey: "", subscribeKey: self.subscribeKey)
+        self.pubNubClient = PubNub.clientWithConfiguration(configuration)
+        
+        super.init()
+        
+        self.pubNubClient.addListener(self)
+        self.pubNubClient.subscribeToChannels([self.channel], withPresence: true)
+    }
+    
+    func client(_ client: PubNub, didReceiveMessage message: PNMessageResult) {
+        
+        // Handle new message stored in message.data.message
+        guard let data = message.data.message else {
+            self.onDataCallback(ApiError(), nil)
+            return
+        }
+        self.onDataCallback(nil, JSON(data))
+
+        if message.data.channel != message.data.subscription {
+            
+            // Message has been received on channel group stored in message.data.subscription.
+            let msg = message.data.subscription!
+            print(msg)
+        }
+        else {
+            
+            // Message has been received on channel stored in message.data.channel.
+            let msg = message.data.channel
+            print(msg)
+        }
+    }
+    
     func open() {
         
     }
@@ -440,4 +523,13 @@ class BitFlyerStreamApi : StreamApi {
     var rawStream: Any {
         return 1
     }
+    
+    let pubNubClient: PubNub
+    let subscribeKey = "sub-c-52a9ab50-291b-11e5-baaa-0619f8945a4f"
+    let channel: String
+    
+    let onOpenCallback: (ApiError?) -> Void
+    let onCloseCallback: (ApiError?) -> Void
+    let onErrorCallback: (ApiError?) -> Void
+    let onDataCallback: (ApiError?, JSON?) -> Void
 }

@@ -14,4 +14,5 @@ target 'zai' do
   pod 'Charts'
   pod 'Firebase/Core'
   pod 'Firebase/AdMob'
+  pod 'PubNub', '~> 4'
 end

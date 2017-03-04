@@ -255,7 +255,7 @@
                                         <rect key="frame" x="302" y="8" width="0.0" height="5"/>
                                         <color key="backgroundColor" red="0.69803921568627447" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="72" id="jzQ-42-WHM"/>
+                                            <constraint firstAttribute="width" id="jzQ-42-WHM"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -720,7 +720,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="zVm-xr-0aN">
-                                                    <rect key="frame" x="394" y="24.666666666666664" width="20" height="19.999999999999993"/>
+                                                    <rect key="frame" x="394" y="25.333333333333336" width="20" height="20.000000000000007"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>
@@ -1515,7 +1515,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="4UZ-96-iNW">
-                                                    <rect key="frame" x="394" y="25.666666666666664" width="20" height="19.999999999999993"/>
+                                                    <rect key="frame" x="394" y="25" width="20" height="20"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>

@@ -432,8 +432,6 @@ class ZaifApi : Api {
         switch currencyPair {
         case .BTC_JPY:
             return 4
-        default:
-            return 0
         }
     }
     
@@ -500,6 +498,7 @@ class ZaifStreamApi : StreamApi {
         self.onOpenCallback = onOpen
         self.onCloseCallback = onClose
         self.onErrorCallback = onError
+        self.onDataCallback = onData
         self.stream = nil
         
         self.stream = StreamingApi.stream(currencyPair.zaifCurrencyPair, openCallback: self.onOpen)
@@ -557,4 +556,5 @@ class ZaifStreamApi : StreamApi {
     let onOpenCallback: (ApiError?) -> Void
     let onCloseCallback: (ApiError?) -> Void
     let onErrorCallback: (ApiError?) -> Void
+    let onDataCallback: (ApiError?, JSON?) -> Void
 }

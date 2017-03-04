@@ -72,6 +72,7 @@ class ChangeExchangeViewController : UITableViewController {
         let account = getAccount()!
         account.setActiveExchange(exchangeName: self.selectedExchange)
         account.activeExchange.validateApiKey() { _ in }
+        self.delegate?.saved(exchange: self.selectedExchange)
     }
 
     var exchanges: [String]!

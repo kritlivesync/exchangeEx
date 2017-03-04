@@ -11,6 +11,11 @@ import SwiftyJSON
 import ZaifSwift
 
 
+fileprivate func floorValue(value: Double, digit: Double) -> Double{
+    return floor(value * digit) / digit
+}
+
+
 struct Quote {
     public enum QuoteType : String {
         case ASK = "ask"
@@ -18,14 +23,28 @@ struct Quote {
     }
     
     init(price: Double, amount: Double, type: QuoteType) {
-        self.price = price
-        self.amount = amount
+        self.price = floorValue(value: price, digit: self.priceDigit)
+        self.amount = floorValue(value: amount, digit: self.amountDigit)
         self.type = type
     }
+    
+    func equalPrice(value: Double) -> Bool {
+        return abs(self.price - value) < self.priceError
+    }
+    
+    func equalAmount(value: Double) -> Bool {
+        return abs(self.amount - value) < self.amountError
+    }
+
     
     let price: Double
     let amount: Double
     let type: QuoteType
+    
+    private let priceDigit = 10000.0 // 4digit
+    private let priceError = 0.0001
+    private let amountDigit = 100000.0 // 5digit
+    private let amountError = 0.00001
 }
 
 
@@ -50,16 +69,72 @@ class Board {
         self.bids = Array<Quote>(self.bids.prefix(size))
     }
     
+    func update(diff: Board) {
+        var newAsks = [Quote]()
+        for i in 0 ..< diff.askCount {
+            let quote = diff.getAsk(index: i)!
+            var isNewQuote = true
+            for j in 0 ..< self.askCount {
+                let curQuote = self.getAsk(index: j)!
+                if curQuote.equalPrice(value: quote.price) {
+                    self.removeAsk(index: j)
+                    if quote.equalAmount(value: 0.0) == false {
+                        self.addAsk(price: quote.price, amount: quote.amount)
+                    }
+                    isNewQuote = false
+                    break
+                }
+            }
+            if isNewQuote {
+                newAsks.append(Quote(price: quote.price, amount: quote.amount, type: quote.type))
+            }
+        }
+        for quote in newAsks {
+            self.addAsk(price: quote.price, amount: quote.amount)
+        }
+        
+        var newBids = [Quote]()
+        for i in 0 ..< diff.bidCount {
+            let quote = diff.getBid(index: i)!
+            var isNewQuote = true
+            for j in 0 ..< self.bidCount {
+                let curQuote = self.getBid(index: j)!
+                if curQuote.equalPrice(value: quote.price) {
+                    self.removeBid(index: j)
+                    if quote.equalAmount(value: 0.0) == false {
+                        self.addBid(price: quote.price, amount: quote.amount)
+                    }
+                    isNewQuote = false
+                    break
+                }
+            }
+            if isNewQuote {
+                newBids.append(Quote(price: quote.price, amount: quote.amount, type: quote.type))
+            }
+        }
+        for quote in newBids {
+            self.addBid(price: quote.price, amount: quote.amount)
+        }
+        self.sort()
+    }
+    
     func addAsk(price: Double, amount: Double) {
         let quote = Quote(price: price, amount: amount, type: .ASK)
         self.asks.append(quote)
     }
     
+    func removeAsk(index: Int) {
+        guard let _ = self.getAsk(index: index) else {
+            return
+        }
+        self.asks.remove(at: index)
+    }
+    
     func getAsk(index: Int) -> Quote? {
         if self.asks.count < index {
-            return self.asks[index]
-        } else {
             return nil
+        } else {
+            return self.asks[index]
         }
     }
     
@@ -82,10 +157,17 @@ class Board {
     
     func getBid(index: Int) -> Quote? {
         if self.bids.count < index {
-            return self.bids[index]
-        } else {
             return nil
+        } else {
+            return self.bids[index]
         }
+    }
+    
+    func removeBid(index: Int) {
+        guard let _ = self.getBid(index: index) else {
+            return
+        }
+        self.bids.remove(at: index)
     }
     
     func getBestBid() -> Quote? {
@@ -122,7 +204,6 @@ class Board {
     var bidCount: Int {
         get { return self.bids.count }
     }
-    
     
     private var asks: [Quote]
     private var bids: [Quote]
