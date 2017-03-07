@@ -47,6 +47,7 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
             self.board = BoardMonitor(currencyPair: currencyPair, api: api)
             self.board.updateInterval = getBoardConfig().boardUpdateIntervalType
             self.board.delegate = self
+            self.needUpdateView = true
         }
         if self.fund == nil {
             self.fund = Fund(api: api)
@@ -90,6 +91,10 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
             }*/
         } else {
             self.boardView.update(board: board!)
+            if self.needUpdateView {
+                self.boardView.reloadData()
+                self.needUpdateView = false
+            }
             let askMomentum = board!.calculateAskMomentum()
             let bidMomentum = board!.calculateBidMomentum()
             let ratio = bidMomentum / askMomentum
@@ -168,6 +173,7 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
 
     fileprivate var currentTraderName: String = ""
     var boardView: BoardView! = nil
+    var needUpdateView = false
     
     fileprivate var fund: Fund!
     fileprivate var board: BoardMonitor!

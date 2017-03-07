@@ -46,7 +46,7 @@ class PositionListViewCell : UITableViewCell {
         self.position = p
         
         self.priceLabel.text = formatValue(Int(p.price))
-        self.amountLabel.text = formatValue(p.amount)
+        self.amountLabel.text = formatValue(p.amount, digit: 4)
         self.balanceLabel.text = "(" + formatValue(p.balance) + ")"
         self.updateProfit(btcJpyPrice: btcJpyPrice)
         

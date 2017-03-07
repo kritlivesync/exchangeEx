@@ -430,13 +430,13 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="98211" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rBu-VL-QGO">
                                                     <rect key="frame" x="15" y="0.0" width="95" height="70"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="+1023" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NCt-fX-AsJ">
                                                     <rect key="frame" x="247" y="15" width="76" height="31"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -448,7 +448,7 @@
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="1.2001" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qtt-4s-V6M">
                                                     <rect key="frame" x="134" y="18" width="93" height="27"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -469,18 +469,18 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="T8o-cw-8Dl" firstAttribute="width" secondItem="ytd-yO-J2U" secondAttribute="width" multiplier="0.25" id="2lF-N3-rmB"/>
+                                                <constraint firstItem="T8o-cw-8Dl" firstAttribute="width" secondItem="ytd-yO-J2U" secondAttribute="width" multiplier="0.27" id="2lF-N3-rmB"/>
                                                 <constraint firstItem="K3S-wH-VcC" firstAttribute="leading" secondItem="rBu-VL-QGO" secondAttribute="trailing" id="530-zL-7aa"/>
                                                 <constraint firstAttribute="bottom" secondItem="Z8H-PC-gly" secondAttribute="bottom" id="6xt-DA-jvm"/>
                                                 <constraint firstItem="qtt-4s-V6M" firstAttribute="height" secondItem="ytd-yO-J2U" secondAttribute="height" multiplier="0.4" id="9D6-uo-P0d"/>
                                                 <constraint firstItem="T8o-cw-8Dl" firstAttribute="top" secondItem="NCt-fX-AsJ" secondAttribute="bottom" id="Ham-j2-gOV"/>
                                                 <constraint firstItem="K3S-wH-VcC" firstAttribute="top" secondItem="qtt-4s-V6M" secondAttribute="bottom" id="IFI-h0-T2V"/>
                                                 <constraint firstAttribute="trailing" secondItem="Z8H-PC-gly" secondAttribute="trailing" id="LaD-J6-S5G"/>
-                                                <constraint firstItem="rBu-VL-QGO" firstAttribute="width" secondItem="ytd-yO-J2U" secondAttribute="width" multiplier="0.25" id="Nyl-20-kVE"/>
+                                                <constraint firstItem="rBu-VL-QGO" firstAttribute="width" secondItem="ytd-yO-J2U" secondAttribute="width" multiplier="0.27" id="Nyl-20-kVE"/>
                                                 <constraint firstItem="T8o-cw-8Dl" firstAttribute="leading" secondItem="K3S-wH-VcC" secondAttribute="trailing" id="P1T-re-b22"/>
                                                 <constraint firstItem="rBu-VL-QGO" firstAttribute="centerY" secondItem="qtt-4s-V6M" secondAttribute="centerY" id="RiQ-bX-fpS"/>
-                                                <constraint firstItem="K3S-wH-VcC" firstAttribute="width" secondItem="ytd-yO-J2U" secondAttribute="width" multiplier="0.25" id="Ujr-Bt-EFD"/>
-                                                <constraint firstItem="Z8H-PC-gly" firstAttribute="width" secondItem="ytd-yO-J2U" secondAttribute="width" multiplier="0.25" id="Xn1-oU-Muo"/>
+                                                <constraint firstItem="K3S-wH-VcC" firstAttribute="width" secondItem="ytd-yO-J2U" secondAttribute="width" multiplier="0.27" id="Ujr-Bt-EFD"/>
+                                                <constraint firstItem="Z8H-PC-gly" firstAttribute="width" secondItem="ytd-yO-J2U" secondAttribute="width" multiplier="0.2" id="Xn1-oU-Muo"/>
                                                 <constraint firstItem="Z8H-PC-gly" firstAttribute="leading" secondItem="T8o-cw-8Dl" secondAttribute="trailing" id="dL3-b0-ViQ"/>
                                                 <constraint firstItem="NCt-fX-AsJ" firstAttribute="centerY" secondItem="qtt-4s-V6M" secondAttribute="centerY" id="doR-Ut-nXL"/>
                                                 <constraint firstAttribute="trailing" secondItem="zbo-mS-yWA" secondAttribute="trailing" id="dvh-ta-alY"/>
@@ -491,9 +491,9 @@
                                                 <constraint firstItem="rBu-VL-QGO" firstAttribute="leading" secondItem="ytd-yO-J2U" secondAttribute="leading" id="miZ-1c-FON"/>
                                                 <constraint firstItem="NCt-fX-AsJ" firstAttribute="leading" secondItem="K3S-wH-VcC" secondAttribute="trailing" id="nzZ-qV-38o"/>
                                                 <constraint firstItem="Z8H-PC-gly" firstAttribute="top" secondItem="ytd-yO-J2U" secondAttribute="top" id="p1m-OR-hqZ"/>
-                                                <constraint firstItem="qtt-4s-V6M" firstAttribute="width" secondItem="ytd-yO-J2U" secondAttribute="width" multiplier="0.25" id="tAg-bc-hnI"/>
+                                                <constraint firstItem="qtt-4s-V6M" firstAttribute="width" secondItem="ytd-yO-J2U" secondAttribute="width" multiplier="0.27" id="tAg-bc-hnI"/>
                                                 <constraint firstItem="NCt-fX-AsJ" firstAttribute="leading" secondItem="qtt-4s-V6M" secondAttribute="trailing" id="ubH-Rv-9Ss"/>
-                                                <constraint firstItem="NCt-fX-AsJ" firstAttribute="width" secondItem="ytd-yO-J2U" secondAttribute="width" multiplier="0.25" id="wof-db-Ve2"/>
+                                                <constraint firstItem="NCt-fX-AsJ" firstAttribute="width" secondItem="ytd-yO-J2U" secondAttribute="width" multiplier="0.27" id="wof-db-Ve2"/>
                                                 <constraint firstItem="zbo-mS-yWA" firstAttribute="centerY" secondItem="Z8H-PC-gly" secondAttribute="centerY" id="xXA-SQ-x9W"/>
                                                 <constraint firstAttribute="bottom" secondItem="rBu-VL-QGO" secondAttribute="bottom" id="z6q-5U-EgB"/>
                                             </constraints>
@@ -518,14 +518,14 @@
                                     <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N81-LT-Ndo">
                                         <rect key="frame" x="8" y="0.0" width="110" height="20"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="損益合計：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DwH-J9-nff">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="確定損益：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DwH-J9-nff">
                                                 <rect key="frame" x="8" y="-5" width="60" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="32100" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i4T-g2-0xt">
-                                                <rect key="frame" x="71" y="-5" width="39" height="30"/>
+                                                <rect key="frame" x="58" y="-5" width="52" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -545,14 +545,14 @@
                                     <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qea-HQ-8Jo">
                                         <rect key="frame" x="143" y="0.0" width="138" height="20"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="平均取得価格：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D7u-sV-umg">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="平均価格：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D7u-sV-umg">
                                                 <rect key="frame" x="0.0" y="-3" width="90" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="98222" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xfk-8K-nQP">
-                                                <rect key="frame" x="98" y="-3" width="40" height="30"/>
+                                                <rect key="frame" x="71" y="-3" width="67" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -720,7 +720,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="zVm-xr-0aN">
-                                                    <rect key="frame" x="394" y="25.333333333333336" width="20" height="20.000000000000007"/>
+                                                    <rect key="frame" x="394" y="24.666666666666664" width="20" height="19.999999999999993"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>
@@ -1102,10 +1102,10 @@
             </objects>
             <point key="canvasLocation" x="6761" y="-1938"/>
         </scene>
-        <!--Zaif APIキーの登録-->
+        <!--Zaif APIキー-->
         <scene sceneID="W1V-Ea-znc">
             <objects>
-                <viewController title="Zaif APIキーの登録" id="oQX-rA-4mB" customClass="ChangeZaifApiKeyController" customModule="zai" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Zaif APIキー" id="oQX-rA-4mB" customClass="ChangeZaifApiKeyController" customModule="zai" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="f5C-7I-wjS"/>
                         <viewControllerLayoutGuide type="bottom" id="B1D-Jo-fha"/>
@@ -1150,7 +1150,7 @@
                             <constraint firstItem="UTH-Xx-P3S" firstAttribute="top" secondItem="9T1-BP-odD" secondAttribute="bottom" constant="5" id="nru-IO-hkl"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Zaif APIキーの登録" id="Pc2-Ey-KzA">
+                    <navigationItem key="navigationItem" title="Zaif APIキー" id="Pc2-Ey-KzA">
                         <barButtonItem key="leftBarButtonItem" title="キャンセル" id="TG5-pl-HKl">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -1175,10 +1175,10 @@
             </objects>
             <point key="canvasLocation" x="6734.7826086956529" y="-567.39130434782612"/>
         </scene>
-        <!--bitFlyer APIキーの登録l-->
+        <!--bitFlyer APIキー-->
         <scene sceneID="f7P-De-tbz">
             <objects>
-                <viewController title="bitFlyer APIキーの登録l" id="j1E-M6-3mk" customClass="ChangeBitFlyerApiKeyController" customModule="zai" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="bitFlyer APIキー" id="j1E-M6-3mk" customClass="ChangeBitFlyerApiKeyController" customModule="zai" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="QA3-6J-jWY"/>
                         <viewControllerLayoutGuide type="bottom" id="4iH-dF-Wti"/>
@@ -1187,10 +1187,10 @@
                         <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="I52-kW-T0M">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="I52-kW-T0M">
                                 <rect key="frame" x="20" y="50" width="373" height="93"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="APIキー" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qpS-zU-Mec">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="APIキー" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qpS-zU-Mec">
                                         <rect key="frame" x="0.0" y="0.0" width="373" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="Dde-tj-Vva"/>
@@ -1199,7 +1199,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="シークレットキー" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7CF-IP-ezG">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="シークレットキー" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7CF-IP-ezG">
                                         <rect key="frame" x="0.0" y="49" width="373" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="2Fr-Ao-kGs"/>
@@ -1210,19 +1210,20 @@
                                     </textField>
                                 </subviews>
                             </stackView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Y7l-DH-gfL">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Y7l-DH-gfL">
                                 <rect key="frame" x="197" y="151" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="I52-kW-T0M" firstAttribute="top" secondItem="QA3-6J-jWY" secondAttribute="bottom" constant="50" id="5lP-Pq-kFa"/>
+                            <constraint firstItem="I52-kW-T0M" firstAttribute="centerX" secondItem="N9T-1R-FsK" secondAttribute="centerX" id="QYV-AJ-qYM"/>
                             <constraint firstItem="Y7l-DH-gfL" firstAttribute="top" secondItem="I52-kW-T0M" secondAttribute="bottom" constant="5" id="bWS-c9-hvy"/>
                             <constraint firstItem="Y7l-DH-gfL" firstAttribute="centerX" secondItem="I52-kW-T0M" secondAttribute="centerX" id="hF1-8A-GEX"/>
                             <constraint firstItem="I52-kW-T0M" firstAttribute="width" secondItem="N9T-1R-FsK" secondAttribute="width" multiplier="0.9" id="yAu-G1-gW9"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="bitFlyer APIキーの登録" id="3jZ-9g-n9K">
+                    <navigationItem key="navigationItem" title="bitFlyer APIキー" id="3jZ-9g-n9K">
                         <barButtonItem key="leftBarButtonItem" title="キャンセル" id="8Zf-OL-YeE">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -1291,7 +1292,7 @@
             </objects>
             <point key="canvasLocation" x="6735" y="213"/>
         </scene>
-        <!--ポジション解消ルール-->
+        <!--売注文ルール-->
         <scene sceneID="WLK-o6-gVV">
             <objects>
                 <tableViewController id="Njh-CO-Ub9" customClass="ChangeUnwindingRuleViewController" customModule="zai" customModuleProvider="target" sceneMemberID="viewController">
@@ -1314,7 +1315,7 @@
                             <outlet property="delegate" destination="Njh-CO-Ub9" id="1EM-Kf-hfU"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="ポジション解消ルール" id="p7H-iE-Ar9">
+                    <navigationItem key="navigationItem" title="売注文ルール" id="p7H-iE-Ar9">
                         <barButtonItem key="leftBarButtonItem" title="キャンセル" id="Jg8-oe-JhU">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -1515,7 +1516,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="4UZ-96-iNW">
-                                                    <rect key="frame" x="394" y="25" width="20" height="20"/>
+                                                    <rect key="frame" x="394" y="25.333333333333336" width="20" height="20.000000000000007"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>

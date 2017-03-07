@@ -23,7 +23,7 @@ class NewZaifAccountView : SectionView {
             cell.textField.placeholder = LabelResource.apiKeyPlaceholder
             
             // for debug
-            cell.textField.text = testKey
+            //cell.textField.text = testKey
 
             return cell
         case 1:
@@ -31,7 +31,7 @@ class NewZaifAccountView : SectionView {
             cell.textField.placeholder = LabelResource.secretKeyPlaceholder
             
             // for dubug
-            cell.textField.text = testSecret
+            //cell.textField.text = testSecret
 
             return cell
         default:

@@ -356,16 +356,17 @@ class bitFlyerApi : Api {
     func createBoardStream(currencyPair: ApiCurrencyPair, maxSize: Int, onOpen: @escaping (ApiError?) -> Void, onClose: @escaping (ApiError?) -> Void, onError: @escaping (ApiError?) -> Void, onData: @escaping (ApiError?, Board) -> Void) -> StreamApi {
         
         var masterBoard: Board?
+        let masterBoardSize = maxSize + 10
         var isBoardReady = false
         let channel = "lightning_board_BTC_JPY"
         let stream = BitFlyerStreamApi(channel: channel, currencyPair: currencyPair, onOpen: onOpen, onClose: onClose, onError: onError) { (err, data) in
             
             if masterBoard == nil {
                 masterBoard = Board()
-                self.getBoard(currencyPair: currencyPair, maxSize: maxSize) { (err, board) in
+                self.getBoard(currencyPair: currencyPair, maxSize: masterBoardSize) { (err, board) in
                     DispatchQueue.main.async {
                         masterBoard!.update(diff: board)
-                        masterBoard!.trunc(size: maxSize)
+                        masterBoard!.trunc(size: masterBoardSize)
                         isBoardReady = true
                     }
                 }
@@ -374,16 +375,17 @@ class bitFlyerApi : Api {
             if let e = err {
                 onError(e)
             } else {
-                guard let partialBoard = self.makeBoard(data: data!, maxSize: maxSize) else {
+                guard let partialBoard = self.makeBoard(data: data!, maxSize: masterBoardSize) else {
                     onError(ApiError())
                     return
                 }
                 DispatchQueue.main.async {
                     masterBoard!.update(diff: partialBoard)
-                    masterBoard!.trunc(size: maxSize)
+                    masterBoard!.trunc(size: masterBoardSize)
                     if isBoardReady {
                         let board = Board()
                         board.update(diff: masterBoard!)
+                        board.trunc(size: maxSize)
                         onData(nil, board)
                     }
                 }
@@ -405,12 +407,15 @@ class bitFlyerApi : Api {
                 PermissionType.getexecutions,
             ]
             self.api.hasPermissions(permissions: permissions) { err, noPermissions in
-                if noPermissions.count > 0 {
-                    callback(ApiError(errorType: .NO_PERMISSION))
+                if err != nil {
+                    callback(ApiError(errorType: .INVALID_API_KEY))
                 } else {
-                    callback(nil)
+                    if noPermissions.count > 0 {
+                        callback(ApiError(errorType: .NO_PERMISSION))
+                    } else {
+                        callback(nil)
+                    }
                 }
-                
             }
         }
     }
@@ -513,11 +518,11 @@ class BitFlyerStreamApi : NSObject, StreamApi, PNObjectEventListener {
     }
     
     func open() {
-        
+        self.pubNubClient.subscribeToChannels([self.channel], withPresence: true)
     }
     
     func close() {
-        
+        self.pubNubClient.unsubscribeFromAll()
     }
     
     var rawStream: Any {

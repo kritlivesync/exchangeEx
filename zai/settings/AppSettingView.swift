@@ -35,7 +35,7 @@ class AppSettingView : SettingView, VariableSettingCellDelegate, ChangeUnwinding
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "variableSettingCell", for: indexPath) as! VariableSettingCell
-            cell.nameLabel.text = "ポジション解消ルール"
+            cell.nameLabel.text = "売注文ルール"
             cell.valueLabel.text = self._config.unwindingRuleType.string
             cell.id = 1
             cell.delegate = self

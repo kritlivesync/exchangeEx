@@ -24,7 +24,7 @@ class NewBitFlyerAccount : SectionView {
             cell.textField.placeholder = LabelResource.apiKeyPlaceholder
             
             // for debug
-            cell.textField.text = testbFKey
+            //cell.textField.text = testbFKey
             
             return cell
         case 1:
@@ -32,7 +32,7 @@ class NewBitFlyerAccount : SectionView {
             cell.textField.placeholder = LabelResource.secretKeyPlaceholder
             
             // for debug
-            cell.textField.text = testbFSecret
+            //cell.textField.text = testbFSecret
             
             return cell
         default:
