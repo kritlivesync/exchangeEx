@@ -197,7 +197,7 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
 
     func orderSell(quote: Quote, callback: @escaping () -> Void) {
         let price = quote.price
-        let amount = min(quote.amount, 1.0)
+        let amount = quote.amount
         
         guard let trader = getAccount()?.activeExchange.trader else {
             callback()
