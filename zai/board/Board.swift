@@ -49,7 +49,7 @@ struct Quote {
 
 
 protocol BoardDelegate : MonitorableDelegate {
-    func recievedBoard(err: ZaiErrorType?, board: Board?)
+    func recievedBoard(err: ZaiErrorType?, board: Board?, sender: Any?)
 }
 
 
@@ -211,9 +211,9 @@ class Board {
 
 class BoardMonitor : BoardDelegate {
     
-    init(currencyPair: ApiCurrencyPair, api: Api) {
-        self.monitorableBoard = MonitorableBoard(currencyPair: currencyPair, api: api)
-        self.streamingBoard = StreamingBoard(currencyPair: currencyPair, api: api)
+    init(currencyPair: ApiCurrencyPair, api: Api, sender: Any?=nil) {
+        self.monitorableBoard = MonitorableBoard(currencyPair: currencyPair, api: api, sender: sender)
+        self.streamingBoard = StreamingBoard(currencyPair: currencyPair, api: api,  sender: sender)
     }
     
     var delegate: BoardDelegate? = nil {
@@ -236,8 +236,8 @@ class BoardMonitor : BoardDelegate {
 
     
     // BoardDelegate
-    func recievedBoard(err: ZaiErrorType?, board: Board?) {
-        self.delegate?.recievedBoard(err: err, board: board)
+    func recievedBoard(err: ZaiErrorType?, board: Board?, sender: Any?) {
+        self.delegate?.recievedBoard(err: err, board: board, sender: sender)
     }
     
     
@@ -249,9 +249,10 @@ class BoardMonitor : BoardDelegate {
 
 class MonitorableBoard : Monitorable {
     
-    init(currencyPair: ApiCurrencyPair, api: Api) {
+    init(currencyPair: ApiCurrencyPair, api: Api, sender: Any?=nil) {
         self.api = api
         self.currencyPair = currencyPair
+        self.sender = sender
         super.init(target: "Board")
     }
     
@@ -259,21 +260,23 @@ class MonitorableBoard : Monitorable {
         let delegate = self.delegate as? BoardDelegate
         api.getBoard(currencyPair: self.currencyPair, maxSize: 50) { (err, board) in
             DispatchQueue.main.async {
-                delegate?.recievedBoard(err: nil, board: board)
+                delegate?.recievedBoard(err: nil, board: board, sender: self.sender)
             }
         }
     }
     
     let api: Api
     let currencyPair: ApiCurrencyPair
+    let sender: Any?
 }
 
 
 class StreamingBoard {
     
-    init(currencyPair: ApiCurrencyPair, api: Api) {
+    init(currencyPair: ApiCurrencyPair, api: Api, sender: Any?=nil) {
         self.api = api
         self.currencyPair = currencyPair
+        self.sender = sender
     }
     
     var delegate: BoardDelegate? = nil {
@@ -299,7 +302,7 @@ class StreamingBoard {
     
     fileprivate func onError(err: ApiError?) {
         print(getNow() +  "error in streaming")
-        self.delegate?.recievedBoard(err: .ZAIF_CONNECTION_ERROR, board: nil)
+        self.delegate?.recievedBoard(err: .ZAIF_CONNECTION_ERROR, board: nil, sender: self.sender)
     }
     
     fileprivate func onData(_ err: ApiError?, board: Board) {
@@ -307,10 +310,11 @@ class StreamingBoard {
             print(e.message)
             return
         }
-        self.delegate?.recievedBoard(err: nil, board: board)
+        self.delegate?.recievedBoard(err: nil, board: board, sender: self.sender)
     }
     
     var streamApi: StreamApi?
     let api: Api
     let currencyPair: ApiCurrencyPair
+    let sender: Any?
 }

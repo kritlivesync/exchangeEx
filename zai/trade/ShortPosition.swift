@@ -80,9 +80,9 @@ class ShortPosition: Position {
         }
     }
     
-    override func unwind(_ amount: Double?=nil, price: Double?, cb: @escaping (ZaiError?) -> Void) {
+    override func unwind(_ amount: Double?=nil, price: Double?, cb: @escaping (ZaiError?, Double) -> Void) {
         if self.status.intValue != PositionState.OPEN.rawValue {
-            cb(nil)
+            cb(nil, 0.0)
             return
         }
         
@@ -101,7 +101,7 @@ class ShortPosition: Position {
         let order = OrderRepository.getInstance().createSellOrder(currencyPair: self.currencyPair, price: price, amount: amt!, api: self.trader!.exchange.api)
         
         order.excute() { (err, res) in
-            cb(err)
+            cb(err, amt!)
             order.delegate = self
         }
     }

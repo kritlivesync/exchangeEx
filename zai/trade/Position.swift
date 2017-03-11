@@ -13,7 +13,7 @@ import ZaifSwift
 
 
 internal protocol PositionProtocol {
-    func unwind(_ amount: Double?, price: Double?, cb: @escaping (ZaiError?) -> Void) -> Void
+    func unwind(_ amount: Double?, price: Double?, cb: @escaping (ZaiError?, Double) -> Void) -> Void
     func delete()
     func calculateUnrealizedProfit(marketPrice: Double) -> Double
     
@@ -99,8 +99,8 @@ enum PositionState: Int {
 
 
 public class Position: NSManagedObject, PositionProtocol, PromisedOrderDelegate {
-    func unwind(_ amount: Double?, price: Double?, cb: @escaping (ZaiError?) -> Void) {
-        cb(ZaiError(errorType: .UNKNOWN_ERROR, message: "not implemented"))
+    func unwind(_ amount: Double?, price: Double?, cb: @escaping (ZaiError?, Double) -> Void) {
+        cb(ZaiError(errorType: .UNKNOWN_ERROR, message: "not implemented"), 0.0)
     }
     
     func addLog(_ log: TradeLog) {

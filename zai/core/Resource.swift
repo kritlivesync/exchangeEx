@@ -101,6 +101,9 @@ class LabelResource {
     static var make: String {
         return "メイク"
     }
+    static var argitrage: String {
+        return "裁定する"
+    }
     static var bestBid: String {
         return "最高\n買注文"
     }

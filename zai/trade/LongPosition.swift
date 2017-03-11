@@ -147,10 +147,10 @@ class LongPosition: Position {
         }
     }
     
-    override func unwind(_ amount: Double?=nil, price: Double?, cb: @escaping (ZaiError?) -> Void) {
+    override func unwind(_ amount: Double?=nil, price: Double?, cb: @escaping (ZaiError?, Double) -> Void) {
         let state = PositionState(rawValue: self.status.intValue)
         if state != PositionState.OPEN {
-            cb(nil)
+            cb(nil, 0.0)
             return
         }
         
@@ -175,9 +175,9 @@ class LongPosition: Position {
                 if let e = err {
                     OrderRepository.getInstance().delete(order)
                     self.open()
-                    cb(e)
+                    cb(e, amt!)
                 } else {
-                    cb(nil)
+                    cb(nil, amt!)
                     self.order = order
                 }
             }

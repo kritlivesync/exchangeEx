@@ -17,8 +17,6 @@ class AssetsViewController: UIViewController, AppBackgroundDelegate {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.barTintColor = Color.keyColor
-        let image = self.navigationController?.navigationBar.items?[0].leftBarButtonItem?.image
-        self.navigationController?.navigationBar.items?[0].leftBarButtonItem?.image = image?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
         
         let admob = createAdView(parent: self)
         admob.rootViewController = self

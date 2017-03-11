@@ -82,7 +82,7 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
     }
     
     // BoardDelegate
-    func recievedBoard(err: ZaiErrorType?, board: Board?) {
+    func recievedBoard(err: ZaiErrorType?, board: Board?, sender: Any?) {
         if let _ = err {
             /*
             DispatchQueue.main.async {
@@ -117,38 +117,12 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
     }
     
     func orderSell(quote: Quote, bestBid: Quote, bestAsk: Quote, callback: @escaping () -> Void) {
-        switch getAppConfig().unwindingRuleType {
-        case .mostBenefit:
-            self.trader.unwindMaxProfitPosition(price: quote.price, amount: quote.amount, marketPrice: bestBid.price) { (err, position) in
-                callback()
-                if let e = err {
-                    let errorView = createErrorModal(message: e.message)
-                    self.present(errorView, animated: false, completion: nil)
-                }
-            }
-        case .mostLoss:
-            self.trader.unwindMaxLossPosition(price: quote.price, amount: quote.amount, marketPrice: bestBid.price) { (err, position) in
-                callback()
-                if let e = err {
-                    let errorView = createErrorModal(message: e.message)
-                    self.present(errorView, animated: false, completion: nil)
-                }
-            }
-        case .mostRecent:
-            self.trader.unwindMostRecentPosition(price: quote.price, amount: quote.amount) { (err, position) in
-                callback()
-                if let e = err {
-                    let errorView = createErrorModal(message: e.message)
-                    self.present(errorView, animated: false, completion: nil)
-                }
-            }
-        case .mostOld:
-            self.trader.unwindMostOldPosition(price: quote.price, amount: quote.amount) { (err, position) in
-                callback()
-                if let e = err {
-                    let errorView = createErrorModal(message: e.message)
-                    self.present(errorView, animated: false, completion: nil)
-                }
+        let rule = getAppConfig().unwindingRuleType
+        self.trader.ruledUnwindPosition(price: quote.price, amount: quote.amount, marketPrice: bestBid.price, rule: rule) { (err, position, orderedAmount) in
+            callback()
+            if let e = err {
+                let errorView = createErrorModal(message: e.message)
+                self.present(errorView, animated: false, completion: nil)
             }
         }
     }
