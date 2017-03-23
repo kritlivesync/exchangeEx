@@ -134,7 +134,7 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, B
         var amount = position.balance * rate
         amount = max(amount, trader.exchange.api.orderUnit(currencyPair: position.currencyPair))
         trader.exchange.api.getTicker(currencyPair: position.currencyPair) { (err, tick) in
-            trader.unwindPosition(id: position.id, price: tick.bid, amount: amount) { (err, _) in
+            trader.unwindPosition(id: position.id, price: tick.bid, amount: amount) { (err, _,  _) in
                 if let e = err {
                     position.open()
                     self.delegate?.error(error: e)

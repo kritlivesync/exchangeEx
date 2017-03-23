@@ -49,9 +49,9 @@ open class Trader: NSManagedObject, FundDelegate {
         }
     }
     
-    func unwindPosition(id: String, price: Double?, amount: Double, cb: @escaping (ZaiError?, Position?) -> Void) {
+    func unwindPosition(id: String, price: Double?, amount: Double, cb: @escaping (ZaiError?, Position?, Double) -> Void) {
         guard let position = self.getPosition(id: id) else {
-            cb(ZaiError(errorType: .INVALID_POSITION), nil)
+            cb(ZaiError(errorType: .INVALID_POSITION), nil, 0.0)
             return
         }
         
@@ -59,43 +59,57 @@ open class Trader: NSManagedObject, FundDelegate {
         let btcFundAmount = self.btcAvailable
         let amt = min(min(balance, amount), btcFundAmount)
         if amt < self.exchange.api.orderUnit(currencyPair: position.currencyPair) {
-            cb(nil, position)
+            cb(nil, position, amt)
             position.close()
             position.delegate?.closedPosition(position: position, promisedOrder: nil)
         } else {
-            position.unwind(amt, price: price) { err in
-                cb(err, position)
+            position.unwind(amt, price: price) { (err, orderedAmount) in
+                cb(err, position, amt)
             }
         }
     }
     
-    func unwindMaxProfitPosition(price: Double?, amount: Double, marketPrice: Double, cb: @escaping (ZaiError?, Position?) -> Void) {
+    func ruledUnwindPosition(price: Double?, amount: Double, marketPrice: Double, rule: UnwindingRule, cb: @escaping (ZaiError?, Position?, Double) -> Void) {
+        
+        switch rule {
+        case .mostBenefit:
+            self.unwindMaxProfitPosition(price: price, amount: amount, marketPrice: marketPrice, cb: cb)
+        case .mostLoss:
+            self.unwindMaxLossPosition(price: price, amount: amount, marketPrice: marketPrice, cb: cb)
+        case .mostRecent:
+            self.unwindMostRecentPosition(price: price, amount: amount, cb: cb)
+        case .mostOld:
+            self.unwindMostOldPosition(price: price, amount: amount, cb: cb)
+        }
+    }
+    
+    func unwindMaxProfitPosition(price: Double?, amount: Double, marketPrice: Double, cb: @escaping (ZaiError?, Position?, Double) -> Void) {
         guard let position = self.maxUnrealizedProfitPosition(marketPrice: marketPrice) else {
-            cb(ZaiError(errorType: .NO_POSITION_TO_UNWIND, message: Resource.noPositionsToUnwind), nil)
+            cb(ZaiError(errorType: .NO_POSITION_TO_UNWIND, message: Resource.noPositionsToUnwind), nil, 0.0)
             return
         }
         self.unwindPosition(id: position.id, price: price, amount: amount, cb: cb)
     }
     
-    func unwindMaxLossPosition(price: Double?, amount: Double, marketPrice: Double, cb: @escaping (ZaiError?, Position?) -> Void) {
+    func unwindMaxLossPosition(price: Double?, amount: Double, marketPrice: Double, cb: @escaping (ZaiError?, Position?, Double) -> Void) {
         guard let position = self.maxUnrealizedLossPosition(marketPrice: marketPrice) else {
-            cb(ZaiError(errorType: .NO_POSITION_TO_UNWIND, message: Resource.noPositionsToUnwind), nil)
+            cb(ZaiError(errorType: .NO_POSITION_TO_UNWIND, message: Resource.noPositionsToUnwind), nil, 0.0)
             return
         }
         self.unwindPosition(id: position.id, price: price, amount: amount, cb: cb)
     }
     
-    func unwindMostRecentPosition(price: Double?, amount: Double, cb: @escaping (ZaiError?, Position?) -> Void) {
+    func unwindMostRecentPosition(price: Double?, amount: Double, cb: @escaping (ZaiError?, Position?, Double) -> Void) {
         guard let position = self.mostRecentPosition else {
-            cb(ZaiError(errorType: .NO_POSITION_TO_UNWIND, message: Resource.noPositionsToUnwind), nil)
+            cb(ZaiError(errorType: .NO_POSITION_TO_UNWIND, message: Resource.noPositionsToUnwind), nil, 0.0)
             return
         }
         self.unwindPosition(id: position.id, price: price, amount: amount, cb: cb)
     }
     
-    func unwindMostOldPosition(price: Double?, amount: Double, cb: @escaping (ZaiError?, Position?) -> Void) {
+    func unwindMostOldPosition(price: Double?, amount: Double, cb: @escaping (ZaiError?, Position?, Double) -> Void) {
         guard let position = self.mostOldPosition else {
-            cb(ZaiError(errorType: .NO_POSITION_TO_UNWIND, message: Resource.noPositionsToUnwind), nil)
+            cb(ZaiError(errorType: .NO_POSITION_TO_UNWIND, message: Resource.noPositionsToUnwind), nil, 0.0)
             return
         }
         self.unwindPosition(id: position.id, price: price, amount: amount, cb: cb)
