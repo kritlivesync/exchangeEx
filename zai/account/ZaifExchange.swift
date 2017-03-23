@@ -87,10 +87,12 @@ public class ZaifExchange: Exchange, ZaiApiDelegate {
     
     // ZaiApiDelegate
     func privateApiCalled(apiName: String) {
-        guard let nonce = (self.serviceApi?.rawApi as? PrivateApi)?.nonceValue else {
-            return
+        DispatchQueue.main.async {
+            guard let nonce = (self.serviceApi?.rawApi as? PrivateApi)?.nonceValue else {
+                return
+            }
+            self.nonce = NSNumber(value: nonce)
         }
-        self.nonce = NSNumber(value: nonce)
     }
     
     override var handlingCurrencyPairs: [ApiCurrencyPair] {
