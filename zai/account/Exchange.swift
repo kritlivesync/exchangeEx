@@ -22,7 +22,7 @@ protocol ExchangeProtocol {
     var api: Api { get }
 }
 
-public class Exchange: NSManagedObject, ExchangeProtocol {
+public class Exchange: NSManagedObject, ExchangeProtocol, CommissionDelegate {
     
     func validateApiKey(_ callback: @escaping (ZaiError?) -> Void) {
         callback(ZaiError(errorType: .UNKNOWN_ERROR))
@@ -56,5 +56,26 @@ public class Exchange: NSManagedObject, ExchangeProtocol {
         return ApiCurrencyPair(rawValue: self.currencyPair)!
     }
     
+    func startWatch() {
+        self.stopWatch()
+        self.commissionMonitor = Commission(currencyPair: self.apiCurrencyPair, api: api)
+        self.commissionMonitor.delegate = self
+    }
+    
+    func stopWatch() {
+        if self.commissionMonitor != nil {
+            self.commissionMonitor.monitoringInterval = UpdateInterval.thirtySeconds
+            self.commissionMonitor.delegate = nil
+            self.commissionMonitor = nil
+        }
+    }
+    
+    // CommissionDelegate
+    func recievedCommmission(commission: Double) {
+        self.commission = commission
+    }
+    
     var serviceApi: Api?
+    var commissionMonitor: Commission!
+    var commission = 0.0
 }

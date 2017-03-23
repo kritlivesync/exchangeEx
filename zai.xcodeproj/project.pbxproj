@@ -109,6 +109,7 @@
 		B85E8E5E1D6F477900C029C8 /* TraderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E5D1D6F477900C029C8 /* TraderView.swift */; };
 		B85E8E601D6F541800C029C8 /* TraderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E5F1D6F541800C029C8 /* TraderViewCell.swift */; };
 		B862419F1E61695400A6D99C /* BitFlyerAssetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862419E1E61695400A6D99C /* BitFlyerAssetsView.swift */; };
+		B87E72A01E74494400017B2F /* Commission.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87E729F1E74494400017B2F /* Commission.swift */; };
 		B88CF6EE1E3C8258008A6189 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88CF6ED1E3C8258008A6189 /* Config.swift */; };
 		B88CF6F01E3C8542008A6189 /* ConfigRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88CF6EF1E3C8542008A6189 /* ConfigRepository.swift */; };
 		B88CF6F21E3CA0E9008A6189 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88CF6F11E3CA0E9008A6189 /* Resource.swift */; };
@@ -320,6 +321,7 @@
 		B85E8E5D1D6F477900C029C8 /* TraderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderView.swift; path = main/TraderView.swift; sourceTree = "<group>"; };
 		B85E8E5F1D6F541800C029C8 /* TraderViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderViewCell.swift; path = main/TraderViewCell.swift; sourceTree = "<group>"; };
 		B862419E1E61695400A6D99C /* BitFlyerAssetsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BitFlyerAssetsView.swift; path = assets/BitFlyerAssetsView.swift; sourceTree = "<group>"; };
+		B87E729F1E74494400017B2F /* Commission.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Commission.swift; path = account/Commission.swift; sourceTree = "<group>"; };
 		B88CF6ED1E3C8258008A6189 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Config.swift; path = core/Config.swift; sourceTree = "<group>"; };
 		B88CF6EF1E3C8542008A6189 /* ConfigRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigRepository.swift; path = config/ConfigRepository.swift; sourceTree = "<group>"; };
 		B88CF6F11E3CA0E9008A6189 /* Resource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Resource.swift; path = core/Resource.swift; sourceTree = "<group>"; };
@@ -692,6 +694,7 @@
 				B8B29AFD1E50075500ED3F64 /* NewAccountView.swift */,
 				B8B29AFF1E507AA500ED3F64 /* NewZaifAccountView.swift */,
 				B8B29B091E56041E00ED3F64 /* NewBitFlyerAccount.swift */,
+				B87E729F1E74494400017B2F /* Commission.swift */,
 			);
 			name = account;
 			sourceTree = "<group>";
@@ -1129,6 +1132,7 @@
 				B862419F1E61695400A6D99C /* BitFlyerAssetsView.swift in Sources */,
 				B835D4101E34EF5000F9C4EB /* Validation.swift in Sources */,
 				B831091C1E5CA915002D10B5 /* ChangeExchangeViewController.swift in Sources */,
+				B87E72A01E74494400017B2F /* Commission.swift in Sources */,
 				B827CD141D7C523700E9847B /* PositionListView.swift in Sources */,
 				B8B29AFC1E5006CF00ED3F64 /* TextSettingCell.swift in Sources */,
 				B83F72871E3232B30077B566 /* AssetsView.swift in Sources */,

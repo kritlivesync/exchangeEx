@@ -14,11 +14,14 @@ import ZaifSwift
     @objc optional func getDelegateName() -> String
 }
 
-internal class Monitorable {
+internal class Monitorable : NSObject {
     
     init(target: String, addOperation: Bool=true) {
         self.target = target
         self.queue = DispatchQueue.global()
+        
+        super.init()
+        
         if addOperation {
             self.addMonitorOperation()
         }

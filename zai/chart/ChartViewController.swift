@@ -12,7 +12,7 @@ import UIKit
 import Charts
 
 
-class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate, BitCoinDelegate, BestQuoteViewDelegate, AppBackgroundDelegate {
+class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate, BitCoinDelegate, BestQuoteViewDelegate, AppBackgroundDelegate, ZaiAnalyticsDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,6 +41,9 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
         self.candleStickChartView.rightAxis.labelCount = 5
         self.candleStickChartView.rightAxis.drawGridLinesEnabled = true
         self.candleStickChartView.rightAxis.drawAxisLineEnabled = true
+        
+        self.autoSwitch.isOn = false
+        self.analyticsClient.delegate = self
     }
     
     open override func viewWillAppear(_ animated: Bool) {
@@ -80,6 +83,12 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
         
         let trader = account.activeExchange.trader
         trader.startWatch()
+        
+        if self.autoSwitch.isOn && account.activeExchangeName == "Zaif" {
+            self.analyticsClient.open()
+        } else {
+            self.analyticsClient.close()
+        }
     }
     
     fileprivate func stop() {
@@ -91,7 +100,6 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
             self.bitcoin.delegate = nil
             self.bitcoin = nil
         }
-        
     }
     
     // CandleChartDelegate
@@ -226,6 +234,51 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
         self.stop()
     }
     
+    // ZaiAnalyticsDelegate
+    func recievedBuySignal() {
+        guard let trader = getAccount()?.activeExchange.trader else {
+            return
+        }
+        guard let bestAsk = self.bestQuoteView.getBestAsk() else {
+            return
+        }
+        
+        trader.createLongPosition(.BTC_JPY, price: bestAsk.price, amount: bestAsk.amount) { (err, position) in
+            DispatchQueue.main.async {
+                if let e = err {
+                    print(e.message)
+                }
+            }
+        }
+    }
+    
+    func recievedSellSignal() {
+        guard let trader = getAccount()?.activeExchange.trader else {
+            return
+        }
+        guard let bestBid = self.bestQuoteView.getBestBid() else {
+            return
+        }
+        trader.cancelAllOrders()
+        
+        DispatchQueue.main.async {
+            trader.unwindAllPositions(price: bestBid.price) { (err, position, orderedAmount) in
+                if let e = err {
+                    print(e.message)
+                }
+            }
+        }
+        
+        /*
+        let rule = getAppConfig().unwindingRuleType
+        trader.ruledUnwindPosition(price: bestBid.price, amount: bestBid.amount, marketPrice: bestBid.price, rule: rule) { (err, position, orderedAmount) in
+            if let e = err {
+                print(e.message)
+            }
+        }
+ */
+    }
+    
     fileprivate func heilightChartButton(type: ChandleChartType) {
         self.oneMinuteButton.setTitleColor(UIColor.white, for: UIControlState.normal)
         self.oneMinuteButton.isEnabled = true
@@ -289,11 +342,20 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
         self.present(settings, animated: true, completion: nil)
     }
 
+    @IBAction func switchAuto(_ sender: Any) {
+        let swtch = sender as! UISwitch
+        if swtch.isOn && getAccount()!.activeExchangeName == "Zaif" {
+            self.analyticsClient.open()
+        } else {
+            self.analyticsClient.close()
+        }
+    }
     
     fileprivate var fund: Fund!
     fileprivate var bitcoin: BitCoin!
     var chartContainer: CandleChartContainer!
     var bestQuoteView: BestQuoteView!
+    var analyticsClient = ZaiAnalyticsClient()
 
     @IBOutlet weak var chartSelectorView: UIView!
     @IBOutlet weak var candleStickChartView: CandleStickChartView!
@@ -306,4 +368,5 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
     @IBOutlet weak var fundLabel: UILabel!
     @IBOutlet weak var bestQuoteTableView: UITableView!
     
+    @IBOutlet weak var autoSwitch: UISwitch!
 }

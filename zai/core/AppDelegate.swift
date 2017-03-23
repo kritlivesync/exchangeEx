@@ -9,7 +9,7 @@
 import UIKit
 
 import Firebase
-
+import CoreData
 
 
 protocol AppBackgroundDelegate {
@@ -139,5 +139,4 @@ func getPositionsConfig() -> PositionsConfig {
 func getOrdersConfig() -> OrdersConfig {
     return getAccount()!.ordersConfig
 }
-
 

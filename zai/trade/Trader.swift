@@ -69,6 +69,19 @@ open class Trader: NSManagedObject, FundDelegate {
         }
     }
     
+    func cancelAllOrders() {
+        for order in self.activeOrders {
+            order.cancel() { _ in }
+        }
+    }
+    
+    func unwindAllPositions(price: Double?, cb: @escaping (ZaiError?, Position?, Double) -> Void) {
+        for position in self.openPositions {
+            let balance = position.balance
+            self.unwindPosition(id: position.id, price: price, amount: balance, cb: cb)
+        }
+    }
+    
     func ruledUnwindPosition(price: Double?, amount: Double, marketPrice: Double, rule: UnwindingRule, cb: @escaping (ZaiError?, Position?, Double) -> Void) {
         
         switch rule {

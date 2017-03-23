@@ -57,6 +57,7 @@ protocol Api {
     func getTicker(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, Tick) -> Void)
     func getBoard(currencyPair: ApiCurrencyPair, maxSize: Int, callback: @escaping (ApiError?, Board) -> Void)
     func getBalance(currencies: [ApiCurrency], callback: @escaping (ApiError?, [Balance]) -> Void)
+    func getCommission(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, Double) -> Void)
     func getActiveOrders(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, [String:ActiveOrder]) -> Void)
     func getTrades(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, [Trade]) -> Void)
     

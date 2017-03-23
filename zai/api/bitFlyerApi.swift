@@ -202,6 +202,23 @@ class bitFlyerApi : Api {
         }
     }
     
+    func getCommission(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, Double) -> Void) {
+        bitFlyerApi.queue.async {
+            self.api.getTradingCommission(productCode: currencyPair.bFCurrencyPair) { (err, res) in
+                if err != nil {
+                    print("getCommission: " + err!.message)
+                    callback(ApiError(errorType: err!.errorCode.apiError, message: err!.message), 0.0)
+                    return
+                }
+                guard let commision = res?["commission_rate"].double else {
+                    callback(ApiError(), 0.0)
+                    return
+                }
+                callback(nil, commision)
+            }
+        }
+    }
+    
     func getActiveOrders(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, [String:ActiveOrder]) -> Void) {
         bitFlyerApi.queue.async {
             self.api.getChildOrders(productCode: currencyPair.bFCurrencyPair, childOrderState: ChildOrderState.active) { (err, res) in

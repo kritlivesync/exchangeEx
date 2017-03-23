@@ -15,7 +15,7 @@ protocol ArbitrageViewDelegate {
 }
 
 
-class ArbitrageView : NSObject, UITableViewDelegate, UITableViewDataSource, BoardDelegate, ArbitrageCellDelegate {
+class ArbitrageView : Monitorable, UITableViewDelegate, UITableViewDataSource, BoardDelegate, ArbitrageCellDelegate, MonitorableDelegate {
     
     init(view: UITableView) {
         self.view = view
@@ -24,7 +24,8 @@ class ArbitrageView : NSObject, UITableViewDelegate, UITableViewDataSource, Boar
         self.view.isScrollEnabled = false
         self.view.bounces = false
         
-        super.init()
+        super.init(target: "ArbitrageView")
+        self.delegate = self
     
         self.view.delegate = self
         self.view.dataSource = self
@@ -33,6 +34,8 @@ class ArbitrageView : NSObject, UITableViewDelegate, UITableViewDataSource, Boar
     public func start(leftExchange: Exchange, rightExchange: Exchange) {
         self.leftExchange = leftExchange
         self.rightExchange = rightExchange
+        self.leftExchange.startWatch()
+        self.rightExchange.startWatch()
         self.leftExchange.trader.startWatch()
         self.rightExchange.trader.startWatch()
         
@@ -50,6 +53,8 @@ class ArbitrageView : NSObject, UITableViewDelegate, UITableViewDataSource, Boar
     }
     
     public func stop() {
+        self.leftExchange.stopWatch()
+        self.rightExchange.stopWatch()
         self.leftExchange.trader.stopWatch()
         self.rightExchange.trader.stopWatch()
         if self.leftBoard != nil {
@@ -67,14 +72,14 @@ class ArbitrageView : NSObject, UITableViewDelegate, UITableViewDataSource, Boar
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 6
     }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
-        case 0, 1, 2:
+        case 0, 1, 2, 3:
             return 35.0
-        case 3, 4:
+        case 4, 5:
             return 70.0
         default:
             return 0.0
@@ -91,22 +96,22 @@ class ArbitrageView : NSObject, UITableViewDelegate, UITableViewDataSource, Boar
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "twoValueCell", for: indexPath) as! TwoValueCell
-            let leftJpy = formatValue(self.leftExchange.trader.jpyAvalilable) + "¥"
-            let rightJpy = formatValue(self.rightExchange.trader.jpyAvalilable) + "¥"
-            cell.setValues(leftValue: leftJpy, rightValue: rightJpy)
+            self.setJpyCell(cell: cell)
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "twoValueCell", for: indexPath) as! TwoValueCell
-            let leftBtc = formatValue(self.leftExchange.trader.btcAvailable) + "Ƀ"
-            let rightBtc = formatValue(self.rightExchange.trader.btcAvailable) + "Ƀ"
-            cell.setValues(leftValue: leftBtc, rightValue: rightBtc)
+            self.setBtcCell(cell: cell)
             return cell
         case 3:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "twoValueCell", for: indexPath) as! TwoValueCell
+            self.setCommissionCell(cell: cell)
+            return cell
+        case 4:
             let cell = tableView.dequeueReusableCell(withIdentifier: "arbitrageCell", for: indexPath) as! ArbitrageCell
             cell.setQuotes(leftQuote: nil, rightQuote: nil, isLeftToRight: true)
             cell.delegate = self
             return cell
-        case 4:
+        case 5:
             let cell = tableView.dequeueReusableCell(withIdentifier: "arbitrageCell", for: indexPath) as! ArbitrageCell
             cell.setQuotes(leftQuote: nil, rightQuote: nil, isLeftToRight: false)
             cell.delegate = self
@@ -119,9 +124,9 @@ class ArbitrageView : NSObject, UITableViewDelegate, UITableViewDataSource, Boar
     
     public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         switch indexPath.row {
-        case 0, 1, 2:
+        case 0, 1, 2, 3:
             return nil
-        case 3, 4:
+        case 4, 5:
             guard let cell = self.view.cellForRow(at: indexPath) as? ArbitrageCell else {
                 return nil
             }
@@ -146,10 +151,10 @@ class ArbitrageView : NSObject, UITableViewDelegate, UITableViewDataSource, Boar
         guard let side = sender as? String else {
             return
         }
-        guard let leftToRightCell = self.view.cellForRow(at: IndexPath(row: 3, section: 0)) as? ArbitrageCell else {
+        guard let leftToRightCell = self.view.cellForRow(at: IndexPath(row: 4, section: 0)) as? ArbitrageCell else {
             return
         }
-        guard let rightToLeftCell = self.view.cellForRow(at: IndexPath(row: 4, section: 0)) as? ArbitrageCell else {
+        guard let rightToLeftCell = self.view.cellForRow(at: IndexPath(row: 5, section: 0)) as? ArbitrageCell else {
             return
         }
         if err != nil {
@@ -171,19 +176,77 @@ class ArbitrageView : NSObject, UITableViewDelegate, UITableViewDataSource, Boar
             leftToRightCell.setQuotes(leftQuote: leftAskQuote, rightQuote: bestBid, isLeftToRight: true)
             rightToLeftCell.setQuotes(leftQuote: leftBidQuote, rightQuote: bestAsk, isLeftToRight: false)
         }
+        
+        if let cell = self.view.cellForRow(at: IndexPath(row: 1, section: 0)) as? TwoValueCell {
+            self.setJpyCell(cell: cell)
+        }
+        if let cell = self.view.cellForRow(at: IndexPath(row: 2, section: 0)) as? TwoValueCell {
+            self.setBtcCell(cell: cell)
+        }
+        if let cell = self.view.cellForRow(at: IndexPath(row: 3, section: 0)) as? TwoValueCell {
+            self.setCommissionCell(cell: cell)
+        }
+    }
+    
+    override func monitor() {
+        guard let leftToRightCell = self.view.cellForRow(at: IndexPath(row: 4, section: 0)) as? ArbitrageCell else {
+            return
+        }
+        guard let rightToLeftCell = self.view.cellForRow(at: IndexPath(row: 5, section: 0)) as? ArbitrageCell else {
+            return
+        }
+        
+        if self.isAuto {
+            if leftToRightCell.priceDifferentials >= 10 {
+                guard let buyQuote = leftToRightCell.leftQuote else {
+                    return
+                }
+                guard let sellQuote = leftToRightCell.rightQuote else {
+                    return
+                }
+                self.delegate2?.orderArbitrage(buyQuote: buyQuote, buyExchange: self.leftExchange, sellQuote: sellQuote, sellExchange: self.rightExchange, amount: leftToRightCell.transferAmount)
+            }
+            if rightToLeftCell.priceDifferentials >= 10 {
+                guard let buyQuote = rightToLeftCell.rightQuote else {
+                    return
+                }
+                guard let sellQuote = rightToLeftCell.leftQuote else {
+                    return
+                }
+                self.delegate2?.orderArbitrage(buyQuote: buyQuote, buyExchange: self.rightExchange, sellQuote: sellQuote, sellExchange: self.leftExchange, amount: rightToLeftCell.transferAmount)
+            }
+        }
     }
     
     // ArbitrageCellDelegate
     func pushedArbitrageButton(leftQuote: Quote, rightQuote: Quote, amount: Double, isLeftToRight: Bool) {
         if isLeftToRight {
-            self.delegate?.orderArbitrage(buyQuote: leftQuote, buyExchange: self.leftExchange, sellQuote: rightQuote, sellExchange: self.rightExchange, amount: amount)
+            self.delegate2?.orderArbitrage(buyQuote: leftQuote, buyExchange: self.leftExchange, sellQuote: rightQuote, sellExchange: self.rightExchange, amount: amount)
         } else {
-            self.delegate?.orderArbitrage(buyQuote: rightQuote, buyExchange: self.rightExchange, sellQuote: leftQuote, sellExchange: self.leftExchange, amount: amount)
+            self.delegate2?.orderArbitrage(buyQuote: rightQuote, buyExchange: self.rightExchange, sellQuote: leftQuote, sellExchange: self.leftExchange, amount: amount)
         }
     }
     
     internal func reloadData() {
         self.view.reloadData()
+    }
+    
+    fileprivate func setJpyCell(cell: TwoValueCell) {
+        let leftJpy = formatValue(self.leftExchange.trader.jpyAvalilable) + "¥"
+        let rightJpy = formatValue(self.rightExchange.trader.jpyAvalilable) + "¥"
+        cell.setValues(leftValue: leftJpy, rightValue: rightJpy)
+    }
+    
+    fileprivate func setBtcCell(cell: TwoValueCell) {
+        let leftBtc = formatValue(self.leftExchange.trader.btcAvailable) + "Ƀ"
+        let rightBtc = formatValue(self.rightExchange.trader.btcAvailable) + "Ƀ"
+        cell.setValues(leftValue: leftBtc, rightValue: rightBtc)
+    }
+    
+    fileprivate func setCommissionCell(cell: TwoValueCell) {
+        let leftCommission = formatValue(self.leftExchange.commission) + "%"
+        let rightCommission = formatValue(self.rightExchange.commission) + "%"
+        cell.setValues(leftValue: leftCommission, rightValue: rightCommission)
     }
 
     fileprivate let view: UITableView
@@ -191,5 +254,7 @@ class ArbitrageView : NSObject, UITableViewDelegate, UITableViewDataSource, Boar
     fileprivate var rightExchange: Exchange!
     fileprivate var leftBoard: BoardMonitor!
     fileprivate var rightBoard: BoardMonitor!
-    var delegate: ArbitrageViewDelegate?
+    fileprivate var isAuto = false
+    
+    var delegate2: ArbitrageViewDelegate?
 }

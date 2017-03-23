@@ -188,6 +188,12 @@ class ZaifApi : Api {
         }
     }
     
+    func getCommission(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, Double) -> Void) {
+        ZaifApi.queue.async {
+            callback(nil, -0.01)
+        }
+    }
+    
     func getActiveOrders(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, [String:ActiveOrder]) -> Void) {
         ZaifApi.queue.async {
             self.api.activeOrders(currencyPair.zaifCurrencyPair) { (err, res) in

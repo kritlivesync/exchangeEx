@@ -18,7 +18,7 @@ class ArbitrageController : UIViewController, AppBackgroundDelegate, ArbitrageVi
         self.navigationController?.navigationBar.barTintColor = Color.keyColor
         
         self.arbitrageView = ArbitrageView(view: self.tableView)
-        self.arbitrageView.delegate = self
+        self.arbitrageView.delegate2 = self
     }
     
     open override func viewWillAppear(_ animated: Bool) {
@@ -63,13 +63,13 @@ class ArbitrageController : UIViewController, AppBackgroundDelegate, ArbitrageVi
         sellExchange.trader.ruledUnwindPosition(price: sellQuote.price, amount: amount, marketPrice: sellQuote.price, rule: rule) { (err, position, orderedAmount) in
             if let e = err {
                 let errorView = createErrorModal(message: e.message)
-                self.present(errorView, animated: false, completion: nil)
+                //self.present(errorView, animated: false, completion: nil)
             } else {
                 buyExchange.trader.createLongPosition(.BTC_JPY, price: buyQuote.price, amount: orderedAmount) { (err, position) in
                     if let e = err {
                         print(e.message)
                         let errorView = createErrorModal(title: e.errorType.toString(), message: e.message)
-                        self.present(errorView, animated: false, completion: nil)
+                        //self.present(errorView, animated: false, completion: nil)
                     }
                 }
             }

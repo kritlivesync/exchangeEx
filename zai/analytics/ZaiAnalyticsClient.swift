@@ -20,10 +20,6 @@ protocol ZaiAnalyticsDelegate {
 
 class ZaiAnalyticsClient {
     init() {
-        self.connect()
-    }
-    
-    private func connect() {
         self.socketIo = SocketIOClient(socketURL: URL(string: "http://192.168.11.11:6665")!, config: [.log(true)])
         //self.socketIo = SocketIOClient(socketURL: URL(string: "https://zai-analytics.herokuapp.com/")!, config: [.log(true)])
         self.socketIo.joinNamespace("/signals")
@@ -32,7 +28,14 @@ class ZaiAnalyticsClient {
         self.socketIo.on("error", callback: self.onError)
         self.socketIo.on("buy", callback: onBuySignal)
         self.socketIo.on("sell", callback: onSellSignal)
+    }
+    
+    public func open() {
         self.socketIo.connect()
+    }
+    
+    public func close() {
+        self.socketIo.disconnect()
     }
     
     private func onConnect(data: Array<Any>, ack: SocketAckEmitter) {
@@ -43,27 +46,22 @@ class ZaiAnalyticsClient {
     private func onClose(data: Array<Any>, ack: SocketAckEmitter) {
         print("conenction to zai-analytic closed")
         print(getNow())
-        self.connect()
     }
     
     private func onError(data: Array<Any>, ack: SocketAckEmitter) {
         print("error occurred on conenction to zai-analytic")
         print(getNow())
-        self.connect()
+        self.close()
     }
     
     private func onBuySignal(data: Array<Any>, ack: SocketAckEmitter) {
         print(getNow())
-        if let d = self.delegate {
-            d.recievedBuySignal()
-        }
+        delegate?.recievedBuySignal()
     }
     
     private func onSellSignal(data: Array<Any>, ack: SocketAckEmitter) {
         print(getNow)
-        if let d = self.delegate {
-            d.recievedSellSignal()
-        }
+        delegate?.recievedSellSignal()
     }
     
     var socketIo: SocketIOClient! = nil
