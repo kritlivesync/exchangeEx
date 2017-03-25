@@ -111,13 +111,13 @@ class LabelResource {
         return "後で設定する"
     }
     static var userIdPlacecholder: String {
-        return "ユーザーID"
+        return "ユーザーID（必須）"
     }
     static var passwordPlaceholder: String {
-        return "パスワード"
+        return "パスワード（必須）"
     }
     static var passwordAgainPlaceholder: String {
-        return "パスワード確認"
+        return "パスワード確認（必須）"
     }
     static var apiKeyPlaceholder: String {
         return "APIキー"

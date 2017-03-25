@@ -143,6 +143,13 @@ class NewAccountViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let identifer = segue.identifier {
+            if identifer == "unwindToLoginSegue" {
+                // cancelled
+                return
+            }
+        }
+        
         let userId = self.newAccountView.getUserId()
         let password = self.newAccountView.getPassword()
         

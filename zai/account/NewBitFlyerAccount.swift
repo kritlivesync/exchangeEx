@@ -55,6 +55,11 @@ class NewBitFlyerAccount : SectionView {
     func validate(callback: @escaping (ZaiError?) -> Void) {
         let apiKey = self.getApiKey()
         let secretKey = self.getSecretKey()
+        
+        if apiKey == "" && secretKey == "" {
+            callback(nil)
+        }
+        
         let api = bitFlyerApi(apiKey: apiKey, secretKey: secretKey)
         api.validateApi() { err in
             if err == nil {

@@ -54,6 +54,11 @@ class NewZaifAccountView : SectionView {
     func validate(callback: @escaping (ZaiError?, Int64) -> Void) {
         let apiKey = self.getApiKey()
         let secretKey = self.getSecretKey()
+        
+        if apiKey == "" && secretKey == "" {
+            callback(nil, timestamp())
+        }
+        
         let zaifApi = ZaifApi(apiKey: apiKey, secretKey: secretKey)
         zaifApi.validateApi() { err in
             let nonce = zaifApi.api.nonceValue

@@ -720,7 +720,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="zVm-xr-0aN">
-                                                    <rect key="frame" x="394" y="24.666666666666664" width="20" height="19.999999999999993"/>
+                                                    <rect key="frame" x="394" y="25.333333333333336" width="20" height="20.000000000000007"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>
@@ -855,7 +855,7 @@
                         <barButtonItem key="leftBarButtonItem" title="キャンセル" id="p3G-cu-rt5">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <segue destination="iKS-7S-egT" kind="unwind" unwindAction="unwindToLogin:" id="hNM-42-mQK"/>
+                                <segue destination="iKS-7S-egT" kind="unwind" identifier="unwindToLoginSegue" unwindAction="unwindToLogin:" id="hNM-42-mQK"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="保存" id="6Cx-xY-Xfu">
@@ -1516,7 +1516,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="4UZ-96-iNW">
-                                                    <rect key="frame" x="394" y="25.333333333333336" width="20" height="20.000000000000007"/>
+                                                    <rect key="frame" x="394" y="25.666666666666664" width="20" height="19.999999999999993"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>
