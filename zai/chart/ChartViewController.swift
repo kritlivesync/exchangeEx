@@ -12,13 +12,16 @@ import UIKit
 import Charts
 
 
-class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate, BitCoinDelegate, BestQuoteViewDelegate, AppBackgroundDelegate, ZaiAnalyticsDelegate {
+class ChartViewController : UIViewController, CandleChartViewDelegate, FundDelegate, BitCoinDelegate, BestQuoteViewDelegate, AppBackgroundDelegate, ZaiAnalyticsDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.barTintColor = Color.keyColor
         
         self.fundLabel.text = "-"
+        
+        self.candleChartView = CandleChartView()
+        self.candleChartView.delegate = self
         
         self.bestQuoteView = BestQuoteView(view: bestQuoteTableView)
         self.bestQuoteView.delegate = self
@@ -75,11 +78,9 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
             self.bitcoin.delegate = self
         }
 
-        self.chartContainer.activateChart(chartName: account.activeExchangeName, interval: config.chartUpdateIntervalType, delegate: self)
-        self.chartContainer.switchChartIntervalType(type: config.selectedCandleChartType)
-        if let activeChart = self.chartContainer.getChart(chartName: account.activeExchangeName) {
-            self.recievedChart(chart: activeChart, shifted: false)
-        }
+        self.candleChartView.activateChart(chartName: "Zaif", interval: config.chartUpdateIntervalType)
+        //self.candleChartView.activateChart(chartName: "bitFlyer", interval: config.chartUpdateIntervalType)
+        self.candleChartView.switchChartIntervalType(type: config.selectedCandleChartType)
         
         let trader = account.activeExchange.trader
         trader.startWatch()
@@ -102,60 +103,14 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
         }
     }
     
-    // CandleChartDelegate
-    func recievedChart(chart: CandleChart, shifted: Bool) {
+    // CandleChartViewDelegate
+    func recievedChart(chartData: CandleChartData, xFormatter: XValueFormatter, yFormatter: YValueFormatter) {
         guard let chartView = self.candleStickChartView else {
             return
         }
-        var entries = [CandleChartDataEntry]()
-        var emptyEntries = [CandleChartDataEntry]()
-        let formatter = XValueFormatter()
-        for i in 0 ..< chart.candles.count {
-            let candle = chart.candles[i]
-            if candle.isEmpty {
-               let average = chart.average
-                let entry = CandleChartDataEntry(x: Double(i), shadowH: average, shadowL: average, open: average, close: average)
-                emptyEntries.append(entry)
-            } else {
-                let entry = CandleChartDataEntry(x: Double(i), shadowH: candle.highPrice!, shadowL: candle.lowPrice!, open: candle.openPrice!, close: candle.lastPrice!)
-                entries.append(entry)
-            }
-            
-            formatter.times[i] = formatHms(timestamp: candle.startDate)
-        }
-        let dataSet = CandleChartDataSet(values: entries, label: "data")
-        dataSet.axisDependency = YAxis.AxisDependency.left;
-        dataSet.shadowColorSameAsCandle = true
-        dataSet.shadowWidth = 0.7
-        dataSet.decreasingColor = Color.askQuoteColor
-        dataSet.decreasingFilled = true
-        dataSet.increasingColor = Color.bidQuoteColor
-        dataSet.increasingFilled = true
-        dataSet.neutralColor = UIColor.black
-        dataSet.setDrawHighlightIndicators(false)
-        
-        let emptyDataSet = CandleChartDataSet(values: emptyEntries, label: "empty")
-        emptyDataSet.axisDependency = YAxis.AxisDependency.left;
-        emptyDataSet.shadowColorSameAsCandle = true
-        emptyDataSet.shadowWidth = 0.7
-        emptyDataSet.decreasingColor = Color.askQuoteColor
-        emptyDataSet.decreasingFilled = true
-        emptyDataSet.increasingColor = Color.bidQuoteColor
-        emptyDataSet.increasingFilled = true
-        emptyDataSet.neutralColor = UIColor.white
-        emptyDataSet.setDrawHighlightIndicators(false)
-        
-        chartView.xAxis.valueFormatter = formatter
+        chartView.xAxis.valueFormatter = xFormatter
         chartView.rightAxis.valueFormatter = YValueFormatter()
-        
-        var dataSets = [IChartDataSet]()
-        if dataSet.entryCount > 0 {
-            dataSets.append(dataSet)
-        }
-        if emptyDataSet.entryCount > 0 {
-            dataSets.append(emptyDataSet)
-        }
-        chartView.data = CandleChartData(dataSets: dataSets)
+        chartView.data = chartData
     }
     
     // MonitorableDelegate
@@ -165,8 +120,9 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
     
     // FundDelegate
     func recievedJpyFund(jpy: Int, available: Int) {
+        self.availableJpy = available
         DispatchQueue.main.async {
-            self.fundLabel.text = formatValue(available)
+            self.fundLabel.text = formatValue(self.availableJpy)
         }
     }
     
@@ -243,13 +199,31 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
             return
         }
         
-        trader.createLongPosition(.BTC_JPY, price: bestAsk.price, amount: bestAsk.amount) { (err, position) in
+        //let amount = Double(self.availableJpy) * 0.5 / bestAsk.price
+        
+        trader.createLongPosition(.BTC_JPY, price: bestAsk.price, amount: bestAsk.amount * 3.0) { (err, position) in
             DispatchQueue.main.async {
                 if let e = err {
                     print(e.message)
                 }
             }
         }
+        
+        /*
+        sleep(UInt32(getChartConfig().chartUpdateIntervalType.int))
+        
+        guard let bestAsk2 = self.bestQuoteView.getBestAsk() else {
+            return
+        }
+        
+        trader.createLongPosition(.BTC_JPY, price: bestAsk2.price, amount: bestAsk2.amount) { (err, position) in
+            DispatchQueue.main.async {
+                if let e = err {
+                    print(e.message)
+                }
+            }
+        }
+ */
     }
     
     func recievedSellSignal() {
@@ -306,7 +280,7 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
     
     @IBAction func pushOneMinuteChart(_ sender: Any) {
         let type = ChandleChartType.oneMinute
-        self.chartContainer.switchChartIntervalType(type: type)
+        self.candleChartView.switchChartIntervalType(type: type)
         self.heilightChartButton(type: type)
         let config = getChartConfig()
         config.selectedCandleChartType = type
@@ -314,7 +288,7 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
     
     @IBAction func pushFiveMinutesChart(_ sender: Any) {
         let type = ChandleChartType.fiveMinutes
-        self.chartContainer.switchChartIntervalType(type: type)
+        self.candleChartView.switchChartIntervalType(type: type)
         self.heilightChartButton(type: type)
         let config = getChartConfig()
         config.selectedCandleChartType = type
@@ -322,7 +296,7 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
     
     @IBAction func pushFifteenMinutesChart(_ sender: Any) {
         let type = ChandleChartType.fifteenMinutes
-        self.chartContainer.switchChartIntervalType(type: type)
+        self.candleChartView.switchChartIntervalType(type: type)
         self.heilightChartButton(type: type)
         let config = getChartConfig()
         config.selectedCandleChartType = type
@@ -330,7 +304,7 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
     
     @IBAction func pushThirtyMinutesChart(_ sender: Any) {
         let type = ChandleChartType.thirtyMinutes
-        self.chartContainer.switchChartIntervalType(type: type)
+        self.candleChartView.switchChartIntervalType(type: type)
         self.heilightChartButton(type: type)
         let config = getChartConfig()
         config.selectedCandleChartType = type
@@ -353,7 +327,9 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
     
     fileprivate var fund: Fund!
     fileprivate var bitcoin: BitCoin!
-    var chartContainer: CandleChartContainer!
+    fileprivate var availableJpy = 0
+    
+    var candleChartView: CandleChartView!
     var bestQuoteView: BestQuoteView!
     var analyticsClient = ZaiAnalyticsClient()
 

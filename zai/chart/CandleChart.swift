@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 
 struct Trade {
@@ -136,12 +137,13 @@ class Candle {
 
 
 protocol CandleChartDelegate : MonitorableDelegate {
-    func recievedChart(chart: CandleChart, shifted: Bool)
+    func recievedChart(chart: CandleChart, shifted: Bool, chartName: String)
 }
 
 
 class CandleChart : Monitorable {
-    init(currencyPair: ApiCurrencyPair, interval: ChandleChartType, candleCount: Int, api: Api) {
+    init(chartName: String, currencyPair: ApiCurrencyPair, interval: ChandleChartType, candleCount: Int, api: Api) {
+        self.chartName = chartName
         self.currencyPair = currencyPair
         self.interval = interval
         self.candleCount = candleCount
@@ -242,7 +244,7 @@ class CandleChart : Monitorable {
                 }
                 self.lastTradeId = trades.first!.id
                 DispatchQueue.main.async {
-                    delegate.recievedChart(chart: self, shifted: shifted)
+                    delegate.recievedChart(chart: self, shifted: shifted, chartName: self.chartName)
                 }
             }
             self.isHeighPrecision = false
@@ -254,13 +256,14 @@ class CandleChart : Monitorable {
                 let trade = Trade(id: "", price: price, amount: 0.0, currencyPair: self.currencyPair.rawValue, action: "bid", timestamp: Int64(Date().timeIntervalSince1970))
                 let shifted = self.addTrade(trade: trade)
                 DispatchQueue.main.async {
-                    delegate.recievedChart(chart: self, shifted: shifted)
+                    delegate.recievedChart(chart: self, shifted: shifted, chartName: self.chartName)
                 }
             }
         }
     }
     
     let api: Api
+    let chartName: String
     let currencyPair: ApiCurrencyPair
     let interval: ChandleChartType
     let candleCount: Int
@@ -269,13 +272,21 @@ class CandleChart : Monitorable {
     var lastTradeId = String()
 }
 
+struct ChartColors {
+    let askColor: UIColor
+    let bidColor: UIColor
+}
+
 
 class CandleChartContainer {
     init(exchanges: [Exchange], currencyPair: ApiCurrencyPair, interval: ChandleChartType, candleCount: Int) {
-        self.activeChart = ""
         self.charts = [String:CandleChart]()
+        self.chartColors = [String:ChartColors]()
+        
         for exchange in exchanges {
-            let chart = CandleChart(currencyPair: currencyPair, interval: interval, candleCount: candleCount, api: exchange.api)
+            let chart = CandleChart(chartName: exchange.name, currencyPair: currencyPair, interval: interval, candleCount: candleCount, api: exchange.api)
+            
+            self.chartColors[exchange.name] = CandleChartContainer.availableColors[self.charts.count % CandleChartContainer.availableColors.count]
             self.charts[exchange.name] = chart
         }
     }
@@ -285,11 +296,8 @@ class CandleChartContainer {
             if name == chartName {
                 chart.monitoringInterval = interval
                 chart.delegate = delegate
-            } else {
-                chart.delegate = nil
             }
         }
-        self.activeChart = chartName
     }
     
     func deactivateCharts() {
@@ -299,29 +307,48 @@ class CandleChartContainer {
     }
     
     func switchChartIntervalType(type: ChandleChartType) {
-        guard let chart = self.getChart(chartName: self.activeChart) else {
-            return
+        for (name, chart) in self.charts {
+            if chart.delegate != nil {
+                if let newChart = self.switchChartIntervalType(type: type, chartName: name) {
+                    self.charts[name] = newChart
+                }
+            }
+        }
+    }
+    
+    fileprivate func switchChartIntervalType(type: ChandleChartType, chartName: String) -> CandleChart? {
+        guard let chart = self.getChart(chartName: chartName) else {
+            return nil
         }
         
         if type == chart.interval {
-            return
+            return nil
         }
         
         let delegate = chart.delegate
         chart.delegate = nil
         
-        let newChart = CandleChart(currencyPair: chart.currencyPair, interval: type, candleCount: chart.candleCount, api: chart.api)
+        let newChart = CandleChart(chartName: chartName, currencyPair: chart.currencyPair, interval: type, candleCount: chart.candleCount, api: chart.api)
         newChart.copyTrades(chart: chart)
         newChart.delegate = delegate
-        
-        self.charts[self.activeChart] = newChart
+        return newChart
     }
     
     func getChart(chartName: String) -> CandleChart? {
         return self.charts[chartName]
     }
     
+    func getChartColors(chartName: String) -> ChartColors? {
+        return self.chartColors[chartName]
+    }
+    
+    
+    static let availableColors = [
+        ChartColors(askColor: Color.askQuoteColor, bidColor: Color.bidQuoteColor),
+        ChartColors(askColor: UIColor.darkGray, bidColor: UIColor.green)
+        ]
+    
     var charts: [String:CandleChart]
-    var activeChart: String
+    var chartColors: [String:ChartColors]
 }
 

@@ -109,6 +109,7 @@
 		B85E8E5E1D6F477900C029C8 /* TraderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E5D1D6F477900C029C8 /* TraderView.swift */; };
 		B85E8E601D6F541800C029C8 /* TraderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E8E5F1D6F541800C029C8 /* TraderViewCell.swift */; };
 		B862419F1E61695400A6D99C /* BitFlyerAssetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862419E1E61695400A6D99C /* BitFlyerAssetsView.swift */; };
+		B86317451E8926F500B5025F /* CandleChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86317441E8926F500B5025F /* CandleChartView.swift */; };
 		B87E72A01E74494400017B2F /* Commission.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87E729F1E74494400017B2F /* Commission.swift */; };
 		B88CF6EE1E3C8258008A6189 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88CF6ED1E3C8258008A6189 /* Config.swift */; };
 		B88CF6F01E3C8542008A6189 /* ConfigRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88CF6EF1E3C8542008A6189 /* ConfigRepository.swift */; };
@@ -321,6 +322,7 @@
 		B85E8E5D1D6F477900C029C8 /* TraderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderView.swift; path = main/TraderView.swift; sourceTree = "<group>"; };
 		B85E8E5F1D6F541800C029C8 /* TraderViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraderViewCell.swift; path = main/TraderViewCell.swift; sourceTree = "<group>"; };
 		B862419E1E61695400A6D99C /* BitFlyerAssetsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BitFlyerAssetsView.swift; path = assets/BitFlyerAssetsView.swift; sourceTree = "<group>"; };
+		B86317441E8926F500B5025F /* CandleChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CandleChartView.swift; path = chart/CandleChartView.swift; sourceTree = "<group>"; };
 		B87E729F1E74494400017B2F /* Commission.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Commission.swift; path = account/Commission.swift; sourceTree = "<group>"; };
 		B88CF6ED1E3C8258008A6189 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Config.swift; path = core/Config.swift; sourceTree = "<group>"; };
 		B88CF6EF1E3C8542008A6189 /* ConfigRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigRepository.swift; path = config/ConfigRepository.swift; sourceTree = "<group>"; };
@@ -845,6 +847,7 @@
 				B8E9E2D61E1E9146003B298F /* ValueFormatter.swift */,
 				B84E60841E251AD1004EA77C /* BestQuoteViewCell.swift */,
 				B84E60861E251E63004EA77C /* BestQuoteView.swift */,
+				B86317441E8926F500B5025F /* CandleChartView.swift */,
 			);
 			name = chart;
 			sourceTree = "<group>";
@@ -1129,6 +1132,7 @@
 				B8B29B021E52067600ED3F64 /* bitFlyerApi.swift in Sources */,
 				B8B29B0A1E56041E00ED3F64 /* NewBitFlyerAccount.swift in Sources */,
 				B83C6C8C1E73C0E100F8BC7C /* TwoValueCell.swift in Sources */,
+				B86317451E8926F500B5025F /* CandleChartView.swift in Sources */,
 				B862419F1E61695400A6D99C /* BitFlyerAssetsView.swift in Sources */,
 				B835D4101E34EF5000F9C4EB /* Validation.swift in Sources */,
 				B831091C1E5CA915002D10B5 /* ChangeExchangeViewController.swift in Sources */,
