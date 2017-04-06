@@ -1,0 +1,282 @@
+
+/* Class = "UINavigationItem"; title = "気配値"; ObjectID = "0eB-X6-38Z"; */
+"0eB-X6-38Z.title" = "気配値";
+
+/* Class = "UITextField"; placeholder = "シークレットキー"; ObjectID = "1De-wl-uma"; */
+"1De-wl-uma.placeholder" = "シークレットキー";
+
+/* Class = "UITabBarItem"; title = "Chart"; ObjectID = "2W2-iF-Dem"; */
+"2W2-iF-Dem.title" = "Chart";
+
+/* Class = "UINavigationItem"; title = "exchangeEx"; ObjectID = "2br-hF-rOm"; */
+"2br-hF-rOm.title" = "exchangeEx";
+
+/* Class = "UITabBarItem"; title = "Assets"; ObjectID = "2uf-BZ-KXL"; */
+"2uf-BZ-KXL.title" = "Assets";
+
+/* Class = "UILabel"; text = "                                                                                             "; ObjectID = "3Pj-h2-Jku"; */
+"3Pj-h2-Jku.text" = "                                                                                             ";
+
+/* Class = "UINavigationItem"; title = "bitFlyer APIキー"; ObjectID = "3jZ-9g-n9K"; */
+"3jZ-9g-n9K.title" = "bitFlyer APIキー";
+
+/* Class = "UILabel"; text = "気配値/気配数量"; ObjectID = "5Ed-Em-7LA"; */
+"5Ed-Em-7LA.text" = "気配値/気配数量";
+
+/* Class = "UIBarButtonItem"; title = "保存"; ObjectID = "5OW-eb-Pf8"; */
+"5OW-eb-Pf8.title" = "保存";
+
+/* Class = "UIBarButtonItem"; title = "保存"; ObjectID = "6Cx-xY-Xfu"; */
+"6Cx-xY-Xfu.title" = "保存";
+
+/* Class = "UITextField"; placeholder = "シークレットキー"; ObjectID = "7CF-IP-ezG"; */
+"7CF-IP-ezG.placeholder" = "シークレットキー";
+
+/* Class = "UITextField"; placeholder = "パスワード"; ObjectID = "7X6-5e-4Fy"; */
+"7X6-5e-4Fy.placeholder" = "パスワード";
+
+/* Class = "UILabel"; text = "2016/12/12 21:11:11"; ObjectID = "7fZ-7G-b6L"; */
+"7fZ-7G-b6L.text" = "2016/12/12 21:11:11";
+
+/* Class = "UIBarButtonItem"; title = "キャンセル"; ObjectID = "8Zf-OL-YeE"; */
+"8Zf-OL-YeE.title" = "キャンセル";
+
+/* Class = "UIButton"; normalTitle = "1分足"; ObjectID = "8mQ-Id-cYy"; */
+"8mQ-Id-cYy.normalTitle" = "1分足";
+
+/* Class = "UIButton"; normalTitle = "30分足"; ObjectID = "9TT-a5-hbT"; */
+"9TT-a5-hbT.normalTitle" = "30分足";
+
+/* Class = "UIViewController"; title = "ログイン"; ObjectID = "BYZ-38-t0r"; */
+"BYZ-38-t0r.title" = "ログイン";
+
+/* Class = "UILabel"; text = "8344"; ObjectID = "Bb0-9N-90u"; */
+"Bb0-9N-90u.text" = "8344";
+
+/* Class = "UITextField"; placeholder = "新しいパスワード"; ObjectID = "Bvi-MU-ROX"; */
+"Bvi-MU-ROX.placeholder" = "新しいパスワード";
+
+/* Class = "UINavigationItem"; title = "設定"; ObjectID = "CGZ-or-Q3m"; */
+"CGZ-or-Q3m.title" = "設定";
+
+/* Class = "UILabel"; text = "BTC余力："; ObjectID = "CaV-ZW-gFj"; */
+"CaV-ZW-gFj.text" = "BTC余力：";
+
+/* Class = "UINavigationController"; title = "Board"; ObjectID = "D73-4q-6m4"; */
+"D73-4q-6m4.title" = "Board";
+
+/* Class = "UILabel"; text = "平均価格："; ObjectID = "D7u-sV-umg"; */
+"D7u-sV-umg.text" = "平均価格：";
+
+/* Class = "UILabel"; text = "確定損益："; ObjectID = "DwH-J9-nff"; */
+"DwH-J9-nff.text" = "確定損益：";
+
+/* Class = "UIBarButtonItem"; title = "キャンセル"; ObjectID = "E7z-tq-ZSD"; */
+"E7z-tq-ZSD.title" = "キャンセル";
+
+/* Class = "UILabel"; text = "128000"; ObjectID = "FUq-Ms-xbU"; */
+"FUq-Ms-xbU.text" = "128000";
+
+/* Class = "UIBarButtonItem"; title = "保存"; ObjectID = "IU9-L6-EIX"; */
+"IU9-L6-EIX.title" = "保存";
+
+/* Class = "UITabBarItem"; title = "Chart"; ObjectID = "Jbr-Zf-VOm"; */
+"Jbr-Zf-VOm.title" = "Chart";
+
+/* Class = "UIBarButtonItem"; title = "キャンセル"; ObjectID = "Jg8-oe-JhU"; */
+"Jg8-oe-JhU.title" = "キャンセル";
+
+/* Class = "UITextField"; placeholder = "パスワード確認"; ObjectID = "Jy3-AB-f3b"; */
+"Jy3-AB-f3b.placeholder" = "パスワード確認";
+
+/* Class = "UILabel"; text = "(0.5001)"; ObjectID = "K3S-wH-VcC"; */
+"K3S-wH-VcC.text" = "(0.5001)";
+
+/* Class = "UINavigationController"; title = "設定"; ObjectID = "L3n-QB-7f2"; */
+"L3n-QB-7f2.title" = "設定";
+
+/* Class = "UINavigationItem"; title = "資産"; ObjectID = "LKf-T4-Z1R"; */
+"LKf-T4-Z1R.title" = "資産";
+
+/* Class = "UIBarButtonItem"; title = "キャンセル"; ObjectID = "LWz-et-KTL"; */
+"LWz-et-KTL.title" = "キャンセル";
+
+/* Class = "UILabel"; text = "取得価格/数量(残高)/損益/状態"; ObjectID = "MBf-zz-GoZ"; */
+"MBf-zz-GoZ.text" = "取得価格/数量(残高)/損益/状態";
+
+/* Class = "UIBarButtonItem"; title = "保存"; ObjectID = "N39-Uk-vKN"; */
+"N39-Uk-vKN.title" = "保存";
+
+/* Class = "UILabel"; text = "+1023"; ObjectID = "NCt-fX-AsJ"; */
+"NCt-fX-AsJ.text" = "+1023";
+
+/* Class = "UILabel"; text = "買付け余力："; ObjectID = "NoQ-yS-b6u"; */
+"NoQ-yS-b6u.text" = "買付け余力：";
+
+/* Class = "UIBarButtonItem"; title = "戻る"; ObjectID = "NzL-Mm-H2c"; */
+"NzL-Mm-H2c.title" = "戻る";
+
+/* Class = "UILabel"; text = "1.4017"; ObjectID = "O1v-uD-qfn"; */
+"O1v-uD-qfn.text" = "1.4017";
+
+/* Class = "UIButton"; normalTitle = "5分足"; ObjectID = "Ogi-gz-0EP"; */
+"Ogi-gz-0EP.normalTitle" = "5分足";
+
+/* Class = "UILabel"; text = "4.1001"; ObjectID = "Oof-cM-qoc"; */
+"Oof-cM-qoc.text" = "4.1001";
+
+/* Class = "UINavigationItem"; title = "Zaif APIキー"; ObjectID = "Pc2-Ey-KzA"; */
+"Pc2-Ey-KzA.title" = "Zaif APIキー";
+
+/* Class = "UILabel"; text = "ベストアスク"; ObjectID = "PgT-uu-zTV"; */
+"PgT-uu-zTV.text" = "ベストアスク";
+
+/* Class = "UITextField"; placeholder = "ユーザーID"; ObjectID = "Prh-6x-Vee"; */
+"Prh-6x-Vee.placeholder" = "ユーザーID";
+
+/* Class = "UITabBarItem"; title = "Board"; ObjectID = "Q4P-h5-QyG"; */
+"Q4P-h5-QyG.title" = "Board";
+
+/* Class = "UINavigationItem"; title = "自動更新間隔"; ObjectID = "QSt-0d-svt"; */
+"QSt-0d-svt.title" = "自動更新間隔";
+
+/* Class = "UILabel"; text = "注文日時/価格/数量"; ObjectID = "Qf9-UH-ODV"; */
+"Qf9-UH-ODV.text" = "注文日時/価格/数量";
+
+/* Class = "UIButton"; normalTitle = "ログイン"; ObjectID = "RbW-DL-xad"; */
+"RbW-DL-xad.normalTitle" = "ログイン";
+
+/* Class = "UILabel"; text = "100000"; ObjectID = "Rxz-Dg-omS"; */
+"Rxz-Dg-omS.text" = "100000";
+
+/* Class = "UIViewController"; title = "Board"; ObjectID = "SJD-rl-KnU"; */
+"SJD-rl-KnU.title" = "Board";
+
+/* Class = "UILabel"; text = "(+0.15%)"; ObjectID = "T8o-cw-8Dl"; */
+"T8o-cw-8Dl.text" = "(+0.15%)";
+
+/* Class = "UIBarButtonItem"; title = "キャンセル"; ObjectID = "TG5-pl-HKl"; */
+"TG5-pl-HKl.title" = "キャンセル";
+
+/* Class = "UITabBarItem"; title = "Orders"; ObjectID = "TUN-8M-6qJ"; */
+"TUN-8M-6qJ.title" = "Orders";
+
+/* Class = "UINavigationItem"; title = "取引所の変更"; ObjectID = "V2S-2e-gBn"; */
+"V2S-2e-gBn.title" = "取引所の変更";
+
+/* Class = "UILabel"; text = "98222"; ObjectID = "Xfk-8K-nQP"; */
+"Xfk-8K-nQP.text" = "98222";
+
+/* Class = "UINavigationItem"; title = "新しいアカウント"; ObjectID = "Xmb-fe-ymZ"; */
+"Xmb-fe-ymZ.title" = "新しいアカウント";
+
+/* Class = "UITextField"; placeholder = "APIキー"; ObjectID = "Yks-MA-4g4"; */
+"Yks-MA-4g4.placeholder" = "APIキー";
+
+/* Class = "UILabel"; text = "Open"; ObjectID = "Z8H-PC-gly"; */
+"Z8H-PC-gly.text" = "Open";
+
+/* Class = "UIButton"; normalTitle = "新しいアカウントを作成する"; ObjectID = "avX-4n-hII"; */
+"avX-4n-hII.normalTitle" = "新しいアカウントを作成する";
+
+/* Class = "UILabel"; text = "56000"; ObjectID = "bpr-2c-4H7"; */
+"bpr-2c-4H7.text" = "56000";
+
+/* Class = "UIBarButtonItem"; title = "保存"; ObjectID = "bxd-wO-GFq"; */
+"bxd-wO-GFq.title" = "保存";
+
+/* Class = "UITabBarItem"; title = "Positions"; ObjectID = "d6s-eL-a9I"; */
+"d6s-eL-a9I.title" = "Positions";
+
+/* Class = "UINavigationItem"; title = "ログイン"; ObjectID = "eYD-ia-zBs"; */
+"eYD-ia-zBs.title" = "ログイン";
+
+/* Class = "UINavigationItem"; title = "ポジション"; ObjectID = "enL-hY-s1V"; */
+"enL-hY-s1V.title" = "ポジション";
+
+/* Class = "UIBarButtonItem"; title = "保存"; ObjectID = "fmx-hW-OHi"; */
+"fmx-hW-OHi.title" = "保存";
+
+/* Class = "UIBarButtonItem"; title = "キャンセル"; ObjectID = "h2r-ZC-B3L"; */
+"h2r-ZC-B3L.title" = "キャンセル";
+
+/* Class = "UILabel"; text = "32100"; ObjectID = "i4T-g2-0xt"; */
+"i4T-g2-0xt.text" = "32100";
+
+/* Class = "UIViewController"; title = "bitFlyer APIキー"; ObjectID = "j1E-M6-3mk"; */
+"j1E-M6-3mk.title" = "bitFlyer APIキー";
+
+/* Class = "UIBarButtonItem"; title = "保存"; ObjectID = "j5y-ty-zUQ"; */
+"j5y-ty-zUQ.title" = "保存";
+
+/* Class = "UILabel"; text = "3.2"; ObjectID = "jGh-kE-3zc"; */
+"jGh-kE-3zc.text" = "3.2";
+
+/* Class = "UILabel"; text = "買付け余力："; ObjectID = "jLJ-Ca-wL5"; */
+"jLJ-Ca-wL5.text" = "買付け余力：";
+
+/* Class = "UINavigationItem"; title = "未約定の注文"; ObjectID = "kfo-VG-TeA"; */
+"kfo-VG-TeA.title" = "未約定の注文";
+
+/* Class = "UITabBarItem"; title = "Assets"; ObjectID = "l7C-XK-GcM"; */
+"l7C-XK-GcM.title" = "Assets";
+
+/* Class = "UITextField"; placeholder = "現在のパスワード"; ObjectID = "lDH-Cz-kTU"; */
+"lDH-Cz-kTU.placeholder" = "現在のパスワード";
+
+/* Class = "UITabBarItem"; title = "Board"; ObjectID = "lJm-MY-x60"; */
+"lJm-MY-x60.title" = "Board";
+
+/* Class = "UINavigationItem"; title = "買注文の上限数量"; ObjectID = "lP0-kx-bWz"; */
+"lP0-kx-bWz.title" = "買注文の上限数量";
+
+/* Class = "UIButton"; normalTitle = "15分足"; ObjectID = "m2G-nA-EI6"; */
+"m2G-nA-EI6.normalTitle" = "15分足";
+
+/* Class = "UINavigationItem"; title = "チャート"; ObjectID = "mOv-bJ-9Dw"; */
+"mOv-bJ-9Dw.title" = "チャート";
+
+/* Class = "UIViewController"; title = "Zaif APIキー"; ObjectID = "oQX-rA-4mB"; */
+"oQX-rA-4mB.title" = "Zaif APIキー";
+
+/* Class = "UIBarButtonItem"; title = "キャンセル"; ObjectID = "p3G-cu-rt5"; */
+"p3G-cu-rt5.title" = "キャンセル";
+
+/* Class = "UINavigationItem"; title = "売注文ルール"; ObjectID = "p7H-iE-Ar9"; */
+"p7H-iE-Ar9.title" = "売注文ルール";
+
+/* Class = "UITextField"; placeholder = "APIキー"; ObjectID = "qpS-zU-Mec"; */
+"qpS-zU-Mec.placeholder" = "APIキー";
+
+/* Class = "UILabel"; text = "1.2001"; ObjectID = "qtt-4s-V6M"; */
+"qtt-4s-V6M.text" = "1.2001";
+
+/* Class = "UILabel"; text = "98211"; ObjectID = "rBu-VL-QGO"; */
+"rBu-VL-QGO.text" = "98211";
+
+/* Class = "UITabBarItem"; title = "Orders"; ObjectID = "rPu-90-Uqk"; */
+"rPu-90-Uqk.title" = "Orders";
+
+/* Class = "UITabBarItem"; title = "Positions"; ObjectID = "sIq-q3-wQi"; */
+"sIq-q3-wQi.title" = "Positions";
+
+/* Class = "UIViewController"; title = "パスワードの変更"; ObjectID = "ySg-0N-fSD"; */
+"ySg-0N-fSD.title" = "パスワードの変更";
+
+/* Class = "UILabel"; text = "169000"; ObjectID = "yc2-1f-R77"; */
+"yc2-1f-R77.text" = "169000";
+
+/* Class = "UIBarButtonItem"; title = "キャンセル"; ObjectID = "yeQ-Ta-qcI"; */
+"yeQ-Ta-qcI.title" = "キャンセル";
+
+/* Class = "UINavigationItem"; title = "パスワードの変更"; ObjectID = "yie-hp-muk"; */
+"yie-hp-muk.title" = "パスワードの変更";
+
+/* Class = "UILabel"; text = "BTC"; ObjectID = "z02-Ch-dlW"; */
+"z02-Ch-dlW.text" = "BTC";
+
+/* Class = "UIBarButtonItem"; title = "保存"; ObjectID = "z3B-ci-3kM"; */
+"z3B-ci-3kM.title" = "保存";
+
+/* Class = "UILabel"; text = "1.2001"; ObjectID = "zix-ia-TZ4"; */
+"zix-ia-TZ4.text" = "1.2001";

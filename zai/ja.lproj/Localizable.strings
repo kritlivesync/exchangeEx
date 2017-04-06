@@ -1,0 +1,57 @@
+/* 
+  Localizable.strings
+  zai
+
+  Created by 渡部郷太 on 4/5/17.
+  Copyright © 2017 watanabe kyota. All rights reserved.
+*/
+
+"invalidUserIdOrPassword" = "ユーザーIDまたはパスワードが違います。";
+"invalidPassword" = "現在のパスワードが違います。";
+"passwordSameAsCurrent" = "現在と同じパスワードは設定できません。";
+"invalidUserIdLength" = "ユーザーIDは%d〜%d文字の範囲で設定してください。";
+"userIdAlreadyUsed" = "このユーザーIDは既に使われています。別のIDを入力してください。";
+"passwordAgainNotMatch" = "再入力パスワードが一致しません。";
+"invalidPasswordLength" = "パスワードは\(minPasswordLength)〜\(maxPasswordLength)文字の範囲で設定してください。";
+"accountCreationFailed" = "アカウント生成に失敗しました。";
+"networkConnectionError" = "ネットワークエラーが発生しました。";
+"unknownError" = "予期しないエラーが発生しました。";
+"apiKeyNoPermission" = "APIキーに権限がありません。";
+"apiKeyNonceNotIncremented" = "APIキーのnonce値の設定に失敗しました。しばらく時間を置くか、別のAPIキーを使用してください。";
+"invalidApiKey" = "有効なAPIキーを設定してください。";
+"invalidApiKeyRestricted" = "残高表示や取引機能が制限されます。設定画面で有効なAPIキーを設定してください。";
+"insufficientAmount" = "%d%@以上の数量で注文してください。";
+"insufficientFunds" = "残高が足りません。";
+"noPositionsToUnwind" = "解消できるポジションがありません。";
+
+/*General labels*/
+"positionStateOpen" = "オープン";
+"positionStateClosed" = "クローズ";
+"positionStateUnwinding" = "解消中";
+"positionStateOpening" = "作成中";
+"positionStateWaiting" = "待機中";
+"positionStateDeleted" = "削除済み";
+"delete" = "削除";
+"unwind" = "解消";
+"buy" = "買う";
+"sell" = "売る";
+"make" = "メイク";
+"bestBid" = "最高\n買注文";
+"bestAsk" = "最安\n売注文";
+"ignoreApiError" = "後で設定する";
+"userIdPlacecholder" = "ユーザーID（必須）";
+"passwordPlaceholder" = "パスワード（必須）";
+"passwordAgainPlaceholder" = "パスワード確認（必須）";
+"apiKeyPlaceholder" = "APIキー";
+"secretKeyPlaceholder" = "シークレットキー";
+"zaifApiKeySection" = "Zaif取引APIキー";
+"biyFlyerApiKeySection" = "bitFlyer Lightning APIキー";
+
+/*Zaif resources*/
+"apiKeyNoPermission" = "Zaif APIキーに権限がありません。以下の権限を持ったAPIキーを使用してください。\ninfo\ntrade";
+"apiKeyNonceNotIncremented" = "Zaif APIキーのnonce値の設定に失敗しました。しばらく時間を置くか、別のAPIキーを使用してください。";
+"invalidApiKey" = "有効なZaif APIキーを設定してください。";
+
+/*bitFlyer resources*/
+"apiKeyNoPermission" = "bitFlyer APIキーに権限がありません。以下の権限を持ったAPIキーを使用してください。\n資産\nトレード";
+"invalidApiKey" = "有効なbitFlyer APIキーを設定してください。";

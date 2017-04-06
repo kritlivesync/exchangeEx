@@ -14,145 +14,145 @@ import bFSwift
 
 class Resource {
     static var invalidUserIdOrPassword: String {
-        return "ユーザーIDまたはパスワードが違います。"
+        return NSLocalizedString("invalidUserIdOrPassword", comment: "")
     }
     static var invalidPassword: String {
-        return "現在のパスワードが違います。"
+        return NSLocalizedString("invalidPassword", comment: "")
     }
     static var passwordSameAsCurrent: String {
-        return "現在と同じパスワードは設定できません。"
+        return NSLocalizedString("passwordSameAsCurrent", comment: "")
     }
     static var invalidUserIdLength: String {
-        return "ユーザーIDは\(minUserIdLength)〜\(maxUserIdLength)文字の範囲で設定してください。"
+        return String(format: NSLocalizedString("invalidUserIdLength", comment: ""), minUserIdLength, maxUserIdLength)
     }
     static var userIdAlreadyUsed: String {
-        return "このユーザーIDは既に使われています。別のIDを入力してください。"
+        return NSLocalizedString("userIdAlreadyUsed", comment: "")
     }
     static var passwordAgainNotMatch: String {
-        return "再入力パスワードが一致しません。"
+        return NSLocalizedString("passwordAgainNotMatch", comment: "")
     }
     static var invalidPasswordLength: String {
-        return "パスワードは\(minPasswordLength)〜\(maxPasswordLength)文字の範囲で設定してください。"
+        return String(format: NSLocalizedString("invalidPasswordLength", comment: ""), minPasswordLength, maxPasswordLength)
     }
     static var accountCreationFailed: String {
-        return "アカウント生成に失敗しました。"
+        return NSLocalizedString("accountCreationFailed", comment: "")
     }
     static var networkConnectionError: String {
-        return "ネットワークエラーが発生しました。"
+        return NSLocalizedString("networkConnectionError", comment: "")
     }
     static var unknownError: String {
-        return "予期しないエラーが発生しました。"
+        return NSLocalizedString("unknownError", comment: "")
     }
     var apiKeyNoPermission: String {
-        return "APIキーに権限がありません。"
+        return NSLocalizedString("apiKeyNoPermission", comment: "")
     }
     var apiKeyNonceNotIncremented: String {
-        return "APIキーのnonce値の設定に失敗しました。しばらく時間を置くか、別のAPIキーを使用してください。"
+        return NSLocalizedString("apiKeyNonceNotIncremented", comment: "")
     }
     var invalidApiKey: String {
-        return "有効なAPIキーを設定してください。"
+        return NSLocalizedString("invalidApiKey", comment: "")
     }
     var invalidApiKeyRestricted: String {
-        return "残高表示や取引機能が制限されます。設定画面で有効なAPIキーを設定してください。"
+        return NSLocalizedString("invalidApiKeyRestricted", comment: "")
     }
     static func insufficientAmount(minAmount: Double, currency: ApiCurrency) -> String {
-        return "\(minAmount)\(currency.label)以上の数量で注文してください。"
+        return String(format: NSLocalizedString("insufficientAmount", comment: ""), minAmount, currency.label)
     }
     static var insufficientFunds: String {
-        return "残高が足りません。"
+        return NSLocalizedString("insufficientFunds", comment: "")
     }
 
     static var noPositionsToUnwind: String {
-        return "解消できるポジションがありません。"
+        return NSLocalizedString("noPositionsToUnwind", comment: "")
     }
 }
 
 class LabelResource {
     static var positionStateOpen: String {
-        return "オープン"
+        return NSLocalizedString("positionStateOpen", comment: "")
     }
     static var positionStateClosed: String {
-        return "クローズ"
+        return NSLocalizedString("positionStateClosed", comment: "")
     }
     static var positionStateUnwinding: String {
-        return "解消中"
+        return NSLocalizedString("positionStateUnwinding", comment: "")
     }
     static var positionStateOpening: String {
-        return "作成中"
+        return NSLocalizedString("positionStateOpening", comment: "")
     }
     static var positionStateWaiting: String {
-        return "待機中"
+        return NSLocalizedString("positionStateWaiting", comment: "")
     }
     static var positionStateDeleted: String {
-        return "削除済み"
+        return NSLocalizedString("positionStateDeleted", comment: "")
     }
     static var delete: String {
-        return "削除"
+        return NSLocalizedString("delete", comment: "")
     }
     static var unwind: String {
-        return "解消"
+        return NSLocalizedString("unwind", comment: "")
     }
     static var buy: String {
-        return "買う"
+        return NSLocalizedString("buy", comment: "")
     }
     static var sell: String {
-        return "売る"
+        return NSLocalizedString("sell", comment: "")
     }
     static var make: String {
-        return "メイク"
+        return NSLocalizedString("make", comment: "")
     }
     static var bestBid: String {
-        return "最高\n買注文"
+        return NSLocalizedString("bestBid", comment: "")
     }
     static var bestAsk: String {
-        return "最安\n売注文"
+        return NSLocalizedString("bestAsk", comment: "")
     }
     static var ignoreApiError: String {
-        return "後で設定する"
+        return NSLocalizedString("ignoreApiError", comment: "")
     }
     static var userIdPlacecholder: String {
-        return "ユーザーID（必須）"
+        return NSLocalizedString("userIdPlacecholder", comment: "")
     }
     static var passwordPlaceholder: String {
-        return "パスワード（必須）"
+        return NSLocalizedString("passwordPlaceholder", comment: "")
     }
     static var passwordAgainPlaceholder: String {
-        return "パスワード確認（必須）"
+        return NSLocalizedString("passwordAgainPlaceholder", comment: "")
     }
     static var apiKeyPlaceholder: String {
-        return "APIキー"
+        return NSLocalizedString("apiKeyPlaceholder", comment: "")
     }
     static var secretKeyPlaceholder: String {
-        return "シークレットキー"
+        return NSLocalizedString("secretKeyPlaceholder", comment: "")
     }
     static var zaifApiKeySection: String {
-        return "Zaif取引APIキー"
+        return NSLocalizedString("zaifApiKeySection", comment: "")
     }
     static var biyFlyerApiKeySection: String {
-        return "bitFlyer Lightning APIキー"
+        return NSLocalizedString("biyFlyerApiKeySection", comment: "")
     }
 }
 
 class ZaifResource : Resource {
     
     override var apiKeyNoPermission: String {
-        return "Zaif APIキーに権限がありません。以下の権限を持ったAPIキーを使用してください。\ninfo\ntrade"
+        return NSLocalizedString("apiKeyNoPermission", comment: "")
     }
     override var apiKeyNonceNotIncremented: String {
-        return "Zaif APIキーのnonce値の設定に失敗しました。しばらく時間を置くか、別のAPIキーを使用してください。"
+        return NSLocalizedString("apiKeyNonceNotIncremented", comment: "")
     }
     override var invalidApiKey: String {
-        return "有効なZaif APIキーを設定してください。"
+        return NSLocalizedString("invalidApiKey", comment: "")
     }
 
 }
 
 class bitFlyerResource : Resource {
     override var apiKeyNoPermission: String {
-        return "bitFlyer APIキーに権限がありません。以下の権限を持ったAPIキーを使用してください。\n資産\nトレード"
+        return NSLocalizedString("apiKeyNoPermission", comment: "")
     }
 
     override var invalidApiKey: String {
-        return "有効なbitFlyer APIキーを設定してください。"
+        return NSLocalizedString("invalidApiKey", comment: "")
     }
 }

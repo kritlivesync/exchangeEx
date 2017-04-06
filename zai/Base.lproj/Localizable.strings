@@ -1,0 +1,58 @@
+/* 
+  Localizable.strings
+  zai
+
+  Created by 渡部郷太 on 4/5/17.
+  Copyright © 2017 watanabe kyota. All rights reserved.
+*/
+
+/*Error messages*/
+"invalidUserIdOrPassword" = "Invalid user ID or password.";
+"invalidPassword" = "";
+"passwordSameAsCurrent" = "";
+"invalidUserIdLength" = "";
+"userIdAlreadyUsed" = "";
+"passwordAgainNotMatch" = "";
+"invalidPasswordLength" = "";
+"accountCreationFailed" = "";
+"networkConnectionError" = "";
+"unknownError" = "";
+"apiKeyNoPermission" = "";
+"apiKeyNonceNotIncremented" = "";
+"invalidApiKey" = "";
+"invalidApiKeyRestricted" = "";
+"insufficientAmount" = "";
+"insufficientFunds" = "";
+"noPositionsToUnwind" = "";
+
+/*General labels*/
+"positionStateOpen" = "";
+"positionStateClosed" = "";
+"positionStateUnwinding" = "";
+"positionStateOpening" = "";
+"positionStateWaiting" = "";
+"positionStateDeleted" = "";
+"delete" = "";
+"unwind" = "";
+"buy" = "";
+"sell" = "";
+"make" = "";
+"bestBid" = "";
+"bestAsk" = "";
+"ignoreApiError" = "";
+"userIdPlacecholder" = "";
+"passwordPlaceholder" = "";
+"passwordAgainPlaceholder" = "";
+"apiKeyPlaceholder" = "";
+"secretKeyPlaceholder" = "";
+"zaifApiKeySection" = "";
+"biyFlyerApiKeySection" = "";
+
+/*Zaif resources*/
+"apiKeyNoPermission" = "";
+"apiKeyNonceNotIncremented" = "";
+"invalidApiKey" = "";
+
+/*bitFlyer resources*/
+"apiKeyNoPermission" = "";
+"invalidApiKey" = "";
