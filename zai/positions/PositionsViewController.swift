@@ -17,7 +17,17 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.barTintColor = Color.keyColor
+        self.navigationController?.navigationBar.items?[0].title = LabelResource.positionsViewTitle
+        
+        self.totalProfitLabel.text = LabelResource.totalProfitLoss
+        self.priceAverageLabel.text = LabelResource.priceAverage
+        self.btcFundLabel.text = LabelResource.btcFunds
+        
         self.positionsHeaderLabel.backgroundColor = Color.keyColor2
+        self.positionsHeaderLabel.text = LabelResource.acquisitionCost + "/"
+            + LabelResource.amountRest + "/"
+            + LabelResource.profitLoss + "/"
+            + LabelResource.state
         
         self.totalProfit.text = "-"
         self.priceAverage.text = "-"
@@ -151,8 +161,11 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var positionsHeaderLabel: UILabel!
     
+    @IBOutlet weak var totalProfitLabel: UILabel!
     @IBOutlet weak var totalProfit: UILabel!
+    @IBOutlet weak var priceAverageLabel: UILabel!
     @IBOutlet weak var priceAverage: UILabel!
+    @IBOutlet weak var btcFundLabel: UILabel!
     @IBOutlet weak var btcFund: UILabel!
     @IBOutlet weak var addPositionButton: UIBarButtonItem!
 }

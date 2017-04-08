@@ -21,7 +21,7 @@ class AssetsSummaryView : SectionView {
         switch row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "readOnlySettingCell", for: indexPath) as! ReadOnlySettingCell
-            cell.nameLabel.text = "総資産"
+            cell.nameLabel.text = LabelResource.totalAssets
             cell.nameLabel.font = cell.nameLabel.font.withSize(24.0)
             cell.valueLabel.font = cell.valueLabel.font.withSize(32.0)
             guard let fund = self.marketCapitalization else {

@@ -16,13 +16,17 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.barTintColor = Color.keyColor
+        self.navigationController?.navigationBar.items?[0].title = LabelResource.boardViewTitle
+        
         self.boardHeaderLabel.backgroundColor = Color.keyColor2
+        self.boardHeaderLabel.text = LabelResource.quotePrice + "/" + LabelResource.quoteAmount
         self.askMomentumBar.backgroundColor = Color.askQuoteColor.withAlphaComponent(0.4)
         self.bidMomentumBar.backgroundColor = Color.bidQuoteColor.withAlphaComponent(0.4)
         
         self.boardView = BoardView(view: self.boardTableView)
         self.boardView.delegate = self
         
+        self.capacityLabel.text = LabelResource.funds
         self.jpyFundLabel.text = "-"
     }
     
@@ -155,6 +159,7 @@ class BoardViewController: UIViewController, FundDelegate, BoardDelegate, BoardV
     @IBOutlet weak var boardHeaderLabel: UILabel!
     @IBOutlet weak var boardTableView: UITableView!
     
+    @IBOutlet weak var capacityLabel: UILabel!
     @IBOutlet weak var jpyFundLabel: UILabel!
 
     @IBOutlet weak var momentumBar: UIView!

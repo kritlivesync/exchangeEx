@@ -43,7 +43,7 @@ class ExchangeAssetsView : SectionView, FundDelegate {
         switch row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "readOnlySettingCell", for: indexPath) as! ReadOnlySettingCell
-            cell.nameLabel.text = "時価評価額"
+            cell.nameLabel.text = LabelResource.marketCapital
             cell.nameLabel.font = cell.nameLabel.font.withSize(24.0)
             cell.valueLabel.font = cell.valueLabel.font.withSize(24.0)
             guard let fund = self.marketCapitalization else {

@@ -17,8 +17,15 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.barTintColor = Color.keyColor
+        self.navigationController?.navigationBar.items?[0].title = LabelResource.chartViewTitle
         
+        self.capacityLabel.text = LabelResource.funds
         self.fundLabel.text = "-"
+        
+        self.oneMinuteButton.setTitle(LabelResource.candleChart(interval: 1), for: UIControlState.normal)
+        self.fiveMinutesButton.setTitle(LabelResource.candleChart(interval: 5), for: UIControlState.normal)
+        self.fifteenMinutesButton.setTitle(LabelResource.candleChart(interval: 15), for: UIControlState.normal)
+        self.thirtyMinutesButton.setTitle(LabelResource.candleChart(interval: 30), for: UIControlState.normal)
         
         self.bestQuoteView = BestQuoteView(view: bestQuoteTableView)
         self.bestQuoteView.delegate = self
@@ -303,6 +310,7 @@ class ChartViewController : UIViewController, CandleChartDelegate, FundDelegate,
     @IBOutlet weak var thirtyMinutesButton: UIButton!
     @IBOutlet weak var fifteenMinutesButton: UIButton!
     
+    @IBOutlet weak var capacityLabel: UILabel!
     @IBOutlet weak var fundLabel: UILabel!
     @IBOutlet weak var bestQuoteTableView: UITableView!
     

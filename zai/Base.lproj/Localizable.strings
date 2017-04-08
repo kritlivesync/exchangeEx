@@ -6,53 +6,98 @@
   Copyright © 2017 watanabe kyota. All rights reserved.
 */
 
+
 /*Error messages*/
+
 "invalidUserIdOrPassword" = "Invalid user ID or password.";
-"invalidPassword" = "";
-"passwordSameAsCurrent" = "";
-"invalidUserIdLength" = "";
-"userIdAlreadyUsed" = "";
-"passwordAgainNotMatch" = "";
-"invalidPasswordLength" = "";
-"accountCreationFailed" = "";
-"networkConnectionError" = "";
-"unknownError" = "";
-"apiKeyNoPermission" = "";
-"apiKeyNonceNotIncremented" = "";
-"invalidApiKey" = "";
-"invalidApiKeyRestricted" = "";
-"insufficientAmount" = "";
-"insufficientFunds" = "";
-"noPositionsToUnwind" = "";
+"invalidPassword" = "Incorrect password.";
+"passwordSameAsCurrent" = "You can not set the same password as the current one.";
+"invalidUserIdLength" = "Please set the user ID within the range of %d to %d characters.";
+"userIdAlreadyUsed" = "This user ID is already in use. Please enter a different ID.";
+"passwordAgainNotMatch" = "Passwords do not match";
+"invalidPasswordLength" = "Please set the password within the range of %d to %d characters.";
+"accountCreationFailed" = "Failed to create a account";
+"networkConnectionError" = "A network error occurred.";
+"unknownError" = "An unexpected error occurred.";
+"apiKeyNoPermission" = "The API key does not have required permissions.";
+"apiKeyNonceNotIncremented" = "Failed to set nonce value of API key. Please wait for a while or use another API key.";
+"invalidApiKey" = "Please use a valid API key.";
+"invalidApiKeyRestricted" = "Assets and trading functionalities are restricted. Please set a valid API key on the setting screen.";
+"insufficientAmount" = "Please order with %d%@ or more amount.";
+"insufficientFunds" = "Insufficient funds.";
+"noPositionsToUnwind" = "No position that can be closed.";
+
 
 /*General labels*/
-"positionStateOpen" = "";
-"positionStateClosed" = "";
-"positionStateUnwinding" = "";
-"positionStateOpening" = "";
-"positionStateWaiting" = "";
-"positionStateDeleted" = "";
-"delete" = "";
-"unwind" = "";
-"buy" = "";
-"sell" = "";
-"make" = "";
-"bestBid" = "";
-"bestAsk" = "";
-"ignoreApiError" = "";
-"userIdPlacecholder" = "";
-"passwordPlaceholder" = "";
-"passwordAgainPlaceholder" = "";
-"apiKeyPlaceholder" = "";
-"secretKeyPlaceholder" = "";
-"zaifApiKeySection" = "";
-"biyFlyerApiKeySection" = "";
+
+// for general
+"cancel" = "Cancel";
+"save" = "Save";
+
+// for Login view
+"loginViewTitle" = "exchangeEx";
+"loginUserIdPlaceholder" = "User ID";
+"loginPasswordPlaceholder" = "Password";
+"login" = "Login";
+"createNewAccount" = "Create new account";
+
+// for new account view
+"newAccountViewTitle" = "New Account";
+
+// for Assets view
+"assetsViewTitle" = "Assets";
+"totalAssets" = "Total";
+"marketCapital" = "Market valuation";
+
+// for Chart view
+"chartViewTitle" = "Chart";
+"funds" = "Funds: ";
+"candleChart" = "%d min";
+
+// for Board view
+"boardViewTitle" = "Board";
+"quotePrice" = "Price";
+"quoteAmount" = "Amount";
+
+// for Positions view
+"positionsViewTitle" = "Positions";
+"acquisitionCost" = "Acquisition";
+"amountRest" = "Amount(rest)";
+"profitLoss" = "PL";
+"state" = "State";
+"totalProfitLoss" = "Total PL: ";
+"priceAverage" = "Price Ave.: ";
+"btcFunds" = "BTC funds: ";
+
+"positionStateOpen" = "Open";
+"positionStateClosed" = "Closed";
+"positionStateUnwinding" = "Closing";
+"positionStateOpening" = "Opening";
+"positionStateWaiting" = "Waiting";
+"positionStateDeleted" = "Deleted";
+"delete" = "Delete";
+"unwind" = "Unwind";
+"buy" = "Buy";
+"sell" = "Sell";
+"make" = "Make";
+"bestBid" = "Best\nBid";
+"bestAsk" = "Best\nAsk";
+"ignoreApiError" = "Later";
+"userIdPlacecholder" = "User ID (required)";
+"passwordPlaceholder" = "Password (required)";
+"passwordAgainPlaceholder" = "Confirm password (required)";
+"apiKeyPlaceholder" = "API key";
+"secretKeyPlaceholder" = "Secret key";
+"zaifApiKeySection" = "Zaif Exchange API key";
+"biyFlyerApiKeySection" = "bitFlyer Lightning API key";
 
 /*Zaif resources*/
-"apiKeyNoPermission" = "";
-"apiKeyNonceNotIncremented" = "";
-"invalidApiKey" = "";
+
+"apiKeyNoPermission" = "The Zaif API key does not have required permissions. Please use API key with the following permissions.\ninfo\ntrade";
+"apiKeyNonceNotIncremented" = "Failed to set nonce value of Zaif API key. Please wait for a while or use another API key.";
+"invalidApiKey" = "Please use a valid Zaif API key.";
 
 /*bitFlyer resources*/
-"apiKeyNoPermission" = "";
-"invalidApiKey" = "";
+
+"apiKeyNoPermission" = "The bitFlyer API key does not have required permissions. Please use API key with the following permissions.\nAssets\nTrading";
+"invalidApiKey" = "Please use a valid bitFlyer API key.";

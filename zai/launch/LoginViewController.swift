@@ -16,17 +16,23 @@ class LoginViewController: UIViewController, UINavigationBarDelegate, UITextFiel
         super.viewDidLoad()
         
         self.navigationBar.barTintColor = Color.keyColor
-        
-        self.loginButton.tintColor = UIColor.white
-        self.loginButton.layer.borderWidth = 1.0
-        self.loginButton.layer.borderColor = Color.keyColor.cgColor
-        self.loginButton.setTitleColor(Color.keyColor, for: UIControlState.normal)
-        self.newAccountButton.setTitleColor(Color.keyColor, for: UIControlState.normal)
+        self.navigationBar.items?[0].title = LabelResource.loginViewTitle
         self.navigationBar.delegate = self
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
         self.navigationBar.frame = self.navigationBar.frame.offsetBy(dx: 0.0, dy: statusBarHeight)
         
+        self.loginButton.setTitle(LabelResource.login, for: UIControlState.normal)
+        self.loginButton.tintColor = UIColor.white
+        self.loginButton.layer.borderWidth = 1.0
+        self.loginButton.layer.borderColor = Color.keyColor.cgColor
+        self.loginButton.setTitleColor(Color.keyColor, for: UIControlState.normal)
+        
+        self.newAccountButton.setTitleColor(Color.keyColor, for: UIControlState.normal)
+        self.newAccountButton.setTitle(LabelResource.createNewAccount, for: UIControlState.normal)
+        
+        self.userIdText.placeholder = LabelResource.loginUserIdPlaceholder
         self.userIdText.delegate = self
+        self.passwordText.placeholder = LabelResource.loginPasswordPlaceholder
         self.passwordText.delegate = self
     }
     

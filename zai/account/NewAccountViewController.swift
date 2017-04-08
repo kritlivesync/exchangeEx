@@ -18,6 +18,9 @@ class NewAccountViewController: UIViewController, UITableViewDelegate, UITableVi
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.barTintColor = Color.keyColor
+        self.navigationController?.navigationBar.items?[0].title = LabelResource.newAccountViewTitle
+        self.navigationController?.navigationBar.items?[0].leftBarButtonItem?.title = LabelResource.cancel
+        self.navigationController?.navigationBar.items?[0].rightBarButtonItem?.title = LabelResource.save
         
         self.tableView.tableFooterView = UIView()
         self.tableView.register(UINib(nibName: "TextSettingCell", bundle: nil), forCellReuseIdentifier: "textSettingCell")

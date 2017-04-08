@@ -68,6 +68,48 @@ class Resource {
 }
 
 class LabelResource {
+    static var loginViewTitle: String {
+        return "exchangeEx"
+    }
+    static var loginUserIdPlaceholder: String {
+        return NSLocalizedString("loginUserIdPlaceholder", comment: "")
+    }
+    static var loginPasswordPlaceholder: String {
+        return NSLocalizedString("loginPasswordPlaceholder", comment: "")
+    }
+    static var login: String {
+        return NSLocalizedString("login", comment: "")
+    }
+    static var createNewAccount: String {
+        return NSLocalizedString("createNewAccount", comment: "")
+    }
+    static var newAccountViewTitle: String {
+        return NSLocalizedString("newAccountViewTitle", comment: "")
+    }
+    static var cancel: String {
+        return NSLocalizedString("cancel", comment: "")
+    }
+    static var save: String {
+        return NSLocalizedString("save", comment: "")
+    }
+    static var assetsViewTitle: String {
+        return NSLocalizedString("assetsViewTitle", comment: "")
+    }
+    static var totalAssets: String {
+        return NSLocalizedString("totalAssets", comment: "")
+    }
+    static var marketCapital: String {
+        return NSLocalizedString("marketCapital", comment: "")
+    }
+    static var chartViewTitle: String {
+        return NSLocalizedString("chartViewTitle", comment: "")
+    }
+    static var funds: String {
+        return NSLocalizedString("funds", comment: "")
+    }
+    static func candleChart(interval: Int) -> String {
+        return String(format: NSLocalizedString("candleChart", comment: ""), interval)
+    }
     static var positionStateOpen: String {
         return NSLocalizedString("positionStateOpen", comment: "")
     }
@@ -106,6 +148,39 @@ class LabelResource {
     }
     static var bestAsk: String {
         return NSLocalizedString("bestAsk", comment: "")
+    }
+    static var boardViewTitle: String {
+        return NSLocalizedString("boardViewTitle", comment: "")
+    }
+    static var quotePrice: String {
+        return NSLocalizedString("quotePrice", comment: "")
+    }
+    static var quoteAmount: String {
+        return NSLocalizedString("quoteAmount", comment: "")
+    }
+    static var positionsViewTitle: String {
+        return NSLocalizedString("positionsViewTitle", comment: "")
+    }
+    static var acquisitionCost: String {
+        return NSLocalizedString("acquisitionCost", comment: "")
+    }
+    static var amountRest: String {
+        return NSLocalizedString("amountRest", comment: "")
+    }
+    static var profitLoss: String {
+        return NSLocalizedString("profitLoss", comment: "")
+    }
+    static var state: String {
+        return NSLocalizedString("state", comment: "")
+    }
+    static var totalProfitLoss: String {
+        return NSLocalizedString("totalProfitLoss", comment: "")
+    }
+    static var priceAverage: String {
+        return NSLocalizedString("priceAverage", comment: "")
+    }
+    static var btcFunds: String {
+        return NSLocalizedString("btcFunds", comment: "")
     }
     static var ignoreApiError: String {
         return NSLocalizedString("ignoreApiError", comment: "")

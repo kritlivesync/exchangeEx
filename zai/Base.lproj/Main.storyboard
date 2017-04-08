@@ -356,6 +356,7 @@
                         <outlet property="bidMomentumWidth" destination="jzQ-42-WHM" id="Sut-oR-k4P"/>
                         <outlet property="boardHeaderLabel" destination="5Ed-Em-7LA" id="db6-wi-r4P"/>
                         <outlet property="boardTableView" destination="oul-D0-Pdj" id="dgU-LU-hgH"/>
+                        <outlet property="capacityLabel" destination="jLJ-Ca-wL5" id="pnp-6L-Sum"/>
                         <outlet property="jpyFundLabel" destination="bpr-2c-4H7" id="3rf-Xe-Wdg"/>
                         <outlet property="momentumBar" destination="vBK-fN-mcU" id="bjZ-Z2-MSQ"/>
                     </connections>
@@ -545,12 +546,6 @@
                                     <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qea-HQ-8Jo">
                                         <rect key="frame" x="143" y="0.0" width="138" height="20"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="平均価格：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D7u-sV-umg">
-                                                <rect key="frame" x="0.0" y="-3" width="90" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="98222" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xfk-8K-nQP">
                                                 <rect key="frame" x="71" y="-3" width="67" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -560,12 +555,8 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="D7u-sV-umg" secondAttribute="bottom" id="6eP-9Q-JUv"/>
                                             <constraint firstItem="Xfk-8K-nQP" firstAttribute="top" secondItem="qea-HQ-8Jo" secondAttribute="top" id="PM7-MP-p9g"/>
-                                            <constraint firstItem="Xfk-8K-nQP" firstAttribute="leading" secondItem="D7u-sV-umg" secondAttribute="trailing" id="T3V-dQ-7JB"/>
                                             <constraint firstAttribute="trailing" secondItem="Xfk-8K-nQP" secondAttribute="trailing" id="fJS-lx-hz2"/>
-                                            <constraint firstItem="D7u-sV-umg" firstAttribute="top" secondItem="qea-HQ-8Jo" secondAttribute="top" id="ggx-Is-0Rq"/>
-                                            <constraint firstItem="D7u-sV-umg" firstAttribute="leading" secondItem="qea-HQ-8Jo" secondAttribute="leading" id="i1t-3U-2wH"/>
                                             <constraint firstAttribute="bottom" secondItem="Xfk-8K-nQP" secondAttribute="bottom" id="olv-ft-8T1"/>
                                         </constraints>
                                     </view>
@@ -596,6 +587,12 @@
                                             <constraint firstItem="CaV-ZW-gFj" firstAttribute="top" secondItem="cE6-gX-gBR" secondAttribute="top" id="jd0-sD-dQi"/>
                                         </constraints>
                                     </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="平均価格：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D7u-sV-umg">
+                                        <rect key="frame" x="143" y="-5" width="90" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -603,10 +600,14 @@
                                     <constraint firstItem="cE6-gX-gBR" firstAttribute="top" secondItem="yCl-As-rfl" secondAttribute="top" id="4jU-Wj-NOq"/>
                                     <constraint firstItem="N81-LT-Ndo" firstAttribute="leading" secondItem="yCl-As-rfl" secondAttribute="leading" constant="10" id="9eF-6y-VzJ"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="cE6-gX-gBR" secondAttribute="trailing" constant="10" id="Akz-0a-J1w"/>
+                                    <constraint firstItem="D7u-sV-umg" firstAttribute="leading" secondItem="yCl-As-rfl" secondAttribute="leading" constant="143" id="CJg-VF-F9c"/>
                                     <constraint firstItem="N81-LT-Ndo" firstAttribute="top" secondItem="yCl-As-rfl" secondAttribute="top" id="F48-28-fBC"/>
                                     <constraint firstItem="qea-HQ-8Jo" firstAttribute="top" secondItem="yCl-As-rfl" secondAttribute="top" id="Hfe-ai-TSF"/>
+                                    <constraint firstItem="D7u-sV-umg" firstAttribute="top" secondItem="yCl-As-rfl" secondAttribute="top" constant="-5" id="K9H-Ca-737"/>
                                     <constraint firstItem="qea-HQ-8Jo" firstAttribute="top" secondItem="yCl-As-rfl" secondAttribute="top" id="R4v-rT-tby"/>
+                                    <constraint firstAttribute="bottom" secondItem="D7u-sV-umg" secondAttribute="bottom" constant="-5" id="TbV-fo-RCx"/>
                                     <constraint firstAttribute="bottom" secondItem="qea-HQ-8Jo" secondAttribute="bottom" id="aJs-LH-2PW"/>
+                                    <constraint firstItem="Xfk-8K-nQP" firstAttribute="leading" secondItem="D7u-sV-umg" secondAttribute="trailing" id="j40-Oa-gnA"/>
                                     <constraint firstItem="cE6-gX-gBR" firstAttribute="leading" secondItem="qea-HQ-8Jo" secondAttribute="trailing" constant="5" id="ora-BN-MW7"/>
                                     <constraint firstAttribute="bottom" secondItem="N81-LT-Ndo" secondAttribute="bottom" id="zEl-k4-IxL"/>
                                     <constraint firstItem="qea-HQ-8Jo" firstAttribute="leading" secondItem="N81-LT-Ndo" secondAttribute="trailing" constant="5" id="zf7-cN-77K"/>
@@ -646,10 +647,13 @@
                     <connections>
                         <outlet property="addPositionButton" destination="uu5-9D-ipx" id="111-YG-aeM"/>
                         <outlet property="btcFund" destination="O1v-uD-qfn" id="RJ5-Dp-KL5"/>
+                        <outlet property="btcFundLabel" destination="CaV-ZW-gFj" id="gDE-ML-aKG"/>
                         <outlet property="positionsHeaderLabel" destination="MBf-zz-GoZ" id="4z9-NR-1Ea"/>
                         <outlet property="priceAverage" destination="Xfk-8K-nQP" id="Tni-2R-ecO"/>
+                        <outlet property="priceAverageLabel" destination="D7u-sV-umg" id="8El-97-VYu"/>
                         <outlet property="tableView" destination="YTQ-Qf-k3R" id="dnI-N8-g38"/>
                         <outlet property="totalProfit" destination="i4T-g2-0xt" id="Cig-qI-ggt"/>
+                        <outlet property="totalProfitLabel" destination="DwH-J9-nff" id="2dh-Pl-X3k"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YQv-dV-nJl" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -720,7 +724,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="zVm-xr-0aN">
-                                                    <rect key="frame" x="394" y="25.333333333333336" width="20" height="20.000000000000007"/>
+                                                    <rect key="frame" x="394" y="24.666666666666664" width="20" height="19.999999999999993"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>
@@ -1516,7 +1520,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="4UZ-96-iNW">
-                                                    <rect key="frame" x="394" y="25.666666666666664" width="20" height="19.999999999999993"/>
+                                                    <rect key="frame" x="394" y="25" width="20" height="20"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>
@@ -1652,6 +1656,7 @@
                     <connections>
                         <outlet property="bestQuoteTableView" destination="7d5-7w-Xnf" id="C7L-sO-icP"/>
                         <outlet property="candleStickChartView" destination="uyf-gC-jzR" id="4TU-U4-4To"/>
+                        <outlet property="capacityLabel" destination="NoQ-yS-b6u" id="tE4-aX-HiP"/>
                         <outlet property="chartSelectorView" destination="Sw0-kr-rK0" id="lQh-8f-IMo"/>
                         <outlet property="fifteenMinutesButton" destination="m2G-nA-EI6" id="kuA-HO-P2C"/>
                         <outlet property="fiveMinutesButton" destination="Ogi-gz-0EP" id="vMz-df-jkO"/>

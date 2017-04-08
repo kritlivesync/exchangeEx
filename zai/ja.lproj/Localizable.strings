@@ -25,6 +25,45 @@
 "noPositionsToUnwind" = "解消できるポジションがありません。";
 
 /*General labels*/
+
+// for general
+"cancel" = "キャンセル";
+"save" = "保存";
+
+// for Login view
+"loginViewTitle" = "exchangeEx";
+"loginUserIdPlaceholder" = "ユーザーID";
+"loginPasswordPlaceholder" = "パスワード";
+"login" = "ログイン";
+"createNewAccount" = "新しいアカウントを作成する";
+
+// for new account view
+"newAccountViewTitle" = "New Account";
+
+// for Assets view
+"assetsViewTitle" = "資産";
+"totalAssets" = "総資産";
+"marketCapital" = "時価評価額";
+
+// for Chart view
+"chartViewTitle" = "チャート";
+"funds" = "買付け余力: ";
+"candleChart" = "%d分足";
+
+// for Board view
+"boardViewTitle" = "気配値";
+"quotePrice" = "気配値";
+"quoteAmount" = "数量";
+
+// for Positions view
+"positionsViewTitle" = "ポジション";
+"acquisitionCost" = "取得価格";
+"amountRest" = "数量(残高)";
+"profitLoss" = "損益";
+"state" = "状態";
+"totalProfitLoss" = "確定損益: ";
+"priceAverage" = "平均価格: ";
+"btcFunds" = "BTC余力: ";
 "positionStateOpen" = "オープン";
 "positionStateClosed" = "クローズ";
 "positionStateUnwinding" = "解消中";
@@ -44,7 +83,7 @@
 "passwordAgainPlaceholder" = "パスワード確認（必須）";
 "apiKeyPlaceholder" = "APIキー";
 "secretKeyPlaceholder" = "シークレットキー";
-"zaifApiKeySection" = "Zaif取引APIキー";
+"zaifApiKeySection" = "Zaif Exchange APIキー";
 "biyFlyerApiKeySection" = "bitFlyer Lightning APIキー";
 
 /*Zaif resources*/

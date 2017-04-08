@@ -47,7 +47,7 @@ class BoardViewCell : UITableViewCell {
             let color = Color.askQuoteColor
             self.priceLabel.textColor = color
             self.amountBar.backgroundColor = color
-            self.takerButtonAction = UITableViewRowAction(style: .normal, title: "買う") { (_, _) in
+            self.takerButtonAction = UITableViewRowAction(style: .normal, title: LabelResource.buy) { (_, _) in
                 self.delegate?.pushedTakerButton(quote: self.quote!, cell: self)
             }
             self.takerButtonAction?.backgroundColor = Color.takerButtonColor
@@ -55,7 +55,7 @@ class BoardViewCell : UITableViewCell {
             let color = Color.bidQuoteColor
             self.priceLabel.textColor = color
             self.amountBar.backgroundColor = color
-            self.takerButtonAction = UITableViewRowAction(style: .normal, title: "売る") { (_, _) in
+            self.takerButtonAction = UITableViewRowAction(style: .normal, title: LabelResource.sell) { (_, _) in
                 self.delegate?.pushedTakerButton(quote: self.quote!, cell: self)
             }
             self.takerButtonAction?.backgroundColor = Color.takerButtonColor
@@ -66,7 +66,7 @@ class BoardViewCell : UITableViewCell {
         
         self.quote = quote
         
-        self.makerButtonAction = UITableViewRowAction(style: .normal, title: "メイク") { (_, _) in
+        self.makerButtonAction = UITableViewRowAction(style: .normal, title: LabelResource.make) { (_, _) in
             self.delegate?.pushedMakerButton(quote: self.quote!, cell: self)
         }
         self.makerButtonAction?.backgroundColor = Color.makerButtonColor
