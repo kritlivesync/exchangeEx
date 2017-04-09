@@ -200,8 +200,12 @@ class ChartViewController : UIViewController, CandleChartViewDelegate, FundDeleg
         }
         
         //let amount = Double(self.availableJpy) * 0.5 / bestAsk.price
+        var amt = 0.2
+        if bestAsk.amount < amt {
+            amt = bestAsk.amount
+        }
         
-        trader.createLongPosition(.BTC_JPY, price: bestAsk.price, amount: bestAsk.amount * 3.0) { (err, position) in
+        trader.createLongPosition(.BTC_JPY, price: bestAsk.price, amount: amt) { (err, position) in
             DispatchQueue.main.async {
                 if let e = err {
                     print(e.message)

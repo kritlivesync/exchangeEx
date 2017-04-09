@@ -22,7 +22,7 @@ class ZaiAnalyticsClient {
     init() {
         self.socketIo = SocketIOClient(socketURL: URL(string: "http://192.168.11.11:6665")!, config: [.log(true)])
         //self.socketIo = SocketIOClient(socketURL: URL(string: "https://zai-analytics.herokuapp.com/")!, config: [.log(true)])
-        self.socketIo.joinNamespace("/signals")
+        self.socketIo.joinNamespace("/signals_zaif")
         self.socketIo.on("connect", callback: self.onConnect)
         self.socketIo.on("close", callback: self.onClose)
         self.socketIo.on("error", callback: self.onError)
