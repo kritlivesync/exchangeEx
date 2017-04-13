@@ -65,6 +65,10 @@ class Resource {
     static var noPositionsToUnwind: String {
         return NSLocalizedString("noPositionsToUnwind", comment: "")
     }
+    
+    static var positionAddMessage: String {
+        return NSLocalizedString("positionAddMessage", comment: "")
+    }
 }
 
 class LabelResource {
@@ -128,11 +132,32 @@ class LabelResource {
     static var positionStateDeleted: String {
         return NSLocalizedString("positionStateDeleted", comment: "")
     }
+    static var positionAddViewTitle: String {
+        return NSLocalizedString("positionAddViewTitle", comment: "")
+    }
+    static var positionEditViewTitle: String {
+        return NSLocalizedString("positionEditViewTitle", comment: "")
+    }
+    static var price: String {
+        return NSLocalizedString("price", comment: "")
+    }
+    static var amount: String {
+        return NSLocalizedString("amount", comment: "")
+    }
+    static var add: String {
+        return NSLocalizedString("add", comment: "")
+    }
     static var delete: String {
         return NSLocalizedString("delete", comment: "")
     }
     static var unwind: String {
         return NSLocalizedString("unwind", comment: "")
+    }
+    static var ordersViewTitle: String {
+        return NSLocalizedString("ordersViewTitle", comment: "")
+    }
+    static var orderDate: String {
+        return NSLocalizedString("orderDate", comment: "")
     }
     static var buy: String {
         return NSLocalizedString("buy", comment: "")
@@ -205,6 +230,30 @@ class LabelResource {
     }
     static var biyFlyerApiKeySection: String {
         return NSLocalizedString("biyFlyerApiKeySection", comment: "")
+    }
+    static var orderTimeoutError: String {
+        return NSLocalizedString("orderTimeoutError", comment: "")
+    }
+    static var invalidOrderError: String {
+        return NSLocalizedString("invalidOrderError", comment: "")
+    }
+    static var invalidApiKeyError: String {
+        return NSLocalizedString("invalidApiKeyError", comment: "")
+    }
+    static var apiKeyNoPermissionError: String {
+        return NSLocalizedString("apiKeyNoPermissionError", comment: "")
+    }
+    static var loginError: String {
+        return NSLocalizedString("loginError", comment: "")
+    }
+    static var nonceNotIncrementedError: String {
+        return NSLocalizedString("nonceNotIncrementedError", comment: "")
+    }
+    static var networkError: String {
+        return NSLocalizedString("networkError", comment: "")
+    }
+    static var unknownError: String {
+        return NSLocalizedString("unknownError", comment: "")
     }
 }
 

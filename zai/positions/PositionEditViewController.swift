@@ -94,7 +94,7 @@ class PositionCreateViewController : ValidatablePositionEditor {
     
     init(trader: Trader) {
         self.trader = trader
-        super.init(title: "ポシション追加", message: "新しいロングポジションを追加します。注文は執行されません。")
+        super.init(title: LabelResource.positionAddViewTitle, message: Resource.positionAddMessage)
         
         self.addPriceField()
         self.addAmountField()
@@ -106,7 +106,7 @@ class PositionCreateViewController : ValidatablePositionEditor {
         self.controller.addTextField { (textField) -> Void in
             self.priceTextField = textField
             textField.tag = 0
-            textField.placeholder = "価格" + "(" + BtcPriceValidator.lowerLimit.description + " - " + BtcPriceValidator.upperLimit.description + ")"
+            textField.placeholder = LabelResource.price + "(" + BtcPriceValidator.lowerLimit.description + " - " + BtcPriceValidator.upperLimit.description + ")"
             textField.keyboardType = .numberPad
             textField.delegate = self
         }
@@ -116,21 +116,21 @@ class PositionCreateViewController : ValidatablePositionEditor {
         self.controller.addTextField { (textField) -> Void in
             self.amountextField = textField
             textField.tag = 1
-            textField.placeholder = "数量" + "(" + self.trader.exchange.api.orderUnit(currencyPair: ApiCurrencyPair(rawValue: self.trader.exchange.currencyPair)!).description + " - " + BtcAmountValidator.upperLimit.description + ")"
+            textField.placeholder = LabelResource.amount + "(" + self.trader.exchange.api.orderUnit(currencyPair: ApiCurrencyPair(rawValue: self.trader.exchange.currencyPair)!).description + " - " + BtcAmountValidator.upperLimit.description + ")"
             textField.keyboardType = .decimalPad
             textField.delegate = self
         }
     }
     
     fileprivate func addCancelAction() {
-        let action = UIAlertAction(title: "キャンセル", style: .cancel) { action in
+        let action = UIAlertAction(title: LabelResource.cancel, style: .cancel) { action in
             self.delegate?.createCancel()
         }
         self.controller.addAction(action)
     }
     
     fileprivate func addOkAction() {
-        let action = UIAlertAction(title: "追加", style: .default, handler: { action in
+        let action = UIAlertAction(title: LabelResource.add, style: .default, handler: { action in
             let position = PositionRepository.getInstance().createLongPosition(trader: self.trader)
             let log = TradeLogRepository.getInstance().create(userId: self.trader.exchange.account.userId, action: .OPEN_LONG_POSITION, traderName: self.trader.name, orderAction: "bid", orderId: nil, currencyPair: "btc_jpy", price: Double(self.priceTextField!.text!)!, amount: Double(self.amountextField!.text!)!, positionId: position.id)
             position.addLog(log)
@@ -156,7 +156,7 @@ class PositionEditViewController : ValidatablePositionEditor {
     init(trader: Trader, position: Position) {
         self.trader = trader
         self.position = position
-        super.init(title: "ポシション編集", message: "")
+        super.init(title: LabelResource.positionEditViewTitle, message: "")
         
         self.addPriceField()
         self.addAmountField()
@@ -168,7 +168,7 @@ class PositionEditViewController : ValidatablePositionEditor {
         self.controller.addTextField { (textField) -> Void in
             self.priceTextField = textField
             textField.tag = 0
-            textField.placeholder = "価格"
+            textField.placeholder = LabelResource.price
             textField.text? = Int(self.position.price).description
             textField.keyboardType = .numberPad
             textField.delegate = self
@@ -179,7 +179,7 @@ class PositionEditViewController : ValidatablePositionEditor {
         self.controller.addTextField { (textField) -> Void in
             self.amountextField = textField
             textField.tag = 1
-            textField.placeholder = "数量"
+            textField.placeholder = LabelResource.amount
             textField.text? = self.position.amount.description
             textField.keyboardType = .decimalPad
             textField.delegate = self
@@ -187,14 +187,14 @@ class PositionEditViewController : ValidatablePositionEditor {
     }
     
     fileprivate func addCancelAction() {
-        let action = UIAlertAction(title: "キャンセル", style: .cancel) { action in
+        let action = UIAlertAction(title: LabelResource.cancel, style: .cancel) { action in
             self.delegate?.editCancel()
         }
         self.controller.addAction(action)
     }
     
     fileprivate func addOkAction() {
-        let action = UIAlertAction(title: "保存", style: .default, handler: { action in
+        let action = UIAlertAction(title: LabelResource.save, style: .default, handler: { action in
             self.position.price = Double(self.priceTextField!.text!)!
             self.position.amount = Double(self.amountextField!.text!)!
             self.delegate?.editOk(position: self.position)

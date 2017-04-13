@@ -34,6 +34,16 @@
 "cancel" = "Cancel";
 "save" = "Save";
 
+// for errors
+"orderTimeoutError" = "Order timed out";
+"invalidOrderError" = "Order error";
+"invalidApiKeyError" = "Invalid API key";
+"apiKeyNoPermissionError" = "API key no permission";
+"loginError" = "Login error";
+"nonceNotIncrementedError" = "Nonce not incremented";
+"networkError" = "Network errror";
+"unknownError" = "Unknown error";
+
 // for Login view
 "loginViewTitle" = "exchangeEx";
 "loginUserIdPlaceholder" = "User ID";
@@ -68,15 +78,22 @@
 "totalProfitLoss" = "Total PL: ";
 "priceAverage" = "Price Ave.: ";
 "btcFunds" = "BTC funds: ";
-
 "positionStateOpen" = "Open";
 "positionStateClosed" = "Closed";
 "positionStateUnwinding" = "Closing";
 "positionStateOpening" = "Opening";
 "positionStateWaiting" = "Waiting";
 "positionStateDeleted" = "Deleted";
+"positionAddViewTitle" = "Add position";
+"positionEditViewTitle" = "Edit position";
+"price" = "Price";
+"amount" = "Amount";
+"add" = "Add";
+"positionAddMessage" = "Add a new long position without ordering to a exchange.";
 "delete" = "Delete";
 "unwind" = "Unwind";
+"ordersViewTitle" = "Orders";
+"orderDate" = "Order date";
 "buy" = "Buy";
 "sell" = "Sell";
 "make" = "Make";

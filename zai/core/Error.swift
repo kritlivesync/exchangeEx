@@ -33,27 +33,27 @@ public enum ZaiErrorType : Error {
     func toString() -> String {
         switch self {
         case .ORDER_TIMEOUT:
-            return "Order timed out"
+            return LabelResource.orderTimeoutError
         case .INVALID_ORDER:
-            return "注文エラー"
+            return LabelResource.invalidOrderError
         case .INVALID_ORDER_AMOUNT:
             return ""
         case .INSUFFICIENT_FUNDS:
             return ""
         case .INVALID_API_KEYS:
-            return "無効なAPIキー"
+            return LabelResource.invalidApiKeyError
         case .INVALID_API_KEYS_NO_PERMISSION:
-            return "権限エラー"
+            return LabelResource.apiKeyNoPermissionError
         case .INVALID_ACCOUNT_INFO:
             return ""
         case .LOGIN_ERROR:
-            return "ログインエラー"
+            return LabelResource.loginError
         case .NONCE_NOT_INCREMENTED:
-            return "nonce値エラー"
+            return LabelResource.nonceNotIncrementedError
         case .CONNECTION_ERROR:
-            return "ネットワークエラー"
+            return LabelResource.networkError
         default:
-            return "Unkonwn error"
+            return LabelResource.unknownError
         }
     }
 }

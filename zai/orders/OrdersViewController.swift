@@ -16,8 +16,10 @@ class OrdersViewController : UIViewController, OrderListViewDelegate, AppBackgro
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.barTintColor = Color.keyColor
+        self.navigationController?.navigationBar.items?[0].title = LabelResource.ordersViewTitle
         
         self.ordersHeadersLabel.backgroundColor = Color.keyColor2
+        self.ordersHeadersLabel.text = LabelResource.orderDate + "/" + LabelResource.price + "/" + LabelResource.amount
         
         self.orderListView = OrderListView(view: self.orderTableView)
     }

@@ -30,6 +30,16 @@
 "cancel" = "キャンセル";
 "save" = "保存";
 
+// for errors
+"orderTimeoutError" = "注文タイムアウト";
+"invalidOrderError" = "注文エラー";
+"invalidApiKeyError" = "無効なAPIキー";
+"apiKeyNoPermissionError" = "権限エラー";
+"loginError" = "ログインエラー";
+"nonceNotIncrementedError" = "nonce値エラー";
+"networkError" = "ネットワークエラー";
+"unknownError" = "エラー";
+
 // for Login view
 "loginViewTitle" = "exchangeEx";
 "loginUserIdPlaceholder" = "ユーザーID";
@@ -70,8 +80,16 @@
 "positionStateOpening" = "作成中";
 "positionStateWaiting" = "待機中";
 "positionStateDeleted" = "削除済み";
+"positionAddViewTitle" = "ポジション追加";
+"positionEditViewTitle" = "ポジション編集";
+"price" = "価格";
+"amount" = "数量";
+"add" = "追加";
+"positionAddMessage" = "新しいロングポジションを追加します。注文は執行されません。";
 "delete" = "削除";
 "unwind" = "解消";
+"ordersViewTitle" = "未約定の注文";
+"orderDate" = "注文日時";
 "buy" = "買う";
 "sell" = "売る";
 "make" = "メイク";

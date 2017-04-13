@@ -29,7 +29,7 @@ class NewAccountViewController: UIViewController, UITableViewDelegate, UITableVi
         
         self.saveButton.tintColor = Color.antiKeyColor
         self.cancelButton.tintColor = Color.antiKeyColor
-        let backButtonItem = UIBarButtonItem(title: "ログイン", style: .plain, target: nil, action: nil)
+        let backButtonItem = UIBarButtonItem(title: LabelResource.login, style: .plain, target: nil, action: nil)
         backButtonItem.tintColor = Color.antiKeyColor
         self.navigationItem.backBarButtonItem = backButtonItem
         

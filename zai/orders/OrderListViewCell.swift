@@ -51,7 +51,7 @@ class OrderListViewCell : UITableViewCell {
             self.orderAmountLabel.textColor = Color.askQuoteColor
         }
         
-        self.cancelAction = UITableViewRowAction(style: .normal, title: "取消し") { (_, _) in
+        self.cancelAction = UITableViewRowAction(style: .normal, title: LabelResource.cancel) { (_, _) in
             self.delegate?.pushedCancelButton(cell: self, order: self.order!)
         }
         self.cancelAction?.backgroundColor = UIColor.red
