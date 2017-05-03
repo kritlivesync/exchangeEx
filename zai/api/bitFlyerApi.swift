@@ -107,8 +107,26 @@ class bitFlyerApi : Api {
     }
     
     func getPrice(currencyPair: ApiCurrencyPair, callback: @escaping (ApiError?, Double) -> Void) {
+        /*
         getTicker(currencyPair: currencyPair) { (err, tick) in
             callback(err, tick.lastPrice)
+        }
+        */
+        PublicApi.getExcutions(productCode: currencyPair.bFCurrencyPair, count: 1) { (err, res) in
+            if err != nil {
+                print("getTicker: " + err!.message)
+                callback(ApiError(errorType: err!.errorCode.apiError, message: err!.message), 0.0)
+            } else {
+                if res?.array?.count == 0 {
+                    callback(ApiError(errorType: .UNKNOWN_ERROR), 0.0)
+                    return
+                }
+                guard let last = res?.array?[0].dictionary?["price"]?.double else {
+                    callback(ApiError(errorType: .UNKNOWN_ERROR), 0.0)
+                    return
+                }
+                callback(nil, last)
+            }
         }
     }
     

@@ -48,6 +48,10 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
         self.positionListView.delegate = self
         self.positionListView.startWatch(trader: self.trader)
         self.positionListView.reloadData()
+        let posCount = self.positionListView.positions.count - 1
+        if posCount > 0 {
+            self.tableView.scrollToRow(at: IndexPath(row: posCount, section: 0), at: UITableViewScrollPosition.middle, animated: true)
+        }
         
         if self.positionFundView == nil {
             self.positionFundView = PositionFundView(trader: self.trader)
@@ -141,6 +145,20 @@ class PositionsViewController : UIViewController, UITextFieldDelegate, PositionF
         let storyboard: UIStoryboard = self.storyboard!
         let settings = storyboard.instantiateViewController(withIdentifier: "settingsViewController") as! UINavigationController
         self.present(settings, animated: true, completion: nil)
+    }
+    
+    @IBAction func pushZiafButton(_ sender: Any) {
+        let account = getAccount()!
+        account.setActiveExchange(exchangeName: "Zaif")
+        self.stop()
+        self.start()
+    }
+    
+    @IBAction func pushBFButton(_ sender: Any) {
+        let account = getAccount()!
+        account.setActiveExchange(exchangeName: "bitFlyer")
+        self.stop()
+        self.start()
     }
     
     var trader: Trader!

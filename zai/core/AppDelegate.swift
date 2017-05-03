@@ -64,6 +64,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var account: Account?
     var resource = Resource()
     var delegate: AppBackgroundDelegate?
+    var activeChartController: ChartViewController?
+}
+
+func getActiveChartController() -> ChartViewController? {
+    let app = UIApplication.shared.delegate as! AppDelegate
+    return app.activeChartController
+}
+
+func setActiveChartController(controller: ChartViewController?) {
+    let app = UIApplication.shared.delegate as! AppDelegate
+    app.activeChartController = controller
 }
 
 func setBackgroundDelegate(delegate: AppBackgroundDelegate) {

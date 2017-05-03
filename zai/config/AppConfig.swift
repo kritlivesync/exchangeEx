@@ -13,6 +13,9 @@ import CoreData
 enum UpdateInterval : Int {
     case realTime
     case oneSecond
+    case twoSeconds
+    case threeSeconds
+    case fourSeconds
     case fiveSeconds
     case tenSeconds
     case thirtySeconds
@@ -22,6 +25,9 @@ enum UpdateInterval : Int {
         switch self {
         case .realTime: return "リアルタイム"
         case .oneSecond: return "1秒"
+        case .twoSeconds: return "2秒"
+        case .threeSeconds: return "3秒"
+        case .fourSeconds: return "4秒"
         case .fiveSeconds: return "5秒"
         case .tenSeconds: return "10秒"
         case .thirtySeconds: return "30秒"
@@ -33,6 +39,9 @@ enum UpdateInterval : Int {
         switch self {
         case .realTime: return 0
         case .oneSecond: return 1
+        case .twoSeconds: return 2
+        case .threeSeconds: return 3
+        case .fourSeconds: return 4
         case .fiveSeconds: return 5
         case .tenSeconds: return 10
         case .thirtySeconds: return 30
@@ -44,6 +53,9 @@ enum UpdateInterval : Int {
         switch self {
         case .realTime: return 0.5
         case .oneSecond: return 1.0
+        case .twoSeconds: return 2.0
+        case .threeSeconds: return 3.0
+        case .fourSeconds: return 4.0
         case .fiveSeconds: return 5.0
         case .tenSeconds: return 10.0
         case .thirtySeconds: return 30.0

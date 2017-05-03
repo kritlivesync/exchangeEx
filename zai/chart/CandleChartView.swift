@@ -12,7 +12,7 @@ import Charts
 
 
 protocol CandleChartViewDelegate {
-    func recievedChart(chartData: CandleChartData, xFormatter: XValueFormatter, yFormatter: YValueFormatter)
+    func recievedChart(chartData: CandleChartData, xFormatter: XValueFormatter, yFormatter: YValueFormatter, chart: CandleChart, shifted: Bool)
 }
 
 
@@ -55,7 +55,11 @@ class CandleChartView : CandleChartDelegate {
                 let entry = CandleChartDataEntry(x: Double(i), shadowH: average, shadowL: average, open: average, close: average)
                 emptyEntries.append(entry)
             } else {
-                let entry = CandleChartDataEntry(x: Double(i), shadowH: candle.highPrice!, shadowL: candle.lowPrice!, open: candle.openPrice!, close: candle.lastPrice!)
+                let h = candle.highPrice
+                let l = candle.lowPrice
+                let o = candle.openPrice
+                let lp = candle.lastPrice
+                let entry = CandleChartDataEntry(x: Double(i), shadowH: h!, shadowL: l!, open: o!, close: lp!)
                 entries.append(entry)
             }
             
@@ -94,15 +98,7 @@ class CandleChartView : CandleChartDelegate {
         let chartData = CandleChartData(dataSets: dataSets)
         self.chartDataContainer[chartName] = chartData
         
-        let allChartData = CandleChartData()
-        
-        for (_, data) in self.chartDataContainer {
-            for dataSet in data.dataSets {
-                allChartData.addDataSet(dataSet)
-            }
-        }
-        
-        self.delegate?.recievedChart(chartData: allChartData, xFormatter: formatter, yFormatter: YValueFormatter())
+        self.delegate?.recievedChart(chartData: chartData, xFormatter: formatter, yFormatter: YValueFormatter(), chart: chart, shifted: shifted)
     }
     
     var chartDataContainer: [String:CandleChartData]

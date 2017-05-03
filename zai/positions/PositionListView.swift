@@ -158,7 +158,7 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, B
         }
         self.positions.removeAll()
         for pos in trader.allPositions {
-            if !pos.isDelete && !pos.isOpening {
+            if !pos.isDelete {
                 self.positions.append(pos)
             }
         }
@@ -185,7 +185,7 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, B
     }
     
     
-    fileprivate var positions: [Position]
+    var positions: [Position]
     fileprivate let view: UITableView
     fileprivate var btcPrice: Int = -1
     

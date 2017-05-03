@@ -100,6 +100,7 @@ public class Order: NSManagedObject, PromiseMonitorDelegate {
             cb(ZaiError(errorType: .INVALID_ORDER, message: "order is not excuted"))
             return
         }
+        
         let activeOrder = ActiveOrder(id: self.orderId!, action: self.action, currencyPair: ApiCurrencyPair(rawValue: self.currencyPair)!, price: self.orderPrice!.doubleValue, amount: self.orderAmount.doubleValue, timestamp: self.orderTime!.int64Value)
         self.api?.cancelOrder(order: activeOrder, retryCount: 2) { err in
             DispatchQueue.main.async {
@@ -148,6 +149,14 @@ public class Order: NSManagedObject, PromiseMonitorDelegate {
         return OrderState(rawValue: self.status.intValue)!.isActive
     }
     
+    var isCanceling: Bool {
+        return self.status.intValue == OrderState.CANCELING.rawValue
+    }
+    
+    var isCancelled: Bool {
+        return self.status.intValue == OrderState.CANCELLED.rawValue
+    }
+    
     var isInvalid: Bool {
         return OrderState(rawValue: self.status.intValue)! == .INVALID
     }
@@ -179,6 +188,7 @@ public class Order: NSManagedObject, PromiseMonitorDelegate {
     }
     
     func invalidated() {
+        self.delegate?.orderCancelled(order: self)
         self.stopWatchingPromise()
     }
     

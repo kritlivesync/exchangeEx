@@ -65,6 +65,24 @@ class Candle {
             return self.trades.count == 0
         }
     }
+    
+    var isBull: Bool {
+        get {
+            return self.openPrice! < self.lastPrice!
+        }
+    }
+    
+    var isBear: Bool {
+        get {
+            return self.lastPrice! < self.openPrice!
+        }
+    }
+    
+    var isCalm: Bool {
+        get {
+            return self.openPrice! == self.lastPrice!
+        }
+    }
 
     var openPrice: Double? {
         get {
@@ -194,6 +212,32 @@ class CandleChart : Monitorable {
                     return false
                 }
             }
+            return false
+        }
+    }
+    
+    open func isGappedUp() -> Bool {
+        let count = self.candles.count
+        if self.candles.count < 2 {
+            return false
+        }
+        let last = self.candles.last!
+        let prev = self.candles[count - 2]
+        return prev.lastPrice! < last.openPrice!
+    }
+    
+    open func isCotinuousUp() -> Bool {
+        let count = self.candles.count
+        if self.candles.count < 2 {
+            return false
+        }
+        let last = self.candles.last!
+        let prev = self.candles[count - 2]
+        if prev.isBull {
+            return prev.lastPrice! <= last.openPrice!
+        } else if prev.isBear {
+            return prev.openPrice! <= last.openPrice!
+        } else {
             return false
         }
     }

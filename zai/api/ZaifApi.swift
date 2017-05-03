@@ -338,6 +338,10 @@ class ZaifApi : Api {
             callback(ApiError(errorType: .INVALID_ORDER), nil)
             return
         }
+        if order.isCancelled {
+            callback(ApiError(errorType: .ORDER_CANCELLED), nil)
+            return
+        }
         if order.orderId == nil {
             callback(ApiError(errorType: .ORDER_NOT_ACTIVE), nil)
             return
@@ -346,6 +350,10 @@ class ZaifApi : Api {
         self.getActiveOrders(currencyPair: ApiCurrencyPair(rawValue: order.currencyPair)!) { (err, activeOrders) in
             if err != nil {
                 callback(err, nil)
+                return
+            }
+            if order.isCancelled {
+                callback(ApiError(errorType: .ORDER_CANCELLED), nil)
                 return
             }
             if let activeOrder = activeOrders[order.orderId!] {
