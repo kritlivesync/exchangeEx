@@ -8,7 +8,7 @@ platform :ios, '10.2'
 use_frameworks!
 
 target 'zai' do
-  pod 'ZaifSwift', '0.1.1'
+  pod 'ZaifSwift', '0.3.1'
   pod 'bFSwift', '0.0.1'
   pod 'Socket.IO-Client-Swift', '~> 8.1.1'
   pod 'Charts'
