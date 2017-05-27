@@ -9,7 +9,7 @@ use_frameworks!
 
 target 'zai' do
   pod 'ZaifSwift', '0.3.1'
-  pod 'bFSwift', '0.0.1'
+  pod 'bFSwift', '0.2.0'
   pod 'Socket.IO-Client-Swift', '~> 8.1.1'
   pod 'Charts'
   pod 'Firebase/Core'
