@@ -184,10 +184,8 @@
 		B8E9E2D31E1D186E003B298F /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E9E2D21E1D186E003B298F /* ChartViewController.swift */; };
 		B8E9E2D51E1D2108003B298F /* CandleChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E9E2D41E1D2108003B298F /* CandleChart.swift */; };
 		B8E9E2D71E1E9146003B298F /* ValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E9E2D61E1E9146003B298F /* ValueFormatter.swift */; };
-		B8F1B2241DC0D37D001A120E /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F1B2231DC0D37D001A120E /* Feature.swift */; };
 		B8F1B2261DC5A9C7001A120E /* ZaiAnalyticsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F1B2251DC5A9C7001A120E /* ZaiAnalyticsClient.swift */; };
 		B8F1B22A1DC5AFDF001A120E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F1B2291DC5AFDF001A120E /* Utils.swift */; };
-		B8F38B3A1D8ECA2600731696 /* Analyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F38B391D8ECA2600731696 /* Analyzer.swift */; };
 		B8F38B3C1D8FC1CB00731696 /* Macd.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F38B3B1D8FC1CB00731696 /* Macd.swift */; };
 		B8F38B3F1D8FD2AB00731696 /* PriceLog+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F38B3D1D8FD2AB00731696 /* PriceLog+CoreDataProperties.swift */; };
 		B8F38B401D8FD2AB00731696 /* PriceLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F38B3E1D8FD2AB00731696 /* PriceLog.swift */; };
@@ -398,10 +396,8 @@
 		B8E9E2D21E1D186E003B298F /* ChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChartViewController.swift; path = chart/ChartViewController.swift; sourceTree = "<group>"; };
 		B8E9E2D41E1D2108003B298F /* CandleChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CandleChart.swift; path = chart/CandleChart.swift; sourceTree = "<group>"; };
 		B8E9E2D61E1E9146003B298F /* ValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValueFormatter.swift; path = chart/ValueFormatter.swift; sourceTree = "<group>"; };
-		B8F1B2231DC0D37D001A120E /* Feature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Feature.swift; path = analytics/Feature.swift; sourceTree = "<group>"; };
 		B8F1B2251DC5A9C7001A120E /* ZaiAnalyticsClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZaiAnalyticsClient.swift; path = analytics/ZaiAnalyticsClient.swift; sourceTree = "<group>"; };
 		B8F1B2291DC5AFDF001A120E /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = core/Utils.swift; sourceTree = "<group>"; };
-		B8F38B391D8ECA2600731696 /* Analyzer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Analyzer.swift; path = analytics/Analyzer.swift; sourceTree = "<group>"; };
 		B8F38B3B1D8FC1CB00731696 /* Macd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Macd.swift; path = analytics/Macd.swift; sourceTree = "<group>"; };
 		B8F38B3D1D8FD2AB00731696 /* PriceLog+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "PriceLog+CoreDataProperties.swift"; path = "log/PriceLog+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B8F38B3E1D8FD2AB00731696 /* PriceLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PriceLog.swift; path = log/PriceLog.swift; sourceTree = "<group>"; };
@@ -449,9 +445,7 @@
 			isa = PBXGroup;
 			children = (
 				B8002D6F1D8D1C480079AB9B /* ZaifWatch.swift */,
-				B8F38B391D8ECA2600731696 /* Analyzer.swift */,
 				B8F38B3B1D8FC1CB00731696 /* Macd.swift */,
-				B8F1B2231DC0D37D001A120E /* Feature.swift */,
 				B8F1B2251DC5A9C7001A120E /* ZaiAnalyticsClient.swift */,
 				B8521A771DFC681A0025B60E /* Ema.swift */,
 			);
@@ -1126,7 +1120,6 @@
 				B84113DB1E141C6F000EB0F8 /* PositionRepository.swift in Sources */,
 				B8F38B3C1D8FC1CB00731696 /* Macd.swift in Sources */,
 				B8DB8ED71E3C517F0051C7EC /* PositionsConfig+CoreDataProperties.swift in Sources */,
-				B8F1B2241DC0D37D001A120E /* Feature.swift in Sources */,
 				B85E8E4D1D6F3E5E00C029C8 /* TradeLog+CoreDataProperties.swift in Sources */,
 				B84113E21E141C6F000EB0F8 /* TraderRepository.swift in Sources */,
 				B84113D11E141C6F000EB0F8 /* ActiveOrder.swift in Sources */,
@@ -1203,7 +1196,6 @@
 				B8C7DEEF1E2D15FD00E666F0 /* ChangeUpdateIntervalViewController.swift in Sources */,
 				B8DB8ECC1E3C517F0051C7EC /* AssetsConfig.swift in Sources */,
 				B8DB8ED31E3C517F0051C7EC /* ChartConfig+CoreDataProperties.swift in Sources */,
-				B8F38B3A1D8ECA2600731696 /* Analyzer.swift in Sources */,
 				B85E8E601D6F541800C029C8 /* TraderViewCell.swift in Sources */,
 				B84113DA1E141C6F000EB0F8 /* Position+CoreDataProperties.swift in Sources */,
 				B8DB8ECE1E3C517F0051C7EC /* BoardConfig.swift in Sources */,
