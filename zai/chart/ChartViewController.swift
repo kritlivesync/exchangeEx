@@ -30,9 +30,6 @@ class ChartViewController : UIViewController, CandleChartViewDelegate, FundDeleg
         self.bestQuoteView = BestQuoteView(view: bestQuoteTableView)
         self.bestQuoteView.delegate = self
         
-        self.candleChartView = CandleChartView()
-        self.candleChartView.delegate = self
-        
         self.chartSelectorView.backgroundColor = Color.keyColor2
         self.heilightChartButton(type: getChartConfig().selectedCandleChartType)
         
@@ -82,9 +79,13 @@ class ChartViewController : UIViewController, CandleChartViewDelegate, FundDeleg
             self.bitcoin.delegate = self
         }
         
-        self.candleChartView.deactivateCharts()
-        self.candleChartView.activateChart(chartName: account.activeExchangeName, interval: config.chartUpdateIntervalType)
-        self.candleChartView.switchChartIntervalType(type: config.selectedCandleChartType)
+        if self.candleChartView == nil {
+            account.activeExchange.stopWatch()
+            self.candleChartView = CandleChartView(chart: account.activeExchange.candleChart)
+            self.candleChartView.delegate = self
+            self.candleChartView.monitoringInterval = config.chartUpdateIntervalType
+            self.candleChartView.switchChartIntervalType(type: config.selectedCandleChartType)
+        }
         
         let trader = account.activeExchange.trader
         trader.startWatch()
@@ -99,11 +100,15 @@ class ChartViewController : UIViewController, CandleChartViewDelegate, FundDeleg
             self.bitcoin.delegate = nil
             self.bitcoin = nil
         }
-        
+        if self.candleChartView != nil {
+            self.candleChartView.delegate = nil
+            self.candleChartView = nil
+            getAccount()?.activeExchange.startWatch()
+        }
     }
     
     // CandleChartViewDelegate
-    func recievedChart(chartData: CandleChartData, xFormatter: XValueFormatter, yFormatter: YValueFormatter, chart: CandleChart, shifted: Bool) {
+    func recievedChart(chartData: CandleChartData, xFormatter: XValueFormatter, yFormatter: YValueFormatter, chart: CandleChart) {
         
         guard let chartView = self.candleStickChartView else {
             return

@@ -18,18 +18,7 @@ func login(userId: String, password: String, callback: @escaping (_ err: ZaiErro
     }
     
     account.activeExchange.validateApiKey() { err in
-        
-        // start monitoring chart
-        let currencyPair = ApiCurrencyPair(rawValue: account.activeExchange.currencyPair)!
-        let chartConfig = account.chartConfig
-        let chartType = chartConfig.selectedCandleChartType
-        var exchanges = [Exchange]()
-        for exchange in account.exchanges {
-            exchanges.append(exchange as! Exchange)
-        }
-        let charts = CandleChartContainer(exchanges: exchanges, currencyPair: currencyPair, interval: chartType, candleCount: 60)
-        getApp().candleCharts = charts
-        
+        account.activeExchange.startWatch()
         callback(err, account)
     }
     
@@ -49,7 +38,9 @@ func loggout() {
     let app = getApp()
     
     // stop monitoring chart
-    app.candleCharts.deactivateCharts()
+    for exchange in account.exchanges {
+        (exchange as! Exchange).stopWatch()
+    }
     
     // stop monitoring trader assets
     account.activeExchange.trader.stopWatch()

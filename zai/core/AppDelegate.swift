@@ -59,7 +59,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     var notification: PromiseNotification!
-    var candleCharts: CandleChartContainer!
     let globalConfig = GlobalConfig()
     var account: Account?
     var resource = Resource()
