@@ -33,4 +33,37 @@ class zaiTests: XCTestCase {
         }
     }
     
+    func testBollinger() {
+        var bollinger = Bollinger(size:20)
+        for i in [2, 4, 6, 8, 10] {
+            bollinger.add(sample: Double(i))
+        }
+        let sd = 2.0 * sqrt(2.0)
+        let ave = 6.0
+        XCTAssertEqual(bollinger.sd, sd)
+        
+        XCTAssertEqual(bollinger.getSigmaLower(level: 1), ave - sd)
+        XCTAssertEqual(bollinger.getSigmaLower(level: 2), ave - sd * 2.0)
+        XCTAssertEqual(bollinger.getSigmaLower(level: 3), ave - sd * 3.0)
+        XCTAssertEqual(bollinger.getSigmaUpper(level: 1), ave + sd)
+        XCTAssertEqual(bollinger.getSigmaUpper(level: 2), ave + sd * 2.0)
+        XCTAssertEqual(bollinger.getSigmaUpper(level: 3), ave + sd * 3.0)
+        
+        bollinger.clear()
+        
+        for i in [1, 2, 3, 4, 5] {
+            bollinger.add(sample: Double(i))
+        }
+        XCTAssertEqual(bollinger.sd, sqrt(2.0))
+        
+        bollinger.clear()
+        
+        for i in [-5, -3, -1, -1, 1, 2, 7] {
+            bollinger.add(sample: Double(i))
+        }
+        
+        
+        
+    }
+    
 }

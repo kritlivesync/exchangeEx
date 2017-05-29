@@ -74,6 +74,7 @@ class ChangeExchangeViewController : UITableViewController {
         account.activeExchange.validateApiKey() { _ in }
         account.activeExchange.startWatch()
         self.delegate?.saved(exchange: self.selectedExchange)
+        self.performSegue(withIdentifier: "unwindToSettings", sender: self)
     }
 
     var exchanges: [String]!

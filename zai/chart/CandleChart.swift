@@ -208,23 +208,11 @@ class CandleChart : Monitorable {
         if self.interval == interval {
             return
         }
-        
-        let now = Int64(Date().timeIntervalSince1970)
-        let period = self.calculatePeriod(date: now)
-        var startDate = period.0
-        var endDate = period.1
+        self.interval = interval
         
         let oldCandles = self.candles
         self.candles = [Candle]()
         self.bollinger.clear()
-        
-        for _ in 0 ..< self.candleCount {
-            let candle = Candle(startDate: startDate, endDate: endDate, bollinger: self.bollinger)
-            self.candles.append(candle)
-            startDate -= interval.seconds
-            endDate -= interval.seconds
-        }
-        self.candles = self.candles.reversed()
         
         for candle in oldCandles {
             for trade in candle.trades {
@@ -389,91 +377,10 @@ class CandleChart : Monitorable {
     let api: Api
     let chartName: String
     let currencyPair: ApiCurrencyPair
-    let interval: ChandleChartType
+    var interval: ChandleChartType
     let candleCount: Int
     var candles: [Candle]
     var isHeighPrecision = true
     var lastTradeId = String()
     var bollinger = Bollinger(size: 20)
 }
-
-struct ChartColors {
-    let askColor: UIColor
-    let bidColor: UIColor
-}
-
-
-class CandleChartContainer {
-    init(exchanges: [Exchange], currencyPair: ApiCurrencyPair, interval: ChandleChartType, candleCount: Int) {
-        self.charts = [String:CandleChart]()
-        self.chartColors = [String:ChartColors]()
-        
-        for exchange in exchanges {
-            let chart = CandleChart(chartName: exchange.name, currencyPair: currencyPair, interval: interval, candleCount: candleCount, api: exchange.api)
-            
-            self.chartColors[exchange.name] = CandleChartContainer.availableColors[0]
-            self.charts[exchange.name] = chart
-        }
-    }
-    
-    func activateChart(chartName: String, interval: UpdateInterval, delegate: CandleChartDelegate) {
-        for (name, chart) in self.charts {
-            if name == chartName {
-                chart.monitoringInterval = interval
-                chart.delegate = delegate
-            }
-        }
-    }
-    
-    func deactivateCharts() {
-        for (_, chart) in self.charts {
-            chart.delegate = nil
-        }
-    }
-    
-    func switchChartIntervalType(type: ChandleChartType) {
-        for (name, chart) in self.charts {
-            if chart.delegate != nil {
-                if let newChart = self.switchChartIntervalType(type: type, chartName: name) {
-                    self.charts[name] = newChart
-                }
-            }
-        }
-    }
-    
-    fileprivate func switchChartIntervalType(type: ChandleChartType, chartName: String) -> CandleChart? {
-        guard let chart = self.getChart(chartName: chartName) else {
-            return nil
-        }
-        
-        if type == chart.interval {
-            return nil
-        }
-        
-        let delegate = chart.delegate
-        chart.delegate = nil
-        
-        let newChart = CandleChart(chartName: chartName, currencyPair: chart.currencyPair, interval: type, candleCount: chart.candleCount, api: chart.api)
-        //newChart.copyTrades(chart: chart)
-        newChart.delegate = delegate
-        return newChart
-    }
-    
-    func getChart(chartName: String) -> CandleChart? {
-        return self.charts[chartName]
-    }
-    
-    func getChartColors(chartName: String) -> ChartColors? {
-        return self.chartColors[chartName]
-    }
-    
-    
-    static let availableColors = [
-        ChartColors(askColor: Color.askQuoteColor, bidColor: Color.bidQuoteColor),
-        ChartColors(askColor: UIColor.darkGray, bidColor: UIColor.green)
-    ]
-    
-    var charts: [String:CandleChart]
-    var chartColors: [String:ChartColors]
-}
-

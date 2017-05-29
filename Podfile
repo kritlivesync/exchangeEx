@@ -16,3 +16,13 @@ target 'zai' do
   pod 'Firebase/AdMob'
   pod 'PubNub', '~> 4'
 end
+
+target 'zaiTests' do
+  pod 'ZaifSwift', '0.3.1'
+  pod 'bFSwift', '0.2.0'
+  pod 'Socket.IO-Client-Swift', '~> 8.1.1'
+  pod 'Charts'
+  pod 'Firebase/Core'
+  pod 'Firebase/AdMob'
+  pod 'PubNub', '~> 4'
+end

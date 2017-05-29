@@ -260,7 +260,6 @@ class ChartViewController : UIViewController, CandleChartViewDelegate, FundDeleg
     
     fileprivate var fund: Fund!
     fileprivate var bitcoin: BitCoin!
-    var chartContainer: CandleChartContainer!
     var bestQuoteView: BestQuoteView!
     var candleChartView: CandleChartView!
 

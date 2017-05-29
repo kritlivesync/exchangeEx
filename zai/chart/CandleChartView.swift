@@ -32,6 +32,7 @@ class CandleChartView : CandleChartDelegate {
         let emptyData = self.makeEmptyData(chart: chart)
         let sigma1Data = self.makeBollingerData(chart: chart, level: 1)
         let sigma2Data = self.makeBollingerData(chart: chart, level: 2)
+        let aveData = self.makeAverageData(chart: chart)
         
         var dataSet = [IChartDataSet]()
         if candleData.entryCount > 0 {
@@ -45,6 +46,9 @@ class CandleChartView : CandleChartDelegate {
         }
         if sigma2Data.entryCount > 0 {
             dataSet.append(sigma2Data)
+        }
+        if aveData.entryCount > 0 {
+            dataSet.append(aveData)
         }
         
         let chartData = CandleChartData(dataSets: dataSet)
@@ -117,6 +121,26 @@ class CandleChartView : CandleChartDelegate {
         dataSet.decreasingColor = color
         dataSet.increasingColor = color
         dataSet.neutralColor = color
+        return dataSet
+    }
+    
+    fileprivate func makeAverageData(chart: CandleChart) -> CandleChartDataSet {
+        var entries = [CandleChartDataEntry]()
+        for i in 0 ..< chart.candles.count {
+            let candle = chart.candles[i]
+            if !candle.isEmpty {
+                let ave = candle.totalAverage
+                if ave > 0.0 {
+                    let entry = CandleChartDataEntry(x: Double(i), shadowH: ave, shadowL: ave, open: ave, close: ave)
+                    entries.append(entry)
+                }
+            }
+        }
+        
+        let dataSet = self.makeDataSet(entries: entries, label: "average")
+        dataSet.decreasingColor = Color.averageColor
+        dataSet.increasingColor = Color.averageColor
+        dataSet.neutralColor = Color.averageColor
         return dataSet
     }
     

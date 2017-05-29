@@ -27,8 +27,8 @@ class Color {
     public static let bollingerColors = [
         Color.keyColor,
         UIColor(red: 1.0, green: 0.76, blue: 0.03, alpha: 1.0), // rgba(255,193,7 ,1)
-        UIColor(red: 0.61, green: 0.15, blue: 0.69, alpha: 1.0), // rgba(255,193,7 ,1)
     ]
+    public static let averageColor = UIColor(red: 0.61, green: 0.15, blue: 0.69, alpha: 1.0) // rgba(255,193,7 ,1)
 
     // baord
     public static let askQuoteColor = UIColor(red: 0.12, green: 0.53, blue: 0.90, alpha: 1.0)

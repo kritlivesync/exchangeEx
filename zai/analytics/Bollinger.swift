@@ -23,7 +23,8 @@ class Bollinger {
         let ave2 = pow(self.ave, 2)
         let samples2 = self.samples.map { pow($0, 2) }
         let samples2Ave = samples2.reduce(0.0, +) / Double(samples2.count)
-        self.sd = sqrt(samples2Ave - ave2)
+        self.disp = samples2Ave - ave2
+        self.sd = sqrt(self.disp)
     }
     
     func clear() {
@@ -63,4 +64,5 @@ class Bollinger {
     var samples = [Double]()
     var ave = 0.0
     var sd = 0.0
+    var disp = 0.0
 }

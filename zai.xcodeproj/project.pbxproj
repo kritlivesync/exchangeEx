@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3761386221FCB5F32FDBFC56 /* Pods_zai.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD254B29072DEED3604B9179 /* Pods_zai.framework */; };
+		385BA63A44611068366B73B5 /* Pods_zaiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6BDECF19447F51B181E075E /* Pods_zaiTests.framework */; };
 		B8002D701D8D1C480079AB9B /* ZaifWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8002D6F1D8D1C480079AB9B /* ZaifWatch.swift */; };
 		B80920311DFD03E8005667D4 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80920301DFD03E8005667D4 /* MainTabBarController.swift */; };
 		B80920351DFD4555005667D4 /* BitCoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80920341DFD4555005667D4 /* BitCoin.swift */; };
@@ -213,8 +214,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1EAD009C39BA2C9498346406 /* Pods-zaiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zaiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-zaiTests/Pods-zaiTests.release.xcconfig"; sourceTree = "<group>"; };
 		2B79EE9EF789B6523DE18096 /* Pods-zai.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zai.release.xcconfig"; path = "Pods/Target Support Files/Pods-zai/Pods-zai.release.xcconfig"; sourceTree = "<group>"; };
 		47AE790BD03FD1B5B46D105B /* Pods-zai.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zai.debug.xcconfig"; path = "Pods/Target Support Files/Pods-zai/Pods-zai.debug.xcconfig"; sourceTree = "<group>"; };
+		83345C2EED50BB671E495A4B /* Pods-zaiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zaiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-zaiTests/Pods-zaiTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B8002D6F1D8D1C480079AB9B /* ZaifWatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZaifWatch.swift; path = analytics/ZaifWatch.swift; sourceTree = "<group>"; };
 		B80920301DFD03E8005667D4 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainTabBarController.swift; path = main/MainTabBarController.swift; sourceTree = "<group>"; };
 		B80920341DFD4555005667D4 /* BitCoin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BitCoin.swift; path = currency/BitCoin.swift; sourceTree = "<group>"; };
@@ -407,6 +410,7 @@
 		B8F38B3E1D8FD2AB00731696 /* PriceLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PriceLog.swift; path = log/PriceLog.swift; sourceTree = "<group>"; };
 		B8F38B411D8FD2D700731696 /* PriceLogRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PriceLogRepository.swift; path = log/PriceLogRepository.swift; sourceTree = "<group>"; };
 		B8F585261D6964FA008680D8 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		F6BDECF19447F51B181E075E /* Pods_zaiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_zaiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD254B29072DEED3604B9179 /* Pods_zai.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_zai.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -423,6 +427,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				385BA63A44611068366B73B5 /* Pods_zaiTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,6 +446,8 @@
 			children = (
 				47AE790BD03FD1B5B46D105B /* Pods-zai.debug.xcconfig */,
 				2B79EE9EF789B6523DE18096 /* Pods-zai.release.xcconfig */,
+				83345C2EED50BB671E495A4B /* Pods-zaiTests.debug.xcconfig */,
+				1EAD009C39BA2C9498346406 /* Pods-zaiTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -832,6 +839,7 @@
 			isa = PBXGroup;
 			children = (
 				FD254B29072DEED3604B9179 /* Pods_zai.framework */,
+				F6BDECF19447F51B181E075E /* Pods_zaiTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -863,9 +871,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B8B8459F1D66041D00535638 /* Build configuration list for PBXNativeTarget "zaiTests" */;
 			buildPhases = (
+				6F82FA7F732E11079B349DE2 /* [CP] Check Pods Manifest.lock */,
 				B8B845841D66041D00535638 /* Sources */,
 				B8B845851D66041D00535638 /* Frameworks */,
 				B8B845861D66041D00535638 /* Resources */,
+				0C7ACA4412F5D61ADF91E715 /* [CP] Embed Pods Frameworks */,
+				E7E30CDC6E2475CDB3CC8861 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1038,6 +1049,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0C7ACA4412F5D61ADF91E715 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-zaiTests/Pods-zaiTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		4B20C9ADD627ECAA7E47BC63 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1081,6 +1107,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-zai/Pods-zai-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6F82FA7F732E11079B349DE2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E7E30CDC6E2475CDB3CC8861 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-zaiTests/Pods-zaiTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1401,9 +1457,11 @@
 		};
 		B8B845A01D66041D00535638 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 83345C2EED50BB671E495A4B /* Pods-zaiTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = zaiTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kyotaw.zaiTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1414,9 +1472,11 @@
 		};
 		B8B845A11D66041D00535638 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1EAD009C39BA2C9498346406 /* Pods-zaiTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = zaiTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kyotaw.zaiTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
