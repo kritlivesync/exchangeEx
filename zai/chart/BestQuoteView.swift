@@ -40,7 +40,7 @@ class BestQuoteView : NSObject, UITableViewDelegate, UITableViewDataSource, Best
     }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70.0
+        return 65.0
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

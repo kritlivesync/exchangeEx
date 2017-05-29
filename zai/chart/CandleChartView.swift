@@ -26,13 +26,14 @@ class CandleChartView : CandleChartDelegate {
         self.candleChart.switchInterval(interval: type)
     }
     
+    func setShowBollingerBand(show: Bool) {
+        self.showBollingerBand = show
+    }
+    
     // CandleChartDelegate
     func recievedChart(chart: CandleChart, newCandles: [Candle], chartName: String) {
         let candleData = self.makeCandleData(chart: chart)
         let emptyData = self.makeEmptyData(chart: chart)
-        let sigma1Data = self.makeBollingerData(chart: chart, level: 1)
-        let sigma2Data = self.makeBollingerData(chart: chart, level: 2)
-        let aveData = self.makeAverageData(chart: chart)
         
         var dataSet = [IChartDataSet]()
         if candleData.entryCount > 0 {
@@ -41,14 +42,20 @@ class CandleChartView : CandleChartDelegate {
         if emptyData.entryCount > 0 {
             dataSet.append(emptyData)
         }
-        if sigma1Data.entryCount > 0 {
-            dataSet.append(sigma1Data)
-        }
-        if sigma2Data.entryCount > 0 {
-            dataSet.append(sigma2Data)
-        }
-        if aveData.entryCount > 0 {
-            dataSet.append(aveData)
+        
+        if self.showBollingerBand {
+            let sigma1Data = self.makeBollingerData(chart: chart, level: 1)
+            let sigma2Data = self.makeBollingerData(chart: chart, level: 2)
+            let aveData = self.makeAverageData(chart: chart)
+            if sigma1Data.entryCount > 0 {
+                dataSet.append(sigma1Data)
+            }
+            if sigma2Data.entryCount > 0 {
+                dataSet.append(sigma2Data)
+            }
+            if aveData.entryCount > 0 {
+                dataSet.append(aveData)
+            }
         }
         
         let chartData = CandleChartData(dataSets: dataSet)
@@ -183,4 +190,5 @@ class CandleChartView : CandleChartDelegate {
     }
     
     var candleChart: CandleChart!
+    var showBollingerBand = false
 }

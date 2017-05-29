@@ -27,6 +27,9 @@ class ChartViewController : UIViewController, CandleChartViewDelegate, FundDeleg
         self.fifteenMinutesButton.setTitle(LabelResource.candleChart(interval: 15), for: UIControlState.normal)
         self.thirtyMinutesButton.setTitle(LabelResource.candleChart(interval: 30), for: UIControlState.normal)
         
+        self.technicalSegmentControl.setTitle("なし", forSegmentAt: 0)
+        self.technicalSegmentControl.setTitle("ボリンジャーバンド", forSegmentAt: 1)
+        
         self.bestQuoteView = BestQuoteView(view: bestQuoteTableView)
         self.bestQuoteView.delegate = self
         
@@ -257,6 +260,13 @@ class ChartViewController : UIViewController, CandleChartViewDelegate, FundDeleg
         self.present(settings, animated: true, completion: nil)
     }
 
+    @IBAction func changedTechnicalSegment(_ sender: Any) {
+        switch self.technicalSegmentControl.selectedSegmentIndex {
+        case 0: self.candleChartView.setShowBollingerBand(show: false)
+        case 1: self.candleChartView.setShowBollingerBand(show: true)
+        default: self.candleChartView.setShowBollingerBand(show: false)
+        }
+    }
     
     fileprivate var fund: Fund!
     fileprivate var bitcoin: BitCoin!
@@ -274,5 +284,7 @@ class ChartViewController : UIViewController, CandleChartViewDelegate, FundDeleg
     @IBOutlet weak var capacityLabel: UILabel!
     @IBOutlet weak var fundLabel: UILabel!
     @IBOutlet weak var bestQuoteTableView: UITableView!
+    
+    @IBOutlet weak var technicalSegmentControl: UISegmentedControl!
     
 }
