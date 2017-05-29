@@ -90,6 +90,8 @@ class ChartViewController : UIViewController, CandleChartViewDelegate, FundDeleg
             self.candleChartView.switchChartIntervalType(type: config.selectedCandleChartType)
         }
         
+        self.changedTechnicalSegment(self)
+        
         let trader = account.activeExchange.trader
         trader.startWatch()
     }
