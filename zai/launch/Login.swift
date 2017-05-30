@@ -45,6 +45,8 @@ func loggout() {
     // stop monitoring trader assets
     account.activeExchange.trader.stopWatch()
     
+    _ = account.activeExchange.saveApiKey(cryptKey: account.ppw!)
+    
     account.loggout()
     app.account = nil
     app.resource = createResource(exchangeName: "")

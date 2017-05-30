@@ -76,8 +76,9 @@ class CandleChartView : CandleChartDelegate {
     
     fileprivate func makeCandleData(chart: CandleChart) -> CandleChartDataSet {
         var entries = [CandleChartDataEntry]()
-        for i in 0 ..< chart.candles.count {
-            let candle = chart.candles[i]
+        let candles = self.extractAvaliableCandles(chart: chart)
+        for i in 0 ..< candles.count {
+            let candle = candles[i]
             if !candle.isEmpty {
                 let h = candle.highPrice
                 let l = candle.lowPrice
@@ -93,8 +94,9 @@ class CandleChartView : CandleChartDelegate {
     
     fileprivate func makeEmptyData(chart: CandleChart) -> CandleChartDataSet {
         var entries = [CandleChartDataEntry]()
-        for i in 0 ..< chart.candles.count {
-            let candle = chart.candles[i]
+        let candles = self.extractAvaliableCandles(chart: chart)
+        for i in 0 ..< candles.count {
+            let candle = candles[i]
             if candle.isEmpty {
                 let average = chart.average
                 let entry = CandleChartDataEntry(x: Double(i), shadowH: average, shadowL: average, open: average, close: average)
@@ -109,8 +111,9 @@ class CandleChartView : CandleChartDelegate {
     
     fileprivate func makeBollingerData(chart: CandleChart, level: Int) -> CandleChartDataSet {
         var entries = [CandleChartDataEntry]()
-        for i in 0 ..< chart.candles.count {
-            let candle = chart.candles[i]
+        let candles = self.extractAvaliableCandles(chart: chart)
+        for i in 0 ..< candles.count {
+            let candle = candles[i]
             if !candle.isEmpty {
                 let sigmaL = candle.getSigmaLower(level: level)
                 let sigmaU = candle.getSigmaUpper(level: level)
@@ -133,8 +136,9 @@ class CandleChartView : CandleChartDelegate {
     
     fileprivate func makeAverageData(chart: CandleChart) -> CandleChartDataSet {
         var entries = [CandleChartDataEntry]()
-        for i in 0 ..< chart.candles.count {
-            let candle = chart.candles[i]
+        let candles = self.extractAvaliableCandles(chart: chart)
+        for i in 0 ..< candles.count {
+            let candle = candles[i]
             if !candle.isEmpty {
                 let ave = candle.totalAverage
                 if ave > 0.0 {
@@ -166,6 +170,10 @@ class CandleChartView : CandleChartDelegate {
         return dataSet
     }
     
+    fileprivate func extractAvaliableCandles(chart: CandleChart) -> [Candle] {
+        return [Candle](chart.candles.suffix(self.availableCandleCount))
+    }
+    
     var delegate: CandleChartViewDelegate? = nil {
         willSet {
             if newValue == nil {
@@ -191,4 +199,5 @@ class CandleChartView : CandleChartDelegate {
     
     var candleChart: CandleChart!
     var showBollingerBand = false
+    let availableCandleCount = 60
 }
