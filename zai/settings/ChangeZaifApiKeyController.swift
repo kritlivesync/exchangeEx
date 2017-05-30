@@ -16,9 +16,16 @@ class ChangeZaifApiKeyController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.title = LabelResource.changeZaifApiKey
+        self.navigationItem.leftBarButtonItem?.title = LabelResource.cancel
+        self.navigationItem.rightBarButtonItem?.title = LabelResource.save
+        
         let api = self.zaifExchange.api.rawApi as! PrivateApi
         self.apiKeyLabel.text = api.apiKey
+        self.apiKeyLabel.placeholder = LabelResource.apiKeyPlaceholder
         self.secretKeyLabel.text = api.secretKey
+        self.secretKeyLabel.placeholder = LabelResource.secretKeyPlaceholder
     }
     
     @IBAction func pushSaveButton(_ sender: Any) {

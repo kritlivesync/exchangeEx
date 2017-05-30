@@ -222,6 +222,9 @@ class LabelResource {
     static var passwordAgainPlaceholder: String {
         return NSLocalizedString("passwordAgainPlaceholder", comment: "")
     }
+    static var required: String {
+        return NSLocalizedString("required", comment: "")
+    }
     static var apiKeyPlaceholder: String {
         return NSLocalizedString("apiKeyPlaceholder", comment: "")
     }
@@ -234,6 +237,101 @@ class LabelResource {
     static var biyFlyerApiKeySection: String {
         return NSLocalizedString("biyFlyerApiKeySection", comment: "")
     }
+    
+    static var logout: String {
+        return NSLocalizedString("logout", comment: "")
+    }
+    static var password: String {
+        return NSLocalizedString("password", comment: "")
+    }
+    static var exchange: String {
+        return NSLocalizedString("exchange", comment: "")
+    }
+    static var currencyPair: String {
+        return NSLocalizedString("currencyPair", comment: "")
+    }
+    static var apiKey: String {
+        return NSLocalizedString("apiKey", comment: "")
+    }
+    static var buyAmountLimit: String {
+        return NSLocalizedString("buyAmountLimit", comment: "")
+    }
+    static var unwindingRule: String {
+        return NSLocalizedString("unwindingRule", comment: "")
+    }
+    static var updateInterval: String {
+        return NSLocalizedString("updateInterval", comment: "")
+    }
+    static var back: String {
+        return NSLocalizedString("back", comment: "")
+    }
+    static var settings: String {
+        return NSLocalizedString("settings", comment: "")
+    }
+    static var changePassword: String {
+        return NSLocalizedString("changePassword", comment: "")
+    }
+    static var currentPasswordPlaceholder: String {
+        return NSLocalizedString("currentPasswordPlaceholder", comment: "")
+    }
+    static var newPasswordPlaceholder: String {
+        return NSLocalizedString("newPasswordPlaceholder", comment: "")
+    }
+    static var changeExchange: String {
+        return NSLocalizedString("changeExchange", comment: "")
+    }
+    static var changeZaifApiKey: String {
+        return NSLocalizedString("changeZaifApiKey", comment: "")
+    }
+    static var changebitFlyerApiKey: String {
+        return NSLocalizedString("changebitFlyerApiKey", comment: "")
+    }
+    static var mostProfitPosition: String {
+        return NSLocalizedString("mostProfitPosition", comment: "")
+    }
+    static var mostLossPosition: String {
+        return NSLocalizedString("mostLossPosition", comment: "")
+    }
+    static var mostNewPosition: String {
+        return NSLocalizedString("mostNewPosition", comment: "")
+    }
+    static var mostOldPosition: String {
+        return NSLocalizedString("mostOldPosition", comment: "")
+    }
+    static var oneSecond: String {
+        return NSLocalizedString("oneSecond", comment: "")
+    }
+    static var twoSeconds: String {
+        return NSLocalizedString("twoSeconds", comment: "")
+    }
+    static var threeSeconds: String {
+        return NSLocalizedString("threeSeconds", comment: "")
+    }
+    static var fourSeconds: String {
+        return NSLocalizedString("fourSeconds", comment: "")
+    }
+    static var fiveSeconds: String {
+        return NSLocalizedString("fiveSeconds", comment: "")
+    }
+    static var tenSeconds: String {
+        return NSLocalizedString("tenSeconds", comment: "")
+    }
+    static var thirtySeconds: String {
+        return NSLocalizedString("thirtySeconds", comment: "")
+    }
+    static var oneMinute: String {
+        return NSLocalizedString("oneMinute", comment: "")
+    }
+    static var realtime: String {
+        return NSLocalizedString("realtime", comment: "")
+    }
+    static var technicalNone: String {
+        return NSLocalizedString("technicalNone", comment: "")
+    }
+    static var technicalBollingerBand: String {
+        return NSLocalizedString("technicalBollingerBand", comment: "")
+    }
+    
     static var orderTimeoutError: String {
         return NSLocalizedString("orderTimeoutError", comment: "")
     }

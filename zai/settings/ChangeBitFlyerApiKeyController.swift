@@ -16,9 +16,16 @@ class ChangeBitFlyerApiKeyController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.title = LabelResource.changebitFlyerApiKey
+        self.navigationItem.leftBarButtonItem?.title = LabelResource.cancel
+        self.navigationItem.rightBarButtonItem?.title = LabelResource.save
+        
         let api = self.exchange.api.rawApi as! PrivateApi
         self.apiKeyText.text = api.apiKey
+        self.apiKeyText.placeholder = LabelResource.apiKeyPlaceholder
         self.secretKeyText.text = api.secretKey
+        self.secretKeyText.placeholder = LabelResource.secretKeyPlaceholder
     }
     
     @IBAction func pushSaveButton(_ sender: Any) {

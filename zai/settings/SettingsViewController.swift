@@ -37,6 +37,8 @@ class SettingsViewController
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.barTintColor = Color.keyColor
+        self.navigationController?.navigationBar.items?[0].title = LabelResource.settings
+        self.navigationController?.navigationBar.items?[0].leftBarButtonItem?.title = LabelResource.back
         
         self.tableView.tableFooterView = UIView()
         

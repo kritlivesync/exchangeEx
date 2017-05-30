@@ -20,6 +20,10 @@ class ChangeUnwindingRuleViewController : UITableViewController {
         
         self.tableView.tableFooterView = UIView()
         
+        self.title = LabelResource.unwindingRule
+        self.navigationItem.leftBarButtonItem?.title = LabelResource.cancel
+        self.navigationItem.rightBarButtonItem?.title = LabelResource.save
+        
         self.config = getAppConfig()
     }
     

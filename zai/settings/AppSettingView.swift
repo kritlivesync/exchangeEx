@@ -28,14 +28,14 @@ class AppSettingView : SettingView, VariableSettingCellDelegate, ChangeUnwinding
         switch row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "variableSettingCell", for: indexPath) as! VariableSettingCell
-            cell.nameLabel.text = "買注文の上限数量"
+            cell.nameLabel.text = LabelResource.buyAmountLimit
             cell.valueLabel.text = formatValue(self._config.buyAmountLimitBtcValue) + "BTC"
             cell.id = 0
             cell.delegate = self
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "variableSettingCell", for: indexPath) as! VariableSettingCell
-            cell.nameLabel.text = "売注文ルール"
+            cell.nameLabel.text = LabelResource.unwindingRule
             cell.valueLabel.text = self._config.unwindingRuleType.string
             cell.id = 1
             cell.delegate = self

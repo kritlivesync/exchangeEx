@@ -27,7 +27,7 @@ class BitFlyerSettingView : SettingView, VariableSettingCellDelegate {
         switch row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "variableSettingCell", for: indexPath) as! VariableSettingCell
-            cell.nameLabel.text = "APIキー"
+            cell.nameLabel.text = LabelResource.apiKey
             cell.valueLabel.text = ""
             cell.delegate = self
             return cell

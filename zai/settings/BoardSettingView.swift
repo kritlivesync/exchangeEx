@@ -28,7 +28,7 @@ class BoardSettingView : SettingView, VariableSettingCellDelegate {
         switch row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "variableSettingCell", for: indexPath) as! VariableSettingCell
-            cell.nameLabel.text = "自動更新間隔"
+            cell.nameLabel.text = LabelResource.updateInterval
             cell.valueLabel.text = self._config.boardUpdateIntervalType.string
             cell.delegate = self
             return cell

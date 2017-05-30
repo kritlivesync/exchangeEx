@@ -19,6 +19,10 @@ class ChangeUpdateIntervalViewController : UITableViewController {
         super.viewDidLoad()
         
         self.tableView.tableFooterView = UIView()
+        
+        self.title = LabelResource.updateInterval
+        self.navigationItem.leftBarButtonItem?.title = LabelResource.cancel
+        self.navigationItem.rightBarButtonItem?.title = LabelResource.save
     }
     
     public override func numberOfSections(in tableView: UITableView) -> Int {

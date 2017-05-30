@@ -48,7 +48,7 @@
 "createNewAccount" = "新しいアカウントを作成する";
 
 // for new account view
-"newAccountViewTitle" = "New Account";
+"newAccountViewTitle" = "新しいアカウント";
 
 // for Assets view
 "assetsViewTitle" = "資産";
@@ -59,6 +59,10 @@
 "chartViewTitle" = "チャート";
 "funds" = "買付け余力: ";
 "candleChart" = "%d分足";
+"bestBid" = "最高\n買注文";
+"bestAsk" = "最安\n売注文";
+"technicalNone" = "なし";
+"technicalBollingerBand" = "ボリンジャーバンド";
 
 // for Board view
 "boardViewTitle" = "気配値";
@@ -89,17 +93,50 @@
 "positionAddMessage" = "新しいロングポジションを追加します。注文は執行されません。";
 "delete" = "削除";
 "unwind" = "解消";
+
+// for Orders view
 "ordersViewTitle" = "未約定の注文";
 "orderDate" = "注文日時";
+
+// for settings view
+"logout" = "ログアウト";
+"password" = "パスワード";
+"exchange" = "現在の取引所";
+"currencyPair" = "取引中の通貨ペア";
+"apiKey" = "APIキー";
+"buyAmountLimit" = "買注文の上限数量";
+"unwindingRule" = "売注文ルール";
+"updateInterval" = "自動更新間隔";
+"back" = "戻る";
+"settings" = "設定";
+"changePassword" = "パスワードの変更";
+"currentPasswordPlaceholder" = "現在のパスワード";
+"newPasswordPlaceholder" = "新しいパスワード";
+"changeExchange" = "取引所の変更";
+"changeZaifApiKey" = "Zaif API キー";
+"changebitFlyerApiKey" = "bitFlyer API キー";
+"mostProfitPosition" = "最も含み益の大きいポジション";
+"mostLossPosition" = "最も含み損の大きいポジション";
+"mostNewPosition" = "最も新しいポジション";
+"mostOldPosition" = "最も古いポジション";
+"oneSecond" = "1秒";
+"twoSeconds" = "2秒";
+"threeSeconds" = "3秒";
+"fourSeconds" = "4秒";
+"fiveSeconds" = "5秒";
+"tenSeconds" = "10秒";
+"thirtySeconds" = "30秒";
+"oneMinute" = "60秒";
+"realtime" = "リアルタイム";
+
 "buy" = "買う";
 "sell" = "売る";
 "make" = "メイク";
-"bestBid" = "最高\n買注文";
-"bestAsk" = "最安\n売注文";
 "ignoreApiError" = "後で設定する";
-"userIdPlacecholder" = "ユーザーID（必須）";
-"passwordPlaceholder" = "パスワード（必須）";
-"passwordAgainPlaceholder" = "パスワード確認（必須）";
+"userIdPlacecholder" = "ユーザーID";
+"passwordPlaceholder" = "パスワード";
+"passwordAgainPlaceholder" = "パスワード確認";
+"required" = "（必須）";
 "apiKeyPlaceholder" = "APIキー";
 "secretKeyPlaceholder" = "シークレットキー";
 "zaifApiKeySection" = "Zaif Exchange APIキー";

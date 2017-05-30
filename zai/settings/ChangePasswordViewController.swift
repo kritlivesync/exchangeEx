@@ -15,6 +15,14 @@ class ChangePasswordViewController : UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = LabelResource.changePassword
+        self.navigationItem.leftBarButtonItem?.title = LabelResource.cancel
+        self.navigationItem.rightBarButtonItem?.title = LabelResource.save
+        
+        self.currentPassword.placeholder = LabelResource.currentPasswordPlaceholder
+        self.newPassword.placeholder = LabelResource.newPasswordPlaceholder
+        self.passwordAgain.placeholder = LabelResource.passwordAgainPlaceholder
+        
         self.currentPassword.delegate = self
         self.newPassword.delegate = self
         self.passwordAgain.delegate = self

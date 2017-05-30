@@ -22,6 +22,10 @@ class ChangeExchangeViewController : UITableViewController {
         
         self.tableView.tableFooterView = UIView()
         
+        self.title = LabelResource.changeExchange
+        self.navigationItem.leftBarButtonItem?.title = LabelResource.cancel
+        self.navigationItem.rightBarButtonItem?.title = LabelResource.save
+        
         self.exchanges = [String]()
         
         let account = getAccount()!

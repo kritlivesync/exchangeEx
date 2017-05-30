@@ -34,20 +34,20 @@ class NewAccountView : SectionView {
         switch row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "textSettingCell", for: indexPath) as! TextSettingCell
-            cell.textField.placeholder = LabelResource.userIdPlacecholder
+            cell.textField.placeholder = LabelResource.userIdPlacecholder + " " + LabelResource.required
             cell.textField.keyboardType = UIKeyboardType.asciiCapable
             cell.delegate = UserIdValidator()
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "textSettingCell", for: indexPath) as! TextSettingCell
-            cell.textField.placeholder = LabelResource.passwordPlaceholder
+            cell.textField.placeholder = LabelResource.passwordPlaceholder + " " + LabelResource.required
             cell.textField.keyboardType = UIKeyboardType.asciiCapable
             cell.textField.isSecureTextEntry = true
             cell.delegate = PasswordValidator()
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "textSettingCell", for: indexPath) as! TextSettingCell
-            cell.textField.placeholder = LabelResource.passwordAgainPlaceholder
+            cell.textField.placeholder = LabelResource.passwordAgainPlaceholder + " " + LabelResource.required
             cell.textField.keyboardType = UIKeyboardType.asciiCapable
             cell.textField.isSecureTextEntry = true
             cell.delegate = PasswordValidator()

@@ -20,6 +20,10 @@ class ChangeBuyAmountLimitViewController : UIViewController, UITextFieldDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = LabelResource.buyAmountLimit
+        self.navigationItem.leftBarButtonItem?.title = LabelResource.cancel
+        self.navigationItem.rightBarButtonItem?.title = LabelResource.save
+        
         self.config = getAppConfig()
         self.maxBuyAmountLabel.text = self.config.buyAmountLimitBtc.description
         self.maxBuyAmountLabel.delegate = self

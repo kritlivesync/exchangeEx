@@ -27,8 +27,8 @@ class ChartViewController : UIViewController, CandleChartViewDelegate, FundDeleg
         self.fifteenMinutesButton.setTitle(LabelResource.candleChart(interval: 15), for: UIControlState.normal)
         self.thirtyMinutesButton.setTitle(LabelResource.candleChart(interval: 30), for: UIControlState.normal)
         
-        self.technicalSegmentControl.setTitle("なし", forSegmentAt: 0)
-        self.technicalSegmentControl.setTitle("ボリンジャーバンド", forSegmentAt: 1)
+        self.technicalSegmentControl.setTitle(LabelResource.technicalNone, forSegmentAt: 0)
+        self.technicalSegmentControl.setTitle(LabelResource.technicalBollingerBand, forSegmentAt: 1)
         
         self.bestQuoteView = BestQuoteView(view: bestQuoteTableView)
         self.bestQuoteView.delegate = self

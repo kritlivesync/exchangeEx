@@ -29,28 +29,28 @@ class UserAccountSettingView : SettingView, ValueActionSettingDelegate, Variable
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "valueActionSettingCell", for: indexPath) as! ValueActionSettingCell
             cell.valueLabel.text = self.account.userId
-            cell.actionButton.setTitle("ログアウト", for: UIControlState.normal)
+            cell.actionButton.setTitle(LabelResource.logout, for: UIControlState.normal)
             cell.actionButton.setTitleColor(Color.keyColor, for: UIControlState.normal)
             cell.actionButton.isEnabled = true
             cell.delegate = self
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "variableSettingCell", for: indexPath) as! VariableSettingCell
-            cell.nameLabel.text = "パスワード"
+            cell.nameLabel.text = LabelResource.password
             cell.valueLabel.text = "*****"
             cell.id = 0
             cell.delegate = self
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "variableSettingCell", for: indexPath) as! VariableSettingCell
-            cell.nameLabel.text = "現在の取引所"
+            cell.nameLabel.text = LabelResource.exchange
             cell.valueLabel.text = self.account.activeExchange.name
             cell.id = 1
             cell.delegate = self
             return cell
         case 3:
             let cell = tableView.dequeueReusableCell(withIdentifier: "readOnlySettingCell", for: indexPath) as! ReadOnlySettingCell
-            cell.nameLabel.text = "取引中の通貨ペア"
+            cell.nameLabel.text = LabelResource.currencyPair
             cell.valueLabel.text = self.account.activeExchange.displayCurrencyPair
             return cell
         default:

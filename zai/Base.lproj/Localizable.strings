@@ -41,7 +41,7 @@
 "apiKeyNoPermissionError" = "API key no permission";
 "loginError" = "Login error";
 "nonceNotIncrementedError" = "Nonce not incremented";
-"networkError" = "Network errror";
+"networkError" = "Network error";
 "unknownError" = "Unknown error";
 
 // for Login view
@@ -49,7 +49,7 @@
 "loginUserIdPlaceholder" = "User ID";
 "loginPasswordPlaceholder" = "Password";
 "login" = "Login";
-"createNewAccount" = "Create new account";
+"createNewAccount" = "Create New Account";
 
 // for new account view
 "newAccountViewTitle" = "New Account";
@@ -57,12 +57,16 @@
 // for Assets view
 "assetsViewTitle" = "Assets";
 "totalAssets" = "Total";
-"marketCapital" = "Market valuation";
+"marketCapital" = "Market Valuation";
 
 // for Chart view
 "chartViewTitle" = "Chart";
 "funds" = "Funds: ";
 "candleChart" = "%d min";
+"bestBid" = "Best\nBid";
+"bestAsk" = "Best\nAsk";
+"technicalNone" = "None";
+"technicalBollingerBand" = "Bollinger Band";
 
 // for Board view
 "boardViewTitle" = "Board";
@@ -85,25 +89,58 @@
 "positionStateWaiting" = "Waiting";
 "positionStateDeleted" = "Deleted";
 "positionStatePartial" = "Partial";
-"positionAddViewTitle" = "Add position";
-"positionEditViewTitle" = "Edit position";
+"positionAddViewTitle" = "Add Position";
+"positionEditViewTitle" = "Edit Position";
 "price" = "Price";
 "amount" = "Amount";
 "add" = "Add";
 "positionAddMessage" = "Add a new long position without ordering to a exchange.";
 "delete" = "Delete";
 "unwind" = "Unwind";
+
+// for Orders view
 "ordersViewTitle" = "Orders";
-"orderDate" = "Order date";
+"orderDate" = "Order Date";
+
+// for settings view
+"logout" = "Logout";
+"password" = "Password";
+"exchange" = "Exchange";
+"currencyPair" = "Currency Pair";
+"apiKey" = "API key";
+"buyAmountLimit" = "Buy Amount Limit";
+"unwindingRule" = "Unwind Position Rule";
+"updateInterval" = "Update Interval";
+"back" = "Back";
+"settings" = "Settings";
+"changePassword" = "Change Password";
+"currentPasswordPlaceholder" = "Current Password";
+"newPasswordPlaceholder" = "New Password";
+"changeExchange" = "Change Exchange";
+"changeZaifApiKey" = "Zaif API Key";
+"changebitFlyerApiKey" = "bitFlyer API Key";
+"mostProfitPosition" = "Biggest Profit Position";
+"mostLossPosition" = "Biggest Loss Position";
+"mostNewPosition" = "Newest Position";
+"mostOldPosition" = "Oldest Position";
+"oneSecond" = "One Second";
+"twoSeconds" = "Two Seconds";
+"threeSeconds" = "Three Seconds";
+"fourSeconds" = "Four Seconds";
+"fiveSeconds" = "Five Seconds";
+"tenSeconds" = "Ten Seconds";
+"thirtySeconds" = "Thirty Seconds";
+"oneMinute" = "One Minute";
+"realtime" = "Real Time";
+
 "buy" = "Buy";
 "sell" = "Sell";
 "make" = "Make";
-"bestBid" = "Best\nBid";
-"bestAsk" = "Best\nAsk";
 "ignoreApiError" = "Later";
-"userIdPlacecholder" = "User ID (required)";
-"passwordPlaceholder" = "Password (required)";
-"passwordAgainPlaceholder" = "Confirm password (required)";
+"userIdPlacecholder" = "User ID";
+"passwordPlaceholder" = "Password";
+"passwordAgainPlaceholder" = "Confirm Password";
+"required" = "(required)";
 "apiKeyPlaceholder" = "API key";
 "secretKeyPlaceholder" = "Secret key";
 "zaifApiKeySection" = "Zaif Exchange API key";
