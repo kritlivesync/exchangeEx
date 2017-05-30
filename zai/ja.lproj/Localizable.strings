@@ -80,6 +80,7 @@
 "positionStateOpening" = "作成中";
 "positionStateWaiting" = "待機中";
 "positionStateDeleted" = "削除済み";
+"positionStatePartial" = "部分約定";
 "positionAddViewTitle" = "ポジション追加";
 "positionEditViewTitle" = "ポジション編集";
 "price" = "価格";

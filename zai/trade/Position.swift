@@ -30,6 +30,7 @@ internal protocol PositionProtocol {
     var isUnwinding: Bool { get }
     var isOpening: Bool { get }
     var isDelete: Bool { get }
+    var isPartial: Bool { get }
 }
 
 protocol PositionDelegate {
@@ -45,6 +46,7 @@ enum PositionState: Int {
     case UNWINDING=3
     case WAITING=4
     case DELETED=5
+    case PARTIAL=6
     
     func toString() -> String {
         switch self {
@@ -60,12 +62,14 @@ enum PositionState: Int {
             return "\(LabelResource.positionStateWaiting)"
         case .DELETED:
             return "\(LabelResource.positionStateDeleted)"
+        case .PARTIAL:
+            return "\(LabelResource.positionStatePartial)"
         }
     }
     
     var isActive: Bool {
         switch self {
-        case .OPENING, .OPEN, .UNWINDING:
+        case .PARTIAL, .OPEN, .UNWINDING:
             return true
         default:
             return false
@@ -90,6 +94,10 @@ enum PositionState: Int {
     
     var isDelete: Bool {
         return self == .DELETED
+    }
+    
+    var isPartial: Bool {
+        return self == .PARTIAL
     }
     
     var isUnwinding: Bool {
@@ -119,6 +127,11 @@ public class Position: NSManagedObject, PositionProtocol, PromisedOrderDelegate 
     
     func delete() {
         self.status = NSNumber(value: PositionState.DELETED.rawValue)
+        Database.getDb().saveContext()
+    }
+    
+    func partial() {
+        self.status = NSNumber(value: PositionState.PARTIAL.rawValue)
         Database.getDb().saveContext()
     }
     
@@ -220,6 +233,10 @@ public class Position: NSManagedObject, PositionProtocol, PromisedOrderDelegate 
     
     var isDelete: Bool {
         return PositionState(rawValue: self.status.intValue)!.isDelete
+    }
+    
+    var isPartial: Bool {
+        return PositionState(rawValue: self.status.intValue)!.isPartial
     }
     
     // OrderDelegate

@@ -332,6 +332,10 @@ class ZaifApi : Api {
             callback(ApiError(errorType: .INVALID_ORDER), nil)
             return
         }
+        if order.isCancelled {
+            callback(ApiError(errorType: .ORDER_CANCELLED), nil)
+            return
+        }
         if order.orderId == nil {
             callback(ApiError(errorType: .ORDER_NOT_ACTIVE), nil)
             return
@@ -340,6 +344,16 @@ class ZaifApi : Api {
         self.getActiveOrders(currencyPair: ApiCurrencyPair(rawValue: order.currencyPair)!) { (err, activeOrders) in
             if err != nil {
                 callback(err, nil)
+                return
+            }
+            
+            // double check
+            if order.isCancelled {
+                callback(ApiError(errorType: .ORDER_CANCELLED), nil)
+                return
+            }
+            if order.orderId == nil {
+                callback(ApiError(errorType: .ORDER_NOT_ACTIVE), nil)
                 return
             }
             if let activeOrder = activeOrders[order.orderId!] {
@@ -406,7 +420,9 @@ class ZaifApi : Api {
             self.api.searchValidNonce(count: 60, step: 100) { err in
                 if err != nil {
                     self.validatePermission() { err in
-                        callback(ApiError(errorType: err!.errorType, message: err!.message))
+                        if err != nil {
+                            callback(ApiError(errorType: err!.errorType, message: err!.message))
+                        }
                     }
                 } else {
                     self.validatePermission(callback: callback)

@@ -319,6 +319,10 @@ class bitFlyerApi : Api {
             callback(ApiError(errorType: .INVALID_ORDER), nil)
             return
         }
+        if order.isCancelled {
+            callback(ApiError(errorType: .ORDER_CANCELLED), nil)
+            return
+        }
         if order.orderId == nil {
             callback(ApiError(errorType: .ORDER_NOT_ACTIVE), nil)
             return
@@ -328,6 +332,16 @@ class bitFlyerApi : Api {
             if err != nil {
                 print("getActiveOrders: " + err!.message)
                 callback(ApiError(errorType: err!.errorCode.apiError, message: err!.message), nil)
+                return
+            }
+            
+            // double check
+            if order.isCancelled {
+                callback(ApiError(errorType: .ORDER_CANCELLED), nil)
+                return
+            }
+            if order.orderId == nil {
+                callback(ApiError(errorType: .ORDER_NOT_ACTIVE), nil)
                 return
             }
             

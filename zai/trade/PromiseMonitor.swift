@@ -43,7 +43,7 @@ class PromiseMonitor : Monitorable {
         self.api.isPromised(order: self.order) { (err, promisedOrder) in
             DispatchQueue.main.async {
                 if let e = err {
-                    if e.errorType == .INVALID_ORDER {
+                    if e.errorType == .INVALID_ORDER || e.errorType == .ORDER_CANCELLED || e.errorType == .ORDER_NOT_ACTIVE {
                         delegate?.invalidated()
                     }
                 } else {

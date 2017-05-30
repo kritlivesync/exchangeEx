@@ -132,6 +132,9 @@ class LabelResource {
     static var positionStateDeleted: String {
         return NSLocalizedString("positionStateDeleted", comment: "")
     }
+    static var positionStatePartial: String {
+        return NSLocalizedString("positionStatePartial", comment: "")
+    }
     static var positionAddViewTitle: String {
         return NSLocalizedString("positionAddViewTitle", comment: "")
     }

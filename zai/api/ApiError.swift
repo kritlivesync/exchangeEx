@@ -18,6 +18,7 @@ public enum ApiErrorType : Error {
     case INSUFFICIENT_FUNDS
     case ORDER_NOT_FOUND
     case ORDER_NOT_ACTIVE
+    case ORDER_CANCELLED
     case CONNECTION_ERROR
     case EXCHANGE_DOWN
     case UNKNOWN_ERROR

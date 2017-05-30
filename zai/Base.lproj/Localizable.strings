@@ -84,6 +84,7 @@
 "positionStateOpening" = "Opening";
 "positionStateWaiting" = "Waiting";
 "positionStateDeleted" = "Deleted";
+"positionStatePartial" = "Partial";
 "positionAddViewTitle" = "Add position";
 "positionEditViewTitle" = "Edit position";
 "price" = "Price";

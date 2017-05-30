@@ -27,11 +27,15 @@ open class Trader: NSManagedObject, FundDelegate {
     func createLongPosition(_ currencyPair: ApiCurrencyPair, price: Double?, amount: Double, cb: @escaping (ZaiError?, Position?) -> Void) {
         var amt = amount
         if let p = price {
-            let maxAmount = Double(self.jpyFund) / p
+            let maxAmount = Double(self.jpyAvalilable) / p
             amt = min(maxAmount, amt)
         }
         let limit = getAppConfig().buyAmountLimitBtcValue
         amt = min(limit, amt)
+        
+        if amt < self.exchange.api.orderUnit(currencyPair: currencyPair) {
+            return
+        }
         
         let order = OrderRepository.getInstance().createBuyOrder(currencyPair: currencyPair, price: price, amount: amt, api: self.exchange.api)
         order.excute() { (err, orderId) in
@@ -196,7 +200,7 @@ open class Trader: NSManagedObject, FundDelegate {
         for position in self.positions {
             let p = position as! Position
             let status = PositionState(rawValue: p.status.intValue)
-            if (status?.isOpen)! {
+            if (status?.isOpen)! || (status?.isPartial)!{
                 positions.append(p)
             }
         }
@@ -388,7 +392,7 @@ open class Trader: NSManagedObject, FundDelegate {
     }
     
     func recievedJpyFund(jpy: Int, available: Int) {
-        self.jpyFund = available
+        self.jpyAvalilable = available
     }
     
     fileprivate func getPosition(id: String) -> Position? {
@@ -403,5 +407,5 @@ open class Trader: NSManagedObject, FundDelegate {
     
     var fund: Fund! = nil
     var btcAvailable: Double = 0.0
-    var jpyFund: Int = 0
+    var jpyAvalilable: Int = 0
 }

@@ -99,18 +99,21 @@ class BestQuoteView : NSObject, UITableViewDelegate, UITableViewDataSource, Best
     
     // BestQuoteViewCellDelegate
     func pushedTakerButton(quote: Quote, cell: BestQuoteViewCell) {
+        guard let delegate = self.delegate else {
+            return
+        }
         if cell.activeIndicator.isAnimating {
             return
         }
         cell.activeIndicator.startAnimating()
         if quote.type == Quote.QuoteType.ASK {
-            self.delegate?.orderBuy(quote: quote) {
+            delegate.orderBuy(quote: quote) {
                 DispatchQueue.main.async {
                     cell.activeIndicator.stopAnimating()
                 }
             }
         } else if quote.type == Quote.QuoteType.BID {
-            self.delegate?.orderSell(quote: quote) {
+            delegate.orderSell(quote: quote) {
                 DispatchQueue.main.async {
                     cell.activeIndicator.stopAnimating()
                 }

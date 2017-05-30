@@ -158,7 +158,7 @@ class PositionListView : NSObject, UITableViewDelegate, UITableViewDataSource, B
         }
         self.positions.removeAll()
         for pos in trader.allPositions {
-            if !pos.isDelete && !pos.isOpening {
+            if !pos.isDelete && !pos.isOpening{
                 self.positions.append(pos)
             }
         }
