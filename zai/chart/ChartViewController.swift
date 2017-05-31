@@ -28,7 +28,9 @@ class ChartViewController : UIViewController, CandleChartViewDelegate, FundDeleg
         self.thirtyMinutesButton.setTitle(LabelResource.candleChart(interval: 30), for: UIControlState.normal)
         
         self.technicalSegmentControl.setTitle(LabelResource.technicalNone, forSegmentAt: 0)
-        self.technicalSegmentControl.setTitle(LabelResource.technicalBollingerBand, forSegmentAt: 1)
+        self.technicalSegmentControl.setTitle(LabelResource.technicalSma5, forSegmentAt: 1)
+        self.technicalSegmentControl.setTitle(LabelResource.technicalSma25, forSegmentAt: 2)
+        self.technicalSegmentControl.setTitle(LabelResource.technicalBollingerBand, forSegmentAt: 3)
         
         self.bestQuoteView = BestQuoteView(view: bestQuoteTableView)
         self.bestQuoteView.delegate = self
@@ -263,10 +265,16 @@ class ChartViewController : UIViewController, CandleChartViewDelegate, FundDeleg
     }
 
     @IBAction func changedTechnicalSegment(_ sender: Any) {
+        self.candleChartView.setShowSma5(show: false)
+        self.candleChartView.setShowSma25(show: false)
+        self.candleChartView.setShowBollingerBand(show: false)
+        
         switch self.technicalSegmentControl.selectedSegmentIndex {
-        case 0: self.candleChartView.setShowBollingerBand(show: false)
-        case 1: self.candleChartView.setShowBollingerBand(show: true)
-        default: self.candleChartView.setShowBollingerBand(show: false)
+        case 0: break
+        case 1: self.candleChartView.setShowSma5(show: true)
+        case 2: self.candleChartView.setShowSma25(show: true)
+        case 3: self.candleChartView.setShowBollingerBand(show: true)
+        default: break
         }
     }
     

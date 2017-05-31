@@ -67,6 +67,8 @@
 "bestAsk" = "Best\nAsk";
 "technicalNone" = "None";
 "technicalBollingerBand" = "Bollinger Band";
+"technicalSma5" = "SMA 5";
+"technicalSma25" = "SMA 25";
 
 // for Board view
 "boardViewTitle" = "Board";

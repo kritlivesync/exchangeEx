@@ -63,6 +63,8 @@
 "bestAsk" = "最安\n売注文";
 "technicalNone" = "なし";
 "technicalBollingerBand" = "ボリンジャーバンド";
+"technicalSma5" = "SMA 5";
+"technicalSma25" = "SMA 25";
 
 // for Board view
 "boardViewTitle" = "気配値";

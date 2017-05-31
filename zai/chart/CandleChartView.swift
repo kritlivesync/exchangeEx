@@ -30,6 +30,14 @@ class CandleChartView : CandleChartDelegate {
         self.showBollingerBand = show
     }
     
+    func setShowSma5(show: Bool) {
+        self.showSma5 = show
+    }
+    
+    func setShowSma25(show: Bool) {
+        self.showSma25 = show
+    }
+    
     // CandleChartDelegate
     func recievedChart(chart: CandleChart, newCandles: [Candle], chartName: String) {
         let candleData = self.makeCandleData(chart: chart)
@@ -55,6 +63,20 @@ class CandleChartView : CandleChartDelegate {
             }
             if aveData.entryCount > 0 {
                 dataSet.append(aveData)
+            }
+        }
+        
+        if self.showSma5 {
+            let sma5Data = self.makeSma5Data(chart: chart)
+            if sma5Data.entryCount > 0 {
+                dataSet.append(sma5Data)
+            }
+        }
+        
+        if self.showSma25 {
+            let sma25Data = self.makeSma25Data(chart: chart)
+            if sma25Data.entryCount > 0 {
+                dataSet.append(sma25Data)
             }
         }
         
@@ -155,6 +177,48 @@ class CandleChartView : CandleChartDelegate {
         return dataSet
     }
     
+    fileprivate func makeSma5Data(chart: CandleChart) -> CandleChartDataSet {
+        var entries = [CandleChartDataEntry]()
+        let candles = self.extractAvaliableCandles(chart: chart)
+        for i in 0 ..< candles.count {
+            let candle = candles[i]
+            if !candle.isEmpty {
+                let ave = candle.sma5
+                if ave > 0.0 {
+                    let entry = CandleChartDataEntry(x: Double(i), shadowH: ave, shadowL: ave, open: ave, close: ave)
+                    entries.append(entry)
+                }
+            }
+        }
+        
+        let dataSet = self.makeDataSet(entries: entries, label: "sma5")
+        dataSet.decreasingColor = Color.averageColor
+        dataSet.increasingColor = Color.averageColor
+        dataSet.neutralColor = Color.averageColor
+        return dataSet
+    }
+    
+    fileprivate func makeSma25Data(chart: CandleChart) -> CandleChartDataSet {
+        var entries = [CandleChartDataEntry]()
+        let candles = self.extractAvaliableCandles(chart: chart)
+        for i in 0 ..< candles.count {
+            let candle = candles[i]
+            if !candle.isEmpty {
+                let ave = candle.sma25
+                if ave > 0.0 {
+                    let entry = CandleChartDataEntry(x: Double(i), shadowH: ave, shadowL: ave, open: ave, close: ave)
+                    entries.append(entry)
+                }
+            }
+        }
+        
+        let dataSet = self.makeDataSet(entries: entries, label: "sma25")
+        dataSet.decreasingColor = Color.averageColor
+        dataSet.increasingColor = Color.averageColor
+        dataSet.neutralColor = Color.averageColor
+        return dataSet
+    }
+    
     fileprivate func makeDataSet(entries: [CandleChartDataEntry], label: String) -> CandleChartDataSet {
         
         let dataSet = CandleChartDataSet(values: entries, label: label)
@@ -199,5 +263,7 @@ class CandleChartView : CandleChartDelegate {
     
     var candleChart: CandleChart!
     var showBollingerBand = false
+    var showSma5 = false
+    var showSma25 = false
     let availableCandleCount = 60
 }

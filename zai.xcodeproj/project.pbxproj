@@ -114,6 +114,7 @@
 		B88CF6F21E3CA0E9008A6189 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88CF6F11E3CA0E9008A6189 /* Resource.swift */; };
 		B89379411E26822C00F693A3 /* UserAccountSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89379401E26822C00F693A3 /* UserAccountSettingView.swift */; };
 		B89D5C851E29C66F004FF743 /* ZaifSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89D5C841E29C66F004FF743 /* ZaifSettingView.swift */; };
+		B8A9444C1EDF14C7004D6563 /* SMA.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A9444B1EDF14C7004D6563 /* SMA.swift */; };
 		B8B29AFA1E50062200ED3F64 /* TextSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8B29AF91E50062200ED3F64 /* TextSettingCell.xib */; };
 		B8B29AFC1E5006CF00ED3F64 /* TextSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B29AFB1E5006CF00ED3F64 /* TextSettingCell.swift */; };
 		B8B29AFE1E50075500ED3F64 /* NewAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B29AFD1E50075500ED3F64 /* NewAccountView.swift */; };
@@ -324,6 +325,7 @@
 		B88CF6F11E3CA0E9008A6189 /* Resource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Resource.swift; path = core/Resource.swift; sourceTree = "<group>"; };
 		B89379401E26822C00F693A3 /* UserAccountSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserAccountSettingView.swift; path = settings/UserAccountSettingView.swift; sourceTree = "<group>"; };
 		B89D5C841E29C66F004FF743 /* ZaifSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZaifSettingView.swift; path = settings/ZaifSettingView.swift; sourceTree = "<group>"; };
+		B8A9444B1EDF14C7004D6563 /* SMA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SMA.swift; path = analytics/SMA.swift; sourceTree = "<group>"; };
 		B8B29AF91E50062200ED3F64 /* TextSettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TextSettingCell.xib; path = table/TextSettingCell.xib; sourceTree = "<group>"; };
 		B8B29AFB1E5006CF00ED3F64 /* TextSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextSettingCell.swift; path = table/TextSettingCell.swift; sourceTree = "<group>"; };
 		B8B29AFD1E50075500ED3F64 /* NewAccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewAccountView.swift; path = account/NewAccountView.swift; sourceTree = "<group>"; };
@@ -460,6 +462,7 @@
 				B8F1B2251DC5A9C7001A120E /* ZaiAnalyticsClient.swift */,
 				B8521A771DFC681A0025B60E /* Ema.swift */,
 				B8569E461ED9659C00715F87 /* Bollinger.swift */,
+				B8A9444B1EDF14C7004D6563 /* SMA.swift */,
 			);
 			name = analytics;
 			sourceTree = "<group>";
@@ -1252,6 +1255,7 @@
 				B83F72891E3235670077B566 /* AssetsSummaryView.swift in Sources */,
 				B8521A781DFC681A0025B60E /* Ema.swift in Sources */,
 				B8521A721DF844380025B60E /* Board.swift in Sources */,
+				B8A9444C1EDF14C7004D6563 /* SMA.swift in Sources */,
 				B80920351DFD4555005667D4 /* BitCoin.swift in Sources */,
 				B8F38B401D8FD2AB00731696 /* PriceLog.swift in Sources */,
 				B828252A1E609001005808DB /* ChangeBitFlyerApiKeyController.swift in Sources */,

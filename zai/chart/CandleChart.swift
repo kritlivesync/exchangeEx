@@ -46,7 +46,7 @@ struct Tick {
 
 
 class Candle {
-    init(startDate: Int64, endDate: Int64, bollinger: Bollinger) {
+    init(startDate: Int64, endDate: Int64, bollinger: Bollinger, sma5: Double, sma25: Double) {
         self.startDate = startDate
         self.endDate = endDate
         self.totalAverage = bollinger.ave
@@ -58,6 +58,8 @@ class Candle {
         self.sigmasUpper.append(bollinger.sigma1Upper)
         self.sigmasUpper.append(bollinger.sigma2Upper)
         self.sigmasUpper.append(bollinger.sigma3Upper)
+        self.sma5 = sma5
+        self.sma25 = sma25
 
         self.trades = [Trade]()
     }
@@ -177,6 +179,8 @@ class Candle {
     var totalAverage: Double
     var sigmasUpper: [Double]
     var sigmasLower: [Double]
+    let sma5: Double
+    let sma25: Double
     var trades: [Trade]
 }
 
@@ -213,6 +217,8 @@ class CandleChart : Monitorable {
         let oldCandles = self.candles
         self.candles = [Candle]()
         self.bollinger.clear()
+        self.sma5.clear()
+        self.sma25.clear()
         
         for candle in oldCandles {
             for trade in candle.trades {
@@ -284,12 +290,19 @@ class CandleChart : Monitorable {
     
     fileprivate func addNextBlankPeriod() {
         if let last = self.candles.last {
-            if let ave = last.priceAevrage {
-                self.bollinger.add(sample: ave)
+            if let lastPrice = last.lastPrice {
+                self.bollinger.add(sample: lastPrice)
+                self.sma5.add(sample: lastPrice)
+                self.sma25.add(sample: lastPrice)
             }
         }
         let naxtStartDate = self.candles.last!.endDate
-        let candle = Candle(startDate: naxtStartDate, endDate: naxtStartDate + self.interval.seconds, bollinger: self.bollinger)
+        let candle = Candle(
+            startDate: naxtStartDate,
+            endDate: naxtStartDate + self.interval.seconds,
+            bollinger: self.bollinger,
+            sma5: self.sma5.value,
+            sma25: self.sma25.value)
         if self.candles.count >= self.candleCount {
             self.candles.removeFirst()
         }
@@ -298,12 +311,19 @@ class CandleChart : Monitorable {
     
     fileprivate func makeCandle(trade: Trade) -> Candle{
         if let last = self.candles.last {
-            if let ave = last.priceAevrage {
-                self.bollinger.add(sample: ave)
+            if let lastPrice = last.lastPrice {
+                self.bollinger.add(sample: lastPrice)
+                self.sma5.add(sample: lastPrice)
+                self.sma25.add(sample: lastPrice)
             }
         }
         let period = self.calculatePeriod(date: trade.timestamp)
-        let candle = Candle(startDate: period.0, endDate: period.1, bollinger: self.bollinger)
+        let candle = Candle(
+            startDate: period.0,
+            endDate: period.1,
+            bollinger: self.bollinger,
+            sma5: self.sma5.value,
+            sma25: self.sma25.value)
         let _ = candle.add(trade: trade)
         return candle
     }
@@ -338,14 +358,9 @@ class CandleChart : Monitorable {
                 return
             }
             var newCandles = [Candle]()
+            
             for trade in trades {
-                if self.lastTradeId == trade.id {
-                    break
-                }
                 newCandles = self.addTrade(trade: trade)
-            }
-            if trades.last!.id != "" {
-                self.lastTradeId = trades.last!.id
             }
 
             DispatchQueue.main.async {
@@ -355,17 +370,23 @@ class CandleChart : Monitorable {
     }
     
     fileprivate func getTreades(callback: @escaping ([Trade]) -> Void) {
-        if self.isHeighPrecision {
+        if !self.initialized {
             self.api.getTrades(currencyPair: self.currencyPair) { (err, trades) in
                 if err != nil {
                     return
                 }
-                callback(trades)
+                
+                let sorted = trades.sorted() { (trade1, trade2) in return trade1.timestamp < trade2.timestamp }
+                
+                callback(sorted)
+                self.initialized = true
             }
-            self.isHeighPrecision = false
         } else {
             self.api.getPrice(currencyPair: self.currencyPair) { (err, price) in
                 if err != nil {
+                    return
+                }
+                if !self.initialized {
                     return
                 }
                 let trade = Trade(id: "", price: price, amount: 0.0, currencyPair: self.currencyPair.rawValue, action: "bid", timestamp: Int64(Date().timeIntervalSince1970))
@@ -380,7 +401,8 @@ class CandleChart : Monitorable {
     var interval: ChandleChartType
     let candleCount: Int
     var candles: [Candle]
-    var isHeighPrecision = true
-    var lastTradeId = String()
+    var initialized = false
     var bollinger = Bollinger(size: 20)
+    var sma5 = SMA(size: 5)
+    var sma25 = SMA(size: 25)
 }
