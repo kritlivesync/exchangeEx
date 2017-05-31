@@ -65,6 +65,7 @@
 "technicalBollingerBand" = "ボリンジャーバンド";
 "technicalSma5" = "SMA 5";
 "technicalSma25" = "SMA 25";
+"technicalSma5_25" = "SMA 5&25";
 
 // for Board view
 "boardViewTitle" = "気配値";

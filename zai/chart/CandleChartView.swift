@@ -26,18 +26,33 @@ class CandleChartView : CandleChartDelegate {
         self.candleChart.switchInterval(interval: type)
     }
     
-    func setShowBollingerBand(show: Bool) {
-        self.showBollingerBand = show
+    var showBollingerBand: Bool {
+        get {
+            return self._showBollingerBand
+        }
+        set {
+            self._showBollingerBand = newValue
+        }
     }
     
-    func setShowSma5(show: Bool) {
-        self.showSma5 = show
+    var showSma5: Bool {
+        get {
+            return self._showSma5
+        }
+        set {
+            self._showSma5 = newValue
+        }
     }
     
-    func setShowSma25(show: Bool) {
-        self.showSma25 = show
+    var showSma25: Bool {
+        get {
+            return self._showSma25
+        }
+        set {
+            self._showSma25 = newValue
+        }
     }
-    
+
     // CandleChartDelegate
     func recievedChart(chart: CandleChart, newCandles: [Candle], chartName: String) {
         let candleData = self.makeCandleData(chart: chart)
@@ -213,9 +228,9 @@ class CandleChartView : CandleChartDelegate {
         }
         
         let dataSet = self.makeDataSet(entries: entries, label: "sma25")
-        dataSet.decreasingColor = Color.averageColor
-        dataSet.increasingColor = Color.averageColor
-        dataSet.neutralColor = Color.averageColor
+        dataSet.decreasingColor = Color.antiKeyColor2
+        dataSet.increasingColor = Color.antiKeyColor2
+        dataSet.neutralColor = Color.antiKeyColor2
         return dataSet
     }
     
@@ -262,8 +277,8 @@ class CandleChartView : CandleChartDelegate {
     }
     
     var candleChart: CandleChart!
-    var showBollingerBand = false
-    var showSma5 = false
-    var showSma25 = false
+    fileprivate var _showBollingerBand = false
+    fileprivate var _showSma5 = false
+    fileprivate var _showSma25 = false
     let availableCandleCount = 60
 }

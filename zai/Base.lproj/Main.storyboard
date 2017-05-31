@@ -1625,7 +1625,7 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="ipc-py-9vb"/>
                                 </constraints>
                             </view>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ajb-Wm-OVz">
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ajb-Wm-OVz" customClass="TouchSegmentControl" customModule="zai" customModuleProvider="target">
                                 <rect key="frame" x="147" y="400" width="121" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="EaB-q3-ob7"/>
@@ -1638,7 +1638,7 @@
                                 </segments>
                                 <color key="tintColor" red="0.18039215689999999" green="0.49019607840000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <action selector="changedTechnicalSegment:" destination="KNX-x2-YuV" eventType="valueChanged" id="gmJ-R6-ViR"/>
+                                    <action selector="changedTechnicalSegment:" destination="KNX-x2-YuV" eventType="valueChanged" id="Apc-wq-ReG"/>
                                 </connections>
                             </segmentedControl>
                         </subviews>
@@ -1680,7 +1680,7 @@
                         <outlet property="fiveMinutesButton" destination="Ogi-gz-0EP" id="vMz-df-jkO"/>
                         <outlet property="fundLabel" destination="yc2-1f-R77" id="DyM-zj-xbM"/>
                         <outlet property="oneMinuteButton" destination="8mQ-Id-cYy" id="cfx-82-9YB"/>
-                        <outlet property="technicalSegmentControl" destination="ajb-Wm-OVz" id="IxQ-mk-TTo"/>
+                        <outlet property="technicalSegmentControl" destination="ajb-Wm-OVz" id="fCc-ym-7O4"/>
                         <outlet property="thirtyMinutesButton" destination="9TT-a5-hbT" id="JoX-pw-Nsx"/>
                     </connections>
                 </viewController>

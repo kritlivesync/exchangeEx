@@ -337,6 +337,9 @@ class LabelResource {
     static var technicalSma25: String {
         return NSLocalizedString("technicalSma25", comment: "")
     }
+    static var technicalSma5_25: String {
+        return NSLocalizedString("technicalSma5_25", comment: "")
+    }
     
     static var orderTimeoutError: String {
         return NSLocalizedString("orderTimeoutError", comment: "")

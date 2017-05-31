@@ -12,7 +12,16 @@ import UIKit
 import Charts
 
 
-class ChartViewController : UIViewController, CandleChartViewDelegate, FundDelegate, BitCoinDelegate, BestQuoteViewDelegate, AppBackgroundDelegate {
+enum TechnicalIndexType : Int{
+    case sma5 = 0
+    case sma25 = 1
+    case sma5_25 = 2
+    case bollingerBand = 3
+    case none = -1
+}
+
+
+class ChartViewController : UIViewController, CandleChartViewDelegate, FundDelegate, BitCoinDelegate, BestQuoteViewDelegate, AppBackgroundDelegate, TechncalIndexStateDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,10 +36,11 @@ class ChartViewController : UIViewController, CandleChartViewDelegate, FundDeleg
         self.fifteenMinutesButton.setTitle(LabelResource.candleChart(interval: 15), for: UIControlState.normal)
         self.thirtyMinutesButton.setTitle(LabelResource.candleChart(interval: 30), for: UIControlState.normal)
         
-        self.technicalSegmentControl.setTitle(LabelResource.technicalNone, forSegmentAt: 0)
-        self.technicalSegmentControl.setTitle(LabelResource.technicalSma5, forSegmentAt: 1)
-        self.technicalSegmentControl.setTitle(LabelResource.technicalSma25, forSegmentAt: 2)
-        self.technicalSegmentControl.setTitle(LabelResource.technicalBollingerBand, forSegmentAt: 3)
+        self.technicalSegmentControl.setTitle(LabelResource.technicalSma5, forSegmentAt: TechnicalIndexType.sma5.rawValue)
+        self.technicalSegmentControl.setTitle(LabelResource.technicalSma25, forSegmentAt: TechnicalIndexType.sma25.rawValue)
+        self.technicalSegmentControl.setTitle(LabelResource.technicalSma5_25, forSegmentAt: TechnicalIndexType.sma5_25.rawValue)
+        self.technicalSegmentControl.setTitle(LabelResource.technicalBollingerBand, forSegmentAt: TechnicalIndexType.bollingerBand.rawValue)
+        self.technicalSegmentControl.selectedSegmentIndex = UISegmentedControlNoSegment
         
         self.bestQuoteView = BestQuoteView(view: bestQuoteTableView)
         self.bestQuoteView.delegate = self
@@ -40,8 +50,9 @@ class ChartViewController : UIViewController, CandleChartViewDelegate, FundDeleg
         
         self.candleStickChartView.legend.enabled = false
         self.candleStickChartView.chartDescription?.enabled = false
-        self.candleStickChartView.maxVisibleCount = 60
         self.candleStickChartView.pinchZoomEnabled = false
+        self.candleStickChartView.maxVisibleCount = 0
+        self.candleStickChartView.drawBordersEnabled = false
         
         self.candleStickChartView.xAxis.labelPosition = XAxis.LabelPosition.bottom
         self.candleStickChartView.xAxis.drawGridLinesEnabled = false
@@ -91,8 +102,11 @@ class ChartViewController : UIViewController, CandleChartViewDelegate, FundDeleg
             self.candleChartView.monitoringInterval = config.chartUpdateIntervalType
             self.candleChartView.switchChartIntervalType(type: config.selectedCandleChartType)
         }
-        
-        self.changedTechnicalSegment(self)
+        if self.technicalIndexState == nil {
+            self.technicalIndexState = TechncalIndexState(index: TechnicalIndexType.none)
+            self.technicalIndexState.delegate = self
+            self.technicalIndexState.changeIndex(index: TechnicalIndexType(rawValue: self.technicalSegmentControl.selectedSegmentIndex)!)
+        }
         
         let trader = account.activeExchange.trader
         trader.startWatch()
@@ -111,6 +125,10 @@ class ChartViewController : UIViewController, CandleChartViewDelegate, FundDeleg
             self.candleChartView.delegate = nil
             self.candleChartView = nil
             getAccount()?.activeExchange.startWatch()
+        }
+        if self.technicalIndexState != nil {
+            self.technicalIndexState.delegate = nil
+            self.technicalIndexState = nil
         }
     }
     
@@ -201,6 +219,34 @@ class ChartViewController : UIViewController, CandleChartViewDelegate, FundDeleg
         self.stop()
     }
     
+    // TechncalIndexStateDelegate
+    func clearTechnicalIndex() {
+        self.candleChartView.showSma5 = false
+        self.candleChartView.showSma25 = false
+        self.candleChartView.showBollingerBand = false
+        self.technicalSegmentControl.selectedSegmentIndex = UISegmentedControlNoSegment
+    }
+    
+    func setTechnicalIndex(index: TechnicalIndexType) {
+        self.candleChartView.showSma5 = false
+        self.candleChartView.showSma25 = false
+        self.candleChartView.showBollingerBand = false
+        
+        switch index {
+        case TechnicalIndexType.sma5:
+            self.candleChartView.showSma5 = true
+        case TechnicalIndexType.sma25:
+            self.candleChartView.showSma25 = true
+        case TechnicalIndexType.sma5_25:
+            self.candleChartView.showSma5 = true
+            self.candleChartView.showSma25 = true
+        case TechnicalIndexType.bollingerBand:
+            self.candleChartView.showBollingerBand = true
+        default:
+            self.technicalSegmentControl.selectedSegmentIndex = UISegmentedControlNoSegment
+        }
+    }
+    
     fileprivate func heilightChartButton(type: ChandleChartType) {
         self.oneMinuteButton.setTitleColor(UIColor.white, for: UIControlState.normal)
         self.oneMinuteButton.isEnabled = true
@@ -263,25 +309,16 @@ class ChartViewController : UIViewController, CandleChartViewDelegate, FundDeleg
         let settings = storyboard.instantiateViewController(withIdentifier: "settingsViewController") as! UINavigationController
         self.present(settings, animated: true, completion: nil)
     }
-
+    
     @IBAction func changedTechnicalSegment(_ sender: Any) {
-        self.candleChartView.setShowSma5(show: false)
-        self.candleChartView.setShowSma25(show: false)
-        self.candleChartView.setShowBollingerBand(show: false)
-        
-        switch self.technicalSegmentControl.selectedSegmentIndex {
-        case 0: break
-        case 1: self.candleChartView.setShowSma5(show: true)
-        case 2: self.candleChartView.setShowSma25(show: true)
-        case 3: self.candleChartView.setShowBollingerBand(show: true)
-        default: break
-        }
+        self.technicalIndexState.changeIndex(index: TechnicalIndexType(rawValue: self.technicalSegmentControl.selectedSegmentIndex)!)
     }
     
     fileprivate var fund: Fund!
     fileprivate var bitcoin: BitCoin!
     var bestQuoteView: BestQuoteView!
     var candleChartView: CandleChartView!
+    var technicalIndexState: TechncalIndexState!
 
     @IBOutlet weak var chartSelectorView: UIView!
     @IBOutlet weak var candleStickChartView: CandleStickChartView!
@@ -295,6 +332,41 @@ class ChartViewController : UIViewController, CandleChartViewDelegate, FundDeleg
     @IBOutlet weak var fundLabel: UILabel!
     @IBOutlet weak var bestQuoteTableView: UITableView!
     
-    @IBOutlet weak var technicalSegmentControl: UISegmentedControl!
+    @IBOutlet weak var technicalSegmentControl: TouchSegmentControl!
     
+}
+
+protocol TechncalIndexStateDelegate {
+    func clearTechnicalIndex()
+    func setTechnicalIndex(index: TechnicalIndexType)
+}
+
+class TechncalIndexState {
+    init(index: TechnicalIndexType) {
+        self.currentIndex = index
+    }
+    
+    func changeIndex(index: TechnicalIndexType) {
+        if self.currentIndex == index || index == TechnicalIndexType.none {
+            self.delegate?.clearTechnicalIndex()
+            self.currentIndex = TechnicalIndexType.none
+            return
+        } else {
+            self.delegate?.setTechnicalIndex(index: index)
+            self.currentIndex = index
+        }
+    }
+    
+    var currentIndex = TechnicalIndexType.none
+    var delegate: TechncalIndexStateDelegate?
+}
+
+class TouchSegmentControl : UISegmentedControl {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let curIndex = self.selectedSegmentIndex
+        super.touchesEnded(touches, with: event)
+        if curIndex == self.selectedSegmentIndex {
+            sendActions(for: .valueChanged)
+        }
+    }
 }

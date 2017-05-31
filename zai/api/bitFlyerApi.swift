@@ -245,13 +245,32 @@ class bitFlyerApi : Api {
                     guard let data = tradeData.dictionary else {
                         continue
                     }
+                    guard let _ = data["id"] else {
+                        continue
+                    }
+                    let id = data["id"]!.stringValue
+                    guard let _ = data["price"] else {
+                        continue
+                    }
+                    let price = data["price"]!.doubleValue
+                    guard let _ = data["size"] else {
+                        continue
+                    }
+                    let size = data["size"]!.doubleValue
+                    guard let _ = data["side"] else {
+                        continue
+                    }
+                    let side = data["side"]!.stringValue
+                    guard let action = Side(rawValue: side)?.action else {
+                        continue
+                    }
                     let date = data["exec_date"]!.stringValue
                     let trade = Trade(
-                        id: data["id"]!.stringValue,
-                        price: data["price"]!.doubleValue,
-                        amount: data["size"]!.doubleValue,
+                        id: id,
+                        price: price,
+                        amount: size,
                         currencyPair: currencyPair.rawValue,
-                        action: Side(rawValue: data["side"]!.stringValue)!.action,
+                        action: action,
                         timestamp: timestamp(date: date.components(separatedBy: ".")[0]))
                     trades.append(trade)
                 }
