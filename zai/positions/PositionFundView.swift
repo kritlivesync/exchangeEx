@@ -23,7 +23,8 @@ class PositionFundView : Monitorable {
     override func monitor() {
         let delegate = self.delegate as? PositionFundViewDelegate
         if self.delegate != nil {
-            delegate?.recievedTotalProfit(profit: formatValue(Int(self.trader.totalProfit)))
+            let profit = self.trader.totalProfit
+            delegate?.recievedTotalProfit(profit: formatValue(Int(profit)))
             delegate?.recievedPriceAverage(average: formatValue(Int(round(self.trader.priceAverage))))
             let fund = Fund(api: self.trader.exchange.api)
             fund.getBtcFund() { (err, btc) in

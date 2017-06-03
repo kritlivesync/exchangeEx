@@ -184,6 +184,10 @@ class CandleChart : Monitorable {
         self.candles = self.candles.reversed()
     }
     
+    open var lastCandle: Candle? {
+        return self.candles.last
+    }
+    
     open func copyTrades(chart: CandleChart) {
         for candle in chart.candles {
             for trade in candle.trades {

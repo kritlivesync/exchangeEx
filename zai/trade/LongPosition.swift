@@ -208,6 +208,27 @@ class LongPosition: Position {
                     self.delegate?.unwindPosition(position: self, promisedOrder: promisedOrder)
                     self.delegate2?.unwindPosition(position: self, promisedOrder: promisedOrder)
                 }
+            case PositionState.PARTIAL.rawValue:
+                if order.action == "bid" {
+                    let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .OPEN_LONG_POSITION, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: promisedOrder.price, amount: promisedOrder.newlyPromisedAmount, positionId: self.id)
+                    
+                    self.addLog(log)
+                    self.open()
+                    self.delegate?.opendPosition(position: self, promisedOrder: promisedOrder)
+                    self.delegate2?.opendPosition(position: self, promisedOrder: promisedOrder)
+                } else if order.action == "ask" {
+                    let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .UNWIND_LONG_POSITION, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: promisedOrder.price, amount: promisedOrder.newlyPromisedAmount, positionId: self.id)
+                    self.addLog(log)
+                    if self.balance < self.trader!.exchange.api.orderUnit(currencyPair: self.currencyPair) {
+                        self.close()
+                        self.delegate?.closedPosition(position: self, promisedOrder: promisedOrder)
+                        self.delegate2?.closedPosition(position: self, promisedOrder: promisedOrder)
+                    } else {
+                        self.open()
+                        self.delegate?.unwindPosition(position: self, promisedOrder: promisedOrder)
+                        self.delegate2?.unwindPosition(position: self, promisedOrder: promisedOrder)
+                    }
+                }
             default: break
             }
         }
@@ -224,6 +245,16 @@ class LongPosition: Position {
                 let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .UNWIND_LONG_POSITION, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: promisedOrder.price, amount: promisedOrder.newlyPromisedAmount, positionId: self.id)
                 self.addLog(log)
                 self.partial()
+            case PositionState.PARTIAL.rawValue:
+                if order.action == "bid" {
+                    let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .OPEN_LONG_POSITION, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: promisedOrder.price, amount: promisedOrder.newlyPromisedAmount, positionId: self.id)
+                    self.addLog(log)
+                    self.partial()
+                } else if order.action == "ask" {
+                    let log = TradeLogRepository.getInstance().create(userId: self.trader!.exchange.account.userId, action: .UNWIND_LONG_POSITION, traderName: self.trader!.name, orderAction: order.action, orderId: order.orderId!, currencyPair: order.currencyPair, price: promisedOrder.price, amount: promisedOrder.newlyPromisedAmount, positionId: self.id)
+                    self.addLog(log)
+                    self.partial()
+                }
             default: break
             }
         }

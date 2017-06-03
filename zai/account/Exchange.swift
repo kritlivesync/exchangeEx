@@ -22,7 +22,7 @@ protocol ExchangeProtocol {
     var api: Api { get }
 }
 
-public class Exchange: NSManagedObject, ExchangeProtocol, CommissionDelegate {
+public class Exchange: NSManagedObject, ExchangeProtocol, CandleChartDelegate {
     
     func validateApiKey(_ callback: @escaping (ZaiError?) -> Void) {
         callback(ZaiError(errorType: .UNKNOWN_ERROR))
@@ -57,25 +57,23 @@ public class Exchange: NSManagedObject, ExchangeProtocol, CommissionDelegate {
     }
     
     func startWatch() {
-        self.stopWatch()
-        self.commissionMonitor = Commission(currencyPair: self.apiCurrencyPair, api: api)
-        self.commissionMonitor.delegate = self
+        if self.candleChart == nil {
+            self.candleChart = CandleChart(chartName: self.name, currencyPair: self.apiCurrencyPair, interval: ChandleChartType.oneMinute, candleCount: 300, api: self.api)
+        }
+        self.candleChart.delegate = self
+        self.candleChart.monitoringInterval = UpdateInterval.fiveSeconds
     }
     
     func stopWatch() {
-        if self.commissionMonitor != nil {
-            self.commissionMonitor.monitoringInterval = UpdateInterval.thirtySeconds
-            self.commissionMonitor.delegate = nil
-            self.commissionMonitor = nil
+        if self.candleChart != nil {
+            self.candleChart.delegate = nil
         }
     }
     
-    // CommissionDelegate
-    func recievedCommmission(commission: Double) {
-        self.commission = commission
+    // CandleChartDelegate
+    func recievedChart(chart: CandleChart, newCandles: [Candle], chartName: String) {
     }
     
     var serviceApi: Api?
-    var commissionMonitor: Commission!
-    var commission = 0.0
+    var candleChart: CandleChart!
 }

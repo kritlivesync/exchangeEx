@@ -53,22 +53,27 @@ open class Trader: NSManagedObject, FundDelegate {
         }
     }
     
-    func unwindPosition(id: String, price: Double?, amount: Double, cb: @escaping (ZaiError?, Position?, Double) -> Void) {
+    func unwindPosition(id: String, price: Double?, amount: Double?, cb: @escaping (ZaiError?, Position?, Double) -> Void) {
         guard let position = self.getPosition(id: id) else {
             cb(ZaiError(errorType: .INVALID_POSITION), nil, 0.0)
             return
         }
         
         let balance = position.balance
+        var amt = amount
+        if amt == nil {
+            amt = balance
+        }
+
         let btcFundAmount = self.btcAvailable
-        let amt = min(min(balance, amount), btcFundAmount)
-        if amt < self.exchange.api.orderUnit(currencyPair: position.currencyPair) {
-            cb(nil, position, amt)
+        amt = min(min(balance, amt!), btcFundAmount)
+        if amt! < self.exchange.api.orderUnit(currencyPair: position.currencyPair) {
+            cb(nil, position, amt!)
             position.close()
             position.delegate?.closedPosition(position: position, promisedOrder: nil)
         } else {
-            position.unwind(amt, price: price) { (err, orderedAmount) in
-                cb(err, position, amt)
+            position.unwind(amt!, price: price) { (err, orderedAmount) in
+                cb(err, position, amt!)
             }
         }
     }
@@ -82,6 +87,14 @@ open class Trader: NSManagedObject, FundDelegate {
     func calncelAllBuyOrders() {
         for order in self.activeOrders {
             if order.action == OrderAction.BID.rawValue {
+                order.cancel() { _ in }
+            }
+        }
+    }
+    
+    func cancelAllSellOrders() {
+        for order in self.activeOrders {
+            if order.action == OrderAction.ASK.rawValue {
                 order.cancel() { _ in }
             }
         }
@@ -108,7 +121,7 @@ open class Trader: NSManagedObject, FundDelegate {
         }
     }
     
-    func unwindMaxProfitPosition(price: Double?, amount: Double, marketPrice: Double, cb: @escaping (ZaiError?, Position?, Double) -> Void) {
+    func unwindMaxProfitPosition(price: Double?, amount: Double?, marketPrice: Double, cb: @escaping (ZaiError?, Position?, Double) -> Void) {
         guard let position = self.maxUnrealizedProfitPosition(marketPrice: marketPrice) else {
             cb(ZaiError(errorType: .NO_POSITION_TO_UNWIND, message: Resource.noPositionsToUnwind), nil, 0.0)
             return
@@ -116,7 +129,7 @@ open class Trader: NSManagedObject, FundDelegate {
         self.unwindPosition(id: position.id, price: price, amount: amount, cb: cb)
     }
     
-    func unwindMaxLossPosition(price: Double?, amount: Double, marketPrice: Double, cb: @escaping (ZaiError?, Position?, Double) -> Void) {
+    func unwindMaxLossPosition(price: Double?, amount: Double?, marketPrice: Double, cb: @escaping (ZaiError?, Position?, Double) -> Void) {
         guard let position = self.maxUnrealizedLossPosition(marketPrice: marketPrice) else {
             cb(ZaiError(errorType: .NO_POSITION_TO_UNWIND, message: Resource.noPositionsToUnwind), nil, 0.0)
             return

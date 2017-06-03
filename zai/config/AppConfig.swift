@@ -23,15 +23,15 @@ enum UpdateInterval : Int {
     
     var string: String {
         switch self {
-        case .realTime: return "リアルタイム"
-        case .oneSecond: return "1秒"
-        case .twoSeconds: return "2秒"
-        case .threeSeconds: return "3秒"
-        case .fourSeconds: return "4秒"
-        case .fiveSeconds: return "5秒"
-        case .tenSeconds: return "10秒"
-        case .thirtySeconds: return "30秒"
-        case .oneMinute: return "60秒"
+        case .realTime: return LabelResource.realtime
+        case .oneSecond: return LabelResource.oneSecond
+        case .twoSeconds: return LabelResource.twoSeconds
+        case .threeSeconds: return LabelResource.threeSeconds
+        case .fourSeconds: return LabelResource.fourSeconds
+        case .fiveSeconds: return LabelResource.fiveSeconds
+        case .tenSeconds: return LabelResource.tenSeconds
+        case .thirtySeconds: return LabelResource.thirtySeconds
+        case .oneMinute: return LabelResource.oneMinute
         }
     }
     
@@ -81,10 +81,10 @@ enum UnwindingRule : Int {
     
     var string: String {
         switch self {
-        case .mostBenefit: return "最も含み益の大きいポジション"
-        case .mostLoss: return "最も含み損の大きいポジション"
-        case .mostRecent: return "最も新しいポジション"
-        case .mostOld: return "最も古いポジション"
+        case .mostBenefit: return LabelResource.mostProfitPosition
+        case .mostLoss: return LabelResource.mostLossPosition
+        case .mostRecent: return LabelResource.mostNewPosition
+        case .mostOld: return LabelResource.mostOldPosition
         }
     }
     
