@@ -13,6 +13,8 @@
 		B80920311DFD03E8005667D4 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80920301DFD03E8005667D4 /* MainTabBarController.swift */; };
 		B80920351DFD4555005667D4 /* BitCoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80920341DFD4555005667D4 /* BitCoin.swift */; };
 		B80920371DFD8817005667D4 /* PositionFundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80920361DFD8817005667D4 /* PositionFundView.swift */; };
+		B80E47601EE32A7C00405590 /* Exchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80E475F1EE32A7C00405590 /* Exchange.swift */; };
+		B80E47621EE32AAE00405590 /* ZaifExchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80E47611EE32AAE00405590 /* ZaifExchange.swift */; };
 		B81AF6431DFF054600D4F706 /* AssetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81AF6421DFF054600D4F706 /* AssetsViewController.swift */; };
 		B81AF6451DFF059600D4F706 /* BoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81AF6441DFF059600D4F706 /* BoardViewController.swift */; };
 		B827CD121D7C4FDD00E9847B /* PositionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827CD111D7C4FDD00E9847B /* PositionsViewController.swift */; };
@@ -73,8 +75,6 @@
 		B84113EE1E18071E000EB0F8 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84113EB1E18071E000EB0F8 /* LaunchViewController.swift */; };
 		B84113EF1E18071E000EB0F8 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84113EC1E18071E000EB0F8 /* Login.swift */; };
 		B84113F01E18071E000EB0F8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84113ED1E18071E000EB0F8 /* LoginViewController.swift */; };
-		B84113F51E1809DD000EB0F8 /* ZaifExchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84113F21E1809DD000EB0F8 /* ZaifExchange.swift */; };
-		B84113F91E181744000EB0F8 /* Exchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84113F71E181744000EB0F8 /* Exchange.swift */; };
 		B84113FD1E18A954000EB0F8 /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84113FC1E18A954000EB0F8 /* Api.swift */; };
 		B84113FF1E18A9FA000EB0F8 /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84113FE1E18A9FA000EB0F8 /* ApiError.swift */; };
 		B84114011E18E293000EB0F8 /* ZaifApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84114001E18E293000EB0F8 /* ZaifApi.swift */; };
@@ -223,6 +223,8 @@
 		B80920301DFD03E8005667D4 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainTabBarController.swift; path = main/MainTabBarController.swift; sourceTree = "<group>"; };
 		B80920341DFD4555005667D4 /* BitCoin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BitCoin.swift; path = currency/BitCoin.swift; sourceTree = "<group>"; };
 		B80920361DFD8817005667D4 /* PositionFundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PositionFundView.swift; path = positions/PositionFundView.swift; sourceTree = "<group>"; };
+		B80E475F1EE32A7C00405590 /* Exchange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Exchange.swift; path = account/Exchange.swift; sourceTree = "<group>"; };
+		B80E47611EE32AAE00405590 /* ZaifExchange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZaifExchange.swift; path = account/ZaifExchange.swift; sourceTree = "<group>"; };
 		B81AF6421DFF054600D4F706 /* AssetsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AssetsViewController.swift; path = assets/AssetsViewController.swift; sourceTree = "<group>"; };
 		B81AF6441DFF059600D4F706 /* BoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardViewController.swift; path = board/BoardViewController.swift; sourceTree = "<group>"; };
 		B827CD111D7C4FDD00E9847B /* PositionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PositionsViewController.swift; path = positions/PositionsViewController.swift; sourceTree = "<group>"; };
@@ -283,8 +285,6 @@
 		B84113EB1E18071E000EB0F8 /* LaunchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LaunchViewController.swift; path = launch/LaunchViewController.swift; sourceTree = "<group>"; };
 		B84113EC1E18071E000EB0F8 /* Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Login.swift; path = launch/Login.swift; sourceTree = "<group>"; };
 		B84113ED1E18071E000EB0F8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = launch/LoginViewController.swift; sourceTree = "<group>"; };
-		B84113F21E1809DD000EB0F8 /* ZaifExchange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZaifExchange.swift; path = /Users/kyota/work/zai/zai/account/ZaifExchange.swift; sourceTree = "<absolute>"; };
-		B84113F71E181744000EB0F8 /* Exchange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Exchange.swift; path = /Users/kyota/work/zai/zai/account/Exchange.swift; sourceTree = "<absolute>"; };
 		B84113FC1E18A954000EB0F8 /* Api.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Api.swift; path = api/Api.swift; sourceTree = "<group>"; };
 		B84113FE1E18A9FA000EB0F8 /* ApiError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiError.swift; path = api/ApiError.swift; sourceTree = "<group>"; };
 		B84114001E18E293000EB0F8 /* ZaifApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZaifApi.swift; path = api/ZaifApi.swift; sourceTree = "<group>"; };
@@ -670,13 +670,13 @@
 		B85E8E261D6F3AA200C029C8 /* account */ = {
 			isa = PBXGroup;
 			children = (
+				B80E47611EE32AAE00405590 /* ZaifExchange.swift */,
+				B80E475F1EE32A7C00405590 /* Exchange.swift */,
 				B8B29B051E55FEC600ED3F64 /* BitFlyerExchange.swift */,
 				B8B29B061E55FEC600ED3F64 /* BitFlyerExchange+CoreDataProperties.swift */,
 				B8E9E2CD1E1B867F003B298F /* ZaifExchange+CoreDataProperties.swift */,
 				B8E9E2CE1E1B867F003B298F /* Exchange+CoreDataProperties.swift */,
-				B84113F71E181744000EB0F8 /* Exchange.swift */,
 				B85E8E3F1D6F3E4D00C029C8 /* Account.swift */,
-				B84113F21E1809DD000EB0F8 /* ZaifExchange.swift */,
 				B85E8E411D6F3E4D00C029C8 /* AccountRepository.swift */,
 				B85E8E421D6F3E4D00C029C8 /* Fund.swift */,
 				B85E8E431D6F3E4D00C029C8 /* NewAccountViewController.swift */,
@@ -1160,6 +1160,7 @@
 				B89379411E26822C00F693A3 /* UserAccountSettingView.swift in Sources */,
 				B84113E11E141C6F000EB0F8 /* Trader+CoreDataProperties.swift in Sources */,
 				B8DB8ECD1E3C517F0051C7EC /* AssetsConfig+CoreDataProperties.swift in Sources */,
+				B80E47621EE32AAE00405590 /* ZaifExchange.swift in Sources */,
 				B843CFE61E0E870E00CC6656 /* OrderListView.swift in Sources */,
 				B85E8E4C1D6F3E5E00C029C8 /* TradeLog.swift in Sources */,
 				B88CF6F01E3C8542008A6189 /* ConfigRepository.swift in Sources */,
@@ -1186,6 +1187,7 @@
 				B84113DB1E141C6F000EB0F8 /* PositionRepository.swift in Sources */,
 				B8F38B3C1D8FC1CB00731696 /* Macd.swift in Sources */,
 				B8DB8ED71E3C517F0051C7EC /* PositionsConfig+CoreDataProperties.swift in Sources */,
+				B80E47601EE32A7C00405590 /* Exchange.swift in Sources */,
 				B85E8E4D1D6F3E5E00C029C8 /* TradeLog+CoreDataProperties.swift in Sources */,
 				B84113E21E141C6F000EB0F8 /* TraderRepository.swift in Sources */,
 				B84113D11E141C6F000EB0F8 /* ActiveOrder.swift in Sources */,
@@ -1193,7 +1195,6 @@
 				B84E608A1E265B7D004EA77C /* SettingsViewController.swift in Sources */,
 				B85E8E391D6F3E2100C029C8 /* Error.swift in Sources */,
 				B8C7DEEB1E2B620C00E666F0 /* ChangeZaifApiKeyController.swift in Sources */,
-				B84113F51E1809DD000EB0F8 /* ZaifExchange.swift in Sources */,
 				B84113E41E15F7D5000EB0F8 /* PositionEditViewController.swift in Sources */,
 				B843CFEA1E12C5C400CC6656 /* Color.swift in Sources */,
 				B84114041E1A8B0E000EB0F8 /* Crypt.swift in Sources */,
@@ -1242,7 +1243,6 @@
 				B84113FD1E18A954000EB0F8 /* Api.swift in Sources */,
 				B84113DE1E141C6F000EB0F8 /* ShortPosition.swift in Sources */,
 				B827CD161D806DF900E9847B /* PositionListViewCell.swift in Sources */,
-				B84113F91E181744000EB0F8 /* Exchange.swift in Sources */,
 				B84113D41E141C6F000EB0F8 /* LongPosition.swift in Sources */,
 				B89D5C851E29C66F004FF743 /* ZaifSettingView.swift in Sources */,
 				B8DB8ED41E3C517F0051C7EC /* AppConfig.swift in Sources */,

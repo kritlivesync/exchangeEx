@@ -20,7 +20,7 @@ extension NSData {
 }
 
 public class ZaifExchange: Exchange, ZaiApiDelegate {
-
+    
     override func validateApiKey(_ cb: @escaping (ZaiError?) -> Void) {
         self.serviceApi?.validateApi() { err in
             if err != nil {
