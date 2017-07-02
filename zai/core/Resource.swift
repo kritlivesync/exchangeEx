@@ -376,7 +376,7 @@ class ZaifResource : Resource {
         return NSLocalizedString("apiKeyNonceNotIncremented", comment: "")
     }
     override var invalidApiKey: String {
-        return NSLocalizedString("invalidApiKey", comment: "")
+        return NSLocalizedString("invalidZaifApiKey", comment: "")
     }
 
 }
@@ -387,6 +387,6 @@ class bitFlyerResource : Resource {
     }
 
     override var invalidApiKey: String {
-        return NSLocalizedString("invalidApiKey", comment: "")
+        return NSLocalizedString("invalidBitFlyerApiKey", comment: "")
     }
 }

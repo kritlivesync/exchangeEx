@@ -56,8 +56,11 @@ class NewBitFlyerAccount : SectionView {
         let apiKey = self.getApiKey()
         let secretKey = self.getSecretKey()
         
+        let resource = bitFlyerResource()
+        
         if apiKey == "" && secretKey == "" {
-            callback(nil)
+            callback(ZaiError(errorType: .INVALID_API_KEYS, message: resource.invalidApiKey))
+            return
         }
         
         let api = bitFlyerApi(apiKey: apiKey, secretKey: secretKey)
@@ -66,7 +69,6 @@ class NewBitFlyerAccount : SectionView {
                 callback(nil)
                 return
             }
-            let resource = bitFlyerResource()
             
             switch err!.errorType {
             case ApiErrorType.NO_PERMISSION:

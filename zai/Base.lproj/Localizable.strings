@@ -153,9 +153,9 @@
 
 "apiKeyNoPermission" = "The Zaif API key does not have required permissions. Please use API key with the following permissions.\ninfo\ntrade";
 "apiKeyNonceNotIncremented" = "Failed to set nonce value of Zaif API key. Please wait for a while or use another API key.";
-"invalidApiKey" = "Please use a valid Zaif API key.";
+"invalidZaifApiKey" = "Please use a valid Zaif API key.";
 
 /*bitFlyer resources*/
 
 "apiKeyNoPermission" = "The bitFlyer API key does not have required permissions. Please use API key with the following permissions.\nAssets\nTrading";
-"invalidApiKey" = "Please use a valid bitFlyer API key.";
+"invalidBitFlyerApiKey" = "Please use a valid bitFlyer API key.";

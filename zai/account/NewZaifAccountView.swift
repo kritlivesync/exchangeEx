@@ -55,8 +55,11 @@ class NewZaifAccountView : SectionView {
         let apiKey = self.getApiKey()
         let secretKey = self.getSecretKey()
         
+        let resource = ZaifResource()
+        
         if apiKey == "" && secretKey == "" {
-            callback(nil, timestamp())
+            callback(ZaiError(errorType: .INVALID_API_KEYS, message: resource.invalidApiKey), timestamp())
+            return
         }
         
         let zaifApi = ZaifApi(apiKey: apiKey, secretKey: secretKey)
@@ -66,7 +69,6 @@ class NewZaifAccountView : SectionView {
                 callback(nil, nonce)
                 return
             }
-            let resource = ZaifResource()
             
             switch err!.errorType {
             case ApiErrorType.NO_PERMISSION:

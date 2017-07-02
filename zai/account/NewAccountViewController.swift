@@ -121,24 +121,26 @@ class NewAccountViewController: UIViewController, UITableViewDelegate, UITableVi
                         self.activeIndicator.stopAnimating()
                         if err != nil {
                             self.showWarning(error: err!) { _ in
-                                self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self)
+                                self.backToLoginView()
                             }
                         } else {
-                            self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self)
+                            self.defaultExchangeName = "Zaif"
+                            self.backToLoginView()
                         }
                     }
                 }
             } else {
                 self.activeIndicator.startAnimating()
+                self.defaultExchangeName = "bitFlyer"
                 self.newZaifAccountView.validate() { (err, nonce) in
                     self.zaifApiNonce = nonce
                     self.activeIndicator.stopAnimating()
                     if err != nil {
                         self.showWarning(error: err!) { _ in
-                            self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self)
+                            self.backToLoginView()
                         }
                     } else {
-                        self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self)
+                        self.backToLoginView()
                     }
                 }
             }
@@ -178,6 +180,10 @@ class NewAccountViewController: UIViewController, UITableViewDelegate, UITableVi
             return
         }
         
+        if self.defaultExchangeName != "" {
+            account.setActiveExchange(exchangeName: self.defaultExchangeName)
+        }
+        
         let config = getGlobalConfig()
         config.previousUserId = userId
         _ = config.save()
@@ -194,8 +200,15 @@ class NewAccountViewController: UIViewController, UITableViewDelegate, UITableVi
             self.present(wariningView, animated: false, completion: nil)
         }
     }
+    
+    fileprivate func backToLoginView() {
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "unwindWithSaveSegue", sender: self)
+        }
+    }
 
     var zaifApiNonce: Int64 = 0
+    var defaultExchangeName = ""
     fileprivate var newAccountView: NewAccountView!
     fileprivate var newZaifAccountView: NewZaifAccountView!
     fileprivate var newBitFlyerAccountView: NewBitFlyerAccount!

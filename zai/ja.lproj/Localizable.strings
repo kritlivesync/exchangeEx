@@ -148,8 +148,8 @@
 /*Zaif resources*/
 "apiKeyNoPermission" = "Zaif APIキーに権限がありません。以下の権限を持ったAPIキーを使用してください。\ninfo\ntrade";
 "apiKeyNonceNotIncremented" = "Zaif APIキーのnonce値の設定に失敗しました。しばらく時間を置くか、別のAPIキーを使用してください。";
-"invalidApiKey" = "有効なZaif APIキーを設定してください。";
+"invalidZaifApiKey" = "有効なZaif APIキーを設定してください。";
 
 /*bitFlyer resources*/
 "apiKeyNoPermission" = "bitFlyer APIキーに権限がありません。以下の権限を持ったAPIキーを使用してください。\n資産\nトレード";
-"invalidApiKey" = "有効なbitFlyer APIキーを設定してください。";
+"invalidBitFlyerApiKey" = "有効なbitFlyer APIキーを設定してください。";
